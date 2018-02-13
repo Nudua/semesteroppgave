@@ -7,6 +7,7 @@ import javafx.animation.TimelineBuilder;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -24,7 +25,7 @@ public abstract class GameEngine {
 
     protected Color background = Color.CORNFLOWERBLUE;
 
-    public GameEngine(GridPane parent, int width, int height) {
+    public GameEngine(Pane parent, int width, int height) {
 
         this.width = width;
         this.height = height;
@@ -32,7 +33,8 @@ public abstract class GameEngine {
         canvas = new Canvas(width, height);
         graphicsContext = canvas.getGraphicsContext2D();
 
-        parent.add(canvas, 0, 1, 1, 1);
+        // Fix
+        ((GridPane)(parent)).add(canvas, 0, 1, 1, 1);
 
         buildAndSetGameLoop();
     }

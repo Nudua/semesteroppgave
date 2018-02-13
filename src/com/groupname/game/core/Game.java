@@ -12,6 +12,7 @@ import com.groupname.game.entities.SimpleGameObject;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -27,7 +28,7 @@ public class Game extends GameEngine {
 
     private GameObject box;
 
-    public Game(GridPane parent, Scene scene, int width, int height) {
+    public Game(Pane parent, Scene scene, int width, int height) {
         super(parent, width, height);
 
         inputManager = new InputManager(scene);

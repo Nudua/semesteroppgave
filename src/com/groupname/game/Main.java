@@ -1,5 +1,7 @@
 package com.groupname.game;
 
+import com.groupname.game.Scene.SceneManager;
+import com.groupname.game.Scene.SceneName;
 import com.groupname.game.controllers.MainWindowController;
 import com.groupname.game.core.Game;
 import javafx.application.Application;
@@ -13,20 +15,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/mainwindow.fxml"));
+        SceneManager sceneManager = SceneManager.INSTANCE;
 
-        GridPane root = loader.load();
-        Scene scene = new Scene(root);
+        sceneManager.setPrimaryStage(primaryStage);
+        sceneManager.changeToScene(SceneName.Title);
 
-        Game game = new Game(root, scene, 640, 480);
-        game.start();
-
-        MainWindowController mainController = loader.getController();
-        mainController.init(game);
-
-        primaryStage.setScene(scene);
-
-        primaryStage.setTitle("Project X - Semesteroppgave!");
         primaryStage.show();
     }
 
