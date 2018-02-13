@@ -56,7 +56,13 @@ public class Game extends GameEngine {
     }
 
     private void createBox() {
-        box = new SimpleGameObject(new Sprite.Builder("box1", "sheet1", new Size(64,64)).sourceVector(0,0).build(), new Vector2D(200,200), new Rectangle(width, height), 4, true);
+        box = new SimpleGameObject(
+                new Sprite.Builder("box1", "sheet1",
+                new Size(64,64)).
+                sourceVector(0,0).build(),
+                new Vector2D(200,200),
+                new Rectangle(width, height), 4, true);
+
         gameObjects.add(box);
     }
 
