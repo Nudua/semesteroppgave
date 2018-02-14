@@ -25,6 +25,13 @@ public class MainWindowController {
     }
 
     @FXML
+    protected void GameOverOnClicked(ActionEvent event) {
+        // Todo: Actually pause the game when we switch the scene out.
+        SceneManager sceneManager = SceneManager.INSTANCE;
+        sceneManager.changeToScene(SceneName.GameOver);
+    }
+
+    @FXML
     protected void menuExitOnClicked(ActionEvent event) {
         Platform.exit();
     }

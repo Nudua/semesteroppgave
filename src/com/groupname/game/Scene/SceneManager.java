@@ -2,8 +2,10 @@ package com.groupname.game.Scene;
 
 import com.groupname.game.controllers.MainWindowController;
 import com.groupname.game.core.Game;
+import com.groupname.game.core.TestGame;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -32,9 +34,11 @@ public enum SceneManager {
     private void createSceneInfos() {
         SceneInfo titleSceneInfo = new SceneInfo(SceneName.Title, "Title - Untitled Game", "../views/titleview.fxml");
         SceneInfo gameSceneInfo = new SceneInfo(SceneName.Game, "Game - Untitled Game", "../views/mainwindow.fxml");
+        SceneInfo testGameSceneInfo = new SceneInfo(SceneName.GameOver, "Game - Test", "");
 
         scenes.put(SceneName.Title, titleSceneInfo);
         scenes.put(SceneName.Game, gameSceneInfo);
+        scenes.put(SceneName.GameOver, testGameSceneInfo);
     }
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -42,6 +46,7 @@ public enum SceneManager {
         initialized = true;
     }
 
+    // Add a navigate to and from action, i.e to pause and resume the game
     public void changeToScene(SceneName newScene) {
         if(!initialized) {
             return;
@@ -82,6 +87,7 @@ public enum SceneManager {
         primaryStage.setScene(sceneInfo.getScene());
     }
 
+    TestGame testGame;
     // Better exception handling
     private void createScene(SceneInfo sceneInfo) throws IOException {
         if(!initialized) {
@@ -89,26 +95,42 @@ public enum SceneManager {
             return;
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneInfo.getViewPath()));
-        Pane root = loader.load();
+        Pane root;
 
-        Scene scene = new Scene(root);
-        sceneInfo.setScene(scene);
+        // Game without a fxml file and controller, just for testing
+        if("".equals(sceneInfo.getViewPath())) {
+            root = new GridPane();
 
-        // This is a bit lazy, but fine for now, do something with generics
-        if(sceneInfo.getSceneName() == SceneName.Game) {
-            MainWindowController controller = loader.getController();
+            Scene scene = new Scene(root);
+            sceneInfo.setScene(scene);
 
-            Game game = new Game(root, scene, 640, 480);
-            game.start();
+            if(sceneInfo.getSceneName() == SceneName.GameOver) {
+                testGame = new TestGame(root, scene, 1280, 720);
+                testGame.start();
+            }
 
-            controller.init(game);
+
+
+        } else {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneInfo.getViewPath()));
+            root = loader.load();
+
+            Scene scene = new Scene(root);
+            sceneInfo.setScene(scene);
+
+            // This is a bit lazy, but fine for now, do something with generics
+            if(sceneInfo.getSceneName() == SceneName.Game) {
+                MainWindowController controller = loader.getController();
+
+                Game game = new Game(root, scene, 1280, 720);
+                game.start();
+
+                controller.init(game);
+            }
         }
-        /* Don't need this yet because the other controllers has no models yet
-        else if(sceneInfo.getSceneName() == SceneName.Title) {
-            TitleController controller = loader.getController();
-        }
-        */
+
+
+
 
         showScene(sceneInfo);
     }
