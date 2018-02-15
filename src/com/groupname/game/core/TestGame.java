@@ -3,7 +3,6 @@ package com.groupname.game.core;
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.background.FadeIn;
 import com.groupname.framework.graphics.background.SpaceEffect;
 import com.groupname.framework.graphics.background.WeatherEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
