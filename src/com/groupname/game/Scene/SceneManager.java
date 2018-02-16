@@ -1,8 +1,10 @@
 package com.groupname.game.Scene;
 
+import com.groupname.framework.core.GameEngine;
 import com.groupname.game.controllers.MainWindowController;
+import com.groupname.game.core.CreditsScreen;
 import com.groupname.game.core.Game;
-import com.groupname.game.core.TestGame;
+import com.groupname.game.core.GameOverScreen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -10,23 +12,24 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 // Singleton - https://en.wikipedia.org/wiki/Singleton_pattern
 public enum SceneManager {
     INSTANCE;
 
     private Stage primaryStage = null;
-    private Map<SceneName, SceneInfo> scenes;
+    private final Map<SceneName, SceneInfo> scenes;
 
     private SceneInfo currentScene = null;
 
     private boolean initialized = false;
 
+    //private final List<GameEngine> gameScreens;
+
     SceneManager() {
         scenes = new HashMap<>();
+        //gameScreens = new ArrayList<>();
         createSceneInfos();
     }
 
@@ -35,10 +38,12 @@ public enum SceneManager {
         SceneInfo titleSceneInfo = new SceneInfo(SceneName.Title, "Title - Untitled Game", "../views/titleview.fxml");
         SceneInfo gameSceneInfo = new SceneInfo(SceneName.Game, "Game - Untitled Game", "../views/mainwindow.fxml");
         SceneInfo testGameSceneInfo = new SceneInfo(SceneName.GameOver, "Game - Test", "");
+        SceneInfo creditsSceneInfo = new SceneInfo(SceneName.Credits, "Game - Credits", "");
 
         scenes.put(SceneName.Title, titleSceneInfo);
         scenes.put(SceneName.Game, gameSceneInfo);
         scenes.put(SceneName.GameOver, testGameSceneInfo);
+        scenes.put(SceneName.Credits, creditsSceneInfo);
     }
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -87,7 +92,9 @@ public enum SceneManager {
         primaryStage.setScene(sceneInfo.getScene());
     }
 
-    TestGame testGame;
+    //private GameOverScreen gameOverScreen;
+    //private CreditsScreen creditsScreen;
+
     // Better exception handling
     private void createScene(SceneInfo sceneInfo) throws IOException {
         if(!initialized) {
@@ -105,12 +112,12 @@ public enum SceneManager {
             sceneInfo.setScene(scene);
 
             if(sceneInfo.getSceneName() == SceneName.GameOver) {
-                testGame = new TestGame(root, scene, 1280, 720);
-                testGame.start();
+                GameEngine gameOverScreen = new GameOverScreen(root, scene, 1280, 720);
+                gameOverScreen.start();
+            } else if(sceneInfo.getSceneName() == SceneName.Credits) {
+                GameEngine creditsScreen = new CreditsScreen(root, scene, 1280, 720);
+                creditsScreen.start();
             }
-
-
-
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneInfo.getViewPath()));
             root = loader.load();
@@ -128,9 +135,6 @@ public enum SceneManager {
                 controller.init(game);
             }
         }
-
-
-
 
         showScene(sceneInfo);
     }

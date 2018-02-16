@@ -15,7 +15,7 @@
             <items>
                   <MenuItem fx:id="newGameMenuItem" onAction="#menuNewGameOnClicked" mnemonicParsing="false" text="Title Screen" />
                   <MenuItem fx:id="loadGameMenuItem" onAction="#GameOverOnClicked" mnemonicParsing="false" text="Game Over Screen" />
-                  <MenuItem fx:id="saveGameMenuItem" mnemonicParsing="false" text="..." />
+                  <MenuItem fx:id="saveGameMenuItem" onAction="#CreditsOnClicked" mnemonicParsing="false" text="Credits Screen" />
               <MenuItem fx:id="exitGameMenuItem" mnemonicParsing="false" onAction="#menuExitOnClicked" text="Exit" />
             </items>
           </Menu>

@@ -26,17 +26,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestGame extends GameEngine {
+public class GameOverScreen extends GameEngine {
 
     private final SpriteBatch spritebatch;
     private final InputManager inputManager;
 
     private WeatherEffect weatherEffect;
-    private SpaceEffect spaceEffect;
 
-    private CreditsScroll creditsScroll;
-
-    public TestGame(Pane parent, Scene scene, int width, int height) {
+    public GameOverScreen(Pane parent, Scene scene, int width, int height) {
         super(parent, width, height);
 
         inputManager = new InputManager(scene);
@@ -48,25 +45,6 @@ public class TestGame extends GameEngine {
 
     private void loadResources() {
         createWeatherEffect();
-        createSpaceEffect();
-    }
-
-    private void createSpaceEffect() {
-        String spriteSheetFolder = "../resources/graphics/spritesheets/";
-        Image star = new Image(getClass().getResourceAsStream(spriteSheetFolder + "star.png"));
-        spritebatch.addSpritesheet("star", star);
-
-        Sprite bigStar = new Sprite.Builder("smallStar", "star", new Size(32,32)).scale(0.7).build();
-        Sprite mediumStar = new Sprite.Builder("smallStar", "star", new Size(16,16)).sourceOffset(0,40).scale(0.7).build();
-        Sprite smallStar = new Sprite.Builder("smallStar", "star", new Size(8,8)).sourceOffset(0,64).scale(0.5).build();
-
-        //Sprite snowSprite1 = new Sprite.Builder("snowflake", "snow", new Size(30,20)).sourceVector(3,0).build();
-
-        List<Sprite> sprites = Arrays.asList(smallStar, mediumStar, bigStar);
-
-        spaceEffect = new SpaceEffect(sprites, new Size(1280, 720));
-
-        creditsScroll = new CreditsScroll();
     }
 
     private void createWeatherEffect() {
@@ -91,10 +69,7 @@ public class TestGame extends GameEngine {
             inputManager.update();
         }
 
-        spaceEffect.update();
-        //weatherEffect.update();
-        creditsScroll.update();
-
+        weatherEffect.update();
     }
 
     protected void draw() {
@@ -102,14 +77,7 @@ public class TestGame extends GameEngine {
         graphicsContext.setFill(background);
         graphicsContext.fillRect(0, 0, width, height);
 
-        //drawWeather();
-        drawSpace();
-    }
-
-    private void drawSpace() {
-        spaceEffect.draw(spritebatch);
-
-        creditsScroll.draw(graphicsContext);
+        drawWeather();
     }
 
     private void drawWeather() {

@@ -32,6 +32,13 @@ public class MainWindowController {
     }
 
     @FXML
+    protected void CreditsOnClicked(ActionEvent event) {
+        // Todo: Actually pause the game when we switch the scene out.
+        SceneManager sceneManager = SceneManager.INSTANCE;
+        sceneManager.changeToScene(SceneName.Credits);
+    }
+
+    @FXML
     protected void menuExitOnClicked(ActionEvent event) {
         Platform.exit();
     }

@@ -5,5 +5,6 @@ public enum SceneName {
     Title,
     Game,
     GameOver,
+    Credits,
     HighScore,
 }
