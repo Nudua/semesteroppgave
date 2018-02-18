@@ -1,8 +1,8 @@
 package com.groupname.game.entities;
 
 import com.groupname.framework.core.GameObject;
-import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.input.InputManager;
@@ -17,6 +17,7 @@ public class Player extends GameObject {
     private final InputManager inputManager;
     private final Rectangle screenBounds;
     private boolean facingRight = false;
+    private boolean facingDown = true;
 
     // Logic
     private final double speed;
@@ -66,11 +67,15 @@ public class Player extends GameObject {
                 position.addY(-speed);
             }
 
+            facingDown = false;
+
         } else if(inputManager.isPressed(KeyboardInput.Defaults.DOWN)) {
             if(position.getY() + sprite.getHeight() >= screenBounds.getHeight()) {
                 position.setY(screenBounds.getHeight() - sprite.getHeight());
             }
             position.addY(speed);
+
+            facingDown = true;
         }
     }
 
@@ -82,6 +87,10 @@ public class Player extends GameObject {
         }
 
         EnumSet<SpriteFlip> flip = facingRight ? EnumSet.of(SpriteFlip.HORIZONTAL) : EnumSet.of(SpriteFlip.NONE);
+
+        if(facingDown) {
+            flip.add(SpriteFlip.VERTICAL);
+        }
 
         spriteBatch.draw(sprite, position, flip);
     }

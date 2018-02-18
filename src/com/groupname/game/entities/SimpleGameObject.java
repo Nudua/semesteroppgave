@@ -1,21 +1,21 @@
 package com.groupname.game.entities;
 
 import com.groupname.framework.core.GameObject;
-import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.math.Size;
+import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
-import javafx.scene.shape.Rectangle;
 
 public class SimpleGameObject extends GameObject {
 
-    private Rectangle screenBounds;
+    private Size screenBounds;
 
     // Logic
     private double speed;
     private boolean goRight;
     private boolean goUp;
 
-    public SimpleGameObject(Sprite sprite, Vector2D position, Rectangle screenBounds, double speed, boolean goRight) {
+    public SimpleGameObject(Sprite sprite, Vector2D position, Size screenBounds, double speed, boolean goRight) {
         super(sprite, position);
         this.screenBounds = screenBounds;
 

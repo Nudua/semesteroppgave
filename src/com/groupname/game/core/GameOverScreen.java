@@ -1,25 +1,16 @@
 package com.groupname.game.core;
 
 import com.groupname.framework.core.GameEngine;
-import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.background.SpaceEffect;
+import com.groupname.framework.graphics.SpriteOld;
 import com.groupname.framework.graphics.background.WeatherEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
-import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.math.Size;
-import com.groupname.framework.math.Vector2D;
-import com.groupname.game.Scene.SceneManager;
-import com.groupname.game.Scene.SceneName;
-import com.groupname.game.entities.Player;
-import com.groupname.game.entities.SimpleGameObject;
-import com.groupname.game.other.CreditsScroll;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
@@ -52,10 +43,15 @@ public class GameOverScreen extends GameEngine {
         Image snow = new Image(getClass().getResourceAsStream(spriteSheetFolder + "snow.png"));
         spritebatch.addSpritesheet("snow", snow);
 
-        Sprite snowSprite1 = new Sprite.Builder("snowflake", "snow", new Size(30,20)).build();
-        Sprite snowSprite2 = new Sprite.Builder("snowflake", "snow", new Size(30,20)).sourceVector(1,0).build();
-        Sprite snowSprite3 = new Sprite.Builder("snowflake", "snow", new Size(30,20)).sourceVector(2,0).scale(0.9).build();
-        Sprite snowSprite4 = new Sprite.Builder("snowflake", "snow", new Size(30,20)).sourceVector(3,0).build();
+        /*
+        SpriteOld snowSprite1 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).build();
+        SpriteOld snowSprite2 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).sourceVector(1,0).build();
+        SpriteOld snowSprite3 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).sourceVector(2,0).scale(0.9).build();
+        SpriteOld snowSprite4 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).sourceVector(3,0).build();
+        */
+
+        Sprite snowSprite3 = new Sprite("snowflake1", "snow", Sprite.createSpriteRegion(2,0,30,20));
+        snowSprite3.setScale(0.9d);
 
         List<Sprite> sprites = new ArrayList<>(Arrays.asList(snowSprite3));
 

@@ -2,10 +2,10 @@ package com.groupname.framework.graphics.background;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteOld;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.game.core.Game;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class WeatherEffect {
     private boolean enabled = true;
 
-    //private final Sprite sprite;
+    //private final SpriteOld sprite;
     private final Size screenBounds;
 
     private final List<GameObject> flakes;

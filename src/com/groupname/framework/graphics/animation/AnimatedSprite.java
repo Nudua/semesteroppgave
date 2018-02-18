@@ -1,12 +1,12 @@
 package com.groupname.framework.graphics.animation;
 
-import com.groupname.framework.graphics.SpriteEx;
+import com.groupname.framework.graphics.Sprite;
 import javafx.scene.shape.Rectangle;
 
 import java.util.List;
 import java.util.Objects;
 
-public class AnimatedSprite extends SpriteEx implements Animatable {
+public class AnimatedSprite extends Sprite implements Animatable {
 
     private AnimationLogic<AnimatedSprite> animationLogic;
     private List<Rectangle> spriteRegions;
@@ -42,7 +42,7 @@ public class AnimatedSprite extends SpriteEx implements Animatable {
         }
     }
 
-    public SpriteEx asSprite() {
+    public Sprite asSprite() {
         return this;
     }
 }

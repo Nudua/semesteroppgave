@@ -2,6 +2,7 @@ package com.groupname.framework.graphics.background;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteOld;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;

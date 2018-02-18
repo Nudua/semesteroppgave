@@ -2,19 +2,18 @@ package com.groupname.game.core;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteOld;
 import com.groupname.framework.graphics.background.SpaceEffect;
-import com.groupname.framework.graphics.background.WeatherEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
+import com.groupname.framework.math.IntVector2D;
 import com.groupname.framework.math.Size;
 import com.groupname.game.other.CreditsScroll;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,9 +45,14 @@ public class CreditsScreen extends GameEngine {
         Image star = new Image(getClass().getResourceAsStream(spriteSheetFolder + "star.png"));
         spritebatch.addSpritesheet("star", star);
 
-        Sprite bigStar = new Sprite.Builder("smallStar", "star", new Size(32,32)).scale(0.7).build();
-        Sprite mediumStar = new Sprite.Builder("smallStar", "star", new Size(16,16)).sourceOffset(0,40).scale(0.7).build();
-        Sprite smallStar = new Sprite.Builder("smallStar", "star", new Size(8,8)).sourceOffset(0,64).scale(0.5).build();
+        Sprite bigStar = new Sprite("smallStar", "star", Sprite.createSpriteRegion(32,32));
+        bigStar.setScale(0.7d);
+
+        Sprite mediumStar = new Sprite("mediumStar", "star", Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
+        mediumStar.setScale(0.7d);
+
+        Sprite smallStar = new Sprite("smallStar", "star", Sprite.createSpriteRegion(0,0,8,8, new IntVector2D(0,64)));
+        smallStar.setScale(0.5d);
 
         List<Sprite> sprites = Arrays.asList(smallStar, mediumStar, bigStar);
 
