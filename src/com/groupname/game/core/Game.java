@@ -1,5 +1,8 @@
 package com.groupname.game.core;
 
+import com.groupname.framework.graphics.SpriteEx;
+import com.groupname.framework.graphics.animation.AnimatedSprite;
+import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
@@ -27,6 +30,7 @@ public class Game extends GameEngine {
     private Player player1;
 
     private GameObject box;
+    private AnimatedSprite animatedSprite;
 
     public Game(Pane parent, Scene scene, int width, int height) {
         super(parent, width, height);
@@ -43,6 +47,20 @@ public class Game extends GameEngine {
 
         createBox();
         createPlayer1();
+        createAnim();
+    }
+
+    private void createAnim() {
+
+        Rectangle frame1 = SpriteEx.createSpriteRegion(0,0,64,64);
+        Rectangle frame2 = SpriteEx.createSpriteRegion(1,0,64,64);
+        Rectangle frame3 = SpriteEx.createSpriteRegion(0,1,64,64);
+        Rectangle frame4 = SpriteEx.createSpriteRegion(1,1,64,64);
+        Rectangle frame5 = SpriteEx.createSpriteRegion(0,2,64,64);
+        Rectangle frame6 = SpriteEx.createSpriteRegion(1,2,64,64);
+
+        animatedSprite = new AnimatedSprite("anim1", "sheet1", Arrays.asList(frame1, frame2, frame3, frame4, frame5, frame6));
+        animatedSprite.setAnimationLogic(new LinearAnimation(30));
     }
 
     private void createSpriteSheets() {
@@ -93,6 +111,8 @@ public class Game extends GameEngine {
         for(GameObject gameObject : gameObjects) {
             gameObject.update();
         }
+
+        animatedSprite.stepAnimation();
     }
 
     protected void draw() {
@@ -108,5 +128,7 @@ public class Game extends GameEngine {
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spritebatch);
         }
+
+        spritebatch.draw(animatedSprite, new Vector2D(200, 200));
     }
 }

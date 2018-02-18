@@ -1,6 +1,7 @@
 package com.groupname.framework.graphics.drawing;
 
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteEx;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -31,12 +32,48 @@ public class SpriteBatch {
         spriteSheets.put(name, new SpriteSheet(name, (int)image.getWidth(), (int)image.getHeight(), image));
     }
 
+    public boolean containsSpriteSheet(String key) {
+        return spriteSheets.containsKey(key);
+    }
+
     // Lots of overloads for drawing stuff here
     // Rotation, scaling etc.
     public void draw(Sprite sprite, Vector2D position) {
         Rectangle srcRect = sprite.getSourceRect();
 
         gc.drawImage(spriteSheets.get(sprite.getSpriteSheet()).getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), position.getX(),position.getY(),sprite.getWidth(), sprite.getHeight());
+    }
+
+    public void draw(SpriteEx sprite, Vector2D position) {
+        Rectangle srcRect = sprite.getSpriteRegion();
+
+        gc.drawImage(spriteSheets.get(sprite.getSpriteSheet()).getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), position.getX(),position.getY(),sprite.getSpriteRegion().getWidth(), sprite.getSpriteRegion().getHeight());
+    }
+
+    public void draw(SpriteEx sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
+        Rectangle srcRect = sprite.getSpriteRegion();
+
+        double spriteWidth = srcRect.getWidth();
+        double spriteHeight = srcRect.getHeight();
+        double posX = position.getX();
+        double posY = position.getY();
+
+        // Setting the width to negative will flip it horizontally
+        if(flipFlags.contains(SpriteFlip.HORIZONTAL)) {
+            spriteWidth = -spriteWidth;
+            // We need to offset the X-position of the spriteOld with the width
+            posX += spriteWidth;
+        }
+
+        // Setting the width to negative will flip it horizontally
+        if(flipFlags.contains(SpriteFlip.VERTICAL)) {
+            spriteHeight = -spriteHeight;
+            posY += spriteHeight;
+        }
+
+        if(containsSpriteSheet(sprite.getSpriteSheet())) {
+            gc.drawImage(spriteSheets.get(sprite.getSpriteSheet()).getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), posX, posY, spriteWidth, spriteHeight);
+        }
     }
 
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {

@@ -1,5 +1,6 @@
 package com.groupname.framework.graphics;
 
+import com.groupname.framework.util.Strings;
 import javafx.scene.image.Image;
 
 import java.security.InvalidParameterException;
@@ -13,11 +14,7 @@ public class SpriteSheet {
     private final Image image;
 
     public SpriteSheet(String name, int width, int height, Image image) {
-        if(name == null || "".equals(name)) {
-            throw new NullPointerException("name cannot be empty or null");
-        }
-
-        this.name = name;
+        this.name = Strings.requireNonNullAndNotEmpty(name);
 
         if(width <= 0 || height <= 0) {
             throw new InvalidParameterException("width and height cannot be less than or equal to 0");
