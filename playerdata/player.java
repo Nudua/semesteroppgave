@@ -1,5 +1,6 @@
 package playerdata;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.*;
@@ -28,7 +29,6 @@ public class player {
         this.posX = posX;
         this.posY = posY;
         this.slot = slot;
-
     }
 
 
@@ -37,7 +37,7 @@ public class player {
     }
 
 
-    public void s2d() {
+    public void s2d() { // save to disk
 
             if (slot == "slot1") { //Finds the right slot to save to.
                 slot = slot1;
@@ -54,7 +54,6 @@ public class player {
             }
 
         try {
-                                            
             Properties props = new Properties();
             FileOutputStream out = new FileOutputStream(slot); //Path
             for(Map.Entry<String, String> entry : playerTab.entrySet()) {
@@ -62,7 +61,6 @@ public class player {
                 String value = entry.getValue();
                 props.setProperty(key, value);
             }
-
             props.store(out, null); //Saves
             out.close(); //Close
         } catch (Exception e) {
@@ -71,20 +69,23 @@ public class player {
     }
 
 
-    public void restoreData() {
+    public void restoreData() { //import data from disk
 
         try {
-            Properties props = new Properties();
-            FileOutputStream in = new FileOutputStream(slot1); //Path
-                System.out.println(props.getProperty(key));
-            }
+            Properties p = new Properties();
+            p.load(new FileInputStream(slot));
 
-            in.close(); //Close
+            nickname = (String) p.get("nickname");
+            score = (String) p.get("score");
+            posX = (String) p.get("posX");
+            posY = (String) p.get("posY");
+            System.out.println(nickname);
+            System.out.println(score);
+            System.out.println(posX);
+            System.out.println(posY);
+
         } catch (Exception e) {
             System.out.println(e);
         }
-
-
-
     }
 }
