@@ -7,7 +7,7 @@ public class SceneInfo {
     private final SceneName sceneName;
     private final String title;
     private final String viewPath;
-    private final Runnable init;
+    private Runnable init;
     private Scene scene;
 
     public SceneInfo(SceneName sceneName, String title, String viewPath) {
@@ -39,6 +39,10 @@ public class SceneInfo {
 
     public Runnable getInit() {
         return init;
+    }
+
+    public void setInit(Runnable init) {
+        this.init = init;
     }
 
     public String getTitle() {

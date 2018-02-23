@@ -12,12 +12,13 @@ public class LinearAnimation implements AnimationLogic<AnimatedSprite> {
     private int currentFrame = 0;
 
     public LinearAnimation(int delay) {
-        this.delay = delay;
+        // Delay can't be negative
+        this.delay = delay >= 0 ? delay  : 0;
         this.counter = delay;
     }
 
     public void step(AnimatedSprite sprite) {
-        // Delay until the counter is zero,
+        // Delay the animation until the counter is zero.
         if(counter > 0) {
             counter--;
             return;

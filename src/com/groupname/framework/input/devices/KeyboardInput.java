@@ -19,6 +19,7 @@ public class KeyboardInput implements InputAdapter {
 
         public static final String ACTION1 = prefix + KeyCode.SPACE.getName();
         public static final String ACTION2 = prefix + KeyCode.KP_LEFT.getName();
+        public static final String ESCAPE = prefix + KeyCode.ESCAPE.getName();
     }
 
     private boolean enabled = true;
@@ -47,7 +48,7 @@ public class KeyboardInput implements InputAdapter {
         internalState.add(Defaults.prefix + event.getCode().getName());
 
         // Just for debugging purposes
-        System.out.println(key);
+        //System.out.println(key);
     }
 
     private void OnKeyReleased(KeyEvent event) {

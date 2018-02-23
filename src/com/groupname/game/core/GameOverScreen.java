@@ -2,11 +2,13 @@ package com.groupname.game.core;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.SpriteOld;
 import com.groupname.framework.graphics.background.WeatherEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
+import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.math.Size;
+import com.groupname.game.Scene.SceneManager;
+import com.groupname.game.Scene.SceneName;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -24,7 +26,7 @@ public class GameOverScreen extends GameEngine {
 
     private WeatherEffect weatherEffect;
 
-    public GameOverScreen(Pane parent, Scene scene, int width, int height) {
+    public GameOverScreen(Pane parent, int width, int height) {
         super(parent, width, height);
 
         inputManager = new InputManager(scene);
@@ -66,6 +68,12 @@ public class GameOverScreen extends GameEngine {
         }
 
         weatherEffect.update();
+
+        if(inputManager.isPressed(KeyboardInput.Defaults.ESCAPE)) {
+            SceneManager sceneManager = SceneManager.INSTANCE;
+            sceneManager.changeToScene(SceneName.Title);
+            stop();
+        }
     }
 
     protected void draw() {

@@ -1,134 +1,89 @@
 package com.groupname.game.core;
 
-import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.SpriteOld;
-import com.groupname.framework.graphics.animation.AnimatedSprite;
-import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.core.GameEngine;
-import com.groupname.framework.core.GameObject;
-import com.groupname.framework.math.Vector2D;
-import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
-import com.groupname.game.entities.Player;
-import com.groupname.game.entities.SimpleGameObject;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import com.groupname.game.Scene.SceneManager;
+import com.groupname.game.Scene.SceneName;
+import com.groupname.game.levels.Level2;
+import com.groupname.game.levels.Level1;
+import com.groupname.game.levels.core.LevelBase;
+import com.groupname.game.levels.core.LevelState;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
 import java.util.*;
 
 public class Game extends GameEngine {
 
-    private final SpriteBatch spritebatch;
+    //private final SpriteBatch spritebatch;
     private final InputManager inputManager;
 
-    private final List<GameObject> gameObjects;
-    private Player player1;
+    // Might consider making a levelManager
+    private List<LevelBase> allLevels;
+    private LevelBase currentLevel;
+    private int currentLevelIndex = 0;
 
-    private GameObject box;
-    private AnimatedSprite animatedSprite;
-
-    public Game(Pane parent, Scene scene, int width, int height) {
+    public Game(Pane parent, int width, int height) {
         super(parent, width, height);
 
         inputManager = new InputManager(scene);
-        gameObjects = new ArrayList<>();
-        spritebatch = new SpriteBatch(graphicsContext);
+        allLevels = new ArrayList<>();
 
-        loadResources();
+        createLevels();
     }
 
-    private void loadResources() {
-        createSpriteSheets();
+    private void createLevels() {
+        LevelBase level1 = new Level1(this, inputManager);
+        level1.initialize();
+        LevelBase level2 = new Level2(this, inputManager);
+        level2.initialize(); // Save initialize for the loading? Or maybe just load all the levels at start...
 
-        createBox();
-        createPlayer1();
-        createAnim();
-    }
+        allLevels.add(level1);
+        allLevels.add(level2);
 
-    private void createAnim() {
-
-        Rectangle frame1 = Sprite.createSpriteRegion(0,0,64,64);
-        Rectangle frame2 = Sprite.createSpriteRegion(1,0,64,64);
-        Rectangle frame3 = Sprite.createSpriteRegion(0,1,64,64);
-        Rectangle frame4 = Sprite.createSpriteRegion(1,1,64,64);
-        Rectangle frame5 = Sprite.createSpriteRegion(0,2,64,64);
-        Rectangle frame6 = Sprite.createSpriteRegion(1,2,64,64);
-
-        animatedSprite = new AnimatedSprite("anim1", "sheet1", Arrays.asList(frame1, frame2, frame3, frame4, frame5, frame6));
-        animatedSprite.setAnimationLogic(new LinearAnimation(30));
-    }
-
-    private void createSpriteSheets() {
-
-        String spriteSheetFolder = "../resources/graphics/spritesheets/";
-
-        Image sheet1 = new Image(getClass().getResourceAsStream(spriteSheetFolder + "spritesheet1.png"));
-        Image playerSheet = new Image(getClass().getResourceAsStream(spriteSheetFolder + "player1.png"));
-
-        spritebatch.addSpritesheet("sheet1", sheet1);
-        spritebatch.addSpritesheet("player1", playerSheet);
-    }
-
-    private void createBox() {
-        box = new SimpleGameObject(
-                new Sprite("box1", "sheet1", Sprite.createSpriteRegion(64,64)),
-                new Vector2D(200,200),
-                new Size(width, height),
-                4,
-                true);
-
-        gameObjects.add(box);
-    }
-
-    private void createPlayer1() {
-        Sprite p1Sprite = new Sprite("player1Sprite", "player1", Sprite.createSpriteRegion(160, 160));
-        p1Sprite.setScale(0.5d);
-
-        player1 = new Player(p1Sprite, new Vector2D(), new Rectangle(width, height), inputManager);
-
-        gameObjects.add(player1);
+        currentLevel = level1;
     }
 
     protected void update() {
-        // Update input to the most recent state
-        if(inputManager.isEnabled()) {
-            inputManager.update();
+
+        if(isPaused()) {
+            // Fade the current level and show the MainMenu
+            return;
         }
 
-        // This should be handled by the objects itself, just to demonstrate simple collision detection
-        if(box.collides(player1.getHitbox())) {
-            player1.getSprite().setSpriteRegion(Sprite.createSpriteRegion(2,0,160,160));
-            System.out.println("CRASH");
-        } else {
-            player1.getSprite().setSpriteRegion(Sprite.createSpriteRegion(0,0,160,160));
+        if(currentLevel.getState() == LevelState.Completed) {
+            // Change to the next level
+            currentLevelIndex++;
+
+            // Just wrap around for now
+            if(currentLevelIndex > allLevels.size() - 1) {
+                currentLevelIndex = 0;
+            }
+
+            // cleanup / remove the old level here
+            currentLevel = allLevels.get(currentLevelIndex);
+
+            currentLevel.reset();
         }
 
-        // Update all our gameobjects
-        for(GameObject gameObject : gameObjects) {
-            gameObject.update();
-        }
+        currentLevel.update();
+    }
 
-        animatedSprite.stepAnimation();
+    private void changeScene(SceneName newScene) {
+        // Stop the current Scene
+        stop();
+
+        SceneManager sceneManager = SceneManager.INSTANCE;
+        sceneManager.changeToScene(newScene);
     }
 
     protected void draw() {
-        // Clear the entire screen with the default background color
-        graphicsContext.setFill(background);
-        graphicsContext.fillRect(0, 0, width, height);
-
-        // We should consider creating a class for drawing text
-        graphicsContext.setFill(Color.BLACK);
-        graphicsContext.fillText("Use the arrow keys to move the player object!", 100, 100);
-
-        // Draw all our gameobjects, really need to sort based on sprite priority
-        for(GameObject gameObject : gameObjects) {
-            gameObject.draw(spritebatch);
+        if(isPaused()) {
+            // Just return
+            return;
         }
 
-        spritebatch.draw(animatedSprite, new Vector2D(200, 200));
+        // Otherwise we're playing
+        currentLevel.draw();
     }
 }

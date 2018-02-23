@@ -88,6 +88,10 @@ public enum SceneManager {
     private void showScene(SceneInfo sceneInfo) {
         currentScene = sceneInfo;
 
+        if(currentScene.getInit() != null) {
+            currentScene.getInit().run();
+        }
+
         primaryStage.setTitle(sceneInfo.getTitle());
         primaryStage.setScene(sceneInfo.getScene());
     }
@@ -108,31 +112,34 @@ public enum SceneManager {
         if("".equals(sceneInfo.getViewPath())) {
             root = new GridPane();
 
-            Scene scene = new Scene(root);
-            sceneInfo.setScene(scene);
-
             if(sceneInfo.getSceneName() == SceneName.GameOver) {
-                GameEngine gameOverScreen = new GameOverScreen(root, scene, 1280, 720);
-                gameOverScreen.start();
+                GameEngine gameOverScreen = new GameOverScreen(root, 1280, 720);
+                sceneInfo.setInit(gameOverScreen::start);
+                sceneInfo.setScene(gameOverScreen.getScene());
+
             } else if(sceneInfo.getSceneName() == SceneName.Credits) {
-                GameEngine creditsScreen = new CreditsScreen(root, scene, 1280, 720);
-                creditsScreen.start();
+                GameEngine creditsScreen = new CreditsScreen(root, 1280, 720);
+                sceneInfo.setInit(creditsScreen::start);
+                sceneInfo.setScene(creditsScreen.getScene());
             }
+
+
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneInfo.getViewPath()));
             root = loader.load();
-
-            Scene scene = new Scene(root);
-            sceneInfo.setScene(scene);
 
             // This is a bit lazy, but fine for now, do something with generics
             if(sceneInfo.getSceneName() == SceneName.Game) {
                 MainWindowController controller = loader.getController();
 
-                Game game = new Game(root, scene, 1280, 720);
-                game.start();
+                Game game = new Game(root, 1280, 720);
+                sceneInfo.setInit(game::start);
+                sceneInfo.setScene(game.getScene());
 
                 controller.init(game);
+            } else {
+                Scene scene = new Scene(root);
+                sceneInfo.setScene(scene);
             }
         }
 

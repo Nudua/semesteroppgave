@@ -6,16 +6,18 @@ import javafx.scene.Scene;
 
 import java.util.*;
 
-// Todo: Store the old state so we can check if a button was not pressed the last frame. (we're not just holding the button)
 public class InputManager {
     private boolean enabled = true;
 
     private final List<InputAdapter> inputAdapters;
+
+    private Set<String> lastInputState;
     private final Set<String> globalInputState;
 
     public InputManager(Scene parent) {
         Objects.requireNonNull(parent);
 
+        lastInputState = new HashSet<>();
         globalInputState = new HashSet<>();
         inputAdapters = new ArrayList<>();
 
@@ -36,7 +38,8 @@ public class InputManager {
     }
 
     public void update() {
-
+        lastInputState.clear();
+        lastInputState.addAll(globalInputState);
         // Clear the old state of the inputs
         globalInputState.clear();
 
@@ -47,7 +50,14 @@ public class InputManager {
         }
     }
 
-    public boolean isPressed(String keyName) {
+    // Holding
+    public boolean isDown(String keyName) {
         return globalInputState.contains(keyName);
     }
+
+    // Single press
+    public boolean isPressed(String keyName) {
+        return !lastInputState.contains(keyName) && globalInputState.contains(keyName);
+    }
+
 }

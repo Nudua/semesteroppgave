@@ -1,7 +1,6 @@
 package com.groupname.framework.core;
 
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.SpriteOld;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import javafx.scene.shape.Rectangle;

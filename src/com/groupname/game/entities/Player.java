@@ -2,12 +2,12 @@ package com.groupname.game.entities;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
-import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
 
@@ -15,14 +15,14 @@ import java.util.EnumSet;
 public class Player extends GameObject {
 
     private final InputManager inputManager;
-    private final Rectangle screenBounds;
+    private final Size screenBounds;
     private boolean facingRight = false;
     private boolean facingDown = true;
 
     // Logic
     private final double speed;
 
-    public Player(Sprite sprite, Vector2D position, Rectangle screenBounds, InputManager inputManager) {
+    public Player(Sprite sprite, Vector2D position, Size screenBounds, InputManager inputManager) {
         super(sprite, position);
         this.screenBounds = screenBounds;
         this.inputManager = inputManager;
@@ -41,7 +41,7 @@ public class Player extends GameObject {
         }
 
         // Very simple movement with bounds checking
-        if(inputManager.isPressed(KeyboardInput.Defaults.RIGHT)) {
+        if(inputManager.isDown(KeyboardInput.Defaults.RIGHT)) {
             if(position.getX() + sprite.getWidth() >= screenBounds.getWidth()) {
                 position.setX(screenBounds.getWidth() - sprite.getWidth());
             } else {
@@ -50,7 +50,7 @@ public class Player extends GameObject {
 
             facingRight = true;
 
-        } else if(inputManager.isPressed(KeyboardInput.Defaults.LEFT)) {
+        } else if(inputManager.isDown(KeyboardInput.Defaults.LEFT)) {
             if(position.getX() > 0) {
                 position.addX(-speed);
             } else {
@@ -60,7 +60,7 @@ public class Player extends GameObject {
             facingRight = false;
         }
 
-        if(inputManager.isPressed(KeyboardInput.Defaults.UP)) {
+        if(inputManager.isDown(KeyboardInput.Defaults.UP)) {
             if(position.getY() <= 0) {
                 position.setY(0);
             } else {
@@ -69,13 +69,17 @@ public class Player extends GameObject {
 
             facingDown = false;
 
-        } else if(inputManager.isPressed(KeyboardInput.Defaults.DOWN)) {
+        } else if(inputManager.isDown(KeyboardInput.Defaults.DOWN)) {
             if(position.getY() + sprite.getHeight() >= screenBounds.getHeight()) {
                 position.setY(screenBounds.getHeight() - sprite.getHeight());
             }
             position.addY(speed);
 
             facingDown = true;
+        }
+
+        if(inputManager.isPressed(KeyboardInput.Defaults.ACTION1)) {
+            System.out.println("Space pressed");
         }
     }
 
