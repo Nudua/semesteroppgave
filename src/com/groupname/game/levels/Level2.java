@@ -5,6 +5,7 @@ import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.LinearAnimation;
+import com.groupname.framework.graphics.background.SierpinskiTriangleBackground;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.math.Size;
@@ -25,6 +26,7 @@ import java.util.List;
 public class Level2 extends LevelBase {
 
     private AnimatedSprite animatedSprite;
+    private SierpinskiTriangleBackground sierpinskiBackground;
 
     public Level2(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
@@ -35,6 +37,8 @@ public class Level2 extends LevelBase {
         createSpriteSheets();
 
         createAnim();
+
+        sierpinskiBackground = new SierpinskiTriangleBackground(graphicsContext);
     }
 
     private void createSpriteSheets() {
@@ -67,11 +71,15 @@ public class Level2 extends LevelBase {
         }
 
         animatedSprite.stepAnimation();
+
+        sierpinskiBackground.update();
     }
 
     public void draw() {
         clearScreen();
 
-        spriteBatch.draw(animatedSprite, new Vector2D(400, 400));
+        //spriteBatch.draw(animatedSprite, new Vector2D(400, 400));
+
+        sierpinskiBackground.draw();
     }
 }
