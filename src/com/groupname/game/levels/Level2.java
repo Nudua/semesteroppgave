@@ -1,32 +1,26 @@
 package com.groupname.game.levels;
 
 import com.groupname.framework.core.GameEngine;
-import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.LinearAnimation;
+import com.groupname.framework.graphics.background.ArrowScreenTransition;
 import com.groupname.framework.graphics.background.SierpinskiTriangleBackground;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
-import com.groupname.framework.math.Size;
-import com.groupname.framework.math.Vector2D;
-import com.groupname.game.entities.Player;
-import com.groupname.game.entities.SimpleGameObject;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Level2 extends LevelBase {
 
     private AnimatedSprite animatedSprite;
     private SierpinskiTriangleBackground sierpinskiBackground;
+    private ArrowScreenTransition arrowScreenTransition;
 
     public Level2(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
@@ -39,6 +33,7 @@ public class Level2 extends LevelBase {
         createAnim();
 
         sierpinskiBackground = new SierpinskiTriangleBackground(graphicsContext);
+        arrowScreenTransition = new ArrowScreenTransition(graphicsContext);
     }
 
     private void createSpriteSheets() {
@@ -68,18 +63,33 @@ public class Level2 extends LevelBase {
 
         if(inputManager.isPressed(KeyboardInput.Defaults.ESCAPE)) {
             state = LevelState.Completed;
+            arrowScreenTransition.setDone(false);
+
         }
 
-        animatedSprite.stepAnimation();
+        if(arrowScreenTransition.isDone()) {
+            animatedSprite.stepAnimation();
 
-        sierpinskiBackground.update();
+            sierpinskiBackground.update();
+        } else {
+            arrowScreenTransition.update();
+        }
+
+
     }
 
     public void draw() {
-        clearScreen();
+
 
         //spriteBatch.draw(animatedSprite, new Vector2D(400, 400));
 
-        sierpinskiBackground.draw();
+        if(arrowScreenTransition.isDone()) {
+            clearScreen();
+            sierpinskiBackground.draw();
+        } else {
+            arrowScreenTransition.draw();
+        }
+
+
     }
 }
