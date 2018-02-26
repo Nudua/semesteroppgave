@@ -5,8 +5,7 @@ import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.input.InputManager;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
-import com.groupname.game.levels.Level2;
-import com.groupname.game.levels.Level1;
+import com.groupname.game.levels.*;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
 import javafx.scene.layout.Pane;
@@ -34,14 +33,22 @@ public class Game extends GameEngine {
 
     private void createLevels() {
         LevelBase level1 = new Level1(this, inputManager);
-        level1.initialize();
         LevelBase level2 = new Level2(this, inputManager);
-        level2.initialize(); // Save initialize for the loading? Or maybe just load all the levels at start...
+        LevelBase level3 = new Level3(this, inputManager);
+        LevelBase level4 = new Level4(this, inputManager);
+
+        // Save initialize for the loading? Or maybe just load all the levels at start...
+        level1.initialize();
+        level2.initialize();
+        level3.initialize();
+        level4.initialize();
 
         allLevels.add(level1);
         allLevels.add(level2);
+        allLevels.add(level3);
+        allLevels.add(level4);
 
-        currentLevel = level1;
+        currentLevel = level3;
     }
 
     protected void update() {
