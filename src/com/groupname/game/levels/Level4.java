@@ -5,6 +5,7 @@ import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.MoveableSprite;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -18,6 +19,7 @@ public class Level4 extends LevelBase {
     private final List<GameObject> gameObjects;
 
     private Sprite bulletSprite;
+    private GameObject moveableObject;
 
     public Level4(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
@@ -29,6 +31,13 @@ public class Level4 extends LevelBase {
     public void initialize() {
         createSpriteSheets();
         createBulletSprite();
+
+        createMoveableSprite();
+    }
+
+    private void createMoveableSprite() {
+        moveableObject = new MoveableSprite(bulletSprite, new Vector2D(0,400), screenBounds, inputManager);
+        gameObjects.add(moveableObject);
     }
 
     private void createSpriteSheets() {
