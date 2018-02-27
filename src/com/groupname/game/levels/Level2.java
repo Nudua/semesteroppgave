@@ -5,6 +5,7 @@ import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.graphics.background.ArrowScreenTransition;
+import com.groupname.framework.graphics.background.ScreenTransition;
 import com.groupname.framework.graphics.background.SierpinskiTriangleBackground;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
@@ -20,7 +21,7 @@ public class Level2 extends LevelBase {
 
     private AnimatedSprite animatedSprite;
     private SierpinskiTriangleBackground sierpinskiBackground;
-    private ArrowScreenTransition arrowScreenTransition;
+    private ScreenTransition arrowScreenTransition;
 
     public Level2(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
@@ -63,7 +64,7 @@ public class Level2 extends LevelBase {
 
         if(inputManager.isPressed(KeyboardInput.Defaults.ESCAPE)) {
             state = LevelState.Completed;
-            arrowScreenTransition.setDone(false);
+            arrowScreenTransition.reset();
 
         }
 

@@ -7,8 +7,10 @@ import javafx.scene.shape.FillRule;
 
 import java.util.Objects;
 
+
+
 // Screen transition?
-public class ArrowScreenTransition {
+public class ArrowScreenTransition implements ScreenTransition {
     private GraphicsContext graphicsContext;
     private double radius = 100;
 
@@ -21,8 +23,15 @@ public class ArrowScreenTransition {
     }
 
     // Dont do this generally
+    /*
     public void setDone(boolean done) {
         this.done = done;
+        trianglePosition = triangleStartPos;
+    }
+    */
+
+    public void reset() {
+        done = false;
         trianglePosition = triangleStartPos;
     }
 
