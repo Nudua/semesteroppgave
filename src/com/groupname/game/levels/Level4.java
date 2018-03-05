@@ -18,14 +18,11 @@ import java.util.List;
 
 public class Level4 extends LevelBase {
 
-    private final List<GameObject> gameObjects;
-
     private Sprite bulletSprite;
     private GameObject moveableObject;
 
     public Level4(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
-        gameObjects = new ArrayList<>();
 
         backgroundColor = Color.CORNFLOWERBLUE;
     }

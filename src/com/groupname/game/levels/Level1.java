@@ -24,7 +24,6 @@ import java.util.List;
 
 public class Level1 extends LevelBase {
 
-    private final List<GameObject> gameObjects;
     private Player player1;
 
     private GameObject box;
@@ -32,7 +31,6 @@ public class Level1 extends LevelBase {
 
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
-        gameObjects = new ArrayList<>();
 
         backgroundColor = Color.CORNFLOWERBLUE;
     }

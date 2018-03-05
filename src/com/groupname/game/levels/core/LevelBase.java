@@ -55,9 +55,10 @@ public abstract class LevelBase {
     }
 
     /**
-     * Returns the SpriteSheet with the specified key if it exists in the HashMap otherwise an empty Optional will be returned.
-     * @param key the name of the SpriteSheet
-     * @return @code {Optional<SpriteSheet>} if successful otherwise @code {Optional.empty()}
+     * Returns the SpriteSheet with the specified key if it exists
+     * @param key the name of the SpriteSheet to get
+     * @return @code {SpriteSheet} if successful.
+     * @throws SpriteSheetNotFoundException if no SpriteSheet by that key was present
      */
     protected SpriteSheet getSpriteSheet(String key) {
         if(spriteSheets.containsKey(key)) {
