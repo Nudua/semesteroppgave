@@ -9,21 +9,19 @@ import java.util.Objects;
 public class SpriteSheet {
 
     private final String name;
-    private final int width;
-    private final int height;
     private final Image image;
 
-    public SpriteSheet(String name, int width, int height, Image image) {
+    public SpriteSheet(String name, Image image) {
         this.name = Strings.requireNonNullAndNotEmpty(name);
-
-        if(width <= 0 || height <= 0) {
-            throw new InvalidParameterException("width and height cannot be less than or equal to 0");
-        }
-
-        this.width = width;
-        this.height = height;
-
         this.image = Objects.requireNonNull(image, "Sheet cannot be null");
+    }
+
+    public int getWidth() {
+        return (int)image.getWidth();
+    }
+
+    public int getHeight() {
+        return (int)image.getHeight();
     }
 
     public String getName() {

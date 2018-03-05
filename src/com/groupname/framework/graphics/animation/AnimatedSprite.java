@@ -1,6 +1,7 @@
 package com.groupname.framework.graphics.animation;
 
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteSheet;
 import javafx.scene.shape.Rectangle;
 
 import java.util.List;
@@ -11,11 +12,11 @@ public class AnimatedSprite extends Sprite implements Animatable {
     private AnimationLogic<AnimatedSprite> animationLogic;
     private List<Rectangle> spriteRegions;
 
-    public AnimatedSprite(String name, String spriteSheet, List<Rectangle> spriteRegions) {
+    public AnimatedSprite(String name, SpriteSheet spriteSheet, List<Rectangle> spriteRegions) {
         this(name, spriteSheet, spriteRegions, 0);
     }
 
-    public AnimatedSprite(String name, String spriteSheet, List<Rectangle> spriteRegions, int firstSpriteRegion) {
+    public AnimatedSprite(String name, SpriteSheet spriteSheet, List<Rectangle> spriteRegions, int firstSpriteRegion) {
         super(name, spriteSheet, spriteRegions.get(firstSpriteRegion));
         this.spriteRegions = Objects.requireNonNull(spriteRegions);
     }

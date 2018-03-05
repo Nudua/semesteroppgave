@@ -3,6 +3,7 @@ package com.groupname.game.levels;
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.input.InputManager;
@@ -61,7 +62,7 @@ public class Level1 extends LevelBase {
         Rectangle frame5 = Sprite.createSpriteRegion(0,2,64,64);
         Rectangle frame6 = Sprite.createSpriteRegion(1,2,64,64);
 
-        animatedSprite = new AnimatedSprite("anim1", "sheet1", Arrays.asList(frame1, frame2, frame3, frame4, frame5, frame6));
+        animatedSprite = new AnimatedSprite("anim1", getSpriteSheet("sheet1"), Arrays.asList(frame1, frame2, frame3, frame4, frame5, frame6));
         animatedSprite.setAnimationLogic(new LinearAnimation(30));
     }
 
@@ -72,13 +73,13 @@ public class Level1 extends LevelBase {
         Image sheet1 = new Image(getClass().getResourceAsStream(spriteSheetFolder + "spritesheet1.png"));
         Image playerSheet = new Image(getClass().getResourceAsStream(spriteSheetFolder + "player1.png"));
 
-        spriteBatch.addSpritesheet("sheet1", sheet1);
-        spriteBatch.addSpritesheet("player1", playerSheet);
+        addSpriteSheet(new SpriteSheet("sheet1", sheet1));
+        addSpriteSheet(new SpriteSheet("player1", playerSheet));
     }
 
     private void createBox() {
         box = new SimpleGameObject(
-                new Sprite("box1", "sheet1", Sprite.createSpriteRegion(64,64)),
+                new Sprite("box1", getSpriteSheet("sheet1"), Sprite.createSpriteRegion(64,64)),
                 new Vector2D(200,200),
                 screenBounds,
                 4,
@@ -88,7 +89,7 @@ public class Level1 extends LevelBase {
     }
 
     private void createPlayer1() {
-        Sprite p1Sprite = new Sprite("player1Sprite", "player1", Sprite.createSpriteRegion(160, 160));
+        Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
 
         player1 = new Player(p1Sprite, new Vector2D(), screenBounds, inputManager);

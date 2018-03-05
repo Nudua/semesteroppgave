@@ -3,6 +3,7 @@ package com.groupname.game.levels;
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.input.InputManager;
@@ -21,13 +22,13 @@ import java.util.List;
 
 public class Level3 extends LevelBase {
 
-    private final List<GameObject> gameObjects;
-
     private Sprite bulletSprite;
+
+    // Spritesheets
+    private final String projectilesSheetName = "projectiles";
 
     public Level3(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
-        gameObjects = new ArrayList<>();
 
         backgroundColor = Color.CORNFLOWERBLUE;
     }
@@ -43,7 +44,7 @@ public class Level3 extends LevelBase {
 
         Image projectilesImage = new Image(getClass().getResourceAsStream(spriteSheetFolder + "projectiles-cords.png"));
 
-        spriteBatch.addSpritesheet("projectiles", projectilesImage);
+        addSpriteSheet(new SpriteSheet(projectilesSheetName, projectilesImage));
     }
 
     private void createBulletSprite() {
@@ -51,7 +52,7 @@ public class Level3 extends LevelBase {
         Rectangle spriteSourceRectangle = Sprite.createSpriteRegion(0, 0, 66, 66);
 
         // Name = Bullet1, SpriteSheet = projectiles, SpriteRegion = spriteSourceRectangle
-        bulletSprite = new Sprite("bullet1", "projectiles", spriteSourceRectangle);
+        bulletSprite = new Sprite("bullet1", getSpriteSheet(projectilesSheetName), spriteSourceRectangle);
     }
 
 

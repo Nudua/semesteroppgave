@@ -2,6 +2,7 @@ package com.groupname.game.core;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.background.WeatherEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
@@ -43,7 +44,8 @@ public class GameOverScreen extends GameEngine {
     private void createWeatherEffect() {
         String spriteSheetFolder = "../resources/graphics/spritesheets/";
         Image snow = new Image(getClass().getResourceAsStream(spriteSheetFolder + "snow.png"));
-        spritebatch.addSpritesheet("snow", snow);
+        SpriteSheet snowSheet = new SpriteSheet("snow", snow);
+
 
         /*
         SpriteOld snowSprite1 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).build();
@@ -52,7 +54,7 @@ public class GameOverScreen extends GameEngine {
         SpriteOld snowSprite4 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).sourceVector(3,0).build();
         */
 
-        Sprite snowSprite3 = new Sprite("snowflake1", "snow", Sprite.createSpriteRegion(2,0,30,20));
+        Sprite snowSprite3 = new Sprite("snowflake1", snowSheet, Sprite.createSpriteRegion(2,0,30,20));
         snowSprite3.setScale(0.9d);
 
         List<Sprite> sprites = new ArrayList<>(Arrays.asList(snowSprite3));

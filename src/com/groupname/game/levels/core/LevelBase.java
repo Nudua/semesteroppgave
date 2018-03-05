@@ -1,6 +1,9 @@
 package com.groupname.game.levels.core;
 
 import com.groupname.framework.core.GameEngine;
+import com.groupname.framework.core.GameObject;
+import com.groupname.framework.graphics.SpriteSheet;
+import com.groupname.framework.graphics.SpriteSheetNotFoundException;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Size;
@@ -8,7 +11,7 @@ import com.groupname.game.core.Game;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.Objects;
+import java.util.*;
 
 // Maybe remove the word base
 public abstract class LevelBase {
@@ -26,6 +29,9 @@ public abstract class LevelBase {
     protected Color backgroundColor;
     protected GameEngine parent;
 
+    private final Map<String, SpriteSheet> spriteSheets;
+    protected final List<GameObject> gameObjects;
+
     // Figure out the actual overloads, probably just pass the game and get stuff from there
     public LevelBase(GameEngine parent, InputManager inputManager) {
         this.parent = Objects.requireNonNull(parent);
@@ -35,11 +41,34 @@ public abstract class LevelBase {
         this.screenBounds = parent.getScreenBounds();
 
         this.spriteBatch = new SpriteBatch(graphicsContext);
+        this.spriteSheets = new HashMap<>();
+        this.gameObjects = new ArrayList<>();
 
         backgroundColor = Color.BLACK;
 
         // Set to loading first when we have screen transitions
         state = LevelState.Playing;
+    }
+
+    protected void addSpriteSheet(SpriteSheet spriteSheet) {
+        spriteSheets.put(spriteSheet.getName(), spriteSheet);
+    }
+
+    /**
+     * Returns the SpriteSheet with the specified key if it exists in the HashMap otherwise an empty Optional will be returned.
+     * @param key the name of the SpriteSheet
+     * @return @code {Optional<SpriteSheet>} if successful otherwise @code {Optional.empty()}
+     */
+    protected SpriteSheet getSpriteSheet(String key) {
+        if(spriteSheets.containsKey(key)) {
+            return spriteSheets.get(key);
+        } else {
+            throw new SpriteSheetNotFoundException();
+        }
+    }
+
+    public void removeSpriteSheet(SpriteSheet spriteSheet) {
+        spriteSheets.remove(spriteSheet.getName());
     }
 
     public void reset() {

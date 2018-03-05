@@ -17,28 +17,32 @@ import java.util.Objects;
 // Make an interface? then have the implementation be SpriteBatchFX
 public class SpriteBatch {
 
-    private GraphicsContext gc;
+    private GraphicsContext graphicsContext;
 
     // A collection of all the spritesheets used in the application, make into a class of itself?
-    private final Map<String, SpriteSheet> spriteSheets;
+    //private final Map<String, SpriteSheet> spriteSheets;
 
-    public SpriteBatch(GraphicsContext gc) {
-        this.gc = Objects.requireNonNull(gc, "gc cannot be null");
-        spriteSheets = new HashMap<>();
+    public SpriteBatch(GraphicsContext graphicsContext) {
+        this.graphicsContext = Objects.requireNonNull(graphicsContext, "gc cannot be null");
+        //spriteSheets = new HashMap<>();
     }
 
+    /*
     public void addSpritesheet(String name, Image image) {
         spriteSheets.put(name, new SpriteSheet(name, (int)image.getWidth(), (int)image.getHeight(), image));
     }
+    */
 
+    /*
     public boolean containsSpriteSheet(String key) {
         return spriteSheets.containsKey(key);
     }
+    */
 
     public void draw(Sprite sprite, Vector2D position) {
         Rectangle srcRect = sprite.getSpriteRegion();
 
-        gc.drawImage(spriteSheets.get(sprite.getSpriteSheet()).getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), position.getX(),position.getY(),sprite.getWidth(), sprite.getHeight());
+        graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), position.getX(),position.getY(),sprite.getWidth(), sprite.getHeight());
     }
 
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
@@ -62,8 +66,8 @@ public class SpriteBatch {
             posY += sprite.getHeight();
         }
 
-        if(containsSpriteSheet(sprite.getSpriteSheet())) {
-            gc.drawImage(spriteSheets.get(sprite.getSpriteSheet()).getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), posX, posY, spriteWidth, spriteHeight);
-        }
+        //if(containsSpriteSheet(sprite.getSpriteSheet())) {
+        graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), posX, posY, spriteWidth, spriteHeight);
+        //}
     }
 }

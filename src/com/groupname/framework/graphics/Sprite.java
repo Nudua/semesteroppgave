@@ -10,15 +10,14 @@ import java.util.Objects;
 public class Sprite {
 
     private final String name;
-    private final String spriteSheet;
+    private final SpriteSheet spriteSheet;
 
     protected Rectangle spriteRegion;
     protected double scale = 1.0d;
 
-    public Sprite(String name, String spriteSheet, Rectangle spriteRegion) {
+    public Sprite(String name, SpriteSheet spriteSheet, Rectangle spriteRegion) {
         this.name = Strings.requireNonNullAndNotEmpty(name);
-        this.spriteSheet = Strings.requireNonNullAndNotEmpty(spriteSheet);
-
+        this.spriteSheet = Objects.requireNonNull(spriteSheet);
         this.spriteRegion = Objects.requireNonNull(spriteRegion);
     }
 
@@ -38,7 +37,7 @@ public class Sprite {
         return name;
     }
 
-    public String getSpriteSheet() {
+    public SpriteSheet getSpriteSheet() {
         return spriteSheet;
     }
 

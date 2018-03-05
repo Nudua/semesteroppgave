@@ -2,6 +2,7 @@ package com.groupname.game.core;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.background.SpaceEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
@@ -46,15 +47,15 @@ public class CreditsScreen extends GameEngine {
     private void createSpaceEffect() {
         String spriteSheetFolder = "../resources/graphics/spritesheets/";
         Image star = new Image(getClass().getResourceAsStream(spriteSheetFolder + "star.png"));
-        spritebatch.addSpritesheet("star", star);
+        SpriteSheet starSpriteSheet = new SpriteSheet("star", star);
 
-        Sprite bigStar = new Sprite("smallStar", "star", Sprite.createSpriteRegion(32,32));
+        Sprite bigStar = new Sprite("smallStar", starSpriteSheet, Sprite.createSpriteRegion(32,32));
         bigStar.setScale(0.7d);
 
-        Sprite mediumStar = new Sprite("mediumStar", "star", Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
+        Sprite mediumStar = new Sprite("mediumStar", starSpriteSheet, Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
         mediumStar.setScale(0.7d);
 
-        Sprite smallStar = new Sprite("smallStar", "star", Sprite.createSpriteRegion(0,0,8,8, new IntVector2D(0,64)));
+        Sprite smallStar = new Sprite("smallStar", starSpriteSheet, Sprite.createSpriteRegion(0,0,8,8, new IntVector2D(0,64)));
         smallStar.setScale(0.5d);
 
         List<Sprite> sprites = Arrays.asList(smallStar, mediumStar, bigStar);

@@ -2,6 +2,7 @@ package com.groupname.game.levels;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.graphics.background.ArrowScreenTransition;
@@ -43,7 +44,7 @@ public class Level2 extends LevelBase {
 
         Image sheet1 = new Image(getClass().getResourceAsStream(spriteSheetFolder + "spritesheet1.png"));
 
-        spriteBatch.addSpritesheet("sheet1", sheet1);
+        addSpriteSheet(new SpriteSheet("sheet1", sheet1));
     }
 
     private void createAnim() {
@@ -53,7 +54,7 @@ public class Level2 extends LevelBase {
         Rectangle frame3 = Sprite.createSpriteRegion(0,1,64,64);
         Rectangle frame4 = Sprite.createSpriteRegion(1,1,64,64);
 
-        animatedSprite = new AnimatedSprite("anim1", "sheet1", Arrays.asList(frame1, frame2, frame3, frame4));
+        animatedSprite = new AnimatedSprite("anim1", getSpriteSheet("sheet1"), Arrays.asList(frame1, frame2, frame3, frame4));
         animatedSprite.setAnimationLogic(new LinearAnimation(30));
     }
 
