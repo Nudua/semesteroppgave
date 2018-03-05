@@ -5,6 +5,7 @@ import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.background.SpaceEffect;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
+import com.groupname.framework.graphics.drawing.SpriteBatchFX;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.math.IntVector2D;
@@ -34,7 +35,7 @@ public class CreditsScreen extends GameEngine {
         super(parent, width, height);
 
         inputManager = new InputManager(scene);
-        spritebatch = new SpriteBatch(graphicsContext);
+        spritebatch = new SpriteBatchFX(graphicsContext);
         background = Color.BLACK;
 
         loadResources();

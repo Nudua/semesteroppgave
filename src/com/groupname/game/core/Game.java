@@ -48,7 +48,7 @@ public class Game extends GameEngine {
         allLevels.add(level3);
         allLevels.add(level4);
 
-        currentLevel = level4;
+        currentLevel = level1;
     }
 
     protected void update() {
