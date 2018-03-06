@@ -11,17 +11,20 @@ import java.util.Objects;
 
 public class LinearBulletProjectile extends Projectile {
 
-    private final Direction direction;
+    private Direction direction;
     private final Size screenBounds;
 
-    public LinearBulletProjectile(String name, Sprite sprite, Vector2D position, Direction direction, Size screenBounds) {
+    public LinearBulletProjectile(String name, Sprite sprite, Vector2D position, Size screenBounds) {
         super(name, sprite, position);
-        this.direction = Objects.requireNonNull(direction);
         this.screenBounds = Objects.requireNonNull(screenBounds);
+
+        setSpeed(20.0);
     }
 
     @Override
-    public void fire() {
+    public void fire(Vector2D position, Direction direction) {
+        this.direction = direction;
+        this.position.set(position);
         setAlive(true);
     }
 
@@ -48,7 +51,7 @@ public class LinearBulletProjectile extends Projectile {
         }
 
         //X-axis
-        if(screenBounds.getWidth() > position.getX() + sprite.getWidth() || position.getX() < position.getX()) {
+        if(position.getX() + sprite.getWidth() > screenBounds.getWidth() || position.getX() < 0) {
             setAlive(false);
         }
 
@@ -56,6 +59,8 @@ public class LinearBulletProjectile extends Projectile {
         if(position.getY() < 0 || position.getY() + sprite.getHeight() > screenBounds.getHeight()) {
             setAlive(false);
         }
+
+
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.groupname.game.entities.projectiles;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.util.Strings;
 
@@ -37,5 +38,5 @@ public abstract class Projectile extends GameObject {
         this.alive = alive;
     }
 
-    public abstract void fire();
+    public abstract void fire(Vector2D position, Direction direction);
 }
