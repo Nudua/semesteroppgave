@@ -9,7 +9,7 @@ import com.groupname.game.entities.Actor;
 public class Player extends Actor {
     private final InputManager inputManager;
     private final Vector2D initialPosition;
-    private double speed = 4d;
+    private double speed = 6.5d;
 
     public Player(Sprite sprite, Vector2D position, int hitPoints, InputManager inputManager) {
         super(sprite, position, hitPoints);
