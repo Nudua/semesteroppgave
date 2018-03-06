@@ -9,6 +9,7 @@ import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.SimpleGameObject;
 import com.groupname.game.levels.core.LevelBase;
@@ -23,6 +24,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Level1 extends LevelBase {
+
+    private Actor player;
 
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
@@ -53,8 +56,8 @@ public class Level1 extends LevelBase {
     private void createPlayer1() {
         Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-
-
+        player = new Player(p1Sprite, new Vector2D(200,200), 10, inputManager);
+        gameObjects.add(player);
     }
 
     public void update() {

@@ -48,6 +48,6 @@ public class Player extends Actor {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-
+        spriteBatch.draw(sprite,position);
     }
 }
