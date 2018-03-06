@@ -1,102 +1,53 @@
 package com.groupname.game.entities;
-
-import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.math.Size;
-import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
-import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
+import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.Actor;
 
-import java.util.EnumSet;
-
-// Simple example of a player controlled GameObject
-public class Player extends GameObject {
-
+public class Player extends Actor {
     private final InputManager inputManager;
-    private final Size screenBounds;
-    private boolean facingRight = false;
-    private boolean facingDown = true;
+    private final Vector2D initialPosition;
+    private double speed = 2.5d;
 
-    // Logic
-    private final double speed;
-
-    public Player(Sprite sprite, Vector2D position, Size screenBounds, InputManager inputManager) {
-        super(sprite, position);
-        this.screenBounds = screenBounds;
+    public Player(Sprite sprite, Vector2D position, int hitPoints, InputManager inputManager) {
+        super(sprite, position, hitPoints);
         this.inputManager = inputManager;
-
-        speed = 8;
-
-        enabled = true;
+        initialPosition = new Vector2D(position);
     }
 
+    @Override
+    public void onCollide() {
 
+    }
+    @Override
+    public void reset() {
+        position.setX(initialPosition.getX());
+        position.setY(initialPosition.getY());
+    }
+    @Override
+    public void onDeath() {
+
+    }
     @Override
     public void update() {
-        // Don't update if this object isn't enabled
-        if(!enabled) {
-            return;
+        double x = position.getX();
+        double y = position.getY();
+        if(inputManager.isDown(KeyboardInput.Defaults.LEFT)) {
+            position.setX(x - speed);
+        } else if (inputManager.isDown((KeyboardInput.Defaults.RIGHT))) {
+            position.setX(x + speed);
         }
-
-        // Very simple movement with bounds checking
-        if(inputManager.isDown(KeyboardInput.Defaults.RIGHT)) {
-            if(position.getX() + sprite.getWidth() >= screenBounds.getWidth()) {
-                position.setX(screenBounds.getWidth() - sprite.getWidth());
-            } else {
-                position.addX(speed);
-            }
-
-            facingRight = true;
-
-        } else if(inputManager.isDown(KeyboardInput.Defaults.LEFT)) {
-            if(position.getX() > 0) {
-                position.addX(-speed);
-            } else {
-                position.setX(0);
-            }
-
-            facingRight = false;
-        }
-
         if(inputManager.isDown(KeyboardInput.Defaults.UP)) {
-            if(position.getY() <= 0) {
-                position.setY(0);
-            } else {
-                position.addY(-speed);
-            }
-
-            facingDown = false;
-
-        } else if(inputManager.isDown(KeyboardInput.Defaults.DOWN)) {
-            if(position.getY() + sprite.getHeight() >= screenBounds.getHeight()) {
-                position.setY(screenBounds.getHeight() - sprite.getHeight());
-            }
-            position.addY(speed);
-
-            facingDown = true;
-        }
-
-        if(inputManager.isPressed(KeyboardInput.Defaults.ACTION1)) {
-            System.out.println("Space pressed");
+            position.setY(y - speed);
+        } else if (inputManager.isDown(KeyboardInput.Defaults.DOWN)) {
+            position.setY(y + speed);
         }
     }
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-        // Don't draw if this object isn't enabled
-        if(!enabled) {
-            return;
-        }
 
-        EnumSet<SpriteFlip> flip = facingRight ? EnumSet.of(SpriteFlip.HORIZONTAL) : EnumSet.of(SpriteFlip.NONE);
-
-        if(facingDown) {
-            flip.add(SpriteFlip.VERTICAL);
-        }
-
-        spriteBatch.draw(sprite, position, flip);
     }
-
 }

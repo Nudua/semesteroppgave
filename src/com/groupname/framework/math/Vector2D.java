@@ -12,6 +12,11 @@ public class Vector2D {
         y = 0;
     }
 
+    public Vector2D(Vector2D position) {
+        this.x = position.getX();
+        this.y = position.getY();
+    }
+
     public Vector2D(double initialX, double initialY) {
         this.x = initialX;
         this.y = initialY;
