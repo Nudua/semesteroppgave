@@ -40,10 +40,10 @@ public class Player extends Actor {
         double y = position.getY();
         if(inputManager.isDown(KeyboardInput.Defaults.LEFT)) {
             position.setX(x - speed);
-            spriteFlip = SpriteFlip.HORIZONTAL;
+            spriteFlip = SpriteFlip.NONE;
         } else if (inputManager.isDown((KeyboardInput.Defaults.RIGHT))) {
             position.setX(x + speed);
-            spriteFlip = SpriteFlip.NONE;
+            spriteFlip = SpriteFlip.HORIZONTAL;
         }
         if(inputManager.isDown(KeyboardInput.Defaults.UP)) {
             position.setY(y - speed);
