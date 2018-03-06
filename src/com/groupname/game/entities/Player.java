@@ -25,19 +25,22 @@ public class Player extends Actor {
     public void onCollide() {
 
     }
+
     @Override
     public void reset() {
-        position.setX(initialPosition.getX());
-        position.setY(initialPosition.getY());
+        position.set(initialPosition);
     }
+
     @Override
     public void onDeath() {
 
     }
+
     @Override
     public void update() {
         double x = position.getX();
         double y = position.getY();
+
         if(inputManager.isDown(KeyboardInput.Defaults.LEFT)) {
             position.setX(x - speed);
             spriteFlip = SpriteFlip.NONE;
@@ -45,6 +48,7 @@ public class Player extends Actor {
             position.setX(x + speed);
             spriteFlip = SpriteFlip.HORIZONTAL;
         }
+
         if(inputManager.isDown(KeyboardInput.Defaults.UP)) {
             position.setY(y - speed);
         } else if (inputManager.isDown(KeyboardInput.Defaults.DOWN)) {
@@ -55,6 +59,5 @@ public class Player extends Actor {
     @Override
     public void draw(SpriteBatch spriteBatch) {
         spriteBatch.draw(sprite,position, EnumSet.of(spriteFlip));
-
     }
 }
