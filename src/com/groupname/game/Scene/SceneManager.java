@@ -2,9 +2,9 @@ package com.groupname.game.Scene;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.game.controllers.MainWindowController;
-import com.groupname.game.core.CreditsScreen;
+import com.groupname.game.other.CreditsScreen;
 import com.groupname.game.core.Game;
-import com.groupname.game.core.GameOverScreen;
+import com.groupname.game.other.GameOverScreen;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;

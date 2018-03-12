@@ -1,4 +1,4 @@
-package com.groupname.game.levels;
+package com.groupname.game.other;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
@@ -10,6 +10,7 @@ import com.groupname.framework.graphics.background.ScreenTransition;
 import com.groupname.framework.graphics.background.SierpinskiTriangleBackground;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.KeyboardInput;
+import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
 import javafx.scene.image.Image;
@@ -18,13 +19,13 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Arrays;
 
-public class Level2 extends LevelBase {
+public class SierpinksiTestLevel extends LevelBase {
 
     private AnimatedSprite animatedSprite;
     private SierpinskiTriangleBackground sierpinskiBackground;
     private ScreenTransition arrowScreenTransition;
 
-    public Level2(GameEngine game, InputManager inputManager) {
+    public SierpinksiTestLevel(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
         backgroundColor = Color.DARKSLATEBLUE;
     }
@@ -63,7 +64,7 @@ public class Level2 extends LevelBase {
             inputManager.update();
         }
 
-        if(inputManager.isPressed(KeyboardInput.Defaults.ESCAPE)) {
+        if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
             state = LevelState.Completed;
             arrowScreenTransition.reset();
 

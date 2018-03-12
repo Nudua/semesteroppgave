@@ -4,27 +4,15 @@ import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.animation.AnimatedSprite;
-import com.groupname.framework.graphics.animation.LinearAnimation;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
-import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
-import com.groupname.game.entities.SimpleGameObject;
 import com.groupname.game.levels.core.LevelBase;
-import com.groupname.game.levels.core.LevelState;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
-import java.nio.file.NoSuchFileException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Level1 extends LevelBase {
 
@@ -48,14 +36,10 @@ public class Level1 extends LevelBase {
     }
 
     private void createSpriteSheets() {
-
-        String spriteSheetFolder = "../resources/graphics/spritesheets/";
-
-        //Image playerSheet = new Image(getClass().getResourceAsStream(spriteSheetFolder + "player1.png"));
         Image playerSheet = Content.loadImage("player1.png", ResourceType.SpriteSheet);
         addSpriteSheet(new SpriteSheet("player1", playerSheet));
 
-        Image bulletSheet = new Image(getClass().getResourceAsStream(spriteSheetFolder + "projectiles.png"));
+        Image bulletSheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
 
         addSpriteSheet(new SpriteSheet("projectiles", bulletSheet));
     }

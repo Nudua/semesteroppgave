@@ -1,4 +1,4 @@
-package com.groupname.game.entities;
+package com.groupname.game.other;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;

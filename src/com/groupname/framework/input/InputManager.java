@@ -2,6 +2,7 @@ package com.groupname.framework.input;
 
 import com.groupname.framework.input.devices.InputAdapter;
 import com.groupname.framework.input.devices.KeyboardInput;
+import com.groupname.game.input.PlayerInputDefinitions;
 import javafx.scene.Scene;
 
 import java.util.*;
@@ -11,17 +12,28 @@ public class InputManager {
 
     private final List<InputAdapter> inputAdapters;
 
-    private Set<String> lastInputState;
-    private final Set<String> globalInputState;
+    private final Set<String> internalInputState;
+
+    private Set<InputBinding> bindings;
+
+    private Set<String> lastState = new HashSet<>();
+    private Set<String> state = new HashSet<>();
 
     public InputManager(Scene parent) {
         Objects.requireNonNull(parent);
 
-        lastInputState = new HashSet<>();
-        globalInputState = new HashSet<>();
+        internalInputState = new HashSet<>();
         inputAdapters = new ArrayList<>();
 
+        // Set these from another place
+        bindings = PlayerInputDefinitions.getDefaultBindings();//new HashSet<>(); //
+
         initializeInputAdapters(parent);
+    }
+
+    public void setBindings(Set<InputBinding> bindings) {
+        this.bindings.clear();
+        this.bindings.addAll(bindings);
     }
 
     public boolean isEnabled() {
@@ -38,26 +50,51 @@ public class InputManager {
     }
 
     public void update() {
-        lastInputState.clear();
-        lastInputState.addAll(globalInputState);
         // Clear the old state of the inputs
-        globalInputState.clear();
+        lastState.clear();
+        lastState.addAll(state);
+        state.clear();
 
+        // The actual internal button names
+        internalInputState.clear();
+
+        // Update all our inputAdapaters, keyboard, gamepad etc.
         for(InputAdapter adapter : inputAdapters) {
             if(adapter.isEnabled()) {
-                adapter.update(globalInputState);
+                adapter.update(internalInputState);
+            }
+        }
+
+        // Check if any of the bound buttons are pressed
+        for(InputBinding inputBinding : bindings) {
+            for(String buttonName : inputBinding.getBindings()) {
+                if(internalButtonIsDown(buttonName)) {
+                    state.add(inputBinding.getName());
+                    break;
+                }
             }
         }
     }
 
-    // Holding
-    public boolean isDown(String keyName) {
-        return globalInputState.contains(keyName);
+    public boolean isDown(String buttonName) {
+        return state.contains(buttonName);
     }
 
+    // Single press
+    public boolean wasPressed(String buttonName) {
+        return !lastState.contains(buttonName) && state.contains(buttonName);
+    }
+
+    // Holding
+    private boolean internalButtonIsDown(String keyName) {
+        return internalInputState.contains(keyName);
+    }
+
+    /*
     // Single press
     public boolean isPressed(String keyName) {
         return !lastInputState.contains(keyName) && globalInputState.contains(keyName);
     }
+    */
 
 }

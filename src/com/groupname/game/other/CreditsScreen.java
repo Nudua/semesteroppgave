@@ -1,4 +1,4 @@
-package com.groupname.game.core;
+package com.groupname.game.other;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
@@ -12,6 +12,7 @@ import com.groupname.framework.math.IntVector2D;
 import com.groupname.framework.math.Size;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
+import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.other.CreditsScroll;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -77,7 +78,7 @@ public class CreditsScreen extends GameEngine {
         //weatherEffect.update();
         creditsScroll.update();
 
-        if(inputManager.isPressed(KeyboardInput.Defaults.ESCAPE)) {
+        if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
             SceneManager sceneManager = SceneManager.INSTANCE;
             sceneManager.changeToScene(SceneName.Title);
             stop();

@@ -17,14 +17,17 @@ public class KeyboardInput implements InputAdapter {
         public static final String LEFT = prefix + KeyCode.A.getName();
         public static final String RIGHT = prefix + KeyCode.D.getName();
 
-        public static final String ACTION1 = prefix + KeyCode.SPACE.getName();
-        public static final String ACTION2 = prefix + KeyCode.KP_LEFT.getName();
-        public static final String ESCAPE = prefix + KeyCode.ESCAPE.getName();
-
         public static final String SHOOT_UP = prefix + KeyCode.UP.getName();
         public static final String SHOOT_DOWN = prefix + KeyCode.DOWN.getName();
         public static final String SHOOT_LEFT = prefix + KeyCode.LEFT.getName();
         public static final String SHOOT_RIGHT = prefix + KeyCode.RIGHT.getName();
+
+        public static final String START = prefix + KeyCode.ENTER.getName();
+        public static final String SELECT = prefix + KeyCode.ESCAPE.getName();
+
+        public static final String SPECIAL_1 = prefix + KeyCode.SPACE.getName();
+        public static final String SPECIAL_2 = prefix + KeyCode.KP_LEFT.getName();
+
     }
 
     private boolean enabled = true;
