@@ -9,7 +9,9 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Actor;
+import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
+import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -17,6 +19,7 @@ import javafx.scene.paint.Color;
 public class Level1 extends LevelBase {
 
     private Actor player;
+    private Actor enemy;
 
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
@@ -33,11 +36,16 @@ public class Level1 extends LevelBase {
         createSpriteSheets();
 
         createPlayer1();
+        createEnemy1();
     }
 
     private void createSpriteSheets() {
         Image playerSheet = Content.loadImage("player1.png", ResourceType.SpriteSheet);
+        Image enemySheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
+
         addSpriteSheet(new SpriteSheet("player1", playerSheet));
+        addSpriteSheet(new SpriteSheet("enemy1", enemySheet));
+
 
         /*
         Image bulletSheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
@@ -51,6 +59,13 @@ public class Level1 extends LevelBase {
         p1Sprite.setScale(0.5d);
         player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 10);
         gameObjects.add(player);
+    }
+
+    private void createEnemy1() {
+        Sprite e1Sprite = new Sprite("enemy1Sprite", getSpriteSheet("enemy1"), Sprite.createSpriteRegion(66, 66));
+        //e1Sprite.setScale(1.0d);
+        enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 4);
+        gameObjects.add(enemy);
     }
 
     public void update() {
