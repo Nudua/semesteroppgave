@@ -85,4 +85,11 @@ public class AnimatedSprite extends Sprite {
         // getRegion instead?
         return animationFrames.get(frame).getSpriteRegion();
     }
+
+    public static void stepIfAnimatedSprite(Sprite sprite) {
+        if(sprite instanceof AnimatedSprite) {
+            AnimatedSprite animatedSprite = (AnimatedSprite)sprite;
+            animatedSprite.step();
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class GuardEnemy extends Enemy {
 
     @Override
     public void update() {
+        super.update();
 
         if(!isAlive()) {
             return;
@@ -42,14 +43,6 @@ public class GuardEnemy extends Enemy {
             direction = Direction.Left;
         } else if(x <= startPosition.getX()) {
             direction = Direction.Right;
-        }
-        if(isAlive()) {
-            // Update our sprite if it's animated
-
-            if(sprite instanceof AnimatedSprite) {
-                AnimatedSprite animatedSprite = (AnimatedSprite)sprite;
-                animatedSprite.step();
-            }
         }
     }
 

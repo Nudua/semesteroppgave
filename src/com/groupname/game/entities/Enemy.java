@@ -15,9 +15,7 @@ import com.groupname.game.input.PlayerInputDefinitions;
 
 
 public abstract class Enemy extends Actor {
-    private double speed = 2.5d;
-    private final Vector2D initialPosition;
-
+    protected final Vector2D initialPosition;
     protected SpriteFlip spriteFlip = SpriteFlip.NONE;
 
     public Enemy(Sprite sprite, Vector2D position, int hitPoints) {

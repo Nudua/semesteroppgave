@@ -23,9 +23,8 @@ public abstract class PowerUp extends GameObject {
 
     @Override
     public void update() {
-        if(sprite instanceof AnimatedSprite) {
-            AnimatedSprite animatedSprite = (AnimatedSprite)sprite;
-            animatedSprite.step();
+        if(!collected) {
+            AnimatedSprite.stepIfAnimatedSprite(sprite);
         }
     }
 

@@ -10,6 +10,8 @@ import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.Scene.SceneManager;
+import com.groupname.game.Scene.SceneName;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
@@ -17,6 +19,7 @@ import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.levels.core.LevelBase;
+import com.groupname.game.levels.core.LevelState;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -26,17 +29,10 @@ import java.util.List;
 
 public class Level1 extends LevelBase {
 
-    private Actor player;
-    private Actor enemy;
-    private List<Actor> enemies;
-    private List<PowerUp> powerUps;
-
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
 
         backgroundColor = Color.CORNFLOWERBLUE;
-        enemies = new ArrayList<>();
-        powerUps = new ArrayList<>();
     }
 
     @Override
@@ -49,8 +45,6 @@ public class Level1 extends LevelBase {
 
         createPlayer1();
         createEnemy1();
-
-
     }
 
     private void createSpriteSheets() {
@@ -59,27 +53,21 @@ public class Level1 extends LevelBase {
 
         addSpriteSheet(new SpriteSheet("player1", playerSheet));
         addSpriteSheet(new SpriteSheet("enemy1", enemySheet));
-
-
-        /*
-        Image bulletSheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
-
-        addSpriteSheet(new SpriteSheet("projectiles", bulletSheet));
-        */
     }
 
     private void createPlayer1() {
         Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-        player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 5);
+        Player player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 5);
+        player.setOnDeath(() -> SceneManager.INSTANCE.changeToScene(SceneName.GameOver));
         gameObjects.add(player);
     }
 
     private void createEnemy1() {
         Sprite e1Sprite = new Sprite("enemy1Sprite", getSpriteSheet("enemy1"), Sprite.createSpriteRegion(66, 66));
         //e1Sprite.setScale(1.0d);
-        enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 3);
-        enemies.add(enemy);
+        Enemy enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 3);
+
         gameObjects.add(enemy);
 
         SpriteSheet sp1 = new SpriteSheet("spritesheet1", Content.loadImage("spritesheet1.png", ResourceType.SpriteSheet));
@@ -93,8 +81,7 @@ public class Level1 extends LevelBase {
 
         AnimatedSprite heartSprite = new AnimatedSprite("Heart", sp1, Sprite.createSpriteRegion(64,64), Arrays.asList(frame1, frame2, frame3, frame4));
 
-        powerUps.add(new HeartPowerUp(heartSprite, new Vector2D(500, 500), 1));
-        gameObjects.add(powerUps.get(0));
+        gameObjects.add(new HeartPowerUp(heartSprite, new Vector2D(500, 500), 1));
     }
 
     public void update() {
@@ -108,10 +95,9 @@ public class Level1 extends LevelBase {
             gameObject.update();
 
             if(gameObject instanceof Player) {
-                Player player3 = (Player)gameObject;
+                Player player = (Player)gameObject;
 
-                player3.checkCollision(enemies);
-                player3.checkPowerUpCollision(powerUps);
+                player.checkCollision(gameObjects);
             }
         }
     }

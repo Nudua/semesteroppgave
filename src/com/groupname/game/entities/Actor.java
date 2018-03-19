@@ -2,6 +2,7 @@ package com.groupname.game.entities;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
 import com.groupname.framework.math.Vector2D;
 
 public abstract class Actor extends GameObject {
@@ -32,16 +33,30 @@ public abstract class Actor extends GameObject {
 
     public void setAlive(boolean alive) {
         this.alive = alive;
+        if(!alive && onDeath != null) {
+            onDeath.run();
+        }
+    }
+
+    public void setOnDeath(Runnable onDeath) {
+        this.onDeath = onDeath;
     }
 
     public void onCollides(int damage) {
-        if(alive) {
+        if(isAlive()) {
             if(hitPoints - damage <= 0) {
                 hitPoints = 0;
-                alive = false;
+                setAlive(false);
             } else {
                 hitPoints -= damage;
             }
+        }
+    }
+
+    @Override
+    public void update() {
+        if(alive) {
+            AnimatedSprite.stepIfAnimatedSprite(sprite);
         }
     }
 

@@ -13,6 +13,7 @@ public class HeartPowerUp extends PowerUp {
         this.hearts = hearts;
     }
 
+    // Make this a runnable instead? Strategy pattern
     @Override
     public void onCollect(Player player) {
         super.onCollect(player);

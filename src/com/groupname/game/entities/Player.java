@@ -1,26 +1,22 @@
 package com.groupname.game.entities;
+import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.input.InputManager;
-import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.math.Direction;
-import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
-import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.powerups.PowerUp;
-import com.groupname.game.entities.projectiles.Projectile;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
 import com.groupname.game.input.PlayerInputDefinitions;
-import javafx.scene.Scene;
 
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Player extends Actor {
 
@@ -62,47 +58,18 @@ public class Player extends Actor {
 
     @Override
     public void update() {
+        // Step our animation if needed
+        super.update();
 
         if(!isAlive()) {
             return;
         }
 
-        double x = position.getX();
-        double y = position.getY();
+        handleMovement();
+        handleWeapon();
+    }
 
-        boolean isMoving = false;
-
-        if(inputManager.isDown(PlayerInputDefinitions.LEFT)) {
-            position.setX(x - speed);
-            spriteFlip = SpriteFlip.NONE;
-            direction.add(Direction.Left);
-            direction.remove(Direction.Right);
-            isMoving = true;
-        } else if (inputManager.isDown((PlayerInputDefinitions.RIGHT))) {
-            position.setX(x + speed);
-            spriteFlip = SpriteFlip.HORIZONTAL;
-            direction.add(Direction.Right);
-            direction.remove(Direction.Left);
-            isMoving = true;
-        }
-
-        if(inputManager.isDown(PlayerInputDefinitions.UP)) {
-            position.setY(y - speed);
-            direction.add(Direction.Up);
-            direction.remove(Direction.Down);
-            isMoving = true;
-        } else if (inputManager.isDown(PlayerInputDefinitions.DOWN)) {
-            position.setY(y + speed);
-            direction.add(Direction.Down);
-            direction.remove(Direction.Up);
-            isMoving = true;
-        }
-
-        if(!isMoving) {
-            direction.clear();
-            direction.add(Direction.Left);
-        }
-
+    private void handleWeapon() {
         if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Right);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
@@ -115,12 +82,87 @@ public class Player extends Actor {
         }
 
         currentWeapon.update();
-
     }
 
-    public void checkCollision(List<Actor> enemies) {
+    private void handleMovement() {
+        double x = position.getX();
+        double y = position.getY();
+
+        boolean isMoving = false;
+
+        if(inputManager.isDown(PlayerInputDefinitions.LEFT)) {
+            position.setX(x - speed);
+            spriteFlip = SpriteFlip.NONE;
+            setDirection(Direction.Left);
+            isMoving = true;
+        } else if (inputManager.isDown((PlayerInputDefinitions.RIGHT))) {
+            position.setX(x + speed);
+            spriteFlip = SpriteFlip.HORIZONTAL;
+            setDirection(Direction.Right);
+            isMoving = true;
+        }
+
+        if(inputManager.isDown(PlayerInputDefinitions.UP)) {
+            position.setY(y - speed);
+            setDirection(Direction.Up);
+            isMoving = true;
+        } else if (inputManager.isDown(PlayerInputDefinitions.DOWN)) {
+            position.setY(y + speed);
+            setDirection(Direction.Down);
+            isMoving = true;
+        }
+
+        // Remove this
+        if(!isMoving) {
+            direction.clear();
+            direction.add(Direction.Left);
+        }
+    }
+
+    private void setDirection(Direction newDirection) {
+        direction.add(newDirection);
+
+        switch (newDirection) {
+            case Right:
+                direction.remove(Direction.Left);
+                break;
+            case Left:
+                direction.remove(Direction.Right);
+                break;
+            case Up:
+                direction.remove(Direction.Down);
+                break;
+            case Down:
+                direction.remove(Direction.Up);
+                break;
+        }
+    }
+
+    public void checkCollision(List<GameObject> gameObjects) {
+
+        // Get a list of all the GameObjects that are actually of the Enemy class that are still alive
+        List<Enemy> enemies = gameObjects.stream()
+                .filter(n -> n instanceof Enemy && ((Enemy) n).isAlive())
+                .map((n) -> (Enemy) n)
+                .collect(Collectors.toList());
+
+        // Check collision between the weapon projectiles and the enemies
         currentWeapon.checkCollision(enemies);
-        for(Actor enemy : enemies) {
+
+        // Check collision between player and enemies
+        checkEnemyCollision(enemies);
+
+        // Write generic class?
+        List<PowerUp> powerUps = gameObjects.stream()
+                .filter(n -> n instanceof PowerUp && !((PowerUp) n).isCollected())
+                .map((n) -> (PowerUp) n)
+                .collect(Collectors.toList());
+
+        checkPowerUpCollision(powerUps);
+    }
+
+    private void checkEnemyCollision(List<Enemy> enemies) {
+        for(Enemy enemy : enemies) {
             if(enemy.isAlive()) {
                 if(enemy.collides(getHitbox())) {
                     //System.out.println("CRASH");
@@ -128,18 +170,11 @@ public class Player extends Actor {
                     if(isAlive()){
                         onCollides(1);
 
-                        if(getHitPoints() == 0) {
-                            SceneManager.INSTANCE.changeToScene(SceneName.GameOver);
-                            return;
+                        if(direction.contains(Direction.Right)){
+                            position.setX(position.getX()-pushBack);
+                        } else if (direction.contains(Direction.Left)){
+                            position.setX(position.getX()+pushBack);
                         }
-
-                        //System.out.println("CRASH");
-
-                       if(direction.contains(Direction.Right)){
-                           position.setX(position.getX()-pushBack);
-                       } else if (direction.contains(Direction.Left)){
-                           position.setX(position.getX()+pushBack);
-                       }
                         if(direction.contains(Direction.Up)){
                             position.setY(position.getY()+pushBack);
                         } else if (direction.contains(Direction.Down)){
@@ -152,7 +187,7 @@ public class Player extends Actor {
         }
     }
 
-    public void checkPowerUpCollision(List<PowerUp> powerUps) {
+    private void checkPowerUpCollision(List<PowerUp> powerUps) {
         for(PowerUp item : powerUps) {
             if(!item.isCollected()) {
                 if(item.collides(getHitbox())) {
