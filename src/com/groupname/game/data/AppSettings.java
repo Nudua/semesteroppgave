@@ -2,7 +2,6 @@ package com.groupname.game.data;
 
 import com.groupname.framework.math.Size;
 
-class
 
 public enum AppSettings {
     INSTANCE;
