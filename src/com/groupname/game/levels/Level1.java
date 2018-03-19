@@ -16,15 +16,20 @@ import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Level1 extends LevelBase {
 
     private Actor player;
     private Actor enemy;
+    private List<Actor> enemies;
 
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
 
         backgroundColor = Color.CORNFLOWERBLUE;
+        enemies = new ArrayList<>();
     }
 
     @Override
@@ -65,6 +70,7 @@ public class Level1 extends LevelBase {
         Sprite e1Sprite = new Sprite("enemy1Sprite", getSpriteSheet("enemy1"), Sprite.createSpriteRegion(66, 66));
         //e1Sprite.setScale(1.0d);
         enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 4);
+        enemies.add(enemy);
         gameObjects.add(enemy);
     }
 
