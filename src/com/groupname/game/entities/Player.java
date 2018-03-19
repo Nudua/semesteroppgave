@@ -7,11 +7,14 @@ import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.Scene.SceneManager;
+import com.groupname.game.Scene.SceneName;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.projectiles.Projectile;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
 import com.groupname.game.input.PlayerInputDefinitions;
+import javafx.scene.Scene;
 
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -25,7 +28,7 @@ public class Player extends Actor {
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
     private Weapon currentWeapon;
-    private double pushBack = 20;
+    private double pushBack = 200;
 
     public Player(Sprite sprite, Vector2D position, InputManager inputManager, int hitPoints) {
         super(sprite, position, hitPoints);
@@ -47,25 +50,45 @@ public class Player extends Actor {
 
     @Override
     public void update() {
+
+        if(!isAlive()) {
+            return;
+        }
+
         double x = position.getX();
         double y = position.getY();
+
+        boolean isMoving = false;
 
         if(inputManager.isDown(PlayerInputDefinitions.LEFT)) {
             position.setX(x - speed);
             spriteFlip = SpriteFlip.NONE;
             direction.add(Direction.Left);
+            direction.remove(Direction.Right);
+            isMoving = true;
         } else if (inputManager.isDown((PlayerInputDefinitions.RIGHT))) {
             position.setX(x + speed);
             spriteFlip = SpriteFlip.HORIZONTAL;
             direction.add(Direction.Right);
+            direction.remove(Direction.Left);
+            isMoving = true;
         }
 
         if(inputManager.isDown(PlayerInputDefinitions.UP)) {
             position.setY(y - speed);
             direction.add(Direction.Up);
+            direction.remove(Direction.Down);
+            isMoving = true;
         } else if (inputManager.isDown(PlayerInputDefinitions.DOWN)) {
             position.setY(y + speed);
             direction.add(Direction.Down);
+            direction.remove(Direction.Up);
+            isMoving = true;
+        }
+
+        if(!isMoving) {
+            direction.clear();
+            direction.add(Direction.Left);
         }
 
         if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
@@ -88,18 +111,29 @@ public class Player extends Actor {
         for(Actor enemy : enemies) {
             if(enemy.isAlive()) {
                 if(enemy.collides(getHitbox())) {
-                    onCollides(1);
+                    //System.out.println("CRASH");
+
                     if(isAlive()){
+                        onCollides(1);
+
+                        if(getHitPoints() == 0) {
+                            SceneManager.INSTANCE.changeToScene(SceneName.GameOver);
+                            return;
+                        }
+
+                        //System.out.println("CRASH");
+
                        if(direction.contains(Direction.Right)){
                            position.setX(position.getX()-pushBack);
                        } else if (direction.contains(Direction.Left)){
                            position.setX(position.getX()+pushBack);
                        }
                         if(direction.contains(Direction.Up)){
-                            position.setY(position.getY()-pushBack);
-                        } else if (direction.contains(Direction.Down)){
                             position.setY(position.getY()+pushBack);
+                        } else if (direction.contains(Direction.Down)){
+                            position.setY(position.getY()-pushBack);
                         }
+
                     }
                 }
             }
@@ -108,8 +142,10 @@ public class Player extends Actor {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-        spriteBatch.draw(sprite,position, EnumSet.of(spriteFlip));
+        if(isAlive()) {
+            spriteBatch.draw(sprite,position, EnumSet.of(spriteFlip));
 
-        currentWeapon.draw(spriteBatch);
+            currentWeapon.draw(spriteBatch);
+        }
     }
 }

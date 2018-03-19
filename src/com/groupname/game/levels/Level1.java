@@ -62,7 +62,7 @@ public class Level1 extends LevelBase {
     private void createPlayer1() {
         Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-        player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 1);
+        player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 5);
         gameObjects.add(player);
     }
 
