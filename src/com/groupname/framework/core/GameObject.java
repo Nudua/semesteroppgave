@@ -33,6 +33,8 @@ public abstract class GameObject implements UpdateDrawAble {
         return getHitbox().intersects(with.getBoundsInParent());
     }
 
+    //public abstract void onCollides(int value);
+
     public abstract void update();
     public abstract void draw(SpriteBatch spriteBatch);
 }

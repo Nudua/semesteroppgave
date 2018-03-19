@@ -12,6 +12,8 @@ import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
+import com.groupname.game.entities.powerups.HeartPowerUp;
+import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -24,12 +26,14 @@ public class Level1 extends LevelBase {
     private Actor player;
     private Actor enemy;
     private List<Actor> enemies;
+    private List<PowerUp> powerUps;
 
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
 
         backgroundColor = Color.CORNFLOWERBLUE;
         enemies = new ArrayList<>();
+        powerUps = new ArrayList<>();
     }
 
     @Override
@@ -42,6 +46,8 @@ public class Level1 extends LevelBase {
 
         createPlayer1();
         createEnemy1();
+
+
     }
 
     private void createSpriteSheets() {
@@ -72,6 +78,10 @@ public class Level1 extends LevelBase {
         enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 3);
         enemies.add(enemy);
         gameObjects.add(enemy);
+
+        //
+        powerUps.add(new HeartPowerUp(e1Sprite, new Vector2D(500, 500), 1));
+        gameObjects.add(powerUps.get(0));
     }
 
     public void update() {
@@ -88,6 +98,7 @@ public class Level1 extends LevelBase {
                 Player player3 = (Player)gameObject;
 
                 player3.checkCollision(enemies);
+                player3.checkPowerUpCollision(powerUps);
             }
         }
     }

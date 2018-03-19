@@ -10,6 +10,7 @@ import com.groupname.framework.math.Vector2D;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
 import com.groupname.game.entities.Actor;
+import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.entities.projectiles.Projectile;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
@@ -22,6 +23,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Player extends Actor {
+
+    public static final int DEFAULT_MAX_HEARTS = 5;
+
     private final InputManager inputManager;
     private final Vector2D initialPosition;
     private double speed = 4.5d;
@@ -29,14 +33,22 @@ public class Player extends Actor {
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
     private Weapon currentWeapon;
     private double pushBack = 200;
+    private int maxHitpoints = DEFAULT_MAX_HEARTS;
 
     public Player(Sprite sprite, Vector2D position, InputManager inputManager, int hitPoints) {
         super(sprite, position, hitPoints);
         this.inputManager = inputManager;
         initialPosition = new Vector2D(position);
 
-
         createWeapon();
+    }
+
+    public int getMaxHitpoints() {
+        return maxHitpoints;
+    }
+
+    public void setMaxHitpoints(int maxHitpoints) {
+        this.maxHitpoints = maxHitpoints;
     }
 
     private void createWeapon() {
@@ -135,6 +147,16 @@ public class Player extends Actor {
                         }
 
                     }
+                }
+            }
+        }
+    }
+
+    public void checkPowerUpCollision(List<PowerUp> powerUps) {
+        for(PowerUp item : powerUps) {
+            if(!item.isCollected()) {
+                if(item.collides(getHitbox())) {
+                    item.onCollect(this);
                 }
             }
         }

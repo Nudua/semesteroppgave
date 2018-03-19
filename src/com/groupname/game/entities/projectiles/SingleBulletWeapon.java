@@ -60,7 +60,7 @@ public class SingleBulletWeapon extends WeaponBase {
     @Override
     public void checkCollision(List<Actor> enemies) {
         for(Actor enemy : enemies) {
-            if(myOnlyBullet.isAlive()) {
+            if(myOnlyBullet.isAlive() && enemy.isAlive()) {
                 if(myOnlyBullet.collides(enemy.getHitbox())) {
                     enemy.onCollides(damage);
                     myOnlyBullet.setAlive(false);

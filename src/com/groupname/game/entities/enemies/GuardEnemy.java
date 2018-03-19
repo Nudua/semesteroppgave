@@ -22,6 +22,11 @@ public class GuardEnemy extends Enemy {
 
     @Override
     public void update() {
+
+        if(!isAlive()) {
+            return;
+        }
+
         double x = position.getX();
         double currentSpeed = speed;
         if(direction == Direction.Right) {
