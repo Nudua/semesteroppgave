@@ -28,7 +28,7 @@ public class Player extends Actor {
 
     private final InputManager inputManager;
     private final Vector2D initialPosition;
-    private double speed = 4.5d;
+    private double speed = 10.5d;
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
     private Weapon currentWeapon;

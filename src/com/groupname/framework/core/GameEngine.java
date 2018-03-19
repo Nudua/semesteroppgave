@@ -66,7 +66,7 @@ public abstract class GameEngine {
                     update();
                     draw();
                     lastUpdate = now;
-                    System.out.println(duration);
+                    //System.out.println(duration);
                 }
             }
         };
@@ -107,10 +107,10 @@ public abstract class GameEngine {
 
 
 
-        //animationTimer.start();
+        animationTimer.start();
 
-        Thread thread = new Thread(this::run);
-        thread.start();
+        //Thread thread = new Thread(this::run);
+        //thread.start();
     }
 
     public void stop() {

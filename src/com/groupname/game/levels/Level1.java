@@ -4,6 +4,8 @@ import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
+import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
+import com.groupname.framework.graphics.animation.improved.AnimationFrame;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
@@ -19,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Level1 extends LevelBase {
@@ -79,8 +82,18 @@ public class Level1 extends LevelBase {
         enemies.add(enemy);
         gameObjects.add(enemy);
 
-        //
-        powerUps.add(new HeartPowerUp(e1Sprite, new Vector2D(500, 500), 1));
+        SpriteSheet sp1 = new SpriteSheet("spritesheet1", Content.loadImage("spritesheet1.png", ResourceType.SpriteSheet));
+
+        int delay = 10;
+
+        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0,0,64,64), delay);
+        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1,0,64,64), delay);
+        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(0,1,64,64), delay);
+        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1,1,64,64), delay);
+
+        AnimatedSprite heartSprite = new AnimatedSprite("Heart", sp1, Sprite.createSpriteRegion(64,64), Arrays.asList(frame1, frame2, frame3, frame4));
+
+        powerUps.add(new HeartPowerUp(heartSprite, new Vector2D(500, 500), 1));
         gameObjects.add(powerUps.get(0));
     }
 

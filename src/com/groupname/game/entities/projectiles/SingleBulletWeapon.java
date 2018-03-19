@@ -20,7 +20,7 @@ import java.util.List;
 public class SingleBulletWeapon extends WeaponBase {
 
     public static final String NAME = "Single Bullet Weapon!";
-    private final double speed = 12d;
+    private final double speed = 20d;
     private final int damage = 1;
     private Projectile myOnlyBullet;
 
@@ -34,12 +34,12 @@ public class SingleBulletWeapon extends WeaponBase {
 
         //Sprite myOnlyBulletSprite = new Sprite("MyOnlyBullet", bulletSpriteSheet, Sprite.createSpriteRegion(66,66));
 
-        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, 0, 66, 66), 2);
-        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 66, 66), 2);
-        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(3, 0, 66, 66), 2);
-        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 2);
+        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, 0, 66, 66), 6);
+        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 66, 66), 6);
+        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(3, 0, 66, 66), 6);
+        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 6);
 
-        AnimatedSprite animatedSprite = new AnimatedSprite("MyOnlyBullet", bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
+        AnimatedSprite animatedSprite = new AnimatedSprite("MyOnlyBullet", bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
 
         myOnlyBullet = new Projectile(animatedSprite);
     }
