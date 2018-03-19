@@ -39,18 +39,17 @@ public class Level1 extends LevelBase {
         Image playerSheet = Content.loadImage("player1.png", ResourceType.SpriteSheet);
         addSpriteSheet(new SpriteSheet("player1", playerSheet));
 
+        /*
         Image bulletSheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
 
         addSpriteSheet(new SpriteSheet("projectiles", bulletSheet));
+        */
     }
 
     private void createPlayer1() {
-        Sprite bulletSprite = new Sprite("bullet1Sprite", getSpriteSheet("projectiles"), Sprite.createSpriteRegion(66, 66));
-        bulletSprite.setScale(1.0d);
-
         Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-        player = new Player(p1Sprite, new Vector2D(200,200), 10, inputManager, bulletSprite);
+        player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 10);
         gameObjects.add(player);
     }
 

@@ -143,7 +143,7 @@ public enum SceneManager {
             }
         }
 
-        showScene(sceneInfo);
+        //showScene(sceneInfo);
     }
 
 

@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Objects;
 
-public abstract class GameObject {
+public abstract class GameObject implements UpdateDrawAble {
 
     protected boolean enabled;
 

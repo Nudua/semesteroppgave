@@ -1,10 +1,8 @@
 package com.groupname.framework.core;
 
 import com.groupname.framework.math.Size;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TimelineBuilder;
+import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -25,12 +23,14 @@ public abstract class GameEngine {
 
     protected long frameCounter;
 
-    private volatile boolean running = true;
+    private volatile boolean running = false;
     private volatile boolean paused = false;
 
     protected Color background = Color.CORNFLOWERBLUE;
 
     protected Scene scene;
+
+    private AnimationTimer animationTimer;
 
     public GameEngine(Pane parent, int width, int height) {
         this.width = width;
@@ -42,9 +42,34 @@ public abstract class GameEngine {
         graphicsContext = canvas.getGraphicsContext2D();
 
         // Fix
-        ((GridPane)(parent)).add(canvas, 0, 1, 1, 1);
+        //((GridPane)(parent)).add(canvas, 0, 1, 1, 1);
+        GridPane.setRowIndex(canvas, 1);
+        parent.getChildren().add(canvas);
 
-        buildAndSetGameLoop();
+
+        //buildAndSetGameLoop();
+        createAnimationTimer();
+
+    }
+
+    private void createAnimationTimer() {
+        animationTimer = new AnimationTimer() {
+            private final long targetDuration = 15_000_000;
+            private long lastUpdate = 0;
+
+            @Override
+            public void handle(long now) {
+                long duration = now - lastUpdate;
+
+                // Around 60fps
+                if(duration >= targetDuration) {
+                    update();
+                    draw();
+                    lastUpdate = now;
+                    System.out.println(duration);
+                }
+            }
+        };
     }
 
     public Size getScreenBounds() {
@@ -72,13 +97,26 @@ public abstract class GameEngine {
     }
 
     public void start() {
+
+        if(running) {
+            return;
+        }
+
         running = true;
-        gameLoop.play();
+        //gameLoop.play();
+
+
+
+        //animationTimer.start();
+
+        Thread thread = new Thread(this::run);
+        thread.start();
     }
 
     public void stop() {
         running = false;
-        gameLoop.stop();
+        //gameLoop.stop();
+        animationTimer.stop();
     }
 
     protected void setSize(double width, double height) {
@@ -86,6 +124,41 @@ public abstract class GameEngine {
         canvas.setHeight(height);
     }
 
+
+    private void run() {
+
+        int frameRate = 60;
+
+        long lastTime = System.nanoTime();
+        long frameTime = 1000000000 / frameRate;
+
+        while(running) {
+            long currentTime = System.nanoTime();
+            long updateTime = currentTime - lastTime;
+
+            lastTime = currentTime;
+
+            long sleepDuration = (frameTime - updateTime) / 1000000;
+
+            if(sleepDuration > 0) {
+                try {
+                    //System.out.println(sleepDuration);
+                    Thread.sleep(sleepDuration);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    //running = false;
+                }
+            }
+            Platform.runLater(() -> {
+                update();
+                draw();
+            });
+
+        }
+    }
+
+
+    /*
     private void buildAndSetGameLoop() {
         int framesPerSecond = 60;
 
@@ -107,6 +180,7 @@ public abstract class GameEngine {
                 .keyFrames(oneFrame)
                 .build();
     }
+    */
 
     protected abstract void update();
 

@@ -15,31 +15,67 @@ enum AnimationLoop {
 }
 */
 
+// Check if animation is done, create an event for it?
+/*
+interface IAnimatedSprite {
+    void start();
+    void stop();
+    void reset();
+}
+*/
 public class AnimatedSprite extends Sprite {
 
+    public enum Status {
+        Running,
+        Completed
+    }
+
     private final List<AnimationFrame> animationFrames;
-    private int frame;
+
+    private Status status = Status.Running;
+    private int frame = 0;
+    private boolean looping = true;
+
+    // This method gets called if we're not loop
+    private Runnable completed;
 
     public AnimatedSprite(String name, SpriteSheet spriteSheet, Rectangle initialSpriteRegion, List<AnimationFrame> animationFrames) {
         super(name, spriteSheet, initialSpriteRegion);
         this.animationFrames = Objects.requireNonNull(animationFrames);
-        frame = 0;
+    }
+
+    public void setOnCompleted(Runnable completed) {
+        this.completed = completed;
+    }
+
+    public void isLooping(boolean loop) {
+        this.looping = loop;
     }
 
     public void step() {
-        AnimationFrame activeFrame = animationFrames.get(frame);
+        if(status == Status.Running) {
+            AnimationFrame activeFrame = animationFrames.get(frame);
 
-        activeFrame.step();
+            activeFrame.step();
 
-        if(activeFrame.isDone()) {
-            // Reset the frame's internal timer and move on the the next frame
-            activeFrame.reset();
+            if(activeFrame.isDone()) {
+                // Reset the frame's internal timer and move on the the next frame
+                activeFrame.reset();
 
-            frame++;
+                frame++;
 
-            // Wrap around, or fire off completed if once?
-            if(frame > animationFrames.size() - 1) {
-                frame = 0;
+                // Wrap around, or fire off completed if once?
+                if(frame > animationFrames.size() - 1) {
+                    if(looping) {
+                        frame = 0;
+                    } else {
+                        status = Status.Completed;
+                        // Fire up our event
+                        if(completed != null) {
+                            completed.run();
+                        }
+                    }
+                }
             }
         }
     }

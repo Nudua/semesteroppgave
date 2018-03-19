@@ -9,6 +9,10 @@ public abstract class Actor extends GameObject {
     private int hitPoints;
     private boolean alive = true;
 
+    // Think about these
+    private Runnable onCollide;
+    private Runnable onDeath;
+
     public Actor(Sprite sprite, Vector2D position, int hitPoints) {
         super(sprite, position);
         this.hitPoints = hitPoints;
@@ -30,7 +34,5 @@ public abstract class Actor extends GameObject {
         this.alive = alive;
     }
 
-    public abstract void onCollide();
     public abstract void reset();
-    public abstract void onDeath();
 }
