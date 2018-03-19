@@ -54,20 +54,20 @@ public abstract class GameEngine {
 
     private void createAnimationTimer() {
         animationTimer = new AnimationTimer() {
-            private final long targetDuration = 15_000_000;
-            private long lastUpdate = 0;
+            //private final long targetDuration = 15_000_000;
+            //private long lastUpdate = 0;
 
             @Override
             public void handle(long now) {
-                long duration = now - lastUpdate;
+                //long duration = now - lastUpdate;
 
                 // Around 60fps
-                if(duration >= targetDuration) {
+                //if(duration >= targetDuration) {
                     update();
                     draw();
-                    lastUpdate = now;
+                    //lastUpdate = now;
                     //System.out.println(duration);
-                }
+                //}
             }
         };
     }
