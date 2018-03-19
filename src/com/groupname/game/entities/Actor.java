@@ -34,5 +34,16 @@ public abstract class Actor extends GameObject {
         this.alive = alive;
     }
 
+    public void onCollides(int damage) {
+        if(alive) {
+            if(hitPoints - damage <= 0) {
+                hitPoints = 0;
+                alive = false;
+            } else {
+                hitPoints -= damage;
+            }
+        }
+    }
+
     public abstract void reset();
 }

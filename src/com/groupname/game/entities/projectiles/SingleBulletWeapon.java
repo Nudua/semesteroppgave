@@ -10,14 +10,18 @@ import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.Actor;
+import com.groupname.game.entities.Enemy;
 import javafx.scene.image.Image;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class SingleBulletWeapon extends WeaponBase {
 
     public static final String NAME = "Single Bullet Weapon!";
     private final double speed = 12d;
+    private final int damage = 1;
     private Projectile myOnlyBullet;
 
     public SingleBulletWeapon() {
@@ -50,6 +54,18 @@ public class SingleBulletWeapon extends WeaponBase {
             myOnlyBullet.setPosition(startPosition);
             myOnlyBullet.setDirection(direction);
             myOnlyBullet.setAlive(true);
+        }
+    }
+
+    @Override
+    public void checkCollision(List<Actor> enemies) {
+        for(Actor enemy : enemies) {
+            if(myOnlyBullet.isAlive()) {
+                if(myOnlyBullet.collides(enemy.getHitbox())) {
+                    enemy.onCollides(damage);
+                    myOnlyBullet.setAlive(false);
+                }
+            }
         }
     }
 

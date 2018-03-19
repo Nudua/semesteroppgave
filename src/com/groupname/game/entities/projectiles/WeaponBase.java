@@ -9,8 +9,10 @@ import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.util.Strings;
+import com.groupname.game.entities.Actor;
 import javafx.scene.image.Image;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class WeaponBase implements Weapon {

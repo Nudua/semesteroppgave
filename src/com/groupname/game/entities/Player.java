@@ -14,6 +14,7 @@ import com.groupname.game.entities.projectiles.Weapon;
 import com.groupname.game.input.PlayerInputDefinitions;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Objects;
 
 public class Player extends Actor {
@@ -72,6 +73,10 @@ public class Player extends Actor {
         }
 
         currentWeapon.update();
+    }
+
+    public void checkCollision(List<Actor> enemies) {
+        currentWeapon.checkCollision(enemies);
     }
 
     @Override

@@ -62,14 +62,14 @@ public class Level1 extends LevelBase {
     private void createPlayer1() {
         Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-        player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 10);
+        player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 1);
         gameObjects.add(player);
     }
 
     private void createEnemy1() {
         Sprite e1Sprite = new Sprite("enemy1Sprite", getSpriteSheet("enemy1"), Sprite.createSpriteRegion(66, 66));
         //e1Sprite.setScale(1.0d);
-        enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 4);
+        enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 3);
         enemies.add(enemy);
         gameObjects.add(enemy);
     }
@@ -83,6 +83,12 @@ public class Level1 extends LevelBase {
         // Update all our gameobjects
         for(GameObject gameObject : gameObjects) {
             gameObject.update();
+
+            if(gameObject instanceof Player) {
+                Player player3 = (Player)gameObject;
+
+                player3.checkCollision(enemies);
+            }
         }
     }
 
