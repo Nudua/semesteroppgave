@@ -46,7 +46,7 @@ public class IntVector2D {
         this.y += y;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
@@ -54,7 +54,7 @@ public class IntVector2D {
         this.x = x;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 
