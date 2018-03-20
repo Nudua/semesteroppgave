@@ -23,7 +23,7 @@ public class AnimationFrame {
     }
 
     public boolean isDone() {
-        return counter >= repeatCount;
+        return counter >= repeatCount - 1;
     }
 
     public void reset() {

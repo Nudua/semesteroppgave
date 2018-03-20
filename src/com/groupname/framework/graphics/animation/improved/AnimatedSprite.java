@@ -41,6 +41,13 @@ public class AnimatedSprite extends Sprite {
 
     public AnimatedSprite(String name, SpriteSheet spriteSheet, Rectangle initialSpriteRegion, List<AnimationFrame> animationFrames) {
         super(name, spriteSheet, initialSpriteRegion);
+
+        Objects.requireNonNull(animationFrames);
+
+        if(animationFrames.size() == 0) {
+            throw new IllegalArgumentException();
+        }
+
         this.animationFrames = Objects.requireNonNull(animationFrames);
     }
 
