@@ -52,6 +52,14 @@ public class Game extends GameEngine {
             return;
         }
 
+
+        if(currentLevel.getState() == LevelState.Completed) {
+            currentLevel.reset();
+            stop();
+            return;
+        }
+
+
         if(currentLevel.getState() == LevelState.Completed) {
             // Change to the next level
             currentLevelIndex++;

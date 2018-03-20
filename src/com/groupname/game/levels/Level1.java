@@ -22,6 +22,7 @@ import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class Level1 extends LevelBase {
 
+    private Player player;
     public Level1(GameEngine game, InputManager inputManager) {
         super(game, inputManager);
 
@@ -38,6 +40,10 @@ public class Level1 extends LevelBase {
     @Override
     public void reset() {
         super.reset();
+
+        gameObjects.clear();
+
+        initialize();
     }
 
     public void initialize() {
@@ -58,30 +64,59 @@ public class Level1 extends LevelBase {
     private void createPlayer1() {
         Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-        Player player = new Player(p1Sprite, new Vector2D(200,200), inputManager, 5);
-        player.setOnDeath(() -> SceneManager.INSTANCE.changeToScene(SceneName.GameOver));
+        player = new Player(p1Sprite, new Vector2D(800,200), inputManager, 5);
+        player.setOnDeath(this::gameOver);
         gameObjects.add(player);
     }
 
-    private void createEnemy1() {
-        Sprite e1Sprite = new Sprite("enemy1Sprite", getSpriteSheet("enemy1"), Sprite.createSpriteRegion(66, 66));
-        //e1Sprite.setScale(1.0d);
-        Enemy enemy = new GuardEnemy(e1Sprite, new Vector2D(50,500), 3);
+    private void gameOver() {
+        //reset();
+        SceneManager.INSTANCE.changeToScene(SceneName.GameOver);
+    }
 
-        gameObjects.add(enemy);
+    private void createEnemy1() {
 
         SpriteSheet sp1 = new SpriteSheet("spritesheet1", Content.loadImage("spritesheet1.png", ResourceType.SpriteSheet));
 
         int delay = 10;
+        AnimationFrame eframe1 = new AnimationFrame(Sprite.createSpriteRegion(0,0,66,66), delay);
+        AnimationFrame eframe2 = new AnimationFrame(Sprite.createSpriteRegion(1,0,66,66), delay);
+        AnimationFrame eframe3 = new AnimationFrame(Sprite.createSpriteRegion(0,1,66,66), delay);
+        AnimationFrame eframe4 = new AnimationFrame(Sprite.createSpriteRegion(1,1,66,66), delay);
+
+        AnimationFrame eframe5 = new AnimationFrame(Sprite.createSpriteRegion(0,0,66,66), 20);
+        AnimationFrame eframe6 = new AnimationFrame(Sprite.createSpriteRegion(0,1,66,66), 20);
+
+        AnimatedSprite enemySprite = new AnimatedSprite("Enemy", getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe5, eframe2 , eframe6));
+        AnimatedSprite enemy2Sprite = new AnimatedSprite("Enemy", getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe1, eframe2));
+        AnimatedSprite enemy3Sprite = new AnimatedSprite("Enemy", getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe4));
+        enemy3Sprite.setScale(0.5d);
+        enemy2Sprite.setScale(2.0d);
+
+        GuardEnemy enemy = new GuardEnemy(enemySprite, new Vector2D(100,200), 3);
+        enemy.setSpeed(10.5d);
+
+        GuardEnemy enemy2 = new GuardEnemy(enemy2Sprite, new Vector2D(50,500), 10);
+        enemy2.setSpeed(15d);
+
+        GuardEnemy enemy3 = new GuardEnemy(enemy3Sprite, new Vector2D(600,450), 3);
+        enemy3.setSpeed(25.5d);
+
+        gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
+
+
+        delay = 10;
 
         AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0,0,64,64), delay);
         AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1,0,64,64), delay);
         AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(0,1,64,64), delay);
         AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1,1,64,64), delay);
 
-        AnimatedSprite heartSprite = new AnimatedSprite("Heart", sp1, Sprite.createSpriteRegion(64,64), Arrays.asList(frame1, frame2, frame3, frame4));
+        AnimatedSprite heartSprite = new AnimatedSprite("Heart", sp1, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
 
         gameObjects.add(new HeartPowerUp(heartSprite, new Vector2D(500, 500), 1));
+
+
     }
 
     public void update() {
@@ -90,15 +125,28 @@ public class Level1 extends LevelBase {
             inputManager.update();
         }
 
+        boolean anyEnemyAlive = false;
         // Update all our gameobjects
         for(GameObject gameObject : gameObjects) {
             gameObject.update();
 
             if(gameObject instanceof Player) {
-                Player player = (Player)gameObject;
+                Player player2 = (Player)gameObject;
 
-                player.checkCollision(gameObjects);
+                player2.checkCollision(gameObjects);
             }
+
+            if(gameObject instanceof Enemy && !anyEnemyAlive) {
+                Enemy enemy = (Enemy)gameObject;
+                if(enemy.isAlive()) {
+                    anyEnemyAlive = true;
+                }
+            }
+        }
+
+        if(!anyEnemyAlive) {
+            state = LevelState.Completed;
+            SceneManager.INSTANCE.changeToScene(SceneName.Credits);
         }
     }
 
@@ -113,5 +161,8 @@ public class Level1 extends LevelBase {
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spriteBatch);
         }
+        graphicsContext.setFont(Font.font(26));
+        graphicsContext.setFill(Color.BLACK);
+        graphicsContext.fillText(String.format("HP: %d", player.getHitPoints()), 5, 30);
     }
 }

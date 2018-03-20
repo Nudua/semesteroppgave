@@ -20,6 +20,10 @@ public class GuardEnemy extends Enemy {
         startPosition = new Vector2D(position);
     }
 
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
     @Override
     public void update() {
         super.update();

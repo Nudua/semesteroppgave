@@ -199,6 +199,7 @@ public class Player extends Actor {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
+
         if(isAlive()) {
             spriteBatch.draw(sprite,position, EnumSet.of(spriteFlip));
 

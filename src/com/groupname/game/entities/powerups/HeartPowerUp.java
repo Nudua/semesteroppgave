@@ -18,7 +18,7 @@ public class HeartPowerUp extends PowerUp {
     public void onCollect(Player player) {
         super.onCollect(player);
 
-        int newHitpoints = player.getMaxHitpoints() + hearts;
+        int newHitpoints = player.getHitPoints() + hearts;
 
         if(newHitpoints > player.getMaxHitpoints()) {
             newHitpoints = player.getMaxHitpoints();
