@@ -5,47 +5,22 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
+import test.util.MockFX;
+
 import static org.junit.Assert.*;
-/*
-class MockGameApplication extends Application {
-
-    private static MockGameApplication INSTANCE;
-
-    public static MockGameApplication get() {
-        if (INSTANCE == null) {
-            mockStage();
-
-            MockGameApplication app = new MockGameApplication();
-
-            INSTANCE = app;
-        }
-
-        return INSTANCE;
-    }
-
-    private static void mockStage() {
-        new Thread(() -> {
-            Application.launch(MockGameApplication.class);
-        }).start();
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-
-    }
-}
-*/
 
 public class KeyboardInputTests {
 
+    @BeforeClass
+    public static void init() {
+        // For these tests we have to make sure that the Javafx thread is initialized
+        MockFX.initFX();
+    }
+
     // Todo: fix on windows
     private Scene scene = new Scene(new GridPane());
-
-    @Before
-    public void before() {
-
-    }
 
     @Test(expected = NullPointerException.class)
     public void checkSceneNotNull() {
