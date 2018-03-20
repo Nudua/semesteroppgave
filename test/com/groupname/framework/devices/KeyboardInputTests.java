@@ -7,38 +7,55 @@ import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+/*
+class MockGameApplication extends Application {
 
-public class KeyboadInputTests {
+    private static MockGameApplication INSTANCE;
 
-    // This is required because we're not allowed to create a scene unless it's on a javafx thread
-    private class FXTestApp extends Application {
-        private Scene scene = new Scene(new GridPane());
+    public static MockGameApplication get() {
+        if (INSTANCE == null) {
+            mockStage();
 
-        @Override
-        public void start(Stage primaryStage) {
+            MockGameApplication app = new MockGameApplication();
+
+            INSTANCE = app;
         }
+
+        return INSTANCE;
     }
 
-    private FXTestApp app = new FXTestApp();
-    private Scene scene;
+    private static void mockStage() {
+        new Thread(() -> {
+            Application.launch(MockGameApplication.class);
+        }).start();
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+
+    }
+}
+*/
+
+public class KeyboardInputTests {
+
+    // Todo: fix on windows
+    private Scene scene = new Scene(new GridPane());
 
     @Before
     public void before() {
-        FXTestApp app = new FXTestApp();
-        scene = app.scene;
+
     }
 
     @Test(expected = NullPointerException.class)
     public void checkSceneNotNull() {
-        KeyboardInput keyboardInput = new KeyboardInput(null);
+        new KeyboardInput(null);
     }
 
     @Test
     public void checkKeyboardInputIsEnableByDefault() {
         KeyboardInput keyboardInput = new KeyboardInput(scene);
-
         assertTrue(keyboardInput.isEnabled());
-
     }
 
     @Test
@@ -46,7 +63,7 @@ public class KeyboadInputTests {
         KeyboardInput keyboardInput = new KeyboardInput(scene);
         keyboardInput.setEnabled(false);
 
-        assertTrue(keyboardInput.isEnabled() == false);
+        assertFalse(keyboardInput.isEnabled());
     }
 
     @Test(expected = NullPointerException.class)
