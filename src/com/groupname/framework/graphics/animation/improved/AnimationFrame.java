@@ -2,6 +2,8 @@ package com.groupname.framework.graphics.animation.improved;
 
 import javafx.scene.shape.Rectangle;
 
+import java.util.Objects;
+
 public class AnimationFrame {
 
     private final Rectangle spriteRegion;
@@ -9,7 +11,10 @@ public class AnimationFrame {
     private int counter;
 
     public AnimationFrame(Rectangle spriteRegion, int repeatCount) {
-        this.spriteRegion = spriteRegion;
+        this.spriteRegion = Objects.requireNonNull(spriteRegion);
+        if(repeatCount < 0){
+            throw new IllegalArgumentException("repeatCount cant be negative");
+        }
         this.repeatCount = repeatCount;
     }
 
