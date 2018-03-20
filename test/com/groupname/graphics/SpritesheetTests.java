@@ -3,6 +3,7 @@ package com.groupname.graphics;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.util.EmptyStringException;
 import javafx.scene.image.Image;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,6 +15,11 @@ public class SpritesheetTests {
     @Test(expected = NullPointerException.class)
     public void nameCannotBeNull() {
         SpriteSheet spriteSheet = new SpriteSheet(null, img);
+    }
+
+    @Test(expected = EmptyStringException.class)
+    public void nameCannotBeEmpty() {
+        SpriteSheet spriteSheet = new SpriteSheet("", img);
     }
 
     @Test(expected = NullPointerException.class)
