@@ -2,7 +2,6 @@ package com.groupname.tests;
 
 import com.groupname.framework.math.ImmutableVector2D;
 import org.junit.Test;
-
 import static org.junit.Assert.assertTrue;
 
 // Test test

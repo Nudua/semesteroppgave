@@ -5,6 +5,7 @@ import com.groupname.game.core.Game;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
+import java.util.Objects;
 
 
 public class Content {
@@ -24,6 +25,8 @@ public class Content {
     }
 
     public static InputStream loadFile(String fileName, ResourceType type) {
+        Strings.requireNonNullAndNotEmpty(fileName);
+        Objects.requireNonNull(type);
 
         String folder = getFolderPathFromResourceType(type);
 
