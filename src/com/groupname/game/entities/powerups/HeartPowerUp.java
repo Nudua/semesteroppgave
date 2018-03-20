@@ -4,12 +4,17 @@ import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Player;
 
+import java.util.Objects;
+
 public class HeartPowerUp extends PowerUp {
 
     private final int hearts;
 
     public HeartPowerUp(Sprite sprite, Vector2D position, int hearts) {
         super(sprite, position);
+        if(hearts <= 0){
+            throw new NullPointerException();
+        }
         this.hearts = hearts;
     }
 
