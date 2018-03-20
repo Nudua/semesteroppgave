@@ -1,6 +1,5 @@
-package com.groupname.graphics;
+package com.groupname.framework.graphics;
 
-import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.util.EmptyStringException;

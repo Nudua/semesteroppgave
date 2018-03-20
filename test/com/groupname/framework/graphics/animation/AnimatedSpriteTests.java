@@ -1,4 +1,4 @@
-package com.groupname.graphics.animation;
+package com.groupname.framework.graphics.animation;
 
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;

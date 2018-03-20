@@ -1,4 +1,4 @@
-package com.groupname.tests;
+package com.groupname.framework.tests;
 
 import com.groupname.framework.math.ImmutableVector2D;
 import org.junit.Test;

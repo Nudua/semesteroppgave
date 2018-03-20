@@ -1,9 +1,8 @@
-package com.groupname.input.devices;
+package com.groupname.framework.devices;
 import com.groupname.framework.input.devices.KeyboardInput;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;

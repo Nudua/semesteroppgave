@@ -1,9 +1,6 @@
-package com.groupname.util;
+package com.groupname.framework.util;
 
-import com.groupname.framework.util.EmptyStringException;
-import com.groupname.framework.util.Strings;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class StringsTest {

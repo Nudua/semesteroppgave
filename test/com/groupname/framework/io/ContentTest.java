@@ -1,14 +1,7 @@
-package com.groupname.io;
+package com.groupname.framework.io;
 
-import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.io.Content;
-import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.util.EmptyStringException;
 import org.junit.Test;
-
-import java.nio.channels.NotYetBoundException;
-
-import static org.junit.Assert.*;
 
 
 public class ContentTest {
