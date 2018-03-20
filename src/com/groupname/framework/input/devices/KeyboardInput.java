@@ -35,7 +35,7 @@ public class KeyboardInput implements InputAdapter {
     private final Set<String> internalState;
 
     public KeyboardInput(Scene scene) {
-
+        Objects.requireNonNull(scene);
         internalState = new HashSet<>();
 
         scene.setOnKeyPressed(this::OnKeyPressed);
@@ -64,6 +64,7 @@ public class KeyboardInput implements InputAdapter {
     }
 
     public void update(Set<String> digitalInput) {
+        Objects.requireNonNull(digitalInput);
         // Update the global input state with the keyboard presses
         digitalInput.addAll(internalState);
     }
