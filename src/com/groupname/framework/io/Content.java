@@ -1,7 +1,6 @@
 package com.groupname.framework.io;
 
 import com.groupname.framework.util.Strings;
-import com.groupname.game.core.Game;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
@@ -11,7 +10,11 @@ import java.util.Objects;
 public class Content {
 
     // Maybe set this at start?
-    private final static String CONTENT_BASE_FOLDER = "/com/groupname/game/resources";
+    private static String contentBaseFolder;// = "/com/groupname/game/resources";
+
+    public static void setContentBaseFolder(String path) {
+        contentBaseFolder = path;
+    }
 
     public static Image loadImage(String filename, ResourceType type) {
         // ResourceType has to be either a Sprite or a SpriteSheet
@@ -25,14 +28,18 @@ public class Content {
     }
 
     public static InputStream loadFile(String fileName, ResourceType type) {
+        if(Strings.isNullOrEmpty(contentBaseFolder)) {
+            throw new ContentNotFoundException("The basefolder has to be set before using this method, call setContentBaseFolder with a valid path first.");
+        }
+
         Strings.requireNonNullAndNotEmpty(fileName);
         Objects.requireNonNull(type);
 
         String folder = getFolderPathFromResourceType(type);
 
-        String fullPath = CONTENT_BASE_FOLDER + folder + fileName;
+        String fullPath = contentBaseFolder + folder + fileName;
 
-        InputStream inputStream = Game.class.getClass().getResourceAsStream(fullPath);
+        InputStream inputStream = Content.class.getResourceAsStream(fullPath);
 
         if(inputStream == null) { // Not sure about this approach, might make a runtime exception instead, because this is not really recoverable
             throw new ContentNotFoundException(String.format("Unable to locate the file: %s", fileName));

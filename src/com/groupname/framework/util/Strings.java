@@ -29,4 +29,8 @@ public final class Strings {
         return value;
     }
 
+    public static boolean isNullOrEmpty(String value) {
+        return value == null || "".equals(value);
+    }
+
 }

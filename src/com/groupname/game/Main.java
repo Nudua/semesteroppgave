@@ -1,5 +1,6 @@
 package com.groupname.game;
 
+import com.groupname.framework.io.Content;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
 import com.groupname.game.controllers.MainWindowController;
@@ -14,6 +15,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+
+        // We have to set this before running
+        Content.setContentBaseFolder("/com/groupname/game/resources");
 
         SceneManager sceneManager = SceneManager.INSTANCE;
 
