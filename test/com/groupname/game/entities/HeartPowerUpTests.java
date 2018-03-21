@@ -36,7 +36,7 @@ public class HeartPowerUpTests {
         assertFalse(testHeart.isCollected());
     }
 
-    //TooDoo
+    //TODO
     @Test
     public void trueWhenIsCollected(){
     }
