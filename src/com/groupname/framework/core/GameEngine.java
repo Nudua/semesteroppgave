@@ -11,6 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+import java.util.Objects;
+
 public abstract class GameEngine {
 
     private Timeline gameLoop;
@@ -46,13 +48,13 @@ public abstract class GameEngine {
         GridPane.setRowIndex(canvas, 1);
         parent.getChildren().add(canvas);
 
-
-        //buildAndSetGameLoop();
         createAnimationTimer();
-
     }
 
     private void createAnimationTimer() {
+        animationTimer = new GameLoopTimer(this::update, this::draw);
+
+        /*
         animationTimer = new AnimationTimer() {
             //private final long targetDuration = 15_000_000;
             //private long lastUpdate = 0;
@@ -70,6 +72,7 @@ public abstract class GameEngine {
                 //}
             }
         };
+        */
     }
 
     public Size getScreenBounds() {
@@ -97,25 +100,17 @@ public abstract class GameEngine {
     }
 
     public void start() {
-
         if(running) {
             return;
         }
 
         running = true;
-        //gameLoop.play();
-
-
 
         animationTimer.start();
-
-        //Thread thread = new Thread(this::run);
-        //thread.start();
     }
 
     public void stop() {
         running = false;
-        //gameLoop.stop();
         animationTimer.stop();
     }
 
@@ -125,6 +120,7 @@ public abstract class GameEngine {
     }
 
 
+    /*
     private void run() {
 
         int frameRate = 60;
@@ -155,30 +151,6 @@ public abstract class GameEngine {
             });
 
         }
-    }
-
-
-    /*
-    private void buildAndSetGameLoop() {
-        int framesPerSecond = 60;
-
-        Duration oneFrameAmt = Duration.millis(1000 / framesPerSecond);
-        KeyFrame oneFrame = new KeyFrame(oneFrameAmt, event -> {
-
-            if(!running) {
-                return;
-            }
-
-            frameCounter++;
-            update();
-            draw();
-        });
-
-        // sets the framework world's framework loop (Timeline)
-        gameLoop = TimelineBuilder.create()
-                .cycleCount(Animation.INDEFINITE)
-                .keyFrames(oneFrame)
-                .build();
     }
     */
 
