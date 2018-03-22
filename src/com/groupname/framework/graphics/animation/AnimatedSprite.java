@@ -12,12 +12,12 @@ public class AnimatedSprite extends Sprite implements Animatable {
     private AnimationLogic<AnimatedSprite> animationLogic;
     private List<Rectangle> spriteRegions;
 
-    public AnimatedSprite(String name, SpriteSheet spriteSheet, List<Rectangle> spriteRegions) {
-        this(name, spriteSheet, spriteRegions, 0);
+    public AnimatedSprite(SpriteSheet spriteSheet, List<Rectangle> spriteRegions) {
+        this(spriteSheet, spriteRegions, 0);
     }
 
-    public AnimatedSprite(String name, SpriteSheet spriteSheet, List<Rectangle> spriteRegions, int firstSpriteRegion) {
-        super(name, spriteSheet, spriteRegions.get(firstSpriteRegion));
+    public AnimatedSprite(SpriteSheet spriteSheet, List<Rectangle> spriteRegions, int firstSpriteRegion) {
+        super(spriteSheet, spriteRegions.get(firstSpriteRegion));
         this.spriteRegions = Objects.requireNonNull(spriteRegions);
     }
 

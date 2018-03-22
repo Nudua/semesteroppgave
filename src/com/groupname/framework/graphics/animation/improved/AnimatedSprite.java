@@ -39,8 +39,8 @@ public class AnimatedSprite extends Sprite {
     // This method gets called if we're not loop
     private Runnable completed;
 
-    public AnimatedSprite(String name, SpriteSheet spriteSheet, Rectangle initialSpriteRegion, List<AnimationFrame> animationFrames) {
-        super(name, spriteSheet, initialSpriteRegion);
+    public AnimatedSprite(SpriteSheet spriteSheet, Rectangle initialSpriteRegion, List<AnimationFrame> animationFrames) {
+        super(spriteSheet, initialSpriteRegion);
 
         Objects.requireNonNull(animationFrames);
 

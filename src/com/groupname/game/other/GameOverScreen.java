@@ -56,7 +56,7 @@ public class GameOverScreen extends GameEngine {
         SpriteOld snowSprite4 = new SpriteOld.Builder("snowflake", "snow", new Size(30,20)).sourceVector(3,0).build();
         */
 
-        Sprite snowSprite3 = new Sprite("snowflake1", snowSheet, Sprite.createSpriteRegion(2,0,30,20));
+        Sprite snowSprite3 = new Sprite(snowSheet, Sprite.createSpriteRegion(2,0,30,20));
         snowSprite3.setScale(0.9d);
 
         List<Sprite> sprites = new ArrayList<>(Arrays.asList(snowSprite3));

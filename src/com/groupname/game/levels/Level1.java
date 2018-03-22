@@ -62,7 +62,7 @@ public class Level1 extends LevelBase {
     }
 
     private void createPlayer1() {
-        Sprite p1Sprite = new Sprite("player1Sprite", getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
+        Sprite p1Sprite = new Sprite(getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
         player = new Player(p1Sprite, new Vector2D(800,200), inputManager, 5);
         player.setOnDeath(this::gameOver);
@@ -87,9 +87,9 @@ public class Level1 extends LevelBase {
         AnimationFrame eframe5 = new AnimationFrame(Sprite.createSpriteRegion(0,0,66,66), 20);
         AnimationFrame eframe6 = new AnimationFrame(Sprite.createSpriteRegion(0,1,66,66), 20);
 
-        AnimatedSprite enemySprite = new AnimatedSprite("Enemy", getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe5, eframe2 , eframe6));
-        AnimatedSprite enemy2Sprite = new AnimatedSprite("Enemy", getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe1, eframe2));
-        AnimatedSprite enemy3Sprite = new AnimatedSprite("Enemy", getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe4));
+        AnimatedSprite enemySprite = new AnimatedSprite(getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe5, eframe2 , eframe6));
+        AnimatedSprite enemy2Sprite = new AnimatedSprite(getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe1, eframe2));
+        AnimatedSprite enemy3Sprite = new AnimatedSprite(getSpriteSheet("enemy1"), eframe1.getSpriteRegion(), Arrays.asList(eframe4));
         enemy3Sprite.setScale(0.5d);
         enemy2Sprite.setScale(2.0d);
 
@@ -112,7 +112,7 @@ public class Level1 extends LevelBase {
         AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(0,1,64,64), delay);
         AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1,1,64,64), delay);
 
-        AnimatedSprite heartSprite = new AnimatedSprite("Heart", sp1, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
+        AnimatedSprite heartSprite = new AnimatedSprite(sp1, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
 
         gameObjects.add(new HeartPowerUp(heartSprite, new Vector2D(500, 500), 1));
 

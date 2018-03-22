@@ -9,14 +9,11 @@ import java.util.Objects;
 
 public class Sprite {
 
-    private final String name;
     private final SpriteSheet spriteSheet;
-
     protected Rectangle spriteRegion;
     protected double scale = 1.0d;
 
-    public Sprite(String name, SpriteSheet spriteSheet, Rectangle spriteRegion) {
-        this.name = Strings.requireNonNullAndNotEmpty(name);
+    public Sprite(SpriteSheet spriteSheet, Rectangle spriteRegion) {
         this.spriteSheet = Objects.requireNonNull(spriteSheet);
         this.spriteRegion = Objects.requireNonNull(spriteRegion);
     }
@@ -31,10 +28,6 @@ public class Sprite {
 
     public double getHeight() {
         return scale * spriteRegion.getHeight();
-    }
-
-    public String getName() {
-        return name;
     }
 
     public SpriteSheet getSpriteSheet() {

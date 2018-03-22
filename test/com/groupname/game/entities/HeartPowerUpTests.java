@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class HeartPowerUpTests {
 
     SpriteSheet testSheet = new SpriteSheet("spriteSheet", Content.loadImage("player1.png", ResourceType.SpriteSheet));
-    Sprite testSprite = new Sprite("spritetest", testSheet, Sprite.createSpriteRegion(66,66));
+    Sprite testSprite = new Sprite(testSheet, Sprite.createSpriteRegion(66,66));
 
     @Test(expected = NullPointerException.class)
     public void heartCannotBeNegative() {

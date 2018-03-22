@@ -12,7 +12,6 @@ import static org.junit.Assert.*;
 
 public class SpriteTests {
 
-    private final String name = "sprite1";
     private final SpriteSheet spriteSheet = getValidSpriteSheet();
     private final Rectangle spriteRegion = new Rectangle(64,64);
 
@@ -22,7 +21,7 @@ public class SpriteTests {
     }
 
     private Sprite getValidSprite() {
-        return new Sprite(name, spriteSheet, spriteRegion);
+        return new Sprite(spriteSheet, spriteRegion);
     }
 
     @BeforeClass
@@ -31,36 +30,27 @@ public class SpriteTests {
     }
 
     // Constructor parameter tests
-    @Test(expected = NullPointerException.class)
-    public void NameParameterCannotBeNull() {
-        new Sprite(null, spriteSheet, spriteRegion);
-    }
-
-    @Test(expected = EmptyStringException.class)
-    public void NameParameterCannotBeEmpty() {
-        new Sprite("", spriteSheet, spriteRegion);
-    }
 
     @Test(expected = NullPointerException.class)
     public void SpriteSheetParameterCannotBeNull() {
-        new Sprite(name, null, spriteRegion);
+        new Sprite(null, spriteRegion);
     }
 
     @Test(expected = NullPointerException.class)
     public void SpriteRegionParameterCannotBeNull() {
-        new Sprite(name, spriteSheet, null);
+        new Sprite(spriteSheet, null);
     }
 
     // Getters
     @Test
     public void ReturnsCorrectWidth() {
-        Sprite sprite = new Sprite(name, spriteSheet, spriteRegion);
+        Sprite sprite = new Sprite(spriteSheet, spriteRegion);
         assertEquals(sprite.getWidth(), spriteRegion.getWidth(), 0.0);
     }
 
     @Test
     public void ReturnsCorrectHeight() {
-        Sprite sprite = new Sprite(name, spriteSheet, spriteRegion);
+        Sprite sprite = new Sprite(spriteSheet, spriteRegion);
         assertEquals(sprite.getHeight(), spriteRegion.getHeight(), 0.0);
     }
 
@@ -83,12 +73,14 @@ public class SpriteTests {
         assertEquals(newHeight, sprite.getHeight(), 0.0d);
     }
 
+    /*
     @Test
     public void getNameGivesCorrectValue() {
         Sprite sprite = getValidSprite();
 
         assertEquals(sprite.getName(), name);
     }
+    */
 
     @Test
     public void getSpriteSheetGivesCorrectValue() {

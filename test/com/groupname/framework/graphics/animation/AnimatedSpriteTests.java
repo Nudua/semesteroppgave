@@ -19,44 +19,34 @@ public class AnimatedSpriteTests {
     private final int frame1Delay = 10;
     private final int frame2Delay = 12;
 
-    private String name = "myAnimatedSprite";
     private AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(100,100), frame1Delay);
     private AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(300,100), frame2Delay);
     private SpriteSheet spriteSheet = new SpriteSheet("testSheet", Content.loadImage("projectiles.png", ResourceType.SpriteSheet));
 
     public AnimatedSprite getValidAnimatedSprite() {
-        return new AnimatedSprite(name, spriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
+        return new AnimatedSprite(spriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
     }
 
     // Constructor
-    @Test(expected = NullPointerException.class)
-    public void nameCannotBeNull() {
-        new AnimatedSprite(null, spriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
-    }
-
-    @Test(expected = EmptyStringException.class)
-    public void nameCannotBeEmpty() {
-        new AnimatedSprite("", spriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
-    }
 
     @Test(expected = NullPointerException.class)
     public void spriteSheetCannotBeNull() {
-        new AnimatedSprite(name, null, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
+        new AnimatedSprite(null, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
     }
 
     @Test(expected = NullPointerException.class)
     public void initialSpriteRegionCannotBeNull() {
-        new AnimatedSprite(name, spriteSheet, null, Arrays.asList(frame1, frame2));
+        new AnimatedSprite(spriteSheet, null, Arrays.asList(frame1, frame2));
     }
 
     @Test(expected = NullPointerException.class)
     public void animationFramesCannotBeNull() {
-        new AnimatedSprite(name, spriteSheet, frame1.getSpriteRegion(), null);
+        new AnimatedSprite(spriteSheet, frame1.getSpriteRegion(), null);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void animationFramesCannotBeEmpty() {
-        new AnimatedSprite(name, spriteSheet, frame1.getSpriteRegion(), new ArrayList<>());
+        new AnimatedSprite(spriteSheet, frame1.getSpriteRegion(), new ArrayList<>());
     }
 
     @Test

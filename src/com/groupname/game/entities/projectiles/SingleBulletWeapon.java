@@ -39,7 +39,7 @@ public class SingleBulletWeapon extends WeaponBase {
         AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(3, 0, 66, 66), 6);
         AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 6);
 
-        AnimatedSprite animatedSprite = new AnimatedSprite("MyOnlyBullet", bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
+        AnimatedSprite animatedSprite = new AnimatedSprite(bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
 
         myOnlyBullet = new Projectile(animatedSprite);
     }

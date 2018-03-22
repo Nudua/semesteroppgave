@@ -51,13 +51,13 @@ public class CreditsScreen extends GameEngine {
         Image star = new Image(getClass().getResourceAsStream(spriteSheetFolder + "star.png"));
         SpriteSheet starSpriteSheet = new SpriteSheet("star", star);
 
-        Sprite bigStar = new Sprite("smallStar", starSpriteSheet, Sprite.createSpriteRegion(32,32));
+        Sprite bigStar = new Sprite(starSpriteSheet, Sprite.createSpriteRegion(32,32));
         bigStar.setScale(0.7d);
 
-        Sprite mediumStar = new Sprite("mediumStar", starSpriteSheet, Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
+        Sprite mediumStar = new Sprite( starSpriteSheet, Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
         mediumStar.setScale(0.7d);
 
-        Sprite smallStar = new Sprite("smallStar", starSpriteSheet, Sprite.createSpriteRegion(0,0,8,8, new IntVector2D(0,64)));
+        Sprite smallStar = new Sprite(starSpriteSheet, Sprite.createSpriteRegion(0,0,8,8, new IntVector2D(0,64)));
         smallStar.setScale(0.5d);
 
         List<Sprite> sprites = Arrays.asList(smallStar, mediumStar, bigStar);

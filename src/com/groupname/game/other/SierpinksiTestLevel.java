@@ -55,7 +55,7 @@ public class SierpinksiTestLevel extends LevelBase {
         Rectangle frame3 = Sprite.createSpriteRegion(0,1,64,64);
         Rectangle frame4 = Sprite.createSpriteRegion(1,1,64,64);
 
-        animatedSprite = new AnimatedSprite("anim1", getSpriteSheet("sheet1"), Arrays.asList(frame1, frame2, frame3, frame4));
+        animatedSprite = new AnimatedSprite(getSpriteSheet("sheet1"), Arrays.asList(frame1, frame2, frame3, frame4));
         animatedSprite.setAnimationLogic(new LinearAnimation(30));
     }
 
