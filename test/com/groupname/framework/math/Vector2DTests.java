@@ -2,8 +2,6 @@ package com.groupname.framework.math;
 
 import org.junit.Test;
 
-import java.util.Vector;
-
 import static org.junit.Assert.*;
 
 public class Vector2DTests {

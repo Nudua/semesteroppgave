@@ -54,11 +54,7 @@ public class Projectile extends GameObject implements IProjectile {
     public void update() {
         if(isAlive()) {
             // Update our sprite if it's animated
-
-            if(sprite instanceof AnimatedSprite) {
-                AnimatedSprite animatedSprite = (AnimatedSprite)sprite;
-                animatedSprite.step();
-            }
+            AnimatedSprite.stepIfAnimatedSprite(sprite);
         }
     }
 
