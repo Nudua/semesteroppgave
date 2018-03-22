@@ -2,7 +2,7 @@ package com.groupname.game.entities.powerups;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
+import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Player;

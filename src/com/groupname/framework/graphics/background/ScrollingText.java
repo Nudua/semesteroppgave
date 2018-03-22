@@ -1,16 +1,17 @@
-package com.groupname.game.other;
+package com.groupname.framework.graphics.background;
 
+import com.groupname.framework.core.UpdateAble;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-// Don't do this ever
-public class CreditsScroll {
+
+public class ScrollingText implements UpdateAble {
     private Vector2D position;
     private String[] lines;
 
-    public CreditsScroll() {
+    public ScrollingText() {
         position = new Vector2D(1280 / 2 - 150, 720);
         lines = new String[] {"Credits...", "thank", "you", "for", "playing", "our", "game", "...", "now", "we", "just", "have", "to", "make", "it", "\uD83D\uDE0A"};
     }

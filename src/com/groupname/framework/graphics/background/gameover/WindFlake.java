@@ -1,4 +1,4 @@
-package com.groupname.framework.graphics.background;
+package com.groupname.framework.graphics.background.gameover;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;

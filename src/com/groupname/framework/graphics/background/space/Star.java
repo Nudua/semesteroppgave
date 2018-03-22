@@ -1,10 +1,11 @@
-package com.groupname.framework.graphics.background;
+package com.groupname.framework.graphics.background.space;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.data.AppSettings;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,15 +22,14 @@ public class Star extends GameObject {
     private final static double SPEED_MEDIUM = 5.0d;
     private final static double SPEED_FAST = 20.0d;
 
-    private Size screenBounds;
+    private Size screenBounds = AppSettings.SCREEN_BOUNDS;
     private StarType starType;
 
     private final double speed;
 
-    public Star(Sprite sprite, Vector2D position, Size screenBounds, StarType starType) {
+    public Star(Sprite sprite, Vector2D position, StarType starType) {
         super(sprite, position);
 
-        this.screenBounds = Objects.requireNonNull(screenBounds);
         this.starType = Objects.requireNonNull(starType);
 
         speed = getStarSpeedFromType();
@@ -62,6 +62,7 @@ public class Star extends GameObject {
     }
 
     // Star logic
+    @Override
     public void update() {
         // Just moving from right to left
         //Left
@@ -82,6 +83,7 @@ public class Star extends GameObject {
         */
     }
 
+    @Override
     public void draw(SpriteBatch spriteBatch) {
 
         spriteBatch.draw(sprite, position);

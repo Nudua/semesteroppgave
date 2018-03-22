@@ -2,9 +2,8 @@ package com.groupname.game.Scene;
 
 import com.groupname.framework.core.GameEngine;
 import com.groupname.game.controllers.MainWindowController;
-import com.groupname.game.other.CreditsScreen;
 import com.groupname.game.core.Game;
-import com.groupname.game.other.GameOverScreen;
+import com.groupname.game.levels.GameOver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -96,8 +95,8 @@ public enum SceneManager {
         primaryStage.setScene(sceneInfo.getScene());
     }
 
-    //private GameOverScreen gameOverScreen;
-    //private CreditsScreen creditsScreen;
+    //private GameOver gameOverScreen;
+    //private Credits creditsScreen;
 
     // Better exception handling
     private void createScene(SceneInfo sceneInfo) throws IOException {
@@ -111,18 +110,6 @@ public enum SceneManager {
         // Game without a fxml file and controller, just for testing
         if("".equals(sceneInfo.getViewPath())) {
             root = new GridPane();
-
-            if(sceneInfo.getSceneName() == SceneName.GameOver) {
-                GameEngine gameOverScreen = new GameOverScreen(root, 1280, 720);
-                sceneInfo.setInit(gameOverScreen::start);
-                sceneInfo.setScene(gameOverScreen.getScene());
-
-            } else if(sceneInfo.getSceneName() == SceneName.Credits) {
-                GameEngine creditsScreen = new CreditsScreen(root, 1280, 720);
-                sceneInfo.setInit(creditsScreen::start);
-                sceneInfo.setScene(creditsScreen.getScene());
-            }
-
 
         } else {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneInfo.getViewPath()));

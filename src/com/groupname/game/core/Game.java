@@ -22,6 +22,8 @@ public class Game extends GameEngine {
     private LevelBase currentLevel;
     private int currentLevelIndex = 0;
 
+    private LevelBase gameOver;
+
     public Game(Pane parent, int width, int height) {
         super(parent, width, height);
 
@@ -33,14 +35,16 @@ public class Game extends GameEngine {
 
     private void createLevels() {
         LevelBase level1 = new Level1(this, inputManager);
-        LevelBase level2 = new SierpinksiTestLevel(this, inputManager);
+        LevelBase credits = new Credits(this, inputManager);
+        gameOver = new GameOver(this, inputManager);
 
         // Save initialize for the loading? Or maybe just load all the levels at start...
+        credits.initialize();
+        gameOver.initialize();
         level1.initialize();
-        level2.initialize();
 
         allLevels.add(level1);
-        allLevels.add(level2);
+        allLevels.add(credits);
 
         currentLevel = level1;
     }
@@ -52,38 +56,27 @@ public class Game extends GameEngine {
             return;
         }
 
-
-        if(currentLevel.getState() == LevelState.Completed) {
+        if(currentLevel.getState() == LevelState.GameOver) {
             currentLevel.reset();
-            stop();
-            return;
-        }
+            gameOver.reset();
 
-
-        if(currentLevel.getState() == LevelState.Completed) {
+            currentLevel = gameOver;
+        } else if (currentLevel.getState() == LevelState.Completed) {
             // Change to the next level
             currentLevelIndex++;
 
             // Just wrap around for now
             if(currentLevelIndex > allLevels.size() - 1) {
+                // We beat all the levels, just go to credits
                 currentLevelIndex = 0;
             }
-
-            // cleanup / remove the old level here
+            // cleanup remove the old level here
             currentLevel = allLevels.get(currentLevelIndex);
 
             currentLevel.reset();
         }
 
         currentLevel.update();
-    }
-
-    private void changeScene(SceneName newScene) {
-        // Stop the current Scene
-        stop();
-
-        SceneManager sceneManager = SceneManager.INSTANCE;
-        sceneManager.changeToScene(newScene);
     }
 
     protected void draw() {

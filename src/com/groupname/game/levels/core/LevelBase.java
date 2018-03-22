@@ -17,6 +17,7 @@ import java.util.*;
 // Maybe remove the word base
 public abstract class LevelBase {
 
+    protected boolean initialized;
     // Maybe just access directly from game, or create a getter?
     protected GraphicsContext graphicsContext;
 
@@ -51,6 +52,7 @@ public abstract class LevelBase {
         state = LevelState.Playing;
     }
 
+    // Remove?
     protected void addSpriteSheet(SpriteSheet spriteSheet) {
         spriteSheets.put(spriteSheet.getName(), spriteSheet);
     }
@@ -89,6 +91,10 @@ public abstract class LevelBase {
     protected void clearScreen(Color fill) {
         graphicsContext.setFill(fill);
         graphicsContext.fillRect(0, 0, screenBounds.getWidth(), screenBounds.getHeight());
+    }
+
+    public boolean isInitialized() {
+        return initialized;
     }
 
     public abstract void initialize();

@@ -1,9 +1,9 @@
-package com.groupname.framework.graphics.background;
+package com.groupname.framework.graphics.background.transitions;
 
+import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.FillRule;
 
 import java.util.Objects;
 

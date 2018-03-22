@@ -1,6 +1,7 @@
-package com.groupname.framework.graphics.background;
+package com.groupname.framework.graphics.background.space;
 
 import com.groupname.framework.core.GameObject;
+import com.groupname.framework.core.UpdateDrawAble;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Size;
@@ -11,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import static com.groupname.framework.graphics.background.Star.StarType;
+import static com.groupname.framework.graphics.background.space.Star.StarType;
 
-public class SpaceEffect {
+public class SpaceEffect implements UpdateDrawAble {
 
     private final List<Sprite> spriteList;
     private final List<GameObject> stars;
@@ -55,19 +56,21 @@ public class SpaceEffect {
 
                 Sprite starSprite = Star.getSpriteFromType(starType, spriteList);
 
-                Star star = new Star(starSprite, position, screenBounds, starType);
+                Star star = new Star(starSprite, position, starType);
                 stars.add(star);
             }
         }
 
     }
 
+    @Override
     public void update() {
         for(GameObject star : stars) {
             star.update();
         }
     }
 
+    @Override
     public void draw(SpriteBatch spriteBatch) {
         for(GameObject star : stars) {
             star.draw(spriteBatch);

@@ -4,29 +4,23 @@ import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
-import com.groupname.framework.graphics.animation.improved.AnimationFrame;
+import com.groupname.framework.graphics.animation.AnimatedSprite;
+import com.groupname.framework.graphics.animation.AnimationFrame;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.game.Scene.SceneManager;
-import com.groupname.game.Scene.SceneName;
-import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
-import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Level1 extends LevelBase {
 
@@ -71,7 +65,8 @@ public class Level1 extends LevelBase {
 
     private void gameOver() {
         //reset();
-        SceneManager.INSTANCE.changeToScene(SceneName.GameOver);
+        //SceneManager.INSTANCE.changeToScene(SceneName.GameOver);
+        state = LevelState.GameOver;
     }
 
     private void createEnemy1() {
@@ -146,7 +141,7 @@ public class Level1 extends LevelBase {
 
         if(!anyEnemyAlive) {
             state = LevelState.Completed;
-            SceneManager.INSTANCE.changeToScene(SceneName.Credits);
+            //SceneManager.INSTANCE.changeToScene(SceneName.Credits);
         }
     }
 

@@ -1,4 +1,4 @@
-package com.groupname.framework.graphics.animation.improved;
+package com.groupname.framework.graphics.animation;
 
 import javafx.scene.shape.Rectangle;
 

@@ -1,4 +1,4 @@
-package com.groupname.framework.graphics.background;
+package com.groupname.framework.graphics.background.transitions;
 
 public interface ScreenTransition {
     void update();

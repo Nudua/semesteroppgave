@@ -2,7 +2,7 @@ package com.groupname.game.entities;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
+import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.math.Vector2D;
 
 public abstract class Actor extends GameObject {

@@ -1,13 +1,11 @@
 package com.groupname.game.entities.projectiles;
 
 import com.groupname.framework.core.GameObject;
-import com.groupname.framework.core.UpdateDrawAble;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
+import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.framework.util.Strings;
 
 // Needed?
 interface IProjectile {

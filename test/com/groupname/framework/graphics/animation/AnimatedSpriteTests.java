@@ -2,11 +2,8 @@ package com.groupname.framework.graphics.animation;
 
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.animation.improved.AnimatedSprite;
-import com.groupname.framework.graphics.animation.improved.AnimationFrame;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
-import com.groupname.framework.util.EmptyStringException;
 import org.junit.Test;
 
 import java.util.ArrayList;

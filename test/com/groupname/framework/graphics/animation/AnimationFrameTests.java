@@ -1,6 +1,5 @@
 package com.groupname.framework.graphics.animation;
 
-import com.groupname.framework.graphics.animation.improved.AnimationFrame;
 import javafx.scene.shape.Rectangle;
 import org.junit.Test;
 import static org.junit.Assert.*;
