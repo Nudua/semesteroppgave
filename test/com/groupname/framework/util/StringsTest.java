@@ -27,6 +27,6 @@ public class StringsTest {
 
     @Test
     public void isNullOrEmptyReturnsFalseOnValidString() {
-        assertTrue(Strings.isNullOrEmpty("Hello Test"));
+        assertFalse(Strings.isNullOrEmpty("Hello Test"));
     }
 }
