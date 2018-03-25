@@ -1,6 +1,7 @@
 package com.groupname.game.input;
 
 import com.groupname.framework.input.InputBinding;
+import com.groupname.framework.input.devices.HitboxInput;
 import com.groupname.framework.input.devices.KeyboardInput;
 
 import java.util.HashSet;
@@ -28,10 +29,10 @@ public class PlayerInputDefinitions {
     public static Set<InputBinding> getDefaultBindings() {
         Set<InputBinding> bindings = new HashSet<>();
 
-        bindings.add(new InputBinding(UP, KeyboardInput.Defaults.UP));
-        bindings.add(new InputBinding(DOWN, KeyboardInput.Defaults.DOWN));
-        bindings.add(new InputBinding(LEFT, KeyboardInput.Defaults.LEFT));
-        bindings.add(new InputBinding(RIGHT, KeyboardInput.Defaults.RIGHT));
+        bindings.add(new InputBinding(UP, KeyboardInput.Defaults.UP, HitboxInput.Defaults.UP));
+        bindings.add(new InputBinding(DOWN, KeyboardInput.Defaults.DOWN, HitboxInput.Defaults.DOWN));
+        bindings.add(new InputBinding(LEFT, KeyboardInput.Defaults.LEFT, HitboxInput.Defaults.LEFT));
+        bindings.add(new InputBinding(RIGHT, KeyboardInput.Defaults.RIGHT, HitboxInput.Defaults.RIGHT));
 
         bindings.add(new InputBinding(SHOOT_UP, KeyboardInput.Defaults.SHOOT_UP));
         bindings.add(new InputBinding(SHOOT_DOWN, KeyboardInput.Defaults.SHOOT_DOWN));

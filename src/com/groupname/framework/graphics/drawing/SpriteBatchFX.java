@@ -32,6 +32,9 @@ public class SpriteBatchFX implements SpriteBatch {
     }
 
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
+        Objects.requireNonNull(sprite);
+        Objects.requireNonNull(position);
+
         Rectangle srcRect = sprite.getSpriteRegion();
 
         double spriteWidth = sprite.getWidth();

@@ -1,7 +1,11 @@
 package com.groupname.framework.input;
 
+import com.groupname.framework.input.devices.HitboxInput;
 import com.groupname.framework.input.devices.InputAdapter;
 import com.groupname.framework.input.devices.KeyboardInput;
+import com.groupname.framework.serial.SerialPort;
+import com.groupname.framework.serial.SerialPortException;
+import com.groupname.framework.serial.SerialPortFactory;
 import com.groupname.game.input.PlayerInputDefinitions;
 import javafx.scene.Scene;
 
@@ -47,6 +51,30 @@ public class InputManager {
     private void initializeInputAdapters(Scene parent) {
         // Keyboard
         inputAdapters.add(new KeyboardInput(parent));
+
+        initializeHitbox();
+    }
+
+    private void initializeHitbox() {
+        SerialPort serialPort = null;
+
+        try {
+            serialPort = SerialPortFactory.create();
+
+            serialPort.open();
+
+        } catch (SerialPortException e) {
+            System.out.println(e.getMessage());
+        }
+
+        if(serialPort == null) {
+            // Unable to initialize the serialport class
+            return;
+        }
+
+
+
+        inputAdapters.add(new HitboxInput(serialPort));
     }
 
     public void update() {
