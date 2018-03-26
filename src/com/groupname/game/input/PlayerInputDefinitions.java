@@ -34,13 +34,13 @@ public class PlayerInputDefinitions {
         bindings.add(new InputBinding(LEFT, KeyboardInput.Defaults.LEFT, HitboxInput.Defaults.LEFT));
         bindings.add(new InputBinding(RIGHT, KeyboardInput.Defaults.RIGHT, HitboxInput.Defaults.RIGHT));
 
-        bindings.add(new InputBinding(SHOOT_UP, KeyboardInput.Defaults.SHOOT_UP));
-        bindings.add(new InputBinding(SHOOT_DOWN, KeyboardInput.Defaults.SHOOT_DOWN));
-        bindings.add(new InputBinding(SHOOT_LEFT, KeyboardInput.Defaults.SHOOT_LEFT));
-        bindings.add(new InputBinding(SHOOT_RIGHT, KeyboardInput.Defaults.SHOOT_RIGHT));
+        bindings.add(new InputBinding(SHOOT_UP, KeyboardInput.Defaults.SHOOT_UP, HitboxInput.Defaults.SHOOT_UP));
+        bindings.add(new InputBinding(SHOOT_DOWN, KeyboardInput.Defaults.SHOOT_DOWN, HitboxInput.Defaults.SHOOT_DOWN));
+        bindings.add(new InputBinding(SHOOT_LEFT, KeyboardInput.Defaults.SHOOT_LEFT, HitboxInput.Defaults.SHOOT_LEFT, HitboxInput.Defaults.SELECT));
+        bindings.add(new InputBinding(SHOOT_RIGHT, KeyboardInput.Defaults.SHOOT_RIGHT, HitboxInput.Defaults.SHOOT_RIGHT, HitboxInput.Defaults.START));
 
-        bindings.add(new InputBinding(START, KeyboardInput.Defaults.START));
-        bindings.add(new InputBinding(SELECT, KeyboardInput.Defaults.SELECT));
+        bindings.add(new InputBinding(START, KeyboardInput.Defaults.START, HitboxInput.Defaults.START));
+        bindings.add(new InputBinding(SELECT, KeyboardInput.Defaults.SELECT, HitboxInput.Defaults.SELECT));
 
         bindings.add(new InputBinding(SPECIAL_1, KeyboardInput.Defaults.SPECIAL_1));
         bindings.add(new InputBinding(SPECIAL_2, KeyboardInput.Defaults.SPECIAL_2));
