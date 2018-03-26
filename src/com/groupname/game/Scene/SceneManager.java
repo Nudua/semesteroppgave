@@ -1,8 +1,10 @@
 package com.groupname.game.Scene;
 
 import com.groupname.framework.core.GameEngine;
+import com.groupname.game.controllers.EditorController;
 import com.groupname.game.controllers.MainWindowController;
 import com.groupname.game.core.Game;
+import com.groupname.game.core.GameEditor;
 import com.groupname.game.levels.GameOver;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -39,10 +41,13 @@ public enum SceneManager {
         SceneInfo testGameSceneInfo = new SceneInfo(SceneName.GameOver, "Game - Test", "");
         SceneInfo creditsSceneInfo = new SceneInfo(SceneName.Credits, "Game - Credits", "");
 
+        SceneInfo editorSceneInfo = new SceneInfo(SceneName.Editor, "Level editor!", "../views/editorview.fxml");
+
         scenes.put(SceneName.Title, titleSceneInfo);
         scenes.put(SceneName.Game, gameSceneInfo);
         scenes.put(SceneName.GameOver, testGameSceneInfo);
         scenes.put(SceneName.Credits, creditsSceneInfo);
+        scenes.put(SceneName.Editor, editorSceneInfo);
     }
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -124,7 +129,16 @@ public enum SceneManager {
                 sceneInfo.setScene(game.getScene());
 
                 controller.init(game);
-            } else {
+            } else if(sceneInfo.getSceneName() == SceneName.Editor) {
+                EditorController controller = loader.getController();
+
+                GameEngine editor = new GameEditor(root);
+                sceneInfo.setInit(editor::start);
+                sceneInfo.setScene(editor.getScene());
+
+                controller.init(editor);
+            }
+            else {
                 Scene scene = new Scene(root);
                 sceneInfo.setScene(scene);
             }

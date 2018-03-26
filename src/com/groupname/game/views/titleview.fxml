@@ -4,8 +4,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupname.game.controllers.TitleController">
+<?import javafx.scene.layout.VBox?>
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupname.game.controllers.TitleController">
    <children>
       <Button onAction="#navigateToGameOnClick" layoutX="248.0" layoutY="187.0" mnemonicParsing="false" text="Go To Game" />
+      <Button onAction="#navigateToEditorOnClick" layoutX="248.0" layoutY="187.0" mnemonicParsing="false" text="Go To editor" />
    </children>
-</AnchorPane>
+</VBox>

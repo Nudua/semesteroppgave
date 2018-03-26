@@ -9,6 +9,12 @@ import javafx.fxml.FXML;
 public class TitleController {
 
     @FXML
+    protected void navigateToEditorOnClick(ActionEvent event) {
+        SceneManager sceneManager = SceneManager.INSTANCE;
+        sceneManager.changeToScene(SceneName.Editor);
+    }
+
+    @FXML
     protected void navigateToGameOnClick(ActionEvent event) {
         SceneManager sceneManager = SceneManager.INSTANCE;
         sceneManager.changeToScene(SceneName.Game);

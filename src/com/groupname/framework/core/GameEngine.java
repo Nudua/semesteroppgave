@@ -83,6 +83,10 @@ public abstract class GameEngine {
         return graphicsContext;
     }
 
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
     public Scene getScene() {
         return scene;
     }

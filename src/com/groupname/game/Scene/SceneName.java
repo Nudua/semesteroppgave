@@ -7,4 +7,5 @@ public enum SceneName {
     GameOver,
     Credits,
     HighScore,
+    Editor
 }

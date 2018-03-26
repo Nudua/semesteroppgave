@@ -64,6 +64,7 @@ public class InputManager {
             serialPort.open();
 
         } catch (SerialPortException e) {
+            serialPort = null;
             System.out.println(e.getMessage());
         }
 
@@ -71,8 +72,6 @@ public class InputManager {
             // Unable to initialize the serialport class
             return;
         }
-
-
 
         inputAdapters.add(new HitboxInput(serialPort));
     }
