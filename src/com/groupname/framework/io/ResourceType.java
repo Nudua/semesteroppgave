@@ -5,4 +5,5 @@ public enum ResourceType {
     Sprite,
     Music,
     SoundEffect,
+    Background
 }

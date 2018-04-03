@@ -17,8 +17,8 @@ public class Content {
     }
 
     public static Image loadImage(String filename, ResourceType type) {
-        // ResourceType has to be either a Sprite or a SpriteSheet
-        if(!(type == ResourceType.Sprite || type == ResourceType.SpriteSheet)) {
+        // ResourceType has to be either a Sprite, SpriteSheet or a Background
+        if(!(type == ResourceType.Sprite || type == ResourceType.SpriteSheet || type == ResourceType.Background)) {
             throw new IllegalArgumentException();
         }
 
@@ -48,8 +48,6 @@ public class Content {
         return inputStream;
     }
 
-    //../resources/graphics/spritesheets/
-
     private static String getFolderPathFromResourceType(ResourceType resourceType) {
         switch (resourceType) {
             case SpriteSheet:
@@ -60,6 +58,8 @@ public class Content {
                 return "/audio/music/";
             case SoundEffect:
                 return "/audio/soundeffects/";
+            case Background:
+                return "/graphics/backgrounds/";
         }
 
         return Strings.EMPTY;

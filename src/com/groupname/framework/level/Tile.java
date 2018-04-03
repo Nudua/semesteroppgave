@@ -11,8 +11,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 enum TileType {
-    Solid,
-    UnSolid
+    Block,
+    Spike
 }
 
 public class Tile implements DrawAble {
