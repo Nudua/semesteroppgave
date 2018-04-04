@@ -42,11 +42,13 @@ public abstract class GameEngine {
 
         canvas = new Canvas(width, height);
         graphicsContext = canvas.getGraphicsContext2D();
+        canvas.setOpacity(0.5);
 
         // Fix
         //((GridPane)(parent)).add(canvas, 0, 1, 1, 1);
-        GridPane.setRowIndex(canvas, 1);
-        parent.getChildren().add(canvas);
+        //GridPane.setRowIndex(canvas, 1);
+        //parent.getChildren().add(canvas);
+        parent.getChildren().add(0, canvas);
 
         createAnimationTimer();
     }

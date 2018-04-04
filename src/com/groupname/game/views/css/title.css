@@ -1,15 +1,31 @@
+.body {
+    -fx-background-color: black;
+}
+
 .titlebutton {
      -fx-font-family: "Arial Black";
-     -fx-font-size: 1.3em;
+     -fx-font-size: 3em;
      -fx-padding: 10px;
      -fx-background-color: none;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+
+
 
 }
 
 .titlebutton:focused {
     -fx-text-fill: green;
+
 }
 
-.active {
-    -fx-text-fill: green;
+
+
+.titlepaused {
+    -fx-font-family: "Arial Black";
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 5em;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+
+
 }

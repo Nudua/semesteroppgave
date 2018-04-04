@@ -127,6 +127,8 @@ public enum SceneManager {
                 Game game = new Game(root, 1280, 720);
                 sceneInfo.setInit(game::start);
                 sceneInfo.setScene(game.getScene());
+                game.getScene().getStylesheets().add("/com/groupname/game/views/css/title.css");
+
 
                 controller.init(game);
             } else if(sceneInfo.getSceneName() == SceneName.Editor) {
