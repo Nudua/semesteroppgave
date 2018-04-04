@@ -125,6 +125,7 @@ public enum SceneManager {
                 MainWindowController controller = loader.getController();
 
                 Game game = new Game(root, 1280, 720);
+                game.setTogglePauseMenu(controller::togglePauseMenu);
                 sceneInfo.setInit(game::start);
                 sceneInfo.setScene(game.getScene());
                 game.getScene().getStylesheets().add("/com/groupname/game/views/css/title.css");

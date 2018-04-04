@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.Objects;
+import java.util.function.Consumer;
 
 public abstract class GameEngine {
 
@@ -34,6 +35,8 @@ public abstract class GameEngine {
 
     private AnimationTimer animationTimer;
 
+    private Consumer<Boolean> togglePauseMenu;
+
     public GameEngine(Pane parent, int width, int height) {
         this.width = width;
         this.height = height;
@@ -42,7 +45,7 @@ public abstract class GameEngine {
 
         canvas = new Canvas(width, height);
         graphicsContext = canvas.getGraphicsContext2D();
-        canvas.setOpacity(0.5);
+        //canvas.setOpacity(0.5);
 
         // Fix
         //((GridPane)(parent)).add(canvas, 0, 1, 1, 1);
@@ -51,6 +54,10 @@ public abstract class GameEngine {
         parent.getChildren().add(0, canvas);
 
         createAnimationTimer();
+    }
+
+    public void setTogglePauseMenu(Consumer<Boolean> togglePauseMenu) {
+        this.togglePauseMenu = togglePauseMenu;
     }
 
     private void createAnimationTimer() {
@@ -98,7 +105,14 @@ public abstract class GameEngine {
     }
 
     public void setPaused(boolean paused) {
+        if(togglePauseMenu != null) {
+            togglePauseMenu.accept(paused);
+        }
+
         this.paused = paused;
+
+        double opacity = paused ? 0.5 : 1.0;
+        canvas.setOpacity(opacity);
     }
 
     public boolean isRunning() {

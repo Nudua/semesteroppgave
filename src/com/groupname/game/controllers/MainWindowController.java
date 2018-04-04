@@ -21,6 +21,10 @@ public class MainWindowController {
     @FXML
     private VBox pausedMenu;
 
+    public void togglePauseMenu(boolean visible) {
+        pausedMenu.setVisible(visible);
+    }
+
     @FXML
     protected void menuExitToHomeOnClicked(ActionEvent event) {
         game.stop();
@@ -46,14 +50,7 @@ public class MainWindowController {
 
     @FXML
     protected void resumeOnClicked(ActionEvent event) {
-        game.setPaused(!game.isPaused());
-        boolean paused = game.isPaused();
-
-        pausedMenu.setVisible(paused);
-        if(paused) {
-            game.getCanvas().setOpacity(0.5);
-        } else {
-            game.getCanvas().setOpacity(1);
-        }
+        //togglePauseMenu(false);
+        game.setPaused(false);
     }
 }

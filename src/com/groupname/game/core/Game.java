@@ -4,6 +4,7 @@ import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.input.InputManager;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
+import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.*;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
@@ -54,6 +55,10 @@ public class Game extends GameEngine {
         if(isPaused()) {
             // Fade the current level and show the MainMenu
             return;
+        }
+
+        if(inputManager.isDown(PlayerInputDefinitions.START)) {
+            setPaused(true);
         }
 
         if(currentLevel.getState() == LevelState.GameOver) {
