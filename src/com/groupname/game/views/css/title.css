@@ -1,3 +1,15 @@
-.test {
-    -fx-background-color: red;
+.titlebutton {
+     -fx-font-family: "Arial Black";
+     -fx-font-size: 1.3em;
+     -fx-padding: 10px;
+     -fx-background-color: none;
+
+}
+
+.titlebutton:focused {
+    -fx-text-fill: green;
+}
+
+.active {
+    -fx-text-fill: green;
 }

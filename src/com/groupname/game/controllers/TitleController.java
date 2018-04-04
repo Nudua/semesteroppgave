@@ -19,4 +19,16 @@ public class TitleController {
         SceneManager sceneManager = SceneManager.INSTANCE;
         sceneManager.changeToScene(SceneName.Game);
     }
+
+
+    @FXML
+    protected void exitGameOnClick(ActionEvent event) {
+        Platform.exit();
+    }
+
+    @FXML
+    protected void navigateToCreditsOnClick(ActionEvent event) {
+        SceneManager sceneManager = SceneManager.INSTANCE;
+        sceneManager.changeToScene(SceneName.Credits);
+    }
 }
