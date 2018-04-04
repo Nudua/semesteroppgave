@@ -14,9 +14,10 @@
             <Label styleClass="titlepaused" text="Paused" />
             <Button styleClass="titlebutton" mnemonicParsing="false" text="Resume" />
              <Button styleClass="titlebutton" mnemonicParsing="false" text="Save" />
-             <Button styleClass="titlebutton" mnemonicParsing="false" text="Exit to main menu" />
              <Button styleClass="titlebutton" mnemonicParsing="false" text="Restart level" />
              <Button styleClass="titlebutton" mnemonicParsing="false" text="Restart game" />
+             <Button styleClass="titlebutton" mnemonicParsing="false" text="Exit" />
+
 
 
 
