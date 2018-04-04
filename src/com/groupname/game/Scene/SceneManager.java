@@ -139,6 +139,8 @@ public enum SceneManager {
                 sceneInfo.setInit(editor::start);
                 sceneInfo.setScene(editor.getScene());
 
+                GridPane.setRowIndex(editor.getCanvas(), 1);
+
                 controller.init(editor);
             }
             else {
