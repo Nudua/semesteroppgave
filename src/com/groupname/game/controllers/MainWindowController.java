@@ -6,6 +6,7 @@ import com.groupname.game.core.Game;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 
 import java.util.Objects;
 
@@ -18,7 +19,10 @@ public class MainWindowController {
     }
 
     @FXML
-    protected void menuNewGameOnClicked(ActionEvent event) {
+    private VBox pausedMenu;
+
+    @FXML
+    protected void menuExitToHomeOnClicked(ActionEvent event) {
         game.stop();
 
         SceneManager sceneManager = SceneManager.INSTANCE;
@@ -26,23 +30,30 @@ public class MainWindowController {
     }
 
     @FXML
-    protected void GameOverOnClicked(ActionEvent event) {
-        game.stop();
-
-        SceneManager sceneManager = SceneManager.INSTANCE;
-        sceneManager.changeToScene(SceneName.GameOver);
+    protected void saveGameOnClicked(ActionEvent event) {
+        System.out.println("Save game: check");
     }
 
     @FXML
-    protected void CreditsOnClicked(ActionEvent event) {
-        game.stop();
-
-        SceneManager sceneManager = SceneManager.INSTANCE;
-        sceneManager.changeToScene(SceneName.Credits);
+    protected void restartLevelOnClicked(ActionEvent event) {
+        System.out.println("Restart level: check");
     }
 
     @FXML
-    protected void menuExitOnClicked(ActionEvent event) {
-        Platform.exit();
+    protected void restartGameOnClicked(ActionEvent event) {
+        System.out.println("Restart game: check");
+    }
+
+    @FXML
+    protected void resumeOnClicked(ActionEvent event) {
+        game.setPaused(!game.isPaused());
+        boolean paused = game.isPaused();
+
+        pausedMenu.setVisible(paused);
+        if(paused) {
+            game.getCanvas().setOpacity(0.5);
+        } else {
+            game.getCanvas().setOpacity(1);
+        }
     }
 }
