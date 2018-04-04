@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
-
-
 <?import javafx.scene.layout.VBox?>
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupname.game.controllers.TitleController">
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupname.game.controllers.TitleController">
    <children>
-      <Button onAction="#navigateToGameOnClick" layoutX="248.0" layoutY="187.0" mnemonicParsing="false" text="Go To Game" />
-      <Button onAction="#navigateToEditorOnClick" layoutX="248.0" layoutY="187.0" mnemonicParsing="false" text="Go To editor" />
+      <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navigateToEditorOnClick" text="Go To editor" />
+            <Button mnemonicParsing="false" onAction="#navigateToGameOnClick" text="Go To Game" />
+         </children>
+      </VBox>
    </children>
-</VBox>
+   <columnConstraints>
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+   </rowConstraints>
+</GridPane>
