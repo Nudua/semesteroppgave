@@ -12,7 +12,7 @@
    <children>
       <VBox alignment="CENTER" prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navigateToEditorOnClick" text="Go To editor" />
+            <Button styleClass="test" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navigateToEditorOnClick" text="Go To editor" />
             <Button mnemonicParsing="false" onAction="#navigateToGameOnClick" text="Go To Game" />
          </children>
       </VBox>

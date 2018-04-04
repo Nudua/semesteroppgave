@@ -140,6 +140,7 @@ public enum SceneManager {
             }
             else {
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add("/com/groupname/game/views/css/title.css");
                 sceneInfo.setScene(scene);
             }
         }
