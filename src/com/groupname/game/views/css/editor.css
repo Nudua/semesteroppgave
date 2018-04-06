@@ -1,0 +1,13 @@
+.items-box {
+    -fx-background-color: lightgray;
+    -fx-border-color: black;
+    -fx-border-image-width: 2px;
+}
+
+.item {
+    -fx-background-color: red;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);
+    -fx-border-color: black;
+    -fx-border-image-width: 4px;
+
+}

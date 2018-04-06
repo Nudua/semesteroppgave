@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import com.groupname.game.views.controls.EditorItemControl ?>
 
-
-<GridPane prefHeight="920.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupname.game.controllers.EditorController">
+<GridPane maxHeight="850" maxWidth="1280" minHeight="850" minWidth="1280" prefHeight="850" prefWidth="1280" stylesheets="@css/editor.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.groupname.game.controllers.EditorController">
    <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" />
+      <RowConstraints minHeight="100.0" prefHeight="100.0" />
+      <RowConstraints minHeight="720.0" prefHeight="720.0" vgrow="ALWAYS" />
    </rowConstraints>
    <columnConstraints>
-      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints maxWidth="1280" minWidth="1280.0" prefWidth="1280.0" />
    </columnConstraints>
    <children>
       <MenuBar GridPane.hgrow="ALWAYS">
@@ -28,5 +35,10 @@
             <Menu mnemonicParsing="false" text="Test" />
         </menus>
       </MenuBar>
+      <HBox alignment="CENTER_LEFT" prefHeight="80.0" styleClass="items-box" GridPane.rowIndex="1">
+         <children>
+             <EditorItemControl maxWidth="80" maxHeight="80" imagePath="enemy.png" prefHeight="80" prefWidth="80" />
+         </children>
+      </HBox>
    </children>
 </GridPane>
