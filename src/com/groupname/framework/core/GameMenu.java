@@ -3,18 +3,18 @@ package com.groupname.framework.core;
 /**
  * Represents a menu that is shown when the game is paused.
  *
- * Implementations must support all the buttons in the PauseMenu enumeration:
+ * Implementations must support all the buttons in the GameMenu enumeration:
  *          *****************
  *          *     PAUSED    * <- Sample header
  *          *****************
- *          * Resume        * <- PauseMenu.Resume
- *          * Save          * <- PauseMenu.Save etc.
+ *          * Resume        * <- GameMenu.Resume
+ *          * Save          * <- GameMenu.Save etc.
  *          * Restart Level *
  *          * Restart Game  *
  *          * Exit          *
  *          *****************
  */
-public interface PauseMenu {
+public interface GameMenu<T extends Enum<T>> {
 
     /**
      * Sets the Runnable to be executed when the selected pausebutton is pressed by the user.
@@ -22,7 +22,7 @@ public interface PauseMenu {
      * @param button to assign the Runnable to.
      * @param action the Runnable to execute.
      */
-    void setOnClicked(PauseButton button, Runnable action);
+    void setOnClicked(T button, Runnable action);
 
 
     /**
@@ -30,7 +30,7 @@ public interface PauseMenu {
      * @param button the element to set the visibility of.
      * @param visibility the new state.
      */
-    void setButtonVisibility(PauseButton button, boolean visibility);
+    void setButtonVisibility(T button, boolean visibility);
 
     /**
      * Sets if the button is currently enabled or not.
@@ -39,10 +39,10 @@ public interface PauseMenu {
      * @param button the element to enable or disable.
      * @param enabled the new state.
      */
-    void setButtonEnabled(PauseButton button, boolean enabled);
+    void setButtonEnabled(T button, boolean enabled);
 
     /**
-     * Updates the current state of the PauseMenu.
+     * Updates the current state of the GameMenu.
      * Should be called within your game loop.
      */
     void update();
