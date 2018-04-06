@@ -79,6 +79,7 @@ public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
         int index = 0;
         for(T constant : enumConstants) {
             Button button = createButton(constant);
+            button.setOnAction((event) -> runActionIfExists(constant));
             menuItems.put(constant, new MenuItem(index, button));
             index++;
         }
