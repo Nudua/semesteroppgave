@@ -74,6 +74,8 @@ public class GameController implements Controller {
     }
 
     private void pause() {
+        Platform.runLater(() -> pauseMenu.focusButton(PauseButton.Resume));
+
         isPaused = true;
         pauseMenu.setVisible(true);
         canvas.setOpacity(0.5d);

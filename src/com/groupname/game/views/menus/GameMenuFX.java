@@ -4,6 +4,7 @@ import com.groupname.framework.core.GameMenu;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.util.Strings;
 import com.groupname.game.input.PlayerInputDefinitions;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -84,6 +85,14 @@ public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
         //this.setOnKeyReleased(KeyEvent::consume);
 
         createButtons(enumType.getEnumConstants());
+
+        Platform.runLater(() -> {
+            focusButton(enumType.getEnumConstants()[0]);
+        });
+    }
+
+    public void focusButton(T button) {
+        menuItems.get(button).button.requestFocus();
     }
 
     private void createButtons(T[] enumConstants) {
@@ -101,13 +110,42 @@ public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
         //button.setPrefSize(400,100);
         button.setFocusTraversable(false);
         button.getStyleClass().add("titlebutton");
-        button.setOnAction((event -> {
-            runActionIfExists(enumConstant);
-        }));
+        button.setOnAction((event -> runActionIfExists(enumConstant)));
+        button.setOnMouseEntered((event -> button.requestFocus()));
 
         this.getChildren().add(button);
         return button;
     }
+
+    /*
+    private String parseButtonName(T enumConstant) {
+        String name = enumConstant.name();
+
+        //char[] letters = name.toCharArray();
+
+        CharSequence letters = name;
+
+        int index = indexOfUppercaseLetter(letters);
+
+        if(index == -1) {
+            return name;
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(name.substring(0, index));
+
+        return name;
+    }
+
+    private int indexOfUppercaseLetter(CharSequence letters) {
+        for(int i = 0; i < letters.length(); i++) {
+            if(Character.isUpperCase(letters.charAt(i))) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    */
 
     /**
      * Sets the Runnable to be executed when the selected pausebutton is pressed by the user.
