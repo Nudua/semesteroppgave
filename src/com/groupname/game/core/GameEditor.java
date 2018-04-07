@@ -9,45 +9,44 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
+import com.groupname.game.levels.core.LevelBase;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 
+// Convert to level/View
 
-
-public class GameEditor extends GameEngine {
+public class GameEditor extends LevelBase {
 
     public enum Mode {
         Editing,
         Playing
     }
 
-    private final InputManager inputManager;
     private final MouseInput mouseInput;
-    private final SpriteBatch spriteBatch;
     private Image backgroundImage;
 
     private Mode mode = Mode.Editing;
 
-    public GameEditor(Pane parent) {
-        super(parent, AppSettings.SCREEN_BOUNDS.getWidth(), AppSettings.SCREEN_BOUNDS.getHeight());
-        inputManager = new InputManager(scene);
-        mouseInput = new MouseInput(getCanvas());
-        spriteBatch = new SpriteBatchFX(graphicsContext);
-        background = Color.BLACK;
+    public GameEditor(Game game, Canvas canvas) {
+        super(game, canvas.getGraphicsContext2D());
 
-        //inputManager.setEnabled(false);
+        mouseInput = new MouseInput(canvas);
+        backgroundColor = Color.BLACK;
+    }
+
+    @Override
+    public void initialize() {
         backgroundImage = Content.loadImage("background1.png", ResourceType.Background);
     }
 
     @Override
-    protected void update() {
+    public void update() {
         // Clear the screen
-        graphicsContext.setFill(background);
-        graphicsContext.fillRect(0,0, width, height);
-
-        graphicsContext.setFill(Color.BLACK);
+        clearScreen();
 
         Vector2D movingPosition = mouseInput.getMovingCoordinates();
         Vector2D pressedPosition = mouseInput.getPressedCoordinates();
@@ -57,7 +56,7 @@ public class GameEditor extends GameEngine {
     }
 
     @Override
-    protected void draw() {
+    public void draw() {
 
         drawBackground();
 

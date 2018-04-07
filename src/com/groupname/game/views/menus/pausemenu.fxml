@@ -8,11 +8,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 <?import javafx.scene.control.Label?>
-<fx:root stylesheets="@../css/title.css" type="javafx.scene.layout.VBox" visible="false" alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root stylesheets="@../css/title.css" type="javafx.scene.layout.VBox" visible="true" alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
        <Label styleClass="titlepaused" text="Paused" />
+       <!--
        <Button fx:id="resumeButton" styleClass="titlebutton" mnemonicParsing="false" text="Resume" />
        <Button fx:id="saveButton" styleClass="titlebutton" mnemonicParsing="false" text="Save" />
        <Button fx:id="restartLevelButton" styleClass="titlebutton" mnemonicParsing="false" text="Restart level" />
        <Button fx:id="restartGameButton" styleClass="titlebutton" mnemonicParsing="false" text="Restart game" />
        <Button fx:id="exitButton" styleClass="titlebutton" mnemonicParsing="false" text="Exit to main menu" />
+       -->
 </fx:root>

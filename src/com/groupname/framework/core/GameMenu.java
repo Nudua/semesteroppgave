@@ -1,5 +1,7 @@
 package com.groupname.framework.core;
 
+import com.groupname.framework.input.InputManager;
+
 /**
  * Represents a menu that is shown when the game is paused.
  *
@@ -45,6 +47,6 @@ public interface GameMenu<T extends Enum<T>> {
      * Updates the current state of the GameMenu.
      * Should be called within your game loop.
      */
-    void update();
+    void update(InputManager inputManager);
 }
 

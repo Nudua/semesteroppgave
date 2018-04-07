@@ -2,9 +2,12 @@ package com.groupname.game.views.menus;
 
 import com.groupname.framework.core.GameMenu;
 import com.groupname.framework.input.InputManager;
+import com.groupname.framework.util.Strings;
+import com.groupname.game.input.PlayerInputDefinitions;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -14,7 +17,11 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.security.InvalidParameterException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+
+// Bugs, add proper mouse support, set initial focus, set focus when mouse clicked, mouse hover colors, MainMenu -> Main Menu (split on case)
 
 /**
  * Represents a menu that is shown when the game is paused.
@@ -33,7 +40,7 @@ import java.util.Objects;
  *  This implementation is based on FXML with the buttons and general layout is defined within the pausemenu.fxml file
  *  and the style is contained within pausemenu.css.
  */
-public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
+public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
 
     // Internal helper class
     private class MenuItem {
@@ -47,17 +54,17 @@ public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
         }
     }
 
-    private final HashMap<T, MenuItem> menuItems;
-    private final InputManager inputManager;
+    private HashMap<T, MenuItem> menuItems;
 
-    public PauseMenu(Class<T> enumType, InputManager inputManger) {
-        this.inputManager = Objects.requireNonNull(inputManger);
+    public GameMenuFX(Class<T> enumType, String fxmlSource) {
+        Strings.requireNonNullAndNotEmpty(fxmlSource);
 
         if(!enumType.isEnum()) {
             throw new InvalidParameterException();
         }
 
-        FXMLLoader fxmlLoader = new FXMLLoader(PauseMenu.class.getResource("/com/groupname/game/views/menus/pausemenu.fxml"));
+        //"/com/groupname/game/views/menus/pausemenu.fxml"
+        FXMLLoader fxmlLoader = new FXMLLoader(GameMenuFX.class.getResource(fxmlSource));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         fxmlLoader.setClassLoader(getClass().getClassLoader());
@@ -68,9 +75,13 @@ public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
             throw new RuntimeException(exception);
         }
 
-        setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, CornerRadii.EMPTY, Insets.EMPTY)));
+        //setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 
         menuItems = new HashMap<>();
+
+        // Ignore the default keyboard input
+        //this.setOnKeyPressed(KeyEvent::consume);
+        //this.setOnKeyReleased(KeyEvent::consume);
 
         createButtons(enumType.getEnumConstants());
     }
@@ -79,7 +90,7 @@ public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
         int index = 0;
         for(T constant : enumConstants) {
             Button button = createButton(constant);
-            button.setOnAction((event) -> runActionIfExists(constant));
+            //button.setOnAction((event) -> runActionIfExists(constant));
             menuItems.put(constant, new MenuItem(index, button));
             index++;
         }
@@ -87,29 +98,16 @@ public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
 
     private Button createButton(T enumConstant) {
         Button button = new Button(enumConstant.name());
+        //button.setPrefSize(400,100);
+        button.setFocusTraversable(false);
+        button.getStyleClass().add("titlebutton");
+        button.setOnAction((event -> {
+            runActionIfExists(enumConstant);
+        }));
+
         this.getChildren().add(button);
         return button;
     }
-
-    /*
-    private void createAndSetupButtonsMap() {
-        assert buttons != null;
-
-        Button[] allButtons = {resumeButton, saveButton, restartLevelButton, restartGameButton, exitButton};
-        PauseButton[] pauseButtons = PauseButton.values();
-
-        assert allButtons.length == pauseButtons.length;
-
-        for(int i = 0; i < allButtons.length; i++) {
-            Button currentButton = allButtons[i];
-            PauseButton currentPauseButton = pauseButtons[i];
-
-            currentButton.setOnAction((event) -> runActionIfExists(currentPauseButton));
-
-            buttons.put(pauseButtons[i], allButtons[i]);
-        }
-    }
-    */
 
     /**
      * Sets the Runnable to be executed when the selected pausebutton is pressed by the user.
@@ -163,13 +161,62 @@ public class PauseMenu<T extends Enum<T>> extends VBox implements GameMenu<T> {
         }
     }
 
+    private MenuItem getMenuItemFromIndex(int index) {
+        Optional<MenuItem> menuItem = menuItems.entrySet()
+                .stream()
+                .filter(item -> item.getValue().index == index)
+                .map(Map.Entry::getValue)
+                .findFirst();
+
+        return menuItem.isPresent() ? menuItem.get() : null;
+    }
+
+    int currentIndex = 0;
+
     /**
      * Updates the current state of the GameMenu.
      */
     @Override
-    public void update() {
+    public void update(InputManager inputManager) {
         // Sort out focusing here via the inputmanager
+        if(inputManager.wasPressed(PlayerInputDefinitions.UP) || inputManager.wasPressed(PlayerInputDefinitions.SHOOT_UP)) {
 
+            currentIndex--;
+
+            if(currentIndex < 0) {
+                currentIndex = 0;
+            } else {
+                MenuItem current = getMenuItemFromIndex(currentIndex);
+                if(current != null) {
+                    current.button.requestFocus();
+                }
+            }
+        } else if(inputManager.wasPressed(PlayerInputDefinitions.DOWN) || inputManager.wasPressed(PlayerInputDefinitions.SHOOT_DOWN)) {
+            currentIndex++;
+
+            if(currentIndex > menuItems.values().size() - 1) {
+                currentIndex = menuItems.values().size() - 1;
+            } else {
+                MenuItem current = getMenuItemFromIndex(currentIndex);
+                if(current != null) {
+                    current.button.requestFocus();
+                }
+            }
+        }
+
+        if(inputManager.wasPressed(PlayerInputDefinitions.START)) {
+            MenuItem current = getMenuItemFromIndex(currentIndex);
+            System.out.println("Executing: " + current.index);
+
+            if(current.action != null) {
+                current.action.run();
+            }
+        }
+
+    }
+
+    private void setActiveMenuItem(MenuItem menuItem) {
+        menuItem.button.requestFocus();
     }
 }
 

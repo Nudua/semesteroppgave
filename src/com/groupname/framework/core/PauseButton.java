@@ -5,5 +5,5 @@ public enum PauseButton {
     Save,
     RestartLevel,
     RestartGame,
-    Exit
+    MainMenu
 }

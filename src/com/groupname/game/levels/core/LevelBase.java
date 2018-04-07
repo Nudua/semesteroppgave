@@ -19,28 +19,27 @@ public abstract class LevelBase {
 
     protected boolean initialized;
     // Maybe just access directly from game, or create a getter?
-    protected GraphicsContext graphicsContext;
+    //protected GraphicsContext graphicsContext;
 
     protected SpriteBatch spriteBatch;
     protected InputManager inputManager;
+    protected GraphicsContext graphicsContext;
 
     protected LevelState state;
 
     protected Size screenBounds;
 
     protected Color backgroundColor;
-    protected GameEngine parent;
 
     private final Map<String, SpriteSheet> spriteSheets;
     protected final List<GameObject> gameObjects;
 
-    // Figure out the actual overloads, probably just pass the game and get stuff from there
-    public LevelBase(GameEngine parent, InputManager inputManager) {
-        this.parent = Objects.requireNonNull(parent);
-        this.graphicsContext = parent.getGraphicsContext();
 
-        this.inputManager = Objects.requireNonNull(inputManager);
+    // Figure out the actual overloads, probably just pass the game and get stuff from there
+    public LevelBase(Game parent, GraphicsContext graphicsContext) {
         this.screenBounds = parent.getScreenBounds();
+        this.inputManager = parent.getInputManager();
+        this.graphicsContext = Objects.requireNonNull(graphicsContext);
 
         this.spriteBatch = new SpriteBatchFX(graphicsContext);
         this.spriteSheets = new HashMap<>();
@@ -89,6 +88,7 @@ public abstract class LevelBase {
 
     // Maybe move into the GameEngine class, or into some drawing class
     protected void clearScreen(Color fill) {
+
         graphicsContext.setFill(fill);
         graphicsContext.fillRect(0, 0, screenBounds.getWidth(), screenBounds.getHeight());
     }

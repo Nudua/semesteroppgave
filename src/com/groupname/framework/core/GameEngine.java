@@ -16,13 +16,13 @@ import java.util.function.Consumer;
 
 public abstract class GameEngine {
 
-    private Timeline gameLoop;
-    private Canvas canvas;
+    //private Timeline gameLoop;
+    protected Canvas canvas;
 
     protected int width;
     protected int height;
 
-    protected GraphicsContext graphicsContext;
+    //private GraphicsContext graphicsContext;
 
     protected long frameCounter;
 
@@ -31,71 +31,64 @@ public abstract class GameEngine {
 
     protected Color background = Color.CORNFLOWERBLUE;
 
-    protected Scene scene;
+    //protected Scene scene;
 
     private AnimationTimer animationTimer;
 
-    private Consumer<Boolean> togglePauseMenu;
+    //private Consumer<Boolean> togglePauseMenu;
 
-    public GameEngine(Pane parent, int width, int height) {
+    public GameEngine(int width, int height) {
         this.width = width;
         this.height = height;
 
-        this.scene = new Scene(parent);
+        //this.scene = new Scene(parent);
 
-        canvas = new Canvas(width, height);
-        graphicsContext = canvas.getGraphicsContext2D();
+        //canvas = new Canvas(width, height);
+        //graphicsContext = canvas.getGraphicsContext2D();
         //canvas.setOpacity(0.5);
 
         // Fix
         //((GridPane)(parent)).add(canvas, 0, 1, 1, 1);
         //GridPane.setRowIndex(canvas, 1);
         //parent.getChildren().add(canvas);
-        parent.getChildren().add(0, canvas);
+        //parent.getChildren().add(0, canvas);
 
         createAnimationTimer();
     }
 
+    /*
     public void setTogglePauseMenu(Consumer<Boolean> togglePauseMenu) {
-        this.togglePauseMenu = togglePauseMenu;
+       this.togglePauseMenu = togglePauseMenu;
     }
+    */
+
+    /*
+    public void setCanvas(Canvas canvas) {
+        this.canvas = Objects.requireNonNull(canvas);
+    }
+    */
+
+    /*
+    public GraphicsContext getGraphicsContext() {
+        return canvas.getGraphicsContext2D();
+    }
+    */
 
     private void createAnimationTimer() {
         animationTimer = new GameLoopTimer(this::update, this::draw);
-
-        /*
-        animationTimer = new AnimationTimer() {
-            //private final long targetDuration = 15_000_000;
-            //private long lastUpdate = 0;
-
-            @Override
-            public void handle(long now) {
-                //long duration = now - lastUpdate;
-
-                // Around 60fps
-                //if(duration >= targetDuration) {
-                    update();
-                    draw();
-                    //lastUpdate = now;
-                    //System.out.println(duration);
-                //}
-            }
-        };
-        */
     }
 
     public Size getScreenBounds() {
         return new Size(width, height);
     }
 
-    public GraphicsContext getGraphicsContext() {
-        return graphicsContext;
-    }
-
-    public Canvas getCanvas() {
+    /*
+    protected Canvas getCanvas() {
         return canvas;
     }
+    */
 
+    /*
     public Scene getScene() {
         return scene;
     }
@@ -113,6 +106,16 @@ public abstract class GameEngine {
 
         double opacity = paused ? 0.5 : 1.0;
         canvas.setOpacity(opacity);
+    }
+    */
+
+    protected boolean isPaused() {
+        return paused;
+    }
+
+    // not sure yet
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public boolean isRunning() {
@@ -134,10 +137,12 @@ public abstract class GameEngine {
         animationTimer.stop();
     }
 
+    /*
     protected void setSize(double width, double height) {
         canvas.setWidth(width);
         canvas.setHeight(height);
     }
+    */
 
 
     /*

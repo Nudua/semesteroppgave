@@ -6,9 +6,11 @@ import com.groupname.framework.graphics.background.transitions.ArrowScreenTransi
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.graphics.background.SierpinskiTriangleBackground;
 import com.groupname.framework.input.InputManager;
+import com.groupname.game.core.Game;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -17,8 +19,8 @@ public class SierpinksiTestLevel extends LevelBase {
     private SierpinskiTriangleBackground sierpinskiBackground;
     private ScreenTransition arrowScreenTransition;
 
-    public SierpinksiTestLevel(GameEngine game, InputManager inputManager) {
-        super(game, inputManager);
+    public SierpinksiTestLevel(Game game, GraphicsContext graphicsContext) {
+        super(game, graphicsContext);
         backgroundColor = Color.DARKSLATEBLUE;
     }
 

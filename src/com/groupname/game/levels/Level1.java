@@ -10,12 +10,14 @@ import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.core.Game;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -25,8 +27,8 @@ import java.util.Arrays;
 public class Level1 extends LevelBase {
 
     private Player player;
-    public Level1(GameEngine game, InputManager inputManager) {
-        super(game, inputManager);
+    public Level1(Game game, GraphicsContext graphicsContext) {
+        super(game, graphicsContext);
 
         backgroundColor = Color.CORNFLOWERBLUE;
     }
@@ -116,9 +118,11 @@ public class Level1 extends LevelBase {
 
     public void update() {
         // Update input to the most recent state
+        /*
         if(inputManager.isEnabled()) {
             inputManager.update();
         }
+        */
 
         boolean anyEnemyAlive = false;
         // Update all our gameobjects
@@ -147,6 +151,7 @@ public class Level1 extends LevelBase {
 
     public void draw() {
         clearScreen();
+
 
         // We should consider creating a class for drawing text
         graphicsContext.setFill(Color.BLACK);

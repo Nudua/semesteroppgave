@@ -8,11 +8,13 @@ import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.IntVector2D;
+import com.groupname.game.core.Game;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.framework.graphics.background.ScrollingText;
 import com.groupname.game.levels.core.LevelState;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
@@ -24,8 +26,8 @@ public class Credits extends LevelBase {
     private SpaceEffect spaceEffect;
     private ScrollingText scrollingText;
 
-    public Credits(GameEngine game, InputManager inputManager) {
-        super(game, inputManager);
+    public Credits(Game game, GraphicsContext graphicsContext) {
+        super(game, graphicsContext);
 
         backgroundColor = Color.BLACK;
     }

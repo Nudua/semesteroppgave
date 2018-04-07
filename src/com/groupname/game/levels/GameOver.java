@@ -7,9 +7,11 @@ import com.groupname.framework.graphics.background.gameover.WeatherEffect;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.game.core.Game;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -21,8 +23,8 @@ public class GameOver extends LevelBase {
 
     private WeatherEffect weatherEffect;
 
-    public GameOver(GameEngine gameEngine, InputManager inputManager) {
-        super(gameEngine, inputManager);
+    public GameOver(Game game, GraphicsContext graphicsContext) {
+        super(game, graphicsContext);
 
         backgroundColor = Color.BLACK;
     }

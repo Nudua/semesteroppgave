@@ -1,20 +1,118 @@
 package com.groupname.game.Scene;
 
-import com.groupname.framework.core.GameEngine;
-import com.groupname.game.controllers.EditorController;
-import com.groupname.game.controllers.MainWindowController;
+import com.groupname.framework.core.GameMenu;
+import com.groupname.framework.core.PauseButton;
+import com.groupname.framework.input.InputManager;
+import com.groupname.game.controllers.Controller;
 import com.groupname.game.core.Game;
-import com.groupname.game.core.GameEditor;
-import com.groupname.game.levels.GameOver;
+import com.groupname.game.data.AppSettings;
+import com.groupname.game.views.menus.GameMenuFX;
+import com.groupname.game.views.menus.TitleMenuNames;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.GridPane;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.security.InvalidParameterException;
 import java.util.*;
 
+
+
+
+public enum SceneManager {
+    INSTANCE;
+
+    private Stage primaryStage = null;
+    private final Map<SceneName, SceneInfo> scenes;
+    private boolean initialized;
+    private Game game;
+
+    SceneManager() {
+        scenes = new HashMap<>();
+
+        createSceneInfos();
+    }
+
+    private void setupGame(Scene scene) {
+        assert scene != null;
+
+        // Get width and height from canvas instead?
+        game = new Game(scene, AppSettings.SCREEN_BOUNDS.getWidth(), AppSettings.SCREEN_BOUNDS.getHeight());
+    }
+
+    private void createSceneInfos() {
+        SceneInfo title= new SceneInfo(SceneName.Title, "Title - Untitled Game", "../views/titleview.fxml");
+        SceneInfo game = new SceneInfo(SceneName.Game, "Game - Untitled Game", "../views/gameview.fxml");
+        SceneInfo editor = new SceneInfo(SceneName.Editor, "Level editor!", "../views/editorview.fxml");
+
+        scenes.put(SceneName.Title, title);
+        scenes.put(SceneName.Game, game);
+        scenes.put(SceneName.Editor, editor);
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = Objects.requireNonNull(primaryStage, "primaryStage cannot be null");
+        initialized = true;
+    }
+
+    public static void navigate(SceneName sceneName) {
+        INSTANCE.changeToScene(sceneName);
+    }
+
+    private void changeToScene(SceneName sceneName) {
+        Objects.requireNonNull(sceneName);
+
+        if(!scenes.containsKey(sceneName)) {
+            throw new InvalidParameterException();
+        }
+
+        SceneInfo info = scenes.get(sceneName);
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(info.getViewPath()));
+
+        Pane root;
+
+        try {
+            root = loader.load();
+
+            Controller controller = loader.getController();
+
+            Scene scene = new Scene(root);
+
+            if(game == null) {
+                setupGame(scene);
+            } else {
+                game.setInputManager(new InputManager(scene));
+            }
+
+            controller.init(game);
+
+            /*
+            if(!game.isRunning()) {
+                game.start();
+            }
+            */
+
+
+
+
+            primaryStage.setTitle(info.getTitle());
+            primaryStage.setScene(scene);
+
+            // Change out the canvas we're drawing to in the game class
+
+        } catch (IOException exception) { // throw other exception
+            exception.printStackTrace();
+        }
+    }
+}
+
+/*
 // Singleton - https://en.wikipedia.org/wiki/Singleton_pattern
 public enum SceneManager {
     INSTANCE;
@@ -37,7 +135,7 @@ public enum SceneManager {
     // Better naming
     private void createSceneInfos() {
         SceneInfo titleSceneInfo = new SceneInfo(SceneName.Title, "Title - Untitled Game", "../views/titleview.fxml");
-        SceneInfo gameSceneInfo = new SceneInfo(SceneName.Game, "Game - Untitled Game", "../views/mainwindow.fxml");
+        SceneInfo gameSceneInfo = new SceneInfo(SceneName.Game, "Game - Untitled Game", "../views/gameview.fxml");
         SceneInfo testGameSceneInfo = new SceneInfo(SceneName.GameOver, "Game - Test", "");
         SceneInfo creditsSceneInfo = new SceneInfo(SceneName.Credits, "Game - Credits", "");
 
@@ -122,7 +220,7 @@ public enum SceneManager {
 
             // This is a bit lazy, but fine for now, do something with generics
             if(sceneInfo.getSceneName() == SceneName.Game) {
-                MainWindowController controller = loader.getController();
+                GameController controller = loader.getController();
 
                 Game game = new Game(root, 1280, 720);
                 game.setTogglePauseMenu(controller::togglePauseMenu);
@@ -156,3 +254,5 @@ public enum SceneManager {
 
 
 }
+
+*/
