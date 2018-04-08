@@ -35,6 +35,15 @@ public class InputManager {
         initializeInputAdapters(parent);
     }
 
+    public void updateScene(Scene scene) {
+        for(int i = 0; i < inputAdapters.size(); i++) {
+            if(inputAdapters.get(i) instanceof KeyboardInput) {
+                inputAdapters.remove(inputAdapters.get(i));
+                inputAdapters.add(new KeyboardInput(scene));
+            }
+        }
+    }
+
     public void setBindings(Set<InputBinding> bindings) {
         this.bindings.clear();
         this.bindings.addAll(bindings);

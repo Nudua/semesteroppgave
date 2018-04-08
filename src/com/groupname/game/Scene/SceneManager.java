@@ -87,7 +87,7 @@ public enum SceneManager {
             if(game == null) {
                 setupGame(scene);
             } else {
-                game.setInputManager(new InputManager(scene));
+                game.getInputManager().updateScene(scene);
             }
 
             controller.init(game);

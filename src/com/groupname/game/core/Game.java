@@ -44,9 +44,11 @@ public class Game extends GameEngine {
         inputManager = new InputManager(owner);
     }
 
+    /*
     public void setInputManager(InputManager inputManager) {
         this.inputManager = Objects.requireNonNull(inputManager);
     }
+    */
 
     public InputManager getInputManager() {
         return inputManager;
