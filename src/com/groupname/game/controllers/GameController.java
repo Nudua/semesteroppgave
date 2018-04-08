@@ -15,6 +15,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class GameController implements Controller {
     @FXML protected GridPane root;
     @FXML protected Canvas canvas;
+    @FXML protected Button pauseButton;
 
     private Game game;
 
@@ -73,18 +75,25 @@ public class GameController implements Controller {
         }
     }
 
+    @FXML
+    protected void pauseButtonOnAction(ActionEvent event) {
+        pause();
+    }
+
     private void pause() {
         Platform.runLater(() -> pauseMenu.focusButton(PauseButton.Resume));
 
         isPaused = true;
         pauseMenu.setVisible(true);
         canvas.setOpacity(0.5d);
+        pauseButton.setVisible(false);
     }
 
     private void unPause() {
         isPaused = false;
         pauseMenu.setVisible(false);
         canvas.setOpacity(1);
+        pauseButton.setVisible(true);
     }
 
     private void draw() {

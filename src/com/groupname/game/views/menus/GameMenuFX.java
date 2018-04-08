@@ -105,8 +105,24 @@ public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
         }
     }
 
+    public String addWhiteSpaceOnUppercaseLetter(String value) {
+        String[] parts = value.split("(?<=.)(?=\\p{Lu})");
+
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < parts.length; i++) {
+            sb.append(parts[i]);
+
+            if(i < parts.length - 1) {
+                sb.append(' ');
+            }
+        }
+
+        return sb.toString();
+    }
+
     private Button createButton(T enumConstant) {
-        Button button = new Button(enumConstant.name());
+        Button button = new Button(addWhiteSpaceOnUppercaseLetter(enumConstant.name()));
         //button.setPrefSize(400,100);
         button.setFocusTraversable(false);
         button.getStyleClass().add("titlebutton");
