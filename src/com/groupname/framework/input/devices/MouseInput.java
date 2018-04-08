@@ -5,7 +5,58 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 
+import java.security.InvalidParameterException;
 import java.util.Objects;
+
+interface TileEvent {
+    void onAction(int x, int y);
+}
+
+// Figure out a better name
+class MouseInputEx {
+
+    private boolean pressed;
+    private TileEvent onClicked;
+    private TileEvent onMove;
+
+    private final int tileSize;
+
+    public MouseInputEx(Node scene, int tileSize) {
+        scene.setOnMouseMoved(this::onMouseMove);
+        scene.setOnMouseClicked(this::onMouseClicked);
+
+        if(tileSize <= 0) {
+            throw new InvalidParameterException("The tileSize cannot be zero or negative!");
+        }
+
+        this.tileSize = tileSize;
+    }
+
+    private void onMouseClicked(MouseEvent mouseEvent) {
+        fireEventIfExists(onClicked, mouseEvent.getX(), mouseEvent.getY());
+    }
+
+    private void onMouseMove(MouseEvent mouseEvent) {
+        fireEventIfExists(onMove, mouseEvent.getX(), mouseEvent.getY());
+    }
+
+    private void fireEventIfExists(TileEvent event, double x, double y) {
+        if(event != null) {
+            int smallX = (int)x / tileSize;
+            int smallY = (int)y / tileSize;
+
+            event.onAction(smallX, smallY);
+        }
+    }
+
+    public void setOnClicked(TileEvent onClicked) {
+        this.onClicked = onClicked;
+    }
+
+    public void setOnMove(TileEvent onHover) {
+        this.onMove = onHover;
+    }
+}
 
 public class MouseInput {
 

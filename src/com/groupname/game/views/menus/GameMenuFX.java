@@ -117,35 +117,39 @@ public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
         return button;
     }
 
-    /*
+
     private String parseButtonName(T enumConstant) {
         String name = enumConstant.name();
 
-        //char[] letters = name.toCharArray();
+        if(name.length() == 1) {
+            return name;
+        }
 
         CharSequence letters = name;
 
-        int index = indexOfUppercaseLetter(letters);
+        int index = indexOfUppercaseLetter(letters, 1);
 
         if(index == -1) {
             return name;
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(name.substring(0, index));
+        stringBuilder.append(name.substring(1, index));
 
         return name;
     }
 
-    private int indexOfUppercaseLetter(CharSequence letters) {
-        for(int i = 0; i < letters.length(); i++) {
+    private int indexOfUppercaseLetter(CharSequence letters, int startIndex) {
+        assert startIndex < letters.length();
+
+        for(int i = startIndex; i < letters.length(); i++) {
             if(Character.isUpperCase(letters.charAt(i))) {
                 return i;
             }
         }
         return -1;
     }
-    */
+
 
     /**
      * Sets the Runnable to be executed when the selected pausebutton is pressed by the user.

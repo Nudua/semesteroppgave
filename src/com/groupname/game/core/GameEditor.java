@@ -9,6 +9,7 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
+import com.groupname.game.entities.Player;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -41,6 +42,7 @@ public class GameEditor extends LevelBase {
     @Override
     public void initialize() {
         backgroundImage = Content.loadImage("background1.png", ResourceType.Background);
+
     }
 
     @Override
