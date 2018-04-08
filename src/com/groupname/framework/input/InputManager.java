@@ -3,6 +3,8 @@ package com.groupname.framework.input;
 import com.groupname.framework.input.devices.HitboxInput;
 import com.groupname.framework.input.devices.InputAdapter;
 import com.groupname.framework.input.devices.KeyboardInput;
+import com.groupname.framework.input.xinput.LibraryNotFoundException;
+import com.groupname.framework.input.xinput.XInput;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;
 import com.groupname.framework.serial.SerialPortFactory;
@@ -61,7 +63,18 @@ public class InputManager {
         // Keyboard
         inputAdapters.add(new KeyboardInput(parent));
 
+        initializeXInput();
         initializeHitbox();
+    }
+
+    private void initializeXInput() {
+        try {
+            XInput xInput = new XInput();
+            xInput.initialize();
+            inputAdapters.add(xInput);
+        } catch (LibraryNotFoundException ex) {
+            System.out.println("XInput library not found");
+        }
     }
 
     private void initializeHitbox() {
