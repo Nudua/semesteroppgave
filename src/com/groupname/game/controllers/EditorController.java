@@ -9,6 +9,7 @@ import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.GameEditor;
+import com.groupname.game.editor.LevelFactory;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.Level1;
 import com.groupname.game.levels.core.LevelBase;
@@ -47,6 +48,7 @@ public class EditorController implements Controller {
 
     private void update(InputManager inputManager) {
         inputManager.update();
+        editor.update();
     }
 
 

@@ -16,7 +16,7 @@ import java.util.Objects;
 
 public class Tile extends GameObject {
 
-    public static final int Size = 64;
+    public static final int Size = 80;
     private final TileType tileType;
 
     public Tile(Sprite sprite, Vector2D position, TileType tileType) {

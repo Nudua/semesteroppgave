@@ -33,6 +33,13 @@ public abstract class GameObject implements UpdateDrawAble {
         return getHitbox().intersects(with.getBoundsInParent());
     }
 
+    public Vector2D getPosition() {
+        return new Vector2D(position);
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position.set(position);
+    }
     //public abstract void onCollides(int value);
 
     public abstract void update();

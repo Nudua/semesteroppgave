@@ -50,9 +50,9 @@ public class LevelFactory {
     public GameObject create(ObjectMetaData metaData) {
         if(metaData.getType() == Player.class) {
             return createPlayer(metaData);
-        } else if(metaData.getType() == Enemy.class) {
+        } else if(Enemy.class.isAssignableFrom(metaData.getType())) { // is subclass of Enemy
             return createEnemy(metaData);
-        } else if(metaData.getType() == PowerUp.class) {
+        } else if(PowerUp.class.isAssignableFrom(metaData.getType())) {
             return createPowerUp(metaData);
         } else if(metaData.getType() == TileType.class) {
             return createTile(metaData);

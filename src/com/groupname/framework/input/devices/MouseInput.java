@@ -8,12 +8,8 @@ import javafx.scene.input.MouseEvent;
 import java.security.InvalidParameterException;
 import java.util.Objects;
 
-interface TileEvent {
-    void onAction(int x, int y);
-}
-
 // Figure out a better name
-class MouseInputEx {
+public class MouseInput {
 
     private boolean pressed;
     private TileEvent onClicked;
@@ -21,7 +17,7 @@ class MouseInputEx {
 
     private final int tileSize;
 
-    public MouseInputEx(Node scene, int tileSize) {
+    public MouseInput(Node scene, int tileSize) {
         scene.setOnMouseMoved(this::onMouseMove);
         scene.setOnMouseClicked(this::onMouseClicked);
 
@@ -57,7 +53,7 @@ class MouseInputEx {
         this.onMove = onHover;
     }
 }
-
+/*
 public class MouseInput {
 
     private boolean pressed;
@@ -104,3 +100,4 @@ public class MouseInput {
         //
     }
 }
+*/
