@@ -37,6 +37,10 @@ public class Vector2D {
         this.y += y;
     }
 
+    public Vector2D normalize(Vector2D other) {
+        return new Vector2D(x - other.getX(), y - other.getY());
+    }
+
     public void addX(double x) {
         this.x += x;
     }

@@ -101,10 +101,15 @@ public class Level1 extends LevelBase {
         GuardEnemy enemy3 = new GuardEnemy(enemy3Sprite, new Vector2D(600,450), 3);
         enemy3.setSpeed(25.5d);
 
-        HomingEnemy enemy4 = new HomingEnemy(enemySprite, new Vector2D(900, 50), 3, player);
+        HomingEnemy enemy4 = new HomingEnemy(enemySprite, new Vector2D(900, 50), 5, player);
+        enemy4.setSpeed(0.1d);
+        HomingEnemy enemy5 = new HomingEnemy(enemySprite, new Vector2D(300, 500), 5, player);
+        enemy5.setSpeed(0.5d);
+        HomingEnemy enemy6 = new HomingEnemy(enemySprite, new Vector2D(100, 700), 10, player);
+        enemy6.setSpeed(2.5d);
 
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
-        gameObjects.addAll(Arrays.asList(enemy4));
+        gameObjects.addAll(Arrays.asList(enemy4, enemy5, enemy6));
 
         delay = 10;
 

@@ -11,13 +11,13 @@ import com.groupname.game.entities.projectiles.Weapon;
 
 public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
-    private double speed = 0.3d;
+    private double speed = 1.8d;
     private Player player;
     private EnemyWeapon currentWeapon;
     private int counter;
     private int delay = 60;
 
-    public HomingEnemy(Sprite sprite, Vector2D position,int hitPoints, Player player) {
+    public HomingEnemy(Sprite sprite, Vector2D position, int hitPoints, Player player) {
         super(sprite, position, hitPoints);
         startPosition = new Vector2D(position);
         this.player = player;
@@ -25,36 +25,37 @@ public class HomingEnemy extends Enemy {
         createWeapon();
     }
     private void createWeapon() {
-        currentWeapon = new EnemyWeapon(player);
+        currentWeapon = new EnemyWeapon();
     }
 
-
-    public void setSpeed(int speed) {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
     @Override
     public void update() {
-        super.update();
-        currentWeapon.update(player);
-
         if(!isAlive()) {
             return;
         }
-        double x = position.getX();
-        double y = position.getY();
 
-        double currentSpeed = speed;
+        super.update();
+
+        if(!player.isAlive()) {
+            return;
+        }
+
+        currentWeapon.update();
+
         if(player.getPosition().getX() < getPosition().getX()) {
-            position.setX(x - speed);
+            position.addX(-speed);
         } else if (player.getPosition().getX() > getPosition().getX()) {
-            position.setX(x + speed);
+            position.addX(speed);
         }
 
         if(player.getPosition().getY() < getPosition().getY()) {
-            position.setY(y - speed);
+            position.addY(-speed);
         } else if (player.getPosition().getY() > getPosition().getY()) {
-            position.setY(y + speed);
+            position.addY(speed);
         }
 
         currentWeapon.checkCollision(player);
@@ -64,7 +65,6 @@ public class HomingEnemy extends Enemy {
             currentWeapon.fire(position, player);
             counter = 0;
         }
-
     }
 
     @Override
