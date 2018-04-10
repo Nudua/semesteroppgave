@@ -9,6 +9,7 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.data.AppSettings;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
@@ -56,18 +57,22 @@ public class EnemyWeapon {
             bulletKillingPlayer.setAlive(true);
             playerCurrentPosition = player.getPosition();
 
+            int addBulletLengthX = AppSettings.SCREEN_BOUNDS.getWidth() - (int)player.getPosition().getX();
+            int addBulletLengthY = AppSettings.SCREEN_BOUNDS.getHeight() - (int)player.getPosition().getY();
+
+
             if (player.getPosition().getX() < startPosition.getX()) {
-                playerCurrentPosition.addX(-0);
+                playerCurrentPosition.addX(-addBulletLengthX);
                 xPositive = false;
             } else {
-                playerCurrentPosition.addX(0);
+                playerCurrentPosition.addX(addBulletLengthX);
                 xPositive = true;
             }
             if (player.getPosition().getY() < startPosition.getY()) {
-                playerCurrentPosition.addY(-0);
+                playerCurrentPosition.addY(-addBulletLengthY);
                 yPositive = false;
             } else {
-                playerCurrentPosition.addY(0);
+                playerCurrentPosition.addY(addBulletLengthY);
                 yPositive = true;
             }
         }
