@@ -14,6 +14,7 @@ import com.groupname.game.core.Game;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
+import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
@@ -47,6 +48,7 @@ public class Level1 extends LevelBase {
 
         createPlayer1();
         createEnemy1();
+
     }
 
     private void createSpriteSheets() {
@@ -99,8 +101,10 @@ public class Level1 extends LevelBase {
         GuardEnemy enemy3 = new GuardEnemy(enemy3Sprite, new Vector2D(600,450), 3);
         enemy3.setSpeed(25.5d);
 
-        gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
+        HomingEnemy enemy4 = new HomingEnemy(enemySprite, new Vector2D(900, 50), 3, player);
 
+        //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
+        gameObjects.addAll(Arrays.asList(enemy4));
 
         delay = 10;
 
