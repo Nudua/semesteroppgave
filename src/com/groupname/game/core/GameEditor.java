@@ -1,27 +1,20 @@
 package com.groupname.game.core;
 
 import com.groupname.framework.core.Difficulty;
-import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
-import com.groupname.framework.graphics.drawing.SpriteBatch;
-import com.groupname.framework.graphics.drawing.SpriteBatchFX;
-import com.groupname.framework.input.InputManager;
 import com.groupname.framework.input.devices.MouseInput;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.level.Tile;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.game.data.AppSettings;
-import com.groupname.game.editor.EnemyMetaData;
-import com.groupname.game.editor.LevelFactory;
-import com.groupname.game.editor.ObjectMetaData;
+import com.groupname.game.editor.metadata.EnemyMetaData;
+import com.groupname.game.editor.metadata.LevelFactory;
+import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
-package com.groupname.game.editor;
+package com.groupname.game.editor.metadata;
 
 
-import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
@@ -11,8 +10,6 @@ import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.level.Tile;
 import com.groupname.framework.level.TilePattern;
 import com.groupname.framework.level.TileType;
-import com.groupname.framework.math.Vector2D;
-import com.groupname.framework.util.Strings;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;

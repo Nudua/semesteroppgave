@@ -1,4 +1,4 @@
-package com.groupname.game.editor;
+package com.groupname.game.editor.metadata;
 
 import com.groupname.framework.level.TilePattern;
 import com.groupname.framework.level.TileType;
