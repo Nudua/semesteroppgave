@@ -17,7 +17,11 @@ public class ObjectMetaData {
     }
 
     public Vector2D getPosition() {
-        return position;
+        return new Vector2D(position);
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position.set(position);
     }
 
     public String getName() {

@@ -26,6 +26,8 @@ public class StackBasedUndoRedo implements UndoRedo {
     public void execute(Command command) {
         command.execute();
         undoStack.push(command);
+
+        redoStack.clear();
     }
 
     /**

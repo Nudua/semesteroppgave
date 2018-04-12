@@ -27,10 +27,14 @@
                   <MenuItem mnemonicParsing="false" text="New" />
                   <MenuItem mnemonicParsing="false" text="Save" />
                   <MenuItem mnemonicParsing="false" text="Load" />
-              <MenuItem mnemonicParsing="false" onAction="#exitOnClicked" text="Exit editor" />
+              <MenuItem mnemonicParsing="false" onAction="#exitOnClicked" text="Exit" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Test" />
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem accelerator="Shortcut+Z" mnemonicParsing="false" onAction="#undoOnClicked" text="Undo" />
+                  <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redoOnClicked" text="Redo" />
+               </items></Menu>
         </menus>
       </MenuBar>
       <HBox alignment="CENTER_LEFT" prefHeight="80.0" styleClass="items-box" GridPane.rowIndex="1">

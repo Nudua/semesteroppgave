@@ -2,11 +2,14 @@ package com.groupname.game.core;
 
 import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
+import com.groupname.framework.history.UndoRedo;
+import com.groupname.framework.history.commands.ListAddCommand;
 import com.groupname.framework.input.devices.MouseInput;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.level.Tile;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.controllers.LevelItem;
 import com.groupname.game.editor.metadata.EnemyMetaData;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
@@ -19,6 +22,7 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 // Convert to level/View
@@ -35,13 +39,18 @@ public class GameEditor extends LevelBase {
 
     private Mode mode = Mode.Editing;
     private final LevelFactory levelFactory;
-    private Player player;
 
-    private List<GameObject> gameObjects = new ArrayList<>();
-    private boolean isSet = false;
+    //private List<GameObject> gameObjects = new ArrayList<>();
+    private List<LevelItem> levelItems;
+    private LevelItem selectedItem;
 
-    public GameEditor(Game game, Canvas canvas) {
+    private UndoRedo commandHistory;
+
+    public GameEditor(Game game, Canvas canvas, List<LevelItem> levelItems, UndoRedo commandHistory) {
         super(game, canvas.getGraphicsContext2D());
+
+        this.levelItems = Objects.requireNonNull(levelItems);
+        this.commandHistory = Objects.requireNonNull(commandHistory);
 
         mouseInput = new MouseInput(canvas, Tile.Size);
         backgroundColor = Color.BLACK;
@@ -50,23 +59,33 @@ public class GameEditor extends LevelBase {
         levelFactory.initialize();
 
         // Can return type be T?
-        player = (Player)levelFactory.create(new ObjectMetaData("Player", Player.class, new Vector2D(100,500)));
+        //player = (Player)levelFactory.create(new ObjectMetaData("Player", Player.class, new Vector2D(100,500)));
 
-        EnemyMetaData guardEnemy = new EnemyMetaData("Guard - Easy", GuardEnemy.class, new Vector2D(500,500));
-        guardEnemy.setDifficulty(Difficulty.Easy);
+        //EnemyMetaData guardEnemy = new EnemyMetaData("Guard - Easy", GuardEnemy.class, new Vector2D(500,500));
+        //guardEnemy.setDifficulty(Difficulty.Easy);
 
         //gameObjects.add(levelFactory.create(guardEnemy));
 
         mouseInput.setOnMove((x, y) -> {
-            if(!isSet) {
-                player.setPosition(new Vector2D(x * Tile.Size, y * Tile.Size));
+            if(selectedItem != null && !selectedItem.isPlaced()) {
+                selectedItem.setPosition(new Vector2D(x * Tile.Size, y * Tile.Size));
             }
         });
 
         mouseInput.setOnClicked((x, y) -> {
-            player.setPosition(new Vector2D(x * Tile.Size, y * Tile.Size));
-            isSet = true;
+            if(selectedItem != null) {
+                selectedItem.setPosition(new Vector2D(x * Tile.Size, y * Tile.Size));
+                selectedItem.setPlaced(true);
+
+                commandHistory.execute(new ListAddCommand<>(levelItems, selectedItem));
+
+                selectedItem = null;
+            }
         });
+    }
+
+    public void setSelectedItem(LevelItem selectedItem) {
+        this.selectedItem = selectedItem;
     }
 
     @Override
@@ -89,24 +108,25 @@ public class GameEditor extends LevelBase {
         graphicsContext.fillText(String.format("Pressed X: %f, Y: %f", pressedPosition.getX(), pressedPosition.getY()), 10, 40);
         */
 
-        player.update();
-        player.checkCollision(gameObjects);
 
-        for(GameObject gameObject : gameObjects) {
-            gameObject.update();
+        if(mode == Mode.Playing) {
+            for(LevelItem item : levelItems) {
+                item.getInstance().update();
+            }
         }
     }
 
     @Override
     public void draw() {
-
         drawBackground();
 
-        for(GameObject gameObject : gameObjects) {
-            gameObject.draw(spriteBatch);
+        if(selectedItem != null) {
+            selectedItem.getInstance().draw(spriteBatch);
         }
 
-        player.draw(spriteBatch);
+        for(LevelItem item : levelItems) {
+            item.getInstance().draw(spriteBatch);
+        }
     }
 
     private void drawBackground() {

@@ -2,20 +2,20 @@ package com.groupname.framework.history.commands;
 
 import java.util.List;
 
-public class ListAddCommand<E> extends ListCommand<E> {
+public class ListRemoveCommand<E> extends ListCommand<E> {
 
-    public ListAddCommand(List<E> list, E item) {
+    public ListRemoveCommand(List<E> list, E item) {
         super(list, item);
     }
 
     @Override
     public void execute() {
-        list.add(item);
+        list.remove(item);
     }
 
     @Override
     public void undo() {
-        list.remove(item);
+        list.add(item);
     }
 
     /**
