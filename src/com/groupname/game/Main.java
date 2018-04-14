@@ -6,6 +6,10 @@ import com.groupname.game.Scene.SceneName;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class Main extends Application {
 
     @Override
@@ -18,6 +22,13 @@ public class Main extends Application {
 
         sceneManager.setPrimaryStage(primaryStage);
         SceneManager.navigate(SceneName.Title);
+
+        //Files.createDirectory(Paths.get("saveFolder"));
+        /*
+        Path currentRelativePath = Paths.get("");
+        String s = currentRelativePath.toAbsolutePath().toString();
+        System.out.println("Current relative path is: " + s);
+        */
 
         primaryStage.show();
     }

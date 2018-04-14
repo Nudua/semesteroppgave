@@ -8,8 +8,8 @@ public class PowerUpMetaData extends ObjectMetaData {
     private final int amount;
     private PowerupSpriteType spriteType = PowerupSpriteType.Heart;
 
-    public PowerUpMetaData(String name, Class<?> type, Vector2D position, int amount) {
-        super(name, type, position);
+    public PowerUpMetaData(String name, Class<?> type, int amount) {
+        super(name, type);
         this.amount = amount;
     }
 

@@ -34,7 +34,14 @@
                <items>
                   <MenuItem accelerator="Shortcut+Z" mnemonicParsing="false" onAction="#undoOnClicked" text="Undo" />
                   <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redoOnClicked" text="Redo" />
-               </items></Menu>
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Test">
+                <items>
+                    <MenuItem accelerator="F5" mnemonicParsing="false" onAction="#playOnClicked" text="Play" />
+                    <MenuItem mnemonicParsing="false" onAction="#editOnClicked" text="Edit" />
+                </items>
+            </Menu>
         </menus>
       </MenuBar>
       <HBox alignment="CENTER_LEFT" prefHeight="80.0" styleClass="items-box" GridPane.rowIndex="1">

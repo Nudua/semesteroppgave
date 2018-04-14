@@ -10,10 +10,10 @@ public class ObjectMetaData {
     private final Vector2D position;
     private final Class<?> type;
 
-    public ObjectMetaData(String name, Class<?> type, Vector2D position) {
+    public ObjectMetaData(String name, Class<?> type) {
         this.name = Strings.requireNonNullAndNotEmpty(name);
         this.type = Objects.requireNonNull(type);
-        this.position = Objects.requireNonNull(position);
+        this.position = new Vector2D();
     }
 
     public Vector2D getPosition() {
@@ -30,5 +30,11 @@ public class ObjectMetaData {
 
     public Class<?> getType() {
         return type;
+    }
+
+    public ObjectMetaData deepCopy() {
+        ObjectMetaData objectMetaData = new ObjectMetaData(name, type);
+        objectMetaData.setPosition(position);
+        return objectMetaData;
     }
 }

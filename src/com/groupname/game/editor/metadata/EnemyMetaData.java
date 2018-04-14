@@ -12,8 +12,8 @@ public class EnemyMetaData extends ObjectMetaData {
     private Difficulty difficulty = Difficulty.Easy;
     private EnemySpriteType spriteType = EnemySpriteType.Blob;
 
-    public EnemyMetaData(String name, Class<?> type, Vector2D position) {
-        super(name, type, position);
+    public EnemyMetaData(String name, Class<?> type) {
+        super(name, type);
     }
 
     public void setSpriteType(EnemySpriteType spriteType) {
@@ -30,5 +30,13 @@ public class EnemyMetaData extends ObjectMetaData {
 
     public Difficulty getDifficulty() {
         return difficulty;
+    }
+
+    @Override
+    public ObjectMetaData deepCopy() {
+        EnemyMetaData enemyMetaData = new EnemyMetaData(getName(), getType());
+        enemyMetaData.setDifficulty(difficulty);
+        enemyMetaData.setSpriteType(spriteType);
+        return enemyMetaData;
     }
 }

@@ -10,8 +10,8 @@ public class TileMetaData extends ObjectMetaData {
     private TileType tileType = TileType.Block;
     private TilePattern tilePattern = TilePattern.Ground;
 
-    public TileMetaData(String name, Class<?> type, Vector2D position) {
-        super(name, type, position);
+    public TileMetaData(String name, Class<?> type) {
+        super(name, type);
     }
 
     public void setTilePattern(TilePattern tilePattern) {

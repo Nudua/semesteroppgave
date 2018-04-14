@@ -4,7 +4,12 @@ import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
@@ -32,6 +37,10 @@ public class SpriteBatchFX implements SpriteBatch {
     }
 
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
+        draw(sprite, position, flipFlags, null);
+    }
+
+    public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags, Color tintColor) {
         Objects.requireNonNull(sprite);
         Objects.requireNonNull(position);
 
@@ -57,6 +66,22 @@ public class SpriteBatchFX implements SpriteBatch {
             posY += sprite.getHeight();
         }
 
-        graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), posX, posY, spriteWidth, spriteHeight);
+        // Figure out how to tint red
+        if(tintColor != null) {
+            graphicsContext.save();
+
+            ColorAdjust monochrome = new ColorAdjust();
+            //monochrome.setSaturation(-1.0);
+            monochrome.setHue(-1.0d);
+
+
+            //Blend blend = new Blend(BlendMode.MULTIPLY, monochrome, new ColorInput(posX,posY, spriteWidth, spriteHeight, Color.RED));
+
+            graphicsContext.setEffect(monochrome);
+        }
+
+        graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY() + 1, srcRect.getWidth(), srcRect.getHeight() - 1, posX, posY, spriteWidth, spriteHeight);
+
+        graphicsContext.restore();
     }
 }

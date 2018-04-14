@@ -12,6 +12,7 @@ import com.groupname.game.core.Game;
 import com.groupname.game.core.GameEditor;
 import com.groupname.game.editor.MetaDataListCell;
 import com.groupname.game.editor.metadata.EnemyMetaData;
+import com.groupname.game.editor.metadata.EnemySpriteType;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Player;
@@ -59,14 +60,16 @@ public class EditorController implements Controller {
     }
 
     private void populateMetaDataList() {
-        ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class, new Vector2D());
-        EnemyMetaData meta2 = new EnemyMetaData("Guard - Easy", GuardEnemy.class, new Vector2D());
+        ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
+        EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
+        EnemyMetaData meta3 = new EnemyMetaData("Guard Fly - Easy", GuardEnemy.class);
+        meta3.setSpriteType(EnemySpriteType.Fly);
         //ObjectMetaData meta2 = new ObjectMetaData("Second", ObjectMetaData.class, new Vector2D());
         //ObjectMetaData meta3 = new ObjectMetaData("Third", ObjectMetaData.class, new Vector2D());
 
         // Move to a css file
         metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2));
+        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3));
 
 
         metaDataListView.setCellFactory((o) -> { return new MetaDataListCell(); });
@@ -76,10 +79,13 @@ public class EditorController implements Controller {
 
     private void gameItemSelected(MouseEvent event) {
 
-        ObjectMetaData metaData = metaDataListView.getSelectionModel().getSelectedItem();
+        ObjectMetaData sourceMetaData = metaDataListView.getSelectionModel().getSelectedItem();
 
-        if(metaData != null) {
+        if(sourceMetaData != null) {
 
+            // Create a copy of the selected item
+            ObjectMetaData metaData = sourceMetaData.deepCopy();
+            // Check instance of here
             GameObject gameObject = levelFactory.create(metaData);
 
             if(gameObject != null) {
@@ -94,6 +100,7 @@ public class EditorController implements Controller {
                     selectedItem = newItem;
                 }
 
+                selectedItem.setPosition(new Vector2D(1280 / 2, 720 / 2));
                 selectedItem.setPlaced(false);
 
                 editor.setSelectedItem(selectedItem);
@@ -150,6 +157,18 @@ public class EditorController implements Controller {
         if(commandHistory.canRedo()) {
             commandHistory.redo();
         }
+    }
+
+
+    @FXML
+    protected void playOnClicked(ActionEvent event) {
+        editor.setMode(GameEditor.Mode.Playing);
+    }
+
+    @FXML
+    protected void editOnClicked(ActionEvent event) {
+        //editor.setMode(GameEditor.Mode.Editing);
+        editor.reset();
     }
 
     @FXML

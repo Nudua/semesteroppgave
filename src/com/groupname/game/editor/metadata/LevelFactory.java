@@ -4,6 +4,8 @@ package com.groupname.game.editor.metadata;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
+import com.groupname.framework.graphics.animation.AnimatedSprite;
+import com.groupname.framework.graphics.animation.AnimationFrame;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
@@ -13,6 +15,7 @@ import com.groupname.framework.level.TileType;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
+import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.entities.powerups.PowerUp;
 import javafx.scene.image.Image;
@@ -37,11 +40,11 @@ public class LevelFactory {
     }
 
     private void createSpriteSheets() {
-        Image playerSheet = Content.loadImage("player1.png", ResourceType.SpriteSheet);
-        Image enemySheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
+        Image playerSheet = Content.loadImage("alien-works.png", ResourceType.SpriteSheet);
+        Image enemySheet = Content.loadImage("enemies.png", ResourceType.SpriteSheet);
 
         spriteSheets.put("player1", new SpriteSheet("player1", playerSheet));
-        spriteSheets.put("enemy1", new SpriteSheet("enemy1", enemySheet));
+        spriteSheets.put("enemies", new SpriteSheet("enemies", enemySheet));
     }
 
     public GameObject create(ObjectMetaData metaData) {
@@ -71,7 +74,7 @@ public class LevelFactory {
             spriteRegion = Sprite.createSpriteRegion(0,1, Tile.Size, Tile.Size);
         }
 
-        Sprite texture = new Sprite(spriteSheets.get("enemy1"), spriteRegion);
+        Sprite texture = new Sprite(spriteSheets.get("enemies"), spriteRegion);
 
         return new Tile(texture, tileMetaData.getPosition(), tileMetaData.getTileType());
     }
@@ -80,9 +83,18 @@ public class LevelFactory {
      * Player(s)
      */
     private Player createPlayer(ObjectMetaData levelObject) {
-        Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(160, 160));
-        p1Sprite.setScale(0.5d);
-        return new Player(p1Sprite, levelObject.getPosition(), inputManager, 5);
+
+        // Idle animation, player class need a lot of work for animations!
+        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0,0, 124, 124), 60 * 2);
+        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1,0, 124, 124), 60);
+        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(2,0, 124, 124), 60);
+        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1,0, 124, 124), 60);
+
+        AnimatedSprite animatedSprite = new AnimatedSprite(spriteSheets.get("player1"), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
+
+        //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
+        animatedSprite.setScale(0.85d);
+        return new Player(animatedSprite, levelObject.getPosition(), inputManager, 5);
     }
 
     /**
@@ -103,7 +115,7 @@ public class LevelFactory {
     }
 
     private HeartPowerUp createHeartPowerUp(PowerUpMetaData metaData) {
-        Sprite sprite = new Sprite(spriteSheets.get("enemy1"), Sprite.createSpriteRegion(0, 1, 66, 66));
+        Sprite sprite = new Sprite(spriteSheets.get("enemies"), Sprite.createSpriteRegion(0, 1, 66, 66));
         return new HeartPowerUp(sprite, metaData.getPosition(), metaData.getAmount());
     }
 
@@ -125,7 +137,18 @@ public class LevelFactory {
     }
 
     private GuardEnemy createGuardEnemy(EnemyMetaData metaData) {
-        Sprite sprite = new Sprite(spriteSheets.get("enemy1"), Sprite.createSpriteRegion(66, 66));
+
+        Sprite sprite;
+
+        if(metaData.getSpriteType() == EnemySpriteType.Blob) {
+            AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, 0, 80, 80), 20);
+            AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 80, 80), 20);
+            sprite = new AnimatedSprite(spriteSheets.get("enemies"), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
+        } else { // Fly for now
+            AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, 3, 80, 80), 10);
+            AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, 3, 80, 80), 10);
+            sprite = new AnimatedSprite(spriteSheets.get("enemies"), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
+        }
 
         int hitPoints;
         double speed;
@@ -134,19 +157,19 @@ public class LevelFactory {
             default:
             case Easy:
                 hitPoints = 3;
-                speed = 10;
+                speed = 3;
                 break;
             case Medium:
                 hitPoints = 5;
-                speed = 20;
+                speed = 7;
                 break;
             case Hard:
                 hitPoints = 10;
-                speed = 30;
+                speed = 10;
                 break;
             case Impossible:
                 hitPoints = 20;
-                speed = 30;
+                speed = 15;
                 break;
         }
 
@@ -155,7 +178,4 @@ public class LevelFactory {
 
         return enemy;
     }
-
-
-
 }

@@ -1,9 +1,11 @@
 package com.groupname.framework.input.devices;
 
+import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Rectangle;
 
 import java.security.InvalidParameterException;
 import java.util.Objects;
@@ -15,17 +17,16 @@ public class MouseInput {
     private TileEvent onClicked;
     private TileEvent onMove;
 
-    private final int tileSize;
+    private final Rectangle bounds;
 
-    public MouseInput(Node scene, int tileSize) {
+    public MouseInput(Node scene, Rectangle bounds) {
         scene.setOnMouseMoved(this::onMouseMove);
         scene.setOnMouseClicked(this::onMouseClicked);
 
-        if(tileSize <= 0) {
-            throw new InvalidParameterException("The tileSize cannot be zero or negative!");
+        this.bounds = Objects.requireNonNull(bounds);
+        if(bounds.getWidth() <= 0 || bounds.getHeight() <= 0) {
+            throw new InvalidParameterException();
         }
-
-        this.tileSize = tileSize;
     }
 
     private void onMouseClicked(MouseEvent mouseEvent) {
@@ -37,11 +38,8 @@ public class MouseInput {
     }
 
     private void fireEventIfExists(TileEvent event, double x, double y) {
-        if(event != null) {
-            int smallX = (int)x / tileSize;
-            int smallY = (int)y / tileSize;
-
-            event.onAction(smallX, smallY);
+        if(event != null && bounds.contains(x,y)) {
+            event.onAction(x, y);
         }
     }
 

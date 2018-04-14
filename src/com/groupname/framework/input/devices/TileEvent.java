@@ -1,5 +1,5 @@
 package com.groupname.framework.input.devices;
 
 public interface TileEvent {
-    void onAction(int x, int y);
+    void onAction(double x, double y);
 }
