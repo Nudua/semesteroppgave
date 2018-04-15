@@ -21,7 +21,7 @@ import java.util.List;
 
 public class GameOver extends LevelBase {
 
-    private static final String LEVEL_ID = "493b0589-2308-4415-aeef-071856b11da4";
+    public static final String LEVEL_ID = "493b0589-2308-4415-aeef-071856b11da4";
 
     private WeatherEffect weatherEffect;
 

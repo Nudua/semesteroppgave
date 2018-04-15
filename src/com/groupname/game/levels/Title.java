@@ -42,12 +42,13 @@ public class Title extends LevelBase {
 
     @Override
     public void draw() {
-
         clearScreen();
 
         graphicsContext.setFill(Color.GREEN);
         graphicsContext.setFont(Font.font(60));
         graphicsContext.fillText("We're on the title screen!", 10, 50);
+        graphicsContext.setFont(Font.font(30));
+        graphicsContext.fillText("(add some freaken animation or something here)", 10, 85);
 
     }
 }

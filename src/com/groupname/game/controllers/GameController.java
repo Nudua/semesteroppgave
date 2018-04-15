@@ -4,16 +4,14 @@ import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.util.Strings;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.LevelMetaData;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.input.PlayerInputDefinitions;
-import com.groupname.game.levels.Credits;
-import com.groupname.game.levels.Level;
-import com.groupname.game.levels.Level1;
-import com.groupname.game.levels.Title;
+import com.groupname.game.levels.*;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
 import com.groupname.game.views.menus.GameMenuFX;
@@ -30,6 +28,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.prefs.BackingStoreException;
 
 public class GameController implements Controller {
@@ -48,6 +47,9 @@ public class GameController implements Controller {
     private boolean isPaused = false;
     private int currentLevelIndex = 0;
 
+    private int creditsIndex = -1;
+    private int gameOverIndex = -1;
+
     // Maybe move into constructor instead
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
@@ -57,6 +59,27 @@ public class GameController implements Controller {
         //currentLevel = new Level1(game, canvas.getGraphicsContext2D());
         //currentLevel.initialize();
         loadLevels();
+
+        String levelId = AppSettings.INSTANCE.getCurrentLevel();
+
+        if(!Strings.isNullOrEmpty(levelId)) {
+            Optional<LevelBase> level = levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
+
+            if(level.isPresent()) {
+                int index = levels.indexOf(level.get());
+                currentLevelIndex = index;
+                System.out.println("Restoring from level: " + currentLevelIndex);
+            }
+        }
+
+        LevelBase currentLevel = getCurrentLevel();
+
+        if(currentLevel instanceof Level) {
+            ((Level) currentLevel).setOnPlayerDead(() ->{
+                System.out.println("Dave, everybody's dead... everybody's dead Dave");
+                getCurrentLevel().reset();
+            });
+        }
 
         if(!game.isRunning()) {
             game.start();
@@ -125,6 +148,7 @@ public class GameController implements Controller {
             unPause();
         });
         pauseMenu.setOnClicked(PauseButton.Save, this::save);
+        //pauseMenu.setButtonEnabled(PauseButton.Save, false);
 
         root.getChildren().add(pauseMenu);
 
@@ -149,7 +173,6 @@ public class GameController implements Controller {
             pauseMenu.update(inputManager);
 
         } else {
-
             LevelBase currentLevel = getCurrentLevel();
 
             if(currentLevel.getState() == LevelState.Completed) {
@@ -163,6 +186,16 @@ public class GameController implements Controller {
                 // Update to the next level
                 currentLevel = getCurrentLevel();
                 currentLevel.reset();
+
+                if(currentLevel instanceof Level) {
+                    ((Level) currentLevel).setOnPlayerDead(() ->{
+                        System.out.println("Dave, everybody's dead... everybody's dead Dave");
+                        getCurrentLevel().reset();
+                    });
+                }
+
+            } else if(currentLevel.getState() == LevelState.GameOver) {
+
             }
 
             currentLevel.update();

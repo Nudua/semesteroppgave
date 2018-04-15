@@ -26,9 +26,15 @@ public class Level extends LevelBase {
     private int screenWidth = AppSettings.SCREEN_BOUNDS.getWidth();
     private int screenHeight = AppSettings.SCREEN_BOUNDS.getHeight();
 
+    private Runnable onPlayerDead = null;
+
     public Level(Game parent, GraphicsContext graphicsContext, LevelMetaData levelMetaData) {
         super(parent, graphicsContext);
         this.levelMetaData = Objects.requireNonNull(levelMetaData);
+    }
+
+    public void setOnPlayerDead(Runnable onPlayerDead) {
+        this.onPlayerDead = onPlayerDead;
     }
 
     @Override
@@ -68,6 +74,18 @@ public class Level extends LevelBase {
         if(allEnemiesDead()) {
             state = LevelState.Completed;
         }
+
+        if(playerDead()) {
+            if(onPlayerDead != null) {
+                onPlayerDead.run();
+            }
+        }
+    }
+
+    private boolean playerDead() {
+        return gameObjects.stream()
+                .filter(n -> n instanceof Player)
+                .noneMatch(n -> ((Player) n).isAlive());
     }
 
     private boolean allEnemiesDead() {
