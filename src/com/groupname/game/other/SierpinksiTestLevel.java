@@ -16,6 +16,11 @@ import javafx.scene.paint.Color;
 
 public class SierpinksiTestLevel extends LevelBase {
 
+    @Override
+    public String getId() {
+        return null;
+    }
+
     private SierpinskiTriangleBackground sierpinskiBackground;
     private ScreenTransition arrowScreenTransition;
 

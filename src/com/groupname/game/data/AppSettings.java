@@ -1,6 +1,7 @@
 package com.groupname.game.data;
 
 import com.groupname.framework.math.Size;
+import com.groupname.framework.util.Strings;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
@@ -16,11 +17,11 @@ import java.util.prefs.Preferences;
 
 class PlayerProgress {
 
-    private final static int FIRST_LEVEL = 0;
+    private final static String FIRST_LEVEL = "";
 
-    private int currentLevel = FIRST_LEVEL;
+    private String currentLevel = FIRST_LEVEL;
 
-    public void setCurrentLevel(int currentLevel) {
+    public void setCurrentLevel(String currentLevel) {
         this.currentLevel = currentLevel;
     }
 }
@@ -32,32 +33,32 @@ public enum AppSettings {
     public static final Size SCREEN_BOUNDS = new Size(1280, 720);
     public static final Rectangle LEVEL_BOUNDS = new Rectangle(80 * 2, 80 * 1, 1280 - 80 * 4, 720 - 80 * 2);
 
-    private int currentLevel = 0;
+    private String currentLevel = Strings.EMPTY;
     private boolean firstRun = false;
     private boolean fullScreen = false;
 
-    public int getCurrentLevel() {
+    // Will be empty if not set
+    public String getCurrentLevel() {
         return currentLevel;
     }
 
-    public void setCurrentLevel(int currentLevel) {
+    public void setCurrentLevel(String currentLevel) {
         this.currentLevel = currentLevel;
     }
 
-
     public void save() throws BackingStoreException {
-        Preferences prefs = Preferences.userRoot().node("settings");
+        Preferences prefs = Preferences.userRoot().node("ourgame");
         prefs.putBoolean("firstRun", false);
         prefs.putBoolean("fullScreen", false);
-        prefs.putInt("currentLevel", currentLevel);
+        prefs.put("currentLevel", currentLevel);
         prefs.flush();
     }
 
     public void load() {
-        Preferences prefs = Preferences.userRoot().node("settings");
+        Preferences prefs = Preferences.userRoot().node("ourgame");
         firstRun = prefs.getBoolean("firstRun", true);
         fullScreen = prefs.getBoolean("fullScreen", false);
-        currentLevel = prefs.getInt("firstRun", 0);
+        currentLevel = prefs.get("currentLevel", Strings.EMPTY);
     }
 
     /*

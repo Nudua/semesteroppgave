@@ -21,12 +21,19 @@ import java.util.List;
 
 public class GameOver extends LevelBase {
 
+    private static final String LEVEL_ID = "493b0589-2308-4415-aeef-071856b11da4";
+
     private WeatherEffect weatherEffect;
 
     public GameOver(Game game, GraphicsContext graphicsContext) {
         super(game, graphicsContext);
 
         backgroundColor = Color.BLACK;
+    }
+
+    @Override
+    public String getId() {
+        return LEVEL_ID;
     }
 
     @Override

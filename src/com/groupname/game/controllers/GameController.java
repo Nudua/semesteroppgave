@@ -2,13 +2,20 @@ package com.groupname.game.controllers;
 
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.input.InputManager;
+import com.groupname.framework.io.Content;
+import com.groupname.framework.io.ResourceType;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
 import com.groupname.game.core.Game;
+import com.groupname.game.core.LevelMetaData;
+import com.groupname.game.data.AppSettings;
 import com.groupname.game.input.PlayerInputDefinitions;
+import com.groupname.game.levels.Credits;
+import com.groupname.game.levels.Level;
 import com.groupname.game.levels.Level1;
 import com.groupname.game.levels.Title;
 import com.groupname.game.levels.core.LevelBase;
+import com.groupname.game.levels.core.LevelState;
 import com.groupname.game.views.menus.GameMenuFX;
 import com.groupname.game.views.menus.TitleMenuNames;
 import javafx.application.Platform;
@@ -19,7 +26,11 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.prefs.BackingStoreException;
 
 public class GameController implements Controller {
     @FXML protected GridPane root;
@@ -29,9 +40,13 @@ public class GameController implements Controller {
     private Game game;
 
     private GameMenuFX<PauseButton> pauseMenu;
-    private LevelBase level1;
+    //private LevelBase currentLevel;
 
+    private List<LevelBase> levels = new ArrayList<>();
+
+    private LevelBase credits;
     private boolean isPaused = false;
+    private int currentLevelIndex = 0;
 
     // Maybe move into constructor instead
     public void init(Game game) {
@@ -39,8 +54,9 @@ public class GameController implements Controller {
 
         game.initialize(canvas, this::update, this::draw);
 
-        level1 = new Level1(game, canvas.getGraphicsContext2D());
-        level1.initialize();
+        //currentLevel = new Level1(game, canvas.getGraphicsContext2D());
+        //currentLevel.initialize();
+        loadLevels();
 
         if(!game.isRunning()) {
             game.start();
@@ -49,15 +65,81 @@ public class GameController implements Controller {
         setupMenu();
     }
 
+    private LevelBase getCurrentLevel() {
+        return levels.get(currentLevelIndex);
+    }
+
+    private void loadLevels() {
+        credits = new Credits(game, canvas.getGraphicsContext2D());
+        credits.initialize();
+
+        LevelReader reader = new LevelReader();
+
+        String[] levelFiles = {"level1.level", "level2.level"};
+
+        for(String levelPath: levelFiles) {
+            boolean loaded = loadLevel(reader, levelPath);
+        }
+        levels.add(credits);
+    }
+
+    private boolean loadLevel(LevelReader reader, String fileName) {
+        boolean error = false;
+        String errorMessage = "";
+
+        try {
+            LevelMetaData levelMetaData = reader.read(Content.loadFile(fileName, ResourceType.Level));
+
+            Level level = new Level(game, canvas.getGraphicsContext2D(), levelMetaData);
+            level.initialize();
+
+            levels.add(level);
+        } catch (IOException exception) {
+            error = true;
+            errorMessage = exception.getMessage();
+        } catch (ClassNotFoundException exception) {
+            error = true;
+            errorMessage = exception.getMessage();
+        }
+
+        if(error) {
+            //Show alert here
+            System.out.println("Error loading level" + errorMessage);
+        }
+
+        return error;
+    }
+
     private void setupMenu() {
         pauseMenu = new GameMenuFX<>(PauseButton.class, "/com/groupname/game/views/menus/pausemenu.fxml");
 
         pauseMenu.setOnClicked(PauseButton.Resume, this::unPause);
         pauseMenu.setOnClicked(PauseButton.MainMenu, () -> SceneManager.navigate(SceneName.Title));
+        pauseMenu.setOnClicked(PauseButton.RestartLevel, () -> {
+            getCurrentLevel().reset();
+            unPause();
+        });
+        pauseMenu.setOnClicked(PauseButton.RestartGame, () -> {
+            currentLevelIndex = 0;
+            getCurrentLevel().reset();
+            unPause();
+        });
+        pauseMenu.setOnClicked(PauseButton.Save, this::save);
 
         root.getChildren().add(pauseMenu);
 
         unPause();
+    }
+
+    private void save() {
+        AppSettings appSettings = AppSettings.INSTANCE;
+
+        appSettings.setCurrentLevel(getCurrentLevel().getId());
+        try {
+            appSettings.save();
+        } catch (BackingStoreException ex) {
+            System.out.println("Unable to store current level");
+        }
     }
 
     private void update(InputManager inputManager) {
@@ -67,7 +149,23 @@ public class GameController implements Controller {
             pauseMenu.update(inputManager);
 
         } else {
-            level1.update();
+
+            LevelBase currentLevel = getCurrentLevel();
+
+            if(currentLevel.getState() == LevelState.Completed) {
+                currentLevelIndex++;
+
+                // Loop around for now
+                if(currentLevelIndex >= levels.size()) {
+                    currentLevelIndex = 0;
+                }
+
+                // Update to the next level
+                currentLevel = getCurrentLevel();
+                currentLevel.reset();
+            }
+
+            currentLevel.update();
 
             if(inputManager.wasPressed(PlayerInputDefinitions.START) || inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
                 pause();
@@ -97,6 +195,6 @@ public class GameController implements Controller {
     }
 
     private void draw() {
-        level1.draw();
+        getCurrentLevel().draw();
     }
 }

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class Main extends Application {
 
@@ -34,12 +35,15 @@ public class Main extends Application {
         AppSettings settings = AppSettings.INSTANCE;
         settings.load();
 
+        //System.out.println(UUID.randomUUID().toString());
+
         primaryStage.show();
     }
 
     @Override
     public void stop() throws Exception {
         AppSettings settings = AppSettings.INSTANCE;
+        //settings.setCurrentLevel(UUID.randomUUID().toString());
         settings.save();
         System.out.println("Saving settings...");
     }

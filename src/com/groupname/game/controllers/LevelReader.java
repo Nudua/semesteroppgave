@@ -10,10 +10,15 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 public class LevelReader {
-    public LevelMetaData read(Path filePath) throws IOException, ClassNotFoundException {
-        try(InputStream inputStream = Files.newInputStream(filePath, StandardOpenOption.READ);
-            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
-            return (LevelMetaData)objectInputStream.readObject();
+
+    public LevelMetaData read(InputStream inputStream) throws IOException, ClassNotFoundException {
+        try (InputStream stream = inputStream; ObjectInputStream objectInputStream = new ObjectInputStream(stream)) {
+            return (LevelMetaData) objectInputStream.readObject();
         }
+    }
+
+    public LevelMetaData read(Path filePath) throws IOException, ClassNotFoundException {
+        InputStream inputStream = Files.newInputStream(filePath, StandardOpenOption.READ);
+        return read(inputStream);
     }
 }

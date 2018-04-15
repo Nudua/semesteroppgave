@@ -40,6 +40,8 @@ import java.util.stream.Collectors;
 
 public class GameEditor extends LevelBase {
 
+    private final static String LEVEL_ID = "cd4305d4-d624-4c4e-9ef8-77207cf9b4e1";
+
     public enum Mode {
         Editing,
         Playing
@@ -107,6 +109,11 @@ public class GameEditor extends LevelBase {
 
             }
         });
+    }
+
+    @Override
+    public String getId() {
+        return LEVEL_ID;
     }
 
     public void setMode(Mode mode) {

@@ -60,6 +60,8 @@ public class Content {
                 return "/audio/soundeffects/";
             case Background:
                 return "/graphics/backgrounds/";
+            case Level:
+                return "/levels/";
         }
 
         return Strings.EMPTY;

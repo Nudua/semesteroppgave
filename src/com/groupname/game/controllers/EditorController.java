@@ -71,7 +71,7 @@ public class EditorController implements Controller {
     }
 
     private void populateMetaDataList() {
-        levelMetaData = new LevelMetaData(0, "Default level");
+        levelMetaData = new LevelMetaData("Default level");
 
         ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
         EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);

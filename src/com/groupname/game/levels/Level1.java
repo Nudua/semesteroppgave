@@ -11,6 +11,10 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.Game;
+import com.groupname.game.core.LevelMetaData;
+import com.groupname.game.data.AppSettings;
+import com.groupname.game.editor.metadata.LevelFactory;
+import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
@@ -24,6 +28,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class Level1 extends LevelBase {
 
@@ -32,6 +38,11 @@ public class Level1 extends LevelBase {
         super(game, graphicsContext);
 
         backgroundColor = Color.CORNFLOWERBLUE;
+    }
+
+    @Override
+    public String getId() {
+        return null;
     }
 
     @Override

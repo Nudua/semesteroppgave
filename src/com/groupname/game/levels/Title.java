@@ -11,10 +11,17 @@ import javafx.scene.text.Font;
 
 public class Title extends LevelBase {
 
+    private static final String LEVEL_ID = "0045c879-f50f-4918-b0f6-b213f7e2b522";
+
     public Title(Game parent, GraphicsContext graphicsContext) {
         super(parent, graphicsContext);
 
         backgroundColor = Color.BLACK;
+    }
+
+    @Override
+    public String getId() {
+        return LEVEL_ID;
     }
 
     @Override

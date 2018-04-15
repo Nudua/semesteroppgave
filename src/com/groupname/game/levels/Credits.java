@@ -23,6 +23,8 @@ import java.util.List;
 // Should probably be converted into a Level
 public class Credits extends LevelBase {
 
+    private final static String LEVEL_ID = "f97998bc-7db6-43b2-ada1-1a3eecf3abf7";
+
     private SpaceEffect spaceEffect;
     private ScrollingText scrollingText;
 
@@ -30,6 +32,11 @@ public class Credits extends LevelBase {
         super(game, graphicsContext);
 
         backgroundColor = Color.BLACK;
+    }
+
+    @Override
+    public String getId() {
+        return LEVEL_ID;
     }
 
     @Override

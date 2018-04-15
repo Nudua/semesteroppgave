@@ -51,6 +51,8 @@ public abstract class LevelBase {
         state = LevelState.Playing;
     }
 
+    public abstract String getId();
+
     // Remove?
     protected void addSpriteSheet(SpriteSheet spriteSheet) {
         spriteSheets.put(spriteSheet.getName(), spriteSheet);
