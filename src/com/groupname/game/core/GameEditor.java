@@ -4,8 +4,10 @@ import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
+import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.history.commands.ListAddCommand;
+import com.groupname.framework.history.commands.ListRemoveCommand;
 import com.groupname.framework.input.devices.MouseInput;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
@@ -19,6 +21,7 @@ import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
+import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
@@ -26,6 +29,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -67,6 +71,7 @@ public class GameEditor extends LevelBase {
         levelFactory = new LevelFactory(inputManager);
         levelFactory.initialize();
 
+        // MoveCommand? simply this
         mouseInput.setOnMove(this::updateItemPosition);
 
         mouseInput.setOnClicked((x, y) -> {
@@ -192,11 +197,26 @@ public class GameEditor extends LevelBase {
                 item.getInstance().update();
             }
         } else {
+
+            // Delete the currently selected item
+            if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
+                deleteSelectedItem();
+            }
+
             for(LevelItem item : levelItems) {
                 Sprite sprite = item.getInstance().getSprite();
 
                 AnimatedSprite.stepIfAnimatedSprite(sprite);
             }
+        }
+    }
+
+    public void deleteSelectedItem() {
+        if(selectedItem != null && !selectedItem.isPlaced()) {
+            if(levelItems.contains(selectedItem)) {
+                commandHistory.execute(new ListRemoveCommand<>(levelItems, selectedItem));
+            }
+            selectedItem = null;
         }
     }
 

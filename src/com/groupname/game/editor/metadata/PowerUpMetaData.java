@@ -1,7 +1,5 @@
 package com.groupname.game.editor.metadata;
 
-import com.groupname.framework.math.Vector2D;
-
 import java.util.Objects;
 
 public class PowerUpMetaData extends ObjectMetaData {

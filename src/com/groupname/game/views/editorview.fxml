@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -24,16 +25,18 @@
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem mnemonicParsing="false" text="New" onAction="#newOnClicked" />
+                  <MenuItem mnemonicParsing="false" onAction="#openOnClicked" text="Open..." />
                   <MenuItem mnemonicParsing="false" text="Save" />
-                  <MenuItem mnemonicParsing="false" text="Load" />
-              <MenuItem mnemonicParsing="false" onAction="#exitOnClicked" text="Exit" />
+                  <MenuItem mnemonicParsing="false" onAction="#saveAsOnClicked" text="Save As..." />
+              <MenuItem mnemonicParsing="false" onAction="#exitOnClicked" text="Exit editor" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Edit">
                <items>
                   <MenuItem accelerator="Shortcut+Z" mnemonicParsing="false" onAction="#undoOnClicked" text="Undo" />
                   <MenuItem accelerator="Shortcut+Y" mnemonicParsing="false" onAction="#redoOnClicked" text="Redo" />
+                   <MenuItem accelerator="Delete" mnemonicParsing="false" onAction="#deleteOnClicked" text="Delete" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Test">
@@ -41,6 +44,30 @@
                     <MenuItem accelerator="F5" mnemonicParsing="false" onAction="#playOnClicked" text="Play" />
                     <MenuItem mnemonicParsing="false" onAction="#editOnClicked" text="Edit" />
                 </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Customize">
+               <items>
+                  <Menu mnemonicParsing="false" text="Background">
+                    <items>
+                        <CheckMenuItem mnemonicParsing="false" text="Background1" />
+                        <CheckMenuItem mnemonicParsing="false" text="Background2" />
+                    </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Screen transitions">
+                    <items>
+                        <Menu mnemonicParsing="false" text="Start Level">
+                          <items>
+                              <CheckMenuItem mnemonicParsing="false" text="Arrow" />
+                          </items>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="End Level">
+                           <items>
+                              <CheckMenuItem mnemonicParsing="false" text="Arrow" />
+                           </items>
+                        </Menu>
+                    </items>
+                  </Menu>
+               </items>
             </Menu>
         </menus>
       </MenuBar>

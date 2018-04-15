@@ -1,8 +1,9 @@
 package com.groupname.framework.math;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Vector2D {
+public class Vector2D implements Serializable {
 
     private double x;
     private double y;

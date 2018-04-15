@@ -10,11 +10,13 @@ import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.GameEditor;
+import com.groupname.game.core.LevelMetaData;
 import com.groupname.game.editor.MetaDataListCell;
 import com.groupname.game.editor.metadata.EnemyMetaData;
 import com.groupname.game.editor.metadata.EnemySpriteType;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
+import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
@@ -23,14 +25,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
+import java.io.*;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import static javafx.scene.control.Alert.AlertType;
 
 public class EditorController implements Controller {
 
@@ -48,6 +57,8 @@ public class EditorController implements Controller {
 
     private LevelItem selectedItem = null;
 
+    private LevelMetaData levelMetaData;
+
     public EditorController() {
         commandHistory = new StackBasedUndoRedo();
         levelItems = new ArrayList<>();
@@ -60,6 +71,8 @@ public class EditorController implements Controller {
     }
 
     private void populateMetaDataList() {
+        levelMetaData = new LevelMetaData(0, "Default level");
+
         ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
         EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
         EnemyMetaData meta3 = new EnemyMetaData("Guard Fly - Easy", GuardEnemy.class);
@@ -78,7 +91,6 @@ public class EditorController implements Controller {
     }
 
     private void gameItemSelected(MouseEvent event) {
-
         ObjectMetaData sourceMetaData = metaDataListView.getSelectionModel().getSelectedItem();
 
         if(sourceMetaData != null) {
@@ -172,7 +184,145 @@ public class EditorController implements Controller {
     }
 
     @FXML
+    protected void newOnClicked(ActionEvent event) {
+        // todo: add confirmation
+        newLevel();
+    }
+
+    @FXML
+    protected void openOnClicked(ActionEvent event) {
+        newLevel();
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save level");
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if(selectedFile == null) {
+            showError("Error", "No file was selected, aborting...");
+            return;
+        }
+
+        LevelReader reader = new LevelReader();
+
+        // todo: make own exception instead
+        try {
+            LevelMetaData level = reader.read(selectedFile.toPath());
+
+            levelMetaData = level;
+
+            for(ObjectMetaData object : level.getObjectMetaDataList()) {
+                ObjectMetaData copy = object.deepCopy();
+                GameObject gameObject = levelFactory.create(copy);
+
+
+                LevelItem levelItem = new LevelItem(copy, gameObject);
+
+                levelItem.setPosition(levelItem.getPosition());
+                levelItem.setPlaced(true);
+
+                if(gameObject instanceof Player) {
+                    levelItem.setPlayer(true);
+                }
+
+                levelItems.add(levelItem);
+            }
+
+        } catch (NoSuchFileException exception) {
+            showError("Error", "File not found!");
+            return;
+        } catch (IOException exception) {
+            showError("Error", "Error while reading the file");
+            return;
+        } catch (ClassNotFoundException exception) {
+            showError("Error", "Unable to");
+            return;
+        }
+
+        showAlert("Success", "Level loaded successfully.", false);
+    }
+
+    @FXML
+    protected void deleteOnClicked(ActionEvent event) {
+        editor.deleteSelectedItem();
+    }
+
+    private void newLevel() {
+        levelItems.clear();
+        selectedItem = null;
+        editor.setSelectedItem(null);
+    }
+
+    @FXML
+    protected void saveAsOnClicked(ActionEvent event) {
+
+        // Split
+
+        List<ObjectMetaData> objects = levelMetaData.getObjectMetaDataList();
+        objects.clear();
+
+        boolean hasPlayer = false;
+        boolean hasEnemy = false;
+
+        for(LevelItem levelItem : levelItems) {
+            if(levelItem.getInstance() instanceof Player) {
+                hasPlayer = true;
+            } else if(levelItem.getInstance() instanceof Enemy) {
+                hasEnemy = true;
+            }
+
+            if(levelItem.isPlaced()) {
+                objects.add(levelItem.getMetaData());
+            }
+        }
+
+        if(!hasPlayer || !hasEnemy) {
+            showError("Unable to save!", "A level has to have at least one player and one enemy placed!");
+            return;
+        }
+
+        // Split
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save level");
+
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+        if(selectedFile == null) {
+            showError("Error", "No file was selected, aborting...");
+            return;
+        }
+
+        // Split
+
+        LevelWriter levelWriter = new LevelWriter();
+
+        try {
+            levelWriter.write(levelMetaData, selectedFile.toPath());
+        } catch (IOException exception) {
+            showError("Error", "An error occurred while trying to write the file to the disk.");
+            return;
+        }
+
+        showError("Success", "Your level was stored successfully.");
+    }
+
+    private void showError(String title, String message) {
+        showAlert(title, message, true);
+    }
+
+    private void showAlert(String title, String message, boolean isError) {
+
+        AlertType alertType = isError ? AlertType.ERROR : AlertType.INFORMATION;
+
+        Alert alert = new Alert(alertType, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.show();
+    }
+
+    @FXML
     protected void exitOnClicked(ActionEvent event) {
         SceneManager.navigate(SceneName.Title);
     }
 }
+

@@ -3,6 +3,7 @@ package com.groupname.game.editor.metadata;
 import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.math.Vector2D;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -35,6 +36,7 @@ public class EnemyMetaData extends ObjectMetaData {
     @Override
     public ObjectMetaData deepCopy() {
         EnemyMetaData enemyMetaData = new EnemyMetaData(getName(), getType());
+        enemyMetaData.setPosition(getPosition());
         enemyMetaData.setDifficulty(difficulty);
         enemyMetaData.setSpriteType(spriteType);
         return enemyMetaData;
