@@ -46,9 +46,9 @@ public enum SceneManager {
     }
 
     private void createSceneInfos() {
-        SceneInfo title= new SceneInfo(SceneName.Title, "Title - Untitled Game", "../views/titleview.fxml");
-        SceneInfo game = new SceneInfo(SceneName.Game, "Game - Untitled Game", "../views/gameview.fxml");
-        SceneInfo editor = new SceneInfo(SceneName.Editor, "Level editor!", "../views/editorview.fxml");
+        SceneInfo title= new SceneInfo(SceneName.Title, "Title - Untitled Game", "/com/groupname/game/views/titleview.fxml");
+        SceneInfo game = new SceneInfo(SceneName.Game, "Game - Untitled Game", "/com/groupname/game/views/gameview.fxml");
+        SceneInfo editor = new SceneInfo(SceneName.Editor, "Level editor!", "/com/groupname/game/views/editorview.fxml");
 
         scenes.put(SceneName.Title, title);
         scenes.put(SceneName.Game, game);
