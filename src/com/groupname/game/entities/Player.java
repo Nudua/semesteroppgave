@@ -8,10 +8,12 @@ import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.Scene.SceneManager;
 import com.groupname.game.Scene.SceneName;
+import com.groupname.game.data.AppSettings;
 import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
 import com.groupname.game.input.PlayerInputDefinitions;
+import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -28,7 +30,7 @@ public class Player extends Actor {
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
     private Weapon currentWeapon;
-    private double pushBack = 200;
+    private double pushBack = 150;
     private int maxHitpoints = DEFAULT_MAX_HEARTS;
 
     public Player(Sprite sprite, Vector2D position, InputManager inputManager, int hitPoints) {
@@ -88,26 +90,50 @@ public class Player extends Actor {
         double x = position.getX();
         double y = position.getY();
 
+        Rectangle levelBounds = AppSettings.LEVEL_BOUNDS;
+
         boolean isMoving = false;
 
         if(inputManager.isDown(PlayerInputDefinitions.LEFT)) {
-            position.setX(x - speed);
+
+            if(position.getX() - speed <= levelBounds.getX()) {
+                position.setX(levelBounds.getX());
+            } else {
+                position.addX(-speed);
+            }
+
             spriteFlip = SpriteFlip.NONE;
             setDirection(Direction.Left);
             isMoving = true;
         } else if (inputManager.isDown((PlayerInputDefinitions.RIGHT))) {
-            position.setX(x + speed);
+            if(position.getX() + sprite.getWidth() + speed >= levelBounds.getX() + levelBounds.getWidth()) {
+                position.setX(levelBounds.getX() + levelBounds.getWidth() - sprite.getWidth());
+            } else {
+                position.addX(speed);
+            }
+
             spriteFlip = SpriteFlip.HORIZONTAL;
             setDirection(Direction.Right);
             isMoving = true;
         }
 
         if(inputManager.isDown(PlayerInputDefinitions.UP)) {
-            position.setY(y - speed);
+            if(position.getY() <= levelBounds.getY()) {
+                position.setY(levelBounds.getY());
+            } else {
+                position.addY(-speed);
+            }
+
             setDirection(Direction.Up);
             isMoving = true;
         } else if (inputManager.isDown(PlayerInputDefinitions.DOWN)) {
-            position.setY(y + speed);
+
+            if(position.getY() + sprite.getHeight() >= levelBounds.getY() + levelBounds.getHeight()) {
+                position.setY(levelBounds.getY() + levelBounds.getHeight() - sprite.getHeight());
+            } else {
+                position.addY(speed);
+            }
+
             setDirection(Direction.Down);
             isMoving = true;
         }

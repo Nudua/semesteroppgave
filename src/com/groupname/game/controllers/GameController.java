@@ -144,7 +144,12 @@ public class GameController implements Controller {
         });
         pauseMenu.setOnClicked(PauseButton.RestartGame, () -> {
             currentLevelIndex = 0;
-            getCurrentLevel().reset();
+            LevelBase currentLevel = getCurrentLevel();
+            currentLevel.reset();
+            ((Level) currentLevel).setOnPlayerDead(() ->{
+                System.out.println("Dave, everybody's dead... everybody's dead Dave");
+                getCurrentLevel().reset();
+            });
             unPause();
         });
         pauseMenu.setOnClicked(PauseButton.Save, this::save);
