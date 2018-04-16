@@ -248,6 +248,7 @@ public class EditorController implements Controller {
     }
 
     private void newLevel() {
+        levelMetaData = new LevelMetaData("level1");
         levelItems.clear();
         selectedItem = null;
         editor.setSelectedItem(null);
@@ -304,7 +305,7 @@ public class EditorController implements Controller {
             return;
         }
 
-        showError("Success", "Your level was stored successfully.");
+        showAlert("Success", "Your level was stored successfully.", false);
     }
 
     private void showError(String title, String message) {

@@ -98,7 +98,7 @@ public class GameController implements Controller {
 
         LevelReader reader = new LevelReader();
 
-        String[] levelFiles = {"level1.level", "level2.level"};
+        String[] levelFiles = {"level1.level", "level2.level", "level3.level"};
 
         for(String levelPath: levelFiles) {
             boolean loaded = loadLevel(reader, levelPath);
@@ -146,10 +146,12 @@ public class GameController implements Controller {
             currentLevelIndex = 0;
             LevelBase currentLevel = getCurrentLevel();
             currentLevel.reset();
-            ((Level) currentLevel).setOnPlayerDead(() ->{
-                System.out.println("Dave, everybody's dead... everybody's dead Dave");
-                getCurrentLevel().reset();
-            });
+            if(currentLevel instanceof Level) {
+                ((Level) currentLevel).setOnPlayerDead(() ->{
+                    System.out.println("Dave, everybody's dead... everybody's dead Dave");
+                    getCurrentLevel().reset();
+                });
+            }
             unPause();
         });
         pauseMenu.setOnClicked(PauseButton.Save, this::save);

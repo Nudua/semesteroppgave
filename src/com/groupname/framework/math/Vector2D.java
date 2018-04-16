@@ -38,7 +38,7 @@ public class Vector2D implements Serializable {
         this.y += y;
     }
 
-    public Vector2D normalize(Vector2D other) {
+    public Vector2D subtract(Vector2D other) {
         return new Vector2D(x - other.getX(), y - other.getY());
     }
 

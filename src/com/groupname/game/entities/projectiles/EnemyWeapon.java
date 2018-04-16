@@ -49,7 +49,7 @@ public class EnemyWeapon {
             targetPosition = new Vector2D(player.getPosition());
 
             //Vector2D aimDirection = subVector(projectile.getPosition(), player.getPosition());
-            Vector2D aimDirection = player.getPosition().normalize(projectile.getPosition());
+            Vector2D aimDirection = player.getPosition().subtract(projectile.getPosition());
 
             // set the position well off the screen
             targetPosition.set(targetPosition.getX() + aimDirection.getX() * 4, targetPosition.getY() + aimDirection.getY() * 4);
@@ -58,7 +58,7 @@ public class EnemyWeapon {
 
 
     private void calculateVelocity() {
-        Vector2D aimDirection = targetPosition.normalize(projectile.getPosition());
+        Vector2D aimDirection = targetPosition.subtract(projectile.getPosition());
 
         double normalizedX = aimDirection.getX() / Math.sqrt(Math.pow(aimDirection.getX(), 2) + Math.pow(aimDirection.getY(), 2));
         double normalizedY = aimDirection.getY() / Math.sqrt(Math.pow(aimDirection.getX(), 2) + Math.pow(aimDirection.getY(), 2));
