@@ -33,7 +33,7 @@ public class SpriteBatchFX implements SpriteBatch {
         //Rectangle srcRect = sprite.getSpriteRegion();
 
         //graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY(), srcRect.getWidth(), srcRect.getHeight(), position.getX(),position.getY(),sprite.getWidth(), sprite.getHeight());
-        draw(sprite, position, EnumSet.of(SpriteFlip.NONE));
+        draw(sprite, position, EnumSet.noneOf(SpriteFlip.class));
     }
 
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {

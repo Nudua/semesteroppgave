@@ -22,6 +22,7 @@ import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
@@ -259,11 +260,33 @@ public class EditorController implements Controller {
         editor.setSelectedItem(null);
     }
 
+
+
     @FXML
     protected void saveAsOnClicked(ActionEvent event) {
+        // Split
+        boolean isValid = validateLevel();
+
+        if(!isValid) {
+            showError("Unable to save!", "A level has to have at least one player and one enemy placed!");
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save level");
+
+        File selectedFile = fileChooser.showSaveDialog(null);
+
+        if(selectedFile == null) {
+            showError("Error", "No file was selected, aborting...");
+            return;
+        }
 
         // Split
+        writeLevel(selectedFile);
+    }
 
+    private boolean validateLevel() {
         List<ObjectMetaData> objects = levelMetaData.getObjectMetaDataList();
         objects.clear();
 
@@ -282,35 +305,37 @@ public class EditorController implements Controller {
             }
         }
 
-        if(!hasPlayer || !hasEnemy) {
-            showError("Unable to save!", "A level has to have at least one player and one enemy placed!");
-            return;
-        }
+        return hasPlayer && hasEnemy;
+    }
 
-        // Split
+    private void writeLevel(File selectedFile) {
+        assert selectedFile != null;
+        assert selectedFile.canWrite();
 
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Save level");
+        final Task<Boolean> levelWriterTask = new Task<Boolean>() {
+            @Override
+            protected Boolean call() {
+                LevelWriter levelWriter = new LevelWriter();
 
-        File selectedFile = fileChooser.showSaveDialog(null);
+                try {
+                    levelWriter.write(levelMetaData, selectedFile.toPath());
+                } catch (IOException exception) {
+                    return false;
+                }
 
-        if(selectedFile == null) {
-            showError("Error", "No file was selected, aborting...");
-            return;
-        }
+                return true;
+            }
+        };
 
-        // Split
+        levelWriterTask.setOnSucceeded((workerStateEvent) -> {
+            showAlert("Success", "Your level was stored successfully.", false);
+        });
 
-        LevelWriter levelWriter = new LevelWriter();
-
-        try {
-            levelWriter.write(levelMetaData, selectedFile.toPath());
-        } catch (IOException exception) {
+        levelWriterTask.setOnFailed((workerStateEvent) -> {
             showError("Error", "An error occurred while trying to write the file to the disk.");
-            return;
-        }
+        });
 
-        showAlert("Success", "Your level was stored successfully.", false);
+        levelWriterTask.run();
     }
 
     private void showError(String title, String message) {

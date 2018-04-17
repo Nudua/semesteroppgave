@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Level extends LevelBase {
 
@@ -63,6 +64,18 @@ public class Level extends LevelBase {
 
     @Override
     public void update() {
+
+        gameObjects.parallelStream().forEach(GameObject::update);
+
+        Optional<GameObject> player = gameObjects.stream().filter(n -> n instanceof Player).findFirst();
+
+        if(player.isPresent()) {
+            Player player1 = (Player)player.get();
+            player1.checkCollision(gameObjects);
+        }
+
+
+        /*
         for(GameObject gameObject : gameObjects) {
             gameObject.update();
 
@@ -70,6 +83,7 @@ public class Level extends LevelBase {
                 ((Player) gameObject).checkCollision(gameObjects);
             }
         }
+        */
 
         if(allEnemiesDead()) {
             state = LevelState.Completed;
@@ -83,7 +97,7 @@ public class Level extends LevelBase {
     }
 
     private boolean playerDead() {
-        return gameObjects.stream()
+        return gameObjects.parallelStream()
                 .filter(n -> n instanceof Player)
                 .noneMatch(n -> ((Player) n).isAlive());
     }
@@ -93,7 +107,7 @@ public class Level extends LevelBase {
             return true;
         }
 
-        return gameObjects.stream()
+        return gameObjects.parallelStream()
                 .filter(n -> n instanceof Enemy)
                 .noneMatch(n -> ((Enemy) n).isAlive());
     }
