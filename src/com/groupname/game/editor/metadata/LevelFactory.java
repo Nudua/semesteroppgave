@@ -13,7 +13,9 @@ import com.groupname.framework.level.Tile;
 import com.groupname.framework.level.TilePattern;
 import com.groupname.framework.level.TileType;
 import com.groupname.game.entities.Enemy;
+import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
+import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
@@ -29,10 +31,12 @@ public class LevelFactory {
 
     private final Map<String,SpriteSheet> spriteSheets;
     private final InputManager inputManager;
+    private final SpriteFactory spriteFactory;
 
     public LevelFactory(InputManager inputManager) {
         spriteSheets = new HashMap<>();
         this.inputManager = Objects.requireNonNull(inputManager);
+        this.spriteFactory = new SpriteFactory();
     }
 
     public void initialize() {
@@ -84,17 +88,11 @@ public class LevelFactory {
      */
     private Player createPlayer(ObjectMetaData levelObject) {
 
-        // Idle animation, player class need a lot of work for animations!
-        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0,0, 124, 124), 60 * 2);
-        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1,0, 124, 124), 60);
-        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(2,0, 124, 124), 60);
-        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1,0, 124, 124), 60);
-
-        AnimatedSprite animatedSprite = new AnimatedSprite(spriteSheets.get("player1"), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
+        Sprite sprite = spriteFactory.createPlayer();
 
         //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
-        animatedSprite.setScale(0.85d);
-        return new Player(animatedSprite, levelObject.getPosition(), inputManager, 5);
+        sprite.setScale(0.85d);
+        return new Player(sprite, levelObject.getPosition(), inputManager, 5);
     }
 
     /**
@@ -137,18 +135,8 @@ public class LevelFactory {
     }
 
     private GuardEnemy createGuardEnemy(EnemyMetaData metaData) {
+        Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
-        Sprite sprite;
-
-        if(metaData.getSpriteType() == EnemySpriteType.Blob) {
-            AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, 0, 80, 80), 20);
-            AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 80, 80), 20);
-            sprite = new AnimatedSprite(spriteSheets.get("enemies"), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
-        } else { // Fly for now
-            AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, 3, 80, 80), 10);
-            AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, 3, 80, 80), 10);
-            sprite = new AnimatedSprite(spriteSheets.get("enemies"), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
-        }
 
         int hitPoints;
         double speed;

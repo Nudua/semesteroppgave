@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.history.StackBasedUndoRedo;
 import com.groupname.framework.history.UndoRedo;
@@ -13,10 +14,10 @@ import com.groupname.game.core.GameEditor;
 import com.groupname.game.core.LevelMetaData;
 import com.groupname.game.editor.MetaDataListCell;
 import com.groupname.game.editor.metadata.EnemyMetaData;
-import com.groupname.game.editor.metadata.EnemySpriteType;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Enemy;
+import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
@@ -75,14 +76,17 @@ public class EditorController implements Controller {
 
         ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
         EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
-        EnemyMetaData meta3 = new EnemyMetaData("Guard Fly - Easy", GuardEnemy.class);
-        meta3.setSpriteType(EnemySpriteType.Fly);
+        EnemyMetaData meta3 = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
+        EnemyMetaData meta4 = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
+        meta3.setSpriteType(EnemySpriteType.Bee);
+        meta4.setSpriteType(EnemySpriteType.CrazyBee);
+        meta4.setDifficulty(Difficulty.Medium);
         //ObjectMetaData meta2 = new ObjectMetaData("Second", ObjectMetaData.class, new Vector2D());
         //ObjectMetaData meta3 = new ObjectMetaData("Third", ObjectMetaData.class, new Vector2D());
 
         // Move to a css file
         metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3));
+        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4));
 
 
         metaDataListView.setCellFactory((o) -> { return new MetaDataListCell(); });

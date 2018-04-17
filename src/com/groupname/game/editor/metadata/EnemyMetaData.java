@@ -2,6 +2,7 @@ package com.groupname.game.editor.metadata;
 
 import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.EnemySpriteType;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -11,7 +12,7 @@ import java.util.Objects;
 // We need a bit more information
 public class EnemyMetaData extends ObjectMetaData {
     private Difficulty difficulty = Difficulty.Easy;
-    private EnemySpriteType spriteType = EnemySpriteType.Blob;
+    private EnemySpriteType spriteType = EnemySpriteType.BlueBlob;
 
     public EnemyMetaData(String name, Class<?> type) {
         super(name, type);
