@@ -81,6 +81,7 @@ public class EditorController implements Controller {
         meta3.setSpriteType(EnemySpriteType.Bee);
         meta4.setSpriteType(EnemySpriteType.CrazyBee);
         meta4.setDifficulty(Difficulty.Medium);
+
         //ObjectMetaData meta2 = new ObjectMetaData("Second", ObjectMetaData.class, new Vector2D());
         //ObjectMetaData meta3 = new ObjectMetaData("Third", ObjectMetaData.class, new Vector2D());
 
