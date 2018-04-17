@@ -22,6 +22,7 @@ import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -309,6 +310,23 @@ public class EditorController implements Controller {
     }
 
     private void writeLevel(File selectedFile) {
+
+        LevelWriterService service = new LevelWriterService();
+
+        service.setLevelMetaData(levelMetaData);
+        service.setFilePath(selectedFile.toPath());
+
+        service.setOnSucceeded((workerStateEvent) -> {
+            showAlert("Success", "Your level was stored successfully.", false);
+        });
+
+        service.setOnFailed((workerStateEvent) -> {
+            showError("Error", "An error occurred while trying to write the file to the disk.");
+        });
+
+        service.start();
+
+        /*
         assert selectedFile != null;
         assert selectedFile.canWrite();
 
@@ -336,6 +354,7 @@ public class EditorController implements Controller {
         });
 
         levelWriterTask.run();
+        */
     }
 
     private void showError(String title, String message) {
@@ -356,4 +375,49 @@ public class EditorController implements Controller {
         SceneManager.navigate(SceneName.Title);
     }
 }
+
+class LevelWriterService extends Service<Boolean> {
+
+    private LevelMetaData levelMetaData;
+    private Path filePath;
+
+    public void setLevelMetaData(LevelMetaData levelMetaData) {
+        this.levelMetaData = Objects.requireNonNull(levelMetaData);
+    }
+
+    public void setFilePath(Path filePath) {
+        this.filePath = Objects.requireNonNull(filePath);
+    }
+
+    @Override
+    protected Task<Boolean> createTask() {
+        return new Task<Boolean>() {
+            @Override
+            protected Boolean call() {
+                LevelWriter levelWriter = new LevelWriter();
+
+                try {
+                    levelWriter.write(levelMetaData, filePath);
+                } catch (IOException exception) {
+                    return false;
+                }
+
+                return true;
+            }
+        };
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
