@@ -9,6 +9,7 @@ import com.groupname.framework.graphics.animation.AnimationFrame;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.LevelMetaData;
@@ -16,9 +17,12 @@ import com.groupname.game.data.AppSettings;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Enemy;
+import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
+import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
+import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.levels.core.LevelState;
@@ -103,8 +107,11 @@ public class Level1 extends LevelBase {
         enemy3Sprite.setScale(0.5d);
         enemy2Sprite.setScale(2.0d);
 
+        SpriteFactory spriteFactory = new SpriteFactory();
+
+
         GuardEnemy enemy = new GuardEnemy(enemySprite, new Vector2D(100,200), 3);
-        enemy.setSpeed(10.5d);
+        enemy.setSpeed(2.5d);
 
         GuardEnemy enemy2 = new GuardEnemy(enemy2Sprite, new Vector2D(50,500), 10);
         enemy2.setSpeed(15d);
@@ -119,8 +126,10 @@ public class Level1 extends LevelBase {
         HomingEnemy enemy6 = new HomingEnemy(enemySprite, new Vector2D(100, 700), 10, player);
         enemy6.setSpeed(2.5d);
 
+        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Snail), new Vector2D(600,300), 3, Direction.Up, player);
+
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
-        gameObjects.addAll(Arrays.asList(enemy4, enemy5, enemy6));
+        gameObjects.addAll(Arrays.asList(enemy7));
 
         delay = 10;
 

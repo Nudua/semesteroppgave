@@ -19,6 +19,8 @@ public class SpriteFactory {
     private final static String PLAYER_SPRITESHEET_FILENAME = "alien-works.png";
     private final static String ENEMY_SPRITESHEET = "enemies";
     private final static String PLAYER_SPRITESHEET = "player1";
+    private final static String PROJECTILE_SPRITESHEET_FILENAME = "prosjectile.png";
+    private final static String PROJECTILE_SPRITESHEET = "projectile";
 
 
     public SpriteFactory() {
@@ -58,6 +60,20 @@ public class SpriteFactory {
 
         //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
         animatedSprite.setScale(0.85d);
+
+        return animatedSprite;
+    }
+
+    public Sprite createProsjectile() {
+        Image bulletSheet = Content.loadImage(PLAYER_SPRITESHEET_FILENAME, ResourceType.SpriteSheet);
+        SpriteSheet bulletSpriteSheet = new SpriteSheet(PROJECTILE_SPRITESHEET, bulletSheet);
+
+        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 6);
+        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(3, 0, 66, 66), 6);
+        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(2, 0, 66, 66), 6);
+        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 66, 66), 6);
+
+        AnimatedSprite animatedSprite = new AnimatedSprite(bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
 
         return animatedSprite;
     }
