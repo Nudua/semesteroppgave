@@ -29,20 +29,19 @@ import java.util.*;
 
 public class LevelFactory {
 
-    private final Map<String,SpriteSheet> spriteSheets;
     private final InputManager inputManager;
     private final SpriteFactory spriteFactory;
 
     public LevelFactory(InputManager inputManager) {
-        spriteSheets = new HashMap<>();
         this.inputManager = Objects.requireNonNull(inputManager);
         this.spriteFactory = new SpriteFactory();
     }
 
     public void initialize() {
-        createSpriteSheets();
+        //createSpriteSheets();
     }
 
+    /*
     private void createSpriteSheets() {
         Image playerSheet = Content.loadImage("alien-works.png", ResourceType.SpriteSheet);
         Image enemySheet = Content.loadImage("enemies.png", ResourceType.SpriteSheet);
@@ -50,6 +49,7 @@ public class LevelFactory {
         spriteSheets.put("player1", new SpriteSheet("player1", playerSheet));
         spriteSheets.put("enemies", new SpriteSheet("enemies", enemySheet));
     }
+    */
 
     public GameObject create(ObjectMetaData metaData) {
         if(metaData.getType() == Player.class) {
@@ -58,13 +58,17 @@ public class LevelFactory {
             return createEnemy(metaData);
         } else if(PowerUp.class.isAssignableFrom(metaData.getType())) {
             return createPowerUp(metaData);
-        } else if(metaData.getType() == TileType.class) {
+        }
+        /*
+        else if(metaData.getType() == TileType.class) {
             return createTile(metaData);
         }
+        */
 
         throw new InvalidParameterException("Unsupported object");
     }
 
+    /*
     private Tile createTile(ObjectMetaData metaData) {
         if(!(metaData instanceof TileMetaData)) {
             throw new InvalidParameterException(); // Make custom exception
@@ -82,6 +86,7 @@ public class LevelFactory {
 
         return new Tile(texture, tileMetaData.getPosition(), tileMetaData.getTileType());
     }
+    */
 
     /**
      * Player(s)
@@ -113,7 +118,7 @@ public class LevelFactory {
     }
 
     private HeartPowerUp createHeartPowerUp(PowerUpMetaData metaData) {
-        Sprite sprite = new Sprite(spriteSheets.get("enemies"), Sprite.createSpriteRegion(0, 1, 66, 66));
+        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.Jellyfish);// new Sprite(spriteSheets.get("enemies"), Sprite.createSpriteRegion(0, 1, 66, 66));
         return new HeartPowerUp(sprite, metaData.getPosition(), metaData.getAmount());
     }
 
@@ -136,7 +141,6 @@ public class LevelFactory {
 
     private GuardEnemy createGuardEnemy(EnemyMetaData metaData) {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
-
 
         int hitPoints;
         double speed;
