@@ -37,20 +37,6 @@ public class LevelFactory {
         this.spriteFactory = new SpriteFactory();
     }
 
-    public void initialize() {
-        //createSpriteSheets();
-    }
-
-    /*
-    private void createSpriteSheets() {
-        Image playerSheet = Content.loadImage("alien-works.png", ResourceType.SpriteSheet);
-        Image enemySheet = Content.loadImage("enemies.png", ResourceType.SpriteSheet);
-
-        spriteSheets.put("player1", new SpriteSheet("player1", playerSheet));
-        spriteSheets.put("enemies", new SpriteSheet("enemies", enemySheet));
-    }
-    */
-
     public GameObject create(ObjectMetaData metaData) {
         if(metaData.getType() == Player.class) {
             return createPlayer(metaData);
@@ -68,36 +54,15 @@ public class LevelFactory {
         throw new InvalidParameterException("Unsupported object");
     }
 
-    /*
-    private Tile createTile(ObjectMetaData metaData) {
-        if(!(metaData instanceof TileMetaData)) {
-            throw new InvalidParameterException(); // Make custom exception
-        }
-
-        TileMetaData tileMetaData = (TileMetaData)metaData;
-
-        Rectangle spriteRegion = Sprite.createSpriteRegion(0, 0, Tile.Size, Tile.Size);
-
-        if(tileMetaData.getTilePattern() == TilePattern.Wall) {
-            spriteRegion = Sprite.createSpriteRegion(0,1, Tile.Size, Tile.Size);
-        }
-
-        Sprite texture = new Sprite(spriteSheets.get("enemies"), spriteRegion);
-
-        return new Tile(texture, tileMetaData.getPosition(), tileMetaData.getTileType());
-    }
-    */
-
     /**
      * Player(s)
      */
     private Player createPlayer(ObjectMetaData levelObject) {
-
         Sprite sprite = spriteFactory.createPlayer();
 
         //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
         sprite.setScale(0.85d);
-        return new Player(sprite, levelObject.getPosition(), inputManager, 5);
+        return new Player(sprite, levelObject.getPosition(), inputManager);
     }
 
     /**
@@ -165,7 +130,8 @@ public class LevelFactory {
                 break;
         }
 
-        GuardEnemy enemy = new GuardEnemy(sprite, metaData.getPosition(), hitPoints);
+        GuardEnemy enemy = new GuardEnemy(sprite, metaData.getPosition());
+        enemy.setHitPoints(hitPoints);
         enemy.setSpeed(speed);
 
         return enemy;

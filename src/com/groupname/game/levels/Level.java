@@ -52,7 +52,6 @@ public class Level extends LevelBase {
         List<ObjectMetaData> objectsMetaData = levelMetaData.getObjectMetaDataList();
 
         LevelFactory factory = new LevelFactory(inputManager);
-        factory.initialize();
 
         for(ObjectMetaData objectMetaData : objectsMetaData) {
             GameObject gameObject = factory.create(objectMetaData);

@@ -15,6 +15,7 @@ import javafx.scene.image.Image;
 import java.util.List;
 import java.util.Objects;
 
+/*
 public abstract class WeaponBase implements Weapon {
 
     private boolean enabled;
@@ -37,4 +38,4 @@ public abstract class WeaponBase implements Weapon {
     // more general?
     protected abstract void createProjectiles();
 }
-
+*/

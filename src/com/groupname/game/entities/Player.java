@@ -29,12 +29,12 @@ public class Player extends Actor {
     private double speed = 10.5d;
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
-    private Weapon currentWeapon;
+    private SingleBulletWeapon currentWeapon;
     private double pushBack = 150;
     private int maxHitpoints = DEFAULT_MAX_HEARTS;
 
-    public Player(Sprite sprite, Vector2D position, InputManager inputManager, int hitPoints) {
-        super(sprite, position, hitPoints);
+    public Player(Sprite sprite, Vector2D position, InputManager inputManager) {
+        super(sprite, position);
         this.inputManager = inputManager;
         initialPosition = new Vector2D(position);
 
@@ -72,24 +72,30 @@ public class Player extends Actor {
     }
 
     private void handleWeapon() {
-        if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Right);
-        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Left);
-        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_DOWN)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Down);
 
+        if(!currentWeapon.canFire()) {
+            currentWeapon.update();
+            return;
+        }
+
+        if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
+            currentWeapon.setDirection(Direction.Right);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
+        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
+            currentWeapon.setDirection(Direction.Left);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
+        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_DOWN)) {
+            currentWeapon.setDirection(Direction.Down);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_UP)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Up);
+            currentWeapon.setDirection(Direction.Up);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
         }
 
         currentWeapon.update();
     }
 
     private void handleMovement() {
-        double x = position.getX();
-        double y = position.getY();
-
         Rectangle levelBounds = AppSettings.LEVEL_BOUNDS;
 
         boolean isMoving = false;

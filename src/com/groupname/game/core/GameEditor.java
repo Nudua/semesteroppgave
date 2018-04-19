@@ -71,7 +71,6 @@ public class GameEditor extends LevelBase {
         backgroundColor = Color.BLACK;
 
         levelFactory = new LevelFactory(inputManager);
-        levelFactory.initialize();
 
         // MoveCommand? simply this
         mouseInput.setOnMove(this::updateItemPosition);

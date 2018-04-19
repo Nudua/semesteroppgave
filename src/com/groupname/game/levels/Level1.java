@@ -77,7 +77,7 @@ public class Level1 extends LevelBase {
     private void createPlayer1() {
         Sprite p1Sprite = new Sprite(getSpriteSheet("player1"), Sprite.createSpriteRegion(160, 160));
         p1Sprite.setScale(0.5d);
-        player = new Player(p1Sprite, new Vector2D(800,200), inputManager, 5);
+        player = new Player(p1Sprite, new Vector2D(800,200), inputManager);
         player.setOnDeath(this::gameOver);
         gameObjects.add(player);
     }
@@ -110,23 +110,14 @@ public class Level1 extends LevelBase {
         SpriteFactory spriteFactory = new SpriteFactory();
 
 
-        GuardEnemy enemy = new GuardEnemy(enemySprite, new Vector2D(100,200), 3);
-        enemy.setSpeed(2.5d);
-
-        GuardEnemy enemy2 = new GuardEnemy(enemy2Sprite, new Vector2D(50,500), 10);
-        enemy2.setSpeed(15d);
-
-        GuardEnemy enemy3 = new GuardEnemy(enemy3Sprite, new Vector2D(600,450), 3);
-        enemy3.setSpeed(25.5d);
-
-        HomingEnemy enemy4 = new HomingEnemy(enemySprite, new Vector2D(900, 50), 5, player);
+        HomingEnemy enemy4 = new HomingEnemy(enemySprite, new Vector2D(900, 50), player);
         enemy4.setSpeed(0.1d);
-        HomingEnemy enemy5 = new HomingEnemy(enemySprite, new Vector2D(300, 500), 5, player);
+        HomingEnemy enemy5 = new HomingEnemy(enemySprite, new Vector2D(300, 500), player);
         enemy5.setSpeed(0.5d);
-        HomingEnemy enemy6 = new HomingEnemy(enemySprite, new Vector2D(100, 700), 10, player);
+        HomingEnemy enemy6 = new HomingEnemy(enemySprite, new Vector2D(100, 700), player);
         enemy6.setSpeed(2.5d);
 
-        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Snail), new Vector2D(600,300), 3, Direction.Up, player);
+        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Snail), new Vector2D(600,300), Direction.Up, player);
 
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
         gameObjects.addAll(Arrays.asList(enemy7));

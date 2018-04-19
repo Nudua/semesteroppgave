@@ -19,8 +19,8 @@ public class GuardEnemy extends Enemy {
     private double speed = 1.4d;
     private Direction direction = Direction.Right;
 
-    public GuardEnemy(Sprite sprite, Vector2D position, int hitPoints) {
-        super(sprite, position, hitPoints);
+    public GuardEnemy(Sprite sprite, Vector2D position) {
+        super(sprite, position);
         endPosition = new Vector2D(position.getX() + walkDistance, position.getY());
         startPosition = new Vector2D(position);
         clampWalkingPath();

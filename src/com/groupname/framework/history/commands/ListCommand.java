@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * This command is used to add or remove a selected item to a List.
+ * The base class for doing operations on a List via the Command interface.
  *
- * @param <E> the type of elements to add to the list.
+ * @param <E> the class type of elements to add to the list.
+ * @see ListAddCommand<E>
+ * @see ListRemoveCommand<E>
  */
 public abstract class ListCommand<E> implements Command {
     protected List<E> list;

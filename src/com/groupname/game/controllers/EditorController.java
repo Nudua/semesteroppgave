@@ -146,7 +146,6 @@ public class EditorController implements Controller {
         editor.initialize();
 
         levelFactory = new LevelFactory(game.getInputManager());
-        levelFactory.initialize();
 
         if(!game.isRunning()) {
             game.start();

@@ -14,13 +14,14 @@ import java.util.Map;
 import java.util.Objects;
 
 public class SpriteFactory {
-    public final Map<String, SpriteSheet> spriteSheets;
+    private final Map<String, SpriteSheet> spriteSheets;
     private final static String ENEMY_SPRITESHEET_FILENAME = "enemies.png";
     private final static String PLAYER_SPRITESHEET_FILENAME = "alien-works.png";
+    private final static String PROJECTILE_SPRITESHEET_FILENAME = "projectiles.png";
+
     private final static String ENEMY_SPRITESHEET = "enemies";
     private final static String PLAYER_SPRITESHEET = "player1";
-    private final static String PROJECTILE_SPRITESHEET_FILENAME = "prosjectile.png";
-    private final static String PROJECTILE_SPRITESHEET = "projectile";
+    private final static String PROJECTILE_SPRITESHEET = "projectiles";
 
 
     public SpriteFactory() {
@@ -36,17 +37,15 @@ public class SpriteFactory {
         spriteSheets.put(ENEMY_SPRITESHEET, new SpriteSheet(ENEMY_SPRITESHEET, enemySheet));
     }
 
-    public Sprite createEnemy(EnemySpriteType spritetype) {
-        Objects.requireNonNull(spritetype);
+    public Sprite createEnemy(EnemySpriteType spriteType) {
+        Objects.requireNonNull(spriteType);
 
-        int y = spritetype.getIndex();
+        // Get the y-position within the spriteSheet
+        int y = spriteType.getIndex();
 
         AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, y, 80, 80), 20);
         AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, y, 80, 80), 20);
-        AnimatedSprite sprite = new AnimatedSprite(spriteSheets.get(ENEMY_SPRITESHEET), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
-
-
-        return sprite;
+        return new AnimatedSprite(spriteSheets.get(ENEMY_SPRITESHEET), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
     }
 
     public Sprite createPlayer() {
@@ -58,14 +57,13 @@ public class SpriteFactory {
 
         AnimatedSprite animatedSprite = new AnimatedSprite(spriteSheets.get(PLAYER_SPRITESHEET), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
 
-        //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
         animatedSprite.setScale(0.85d);
 
         return animatedSprite;
     }
 
-    public Sprite createProsjectile() {
-        Image bulletSheet = Content.loadImage(PLAYER_SPRITESHEET_FILENAME, ResourceType.SpriteSheet);
+    public Sprite createProjectile() {
+        Image bulletSheet = Content.loadImage(PROJECTILE_SPRITESHEET_FILENAME, ResourceType.SpriteSheet);
         SpriteSheet bulletSpriteSheet = new SpriteSheet(PROJECTILE_SPRITESHEET, bulletSheet);
 
         AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 6);
@@ -73,9 +71,9 @@ public class SpriteFactory {
         AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(2, 0, 66, 66), 6);
         AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 66, 66), 6);
 
-        AnimatedSprite animatedSprite = new AnimatedSprite(bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
-
-        return animatedSprite;
+        AnimatedSprite sprite = new AnimatedSprite(bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
+        sprite.setScale(0.5d);
+        return sprite;
     }
 
 }

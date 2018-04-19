@@ -3,20 +3,24 @@ package com.groupname.game.entities;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
+import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.math.Vector2D;
 
 public abstract class Actor extends GameObject {
 
-    private int hitPoints;
+    private static final int DEFAULT_HITPOINTS = 5;
+
+    private int hitPoints = DEFAULT_HITPOINTS;
     private boolean alive = true;
 
     // Think about these
     private Runnable onCollide;
     private Runnable onDeath;
 
-    public Actor(Sprite sprite, Vector2D position, int hitPoints) {
+    protected SpriteFlip spriteFlip = SpriteFlip.NONE;
+
+    public Actor(Sprite sprite, Vector2D position) {
         super(sprite, position);
-        this.hitPoints = hitPoints;
     }
 
     public int getHitPoints() {

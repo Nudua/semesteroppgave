@@ -13,14 +13,12 @@ import java.util.List;
 
 
 public interface Weapon extends UpdateDrawAble {
-    String NAME = "GenericWeapon";
 
-    boolean isEnabled();
-    void setEnabled(boolean enabled);
+    void fire(Vector2D startPosition);
 
-    void fire(Vector2D startPosition, Direction direction);
+    void setDirection(Direction direction);
 
-    void checkCollision(List<Enemy> enemies);
+    //void checkCollision(List<Enemy> enemies);
 }
 
 

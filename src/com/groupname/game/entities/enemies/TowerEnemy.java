@@ -6,32 +6,30 @@ import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
-import com.groupname.game.entities.projectiles.EnemyWeapon;
-import com.groupname.game.entities.projectiles.OneDirectionWeapon;
+import com.groupname.game.entities.projectiles.SingleBulletWeapon;
+
+import java.util.Objects;
 
 public class TowerEnemy extends Enemy {
 
     private Vector2D position;
-    private Direction direction = Direction.Up;
-    private OneDirectionWeapon currentWeapon;
+    private Direction shootingDirection = Direction.Up;
+    private SingleBulletWeapon currentWeapon;
     private Player player;
     private int shootingLeft;
     private int shootingRight;
-    private boolean ok;
+    private boolean canShoot;
 
-
-
-    public TowerEnemy(Sprite sprite, Vector2D position, int hitPoints, Direction shootingDirection, Player player) {
-        super(sprite, position, hitPoints);
-        this.direction = shootingDirection;
+    public TowerEnemy(Sprite sprite, Vector2D position, Direction shootingDirection, Player player) {
+        super(sprite, position);
+        this.shootingDirection = Objects.requireNonNull(shootingDirection);
         this.position = new Vector2D(position);
-        this.player = player;
+        this.player = Objects.requireNonNull(player);
         createWeapon();
-
     }
 
-    public void createWeapon() {
-        currentWeapon = new OneDirectionWeapon();
+    private void createWeapon() {
+        currentWeapon = new SingleBulletWeapon();
         shootingLeft = (int) position.getX() - 20;
         shootingRight = (int) position.getX() + 20;
     }
@@ -42,10 +40,6 @@ public class TowerEnemy extends Enemy {
     }
 
 
-    public void setShootingDirection(Direction direction) {
-        this.direction = direction;
-    }
-
     @Override
     public void update() {
         super.update();
@@ -55,21 +49,21 @@ public class TowerEnemy extends Enemy {
         }
         currentWeapon.update();
 
-
+        // Look this over
         if(shootingLeft < player.getPosition().getX()) {
-            ok = true;
+            canShoot = true;
         }
         if(shootingLeft > player.getPosition().getX()) {
-            ok = false;
+            canShoot = false;
         }
         if (shootingRight > player.getPosition().getX()) {
-            ok = true;
+            canShoot = true;
         }
         if(shootingRight < player.getPosition().getX()) {
-            ok = false;
+            canShoot = false;
         }
 
-        if(ok) {
+        if(canShoot) {
             currentWeapon.fire(position);
         }
 

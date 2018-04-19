@@ -7,14 +7,18 @@ import com.groupname.framework.graphics.animation.AnimationFrame;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
+import com.groupname.game.entities.SpriteFactory;
 import javafx.scene.image.Image;
 
 import java.util.Arrays;
+import java.util.Objects;
 
-public class EnemyWeapon {
+public class EnemyWeapon implements Weapon {
     private static final String NAME = "Enemy Weapon!";
     private final double speed = 15d;
     private final int damage = 1;
@@ -23,33 +27,32 @@ public class EnemyWeapon {
     private Vector2D targetPosition = new Vector2D();
     private Vector2D velocity = new Vector2D();
 
+    private final Actor target;
 
-    public EnemyWeapon() {
+    public EnemyWeapon(Actor target) {
+        this.target = Objects.requireNonNull(target);
         createProjectiles();
     }
 
-    private void createProjectiles() {
-        Image bulletSheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
-        SpriteSheet bulletSpriteSheet = new SpriteSheet("projectiles", bulletSheet);
-
-        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 6);
-        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(3, 0, 66, 66), 6);
-        AnimationFrame frame3 = new AnimationFrame(Sprite.createSpriteRegion(2, 0, 66, 66), 6);
-        AnimationFrame frame4 = new AnimationFrame(Sprite.createSpriteRegion(1, 0, 66, 66), 6);
-
-        AnimatedSprite animatedSprite = new AnimatedSprite(bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
-
-        projectile = new Projectile(animatedSprite);
+    @Override
+    public void setDirection(Direction direction) {
+        // Ignored in this implementation
     }
 
-    public void fire(Vector2D startPosition, Player player) {
-        if (!projectile.isAlive() && player.isAlive()) {
+    private void createProjectiles() {
+        SpriteFactory spriteFactory = new SpriteFactory();
+
+        projectile = new Projectile(spriteFactory.createProjectile());
+    }
+
+    public void fire(Vector2D startPosition) {
+        if (!projectile.isAlive() && target.isAlive()) {
             projectile.setPosition(startPosition);
             projectile.setAlive(true);
-            targetPosition = new Vector2D(player.getPosition());
+            targetPosition = new Vector2D(target.getPosition());
 
             //Vector2D aimDirection = subVector(projectile.getPosition(), player.getPosition());
-            Vector2D aimDirection = player.getPosition().subtract(projectile.getPosition());
+            Vector2D aimDirection = target.getPosition().subtract(projectile.getPosition());
 
             // set the position well off the screen
             targetPosition.set(targetPosition.getX() + aimDirection.getX() * 4, targetPosition.getY() + aimDirection.getY() * 4);

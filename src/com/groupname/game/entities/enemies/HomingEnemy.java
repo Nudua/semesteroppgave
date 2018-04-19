@@ -17,15 +17,15 @@ public class HomingEnemy extends Enemy {
     private int counter;
     private int delay = 60;
 
-    public HomingEnemy(Sprite sprite, Vector2D position, int hitPoints, Player player) {
-        super(sprite, position, hitPoints);
+    public HomingEnemy(Sprite sprite, Vector2D position, Player player) {
+        super(sprite, position);
         startPosition = new Vector2D(position);
         this.player = player;
 
         createWeapon();
     }
     private void createWeapon() {
-        currentWeapon = new EnemyWeapon();
+        currentWeapon = new EnemyWeapon(player);
     }
 
     public void setSpeed(double speed) {
@@ -62,7 +62,7 @@ public class HomingEnemy extends Enemy {
 
         counter++;
         if(counter >= delay) {
-            currentWeapon.fire(position, player);
+            currentWeapon.fire(position);
             counter = 0;
         }
     }

@@ -8,16 +8,8 @@ import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
 
-// Needed?
-interface IProjectile {
-    boolean isAlive();
-    void setAlive(boolean alive);
 
-    Vector2D getPosition();
-    void setPosition(Vector2D position);
-}
-
-public class Projectile extends GameObject implements IProjectile {
+public class Projectile extends GameObject {
     private boolean alive = false;
     private Direction direction = Direction.Right;
 
@@ -41,12 +33,12 @@ public class Projectile extends GameObject implements IProjectile {
         this.direction = direction;
     }
 
-    @Override
+
     public boolean isAlive() {
         return alive;
     }
 
-    @Override
+
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
@@ -78,40 +70,3 @@ public class Projectile extends GameObject implements IProjectile {
     }
 }
 
-
-/*
-public abstract class Projectile extends GameObject {
-
-    private final String name;
-
-    private double speed;
-    private boolean alive = false;
-
-    public Projectile(String name, Sprite sprite, Vector2D position) {
-        super(sprite, position);
-        this.name = Strings.requireNonNullAndNotEmpty(name);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public double getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(double speed) {
-        this.speed = speed;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    public abstract void fire(Vector2D position, Direction direction);
-}
-*/

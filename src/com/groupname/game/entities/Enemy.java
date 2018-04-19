@@ -13,14 +13,13 @@ import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
 import com.groupname.game.input.PlayerInputDefinitions;
 
+import java.util.Objects;
+
 
 public abstract class Enemy extends Actor {
-    protected final Vector2D initialPosition;
-    protected SpriteFlip spriteFlip = SpriteFlip.NONE;
-
-    public Enemy(Sprite sprite, Vector2D position, int hitPoints) {
-        super(sprite, position, hitPoints);
-        initialPosition = new Vector2D(position);
+    public Enemy(Sprite sprite, Vector2D position) {
+        super(sprite, position);
     }
 
+    // Enemy helper methods here
 }
