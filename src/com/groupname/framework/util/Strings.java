@@ -1,5 +1,8 @@
 package com.groupname.framework.util;
 
+/**
+ * A helper class meant for checking if a String instance is not null or contains an empty String.
+ */
 public final class Strings {
     private Strings() {
         throw new AssertionError("No Strings instances for you!");
@@ -29,6 +32,11 @@ public final class Strings {
         return value;
     }
 
+    /**
+     * Checks whether a String instance is null or is equal to an empty String.
+     * @param value the String instance to check.
+     * @return true if the String instance is null or is equal to an empty String, otherwise false.
+     */
     public static boolean isNullOrEmpty(String value) {
         return value == null || "".equals(value);
     }
