@@ -1,19 +1,10 @@
-package com.groupname.game.Scene;
+package com.groupname.game.scene;
 
-import com.groupname.framework.core.GameMenu;
-import com.groupname.framework.core.PauseButton;
-import com.groupname.framework.input.InputManager;
 import com.groupname.game.controllers.Controller;
 import com.groupname.game.core.Game;
 import com.groupname.game.data.AppSettings;
-import com.groupname.game.views.menus.GameMenuFX;
-import com.groupname.game.views.menus.TitleMenuNames;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -162,7 +153,7 @@ public enum SceneManager {
         Objects.requireNonNull(newScene);
 
         if(currentScene != null && currentScene.getSceneName() == newScene) {
-            System.out.println("Scene is already loaded, use reset instead.");
+            System.out.println("scene is already loaded, use reset instead.");
             return;
         }
 
@@ -173,7 +164,7 @@ public enum SceneManager {
 
         SceneInfo sceneInfo = scenes.get(newScene);
 
-        // Scene for that screen isn't loaded yet, so load it
+        // scene for that screen isn't loaded yet, so load it
         if(sceneInfo.getScene() == null) {
             // Redo this, maybe upcast the exception
             try {
@@ -243,7 +234,7 @@ public enum SceneManager {
                 controller.init(editor);
             }
             else {
-                Scene scene = new Scene(root);
+                scene scene = new scene(root);
                 scene.getStylesheets().add("/com/groupname/game/views/css/title.css");
                 sceneInfo.setScene(scene);
             }

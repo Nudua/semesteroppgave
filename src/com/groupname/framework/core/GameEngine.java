@@ -31,7 +31,7 @@ public abstract class GameEngine {
 
     protected Color background = Color.CORNFLOWERBLUE;
 
-    //protected Scene scene;
+    //protected scene scene;
 
     private AnimationTimer animationTimer;
 
@@ -41,7 +41,7 @@ public abstract class GameEngine {
         this.width = width;
         this.height = height;
 
-        //this.scene = new Scene(parent);
+        //this.scene = new scene(parent);
 
         //canvas = new Canvas(width, height);
         //graphicsContext = canvas.getGraphicsContext2D();
@@ -89,7 +89,7 @@ public abstract class GameEngine {
     */
 
     /*
-    public Scene getScene() {
+    public scene getScene() {
         return scene;
     }
 

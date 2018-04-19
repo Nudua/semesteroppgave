@@ -1,23 +1,9 @@
 package com.groupname.game.core;
 
 import com.groupname.framework.core.GameEngine;
-import com.groupname.framework.core.GameMenu;
-import com.groupname.framework.core.PauseButton;
-import com.groupname.framework.core.UpdateAble;
-import com.groupname.framework.graphics.drawing.SpriteBatch;
-import com.groupname.framework.graphics.drawing.SpriteBatchFX;
 import com.groupname.framework.input.InputManager;
-import com.groupname.game.Scene.SceneManager;
-import com.groupname.game.Scene.SceneName;
-import com.groupname.game.input.PlayerInputDefinitions;
-import com.groupname.game.levels.*;
-import com.groupname.game.levels.core.LevelBase;
-import com.groupname.game.levels.core.LevelState;
-import com.groupname.game.other.SierpinksiTestLevel;
-import com.groupname.game.views.menus.GameMenuFX;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.layout.Pane;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -110,7 +96,7 @@ public class Game extends GameEngine {
         this.menu = menu;
     }
 
-    public Game(Scene owner, Canvas canvas, int width, int height) {
+    public Game(scene owner, Canvas canvas, int width, int height) {
         super(width, height);
 
         setCanvas(canvas);

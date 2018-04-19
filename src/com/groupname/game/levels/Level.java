@@ -64,7 +64,7 @@ public class Level extends LevelBase {
     @Override
     public void update() {
 
-        gameObjects.stream().forEach(GameObject::update);
+        gameObjects.forEach(GameObject::update);
 
         Optional<GameObject> player = gameObjects.stream().filter(n -> n instanceof Player).findFirst();
 

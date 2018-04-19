@@ -1,18 +1,14 @@
 package com.groupname.game.controllers;
 
-import com.groupname.framework.core.PauseButton;
-import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.input.InputManager;
-import com.groupname.game.Scene.SceneManager;
-import com.groupname.game.Scene.SceneName;
+import com.groupname.game.scene.SceneManager;
+import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
-import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.Title;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.game.views.menus.GameMenuFX;
 import com.groupname.game.views.menus.TitleMenuNames;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.GridPane;

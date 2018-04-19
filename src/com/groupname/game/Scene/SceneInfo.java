@@ -1,4 +1,4 @@
-package com.groupname.game.Scene;
+package com.groupname.game.scene;
 
 import javafx.scene.Scene;
 

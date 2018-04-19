@@ -6,19 +6,15 @@ import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.game.Scene.SceneManager;
-import com.groupname.game.Scene.SceneName;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
-import com.groupname.game.entities.projectiles.Weapon;
 import com.groupname.game.input.PlayerInputDefinitions;
 import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Player extends Actor {
 
