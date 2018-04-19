@@ -65,9 +65,13 @@ public class SpaceEffect implements UpdateDrawAble {
 
     @Override
     public void update() {
+
+        //stars.parallelStream().forEach(GameObject::update);
+
         for(GameObject star : stars) {
             star.update();
         }
+
     }
 
     @Override

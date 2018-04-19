@@ -5,12 +5,14 @@ import com.groupname.framework.input.InputManager;
 /**
  * Represents a menu that is shown when the game is paused.
  *
- * Implementations must support all the buttons in the GameMenu enumeration:
+ * Implementations must generate all the buttons specified by the Enum<T> supplied.
+ *
+ * Example:
  *          *****************
- *          *     PAUSED    * <- Sample header
+ *          *     PAUSED    *
  *          *****************
- *          * Resume        * <- GameMenu.Resume
- *          * Save          * <- GameMenu.Save etc.
+ *          * Resume        *
+ *          * Save          *
  *          * Restart Level *
  *          * Restart Game  *
  *          * Exit          *
@@ -19,7 +21,7 @@ import com.groupname.framework.input.InputManager;
 public interface GameMenu<T extends Enum<T>> {
 
     /**
-     * Sets the Runnable to be executed when the selected pausebutton is pressed by the user.
+     * Sets the Runnable to be executed when the selected enum value (button) is pressed by the user.
      *
      * @param button to assign the Runnable to.
      * @param action the Runnable to execute.
@@ -28,7 +30,7 @@ public interface GameMenu<T extends Enum<T>> {
 
 
     /**
-     * Sets the visibility of the selected PauseButton.
+     * Sets the visibility of the selected button.
      * @param button the element to set the visibility of.
      * @param visibility the new state.
      */

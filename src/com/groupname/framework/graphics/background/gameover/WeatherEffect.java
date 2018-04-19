@@ -9,7 +9,10 @@ import com.groupname.framework.math.Vector2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 public class WeatherEffect {
     private boolean enabled = true;
@@ -17,14 +20,14 @@ public class WeatherEffect {
     //private final SpriteOld sprite;
     private final Size screenBounds;
 
-    private final List<GameObject> flakes;
+    private final Queue<GameObject> flakes;
     private final List<Sprite> sprites;
 
     public WeatherEffect(List<Sprite> sprites, Size screenBounds) {
         this.sprites = Objects.requireNonNull(sprites, "sprite cannot be null");
         this.screenBounds = Objects.requireNonNull(screenBounds, "screenBounds cannot be null");
 
-        flakes = new ArrayList<>();
+        flakes = new ConcurrentLinkedQueue<>();
 
         //initializeFlakes();
         createWindFlakes();
@@ -33,11 +36,23 @@ public class WeatherEffect {
     private void createWindFlakes() {
         ThreadLocalRandom rng = ThreadLocalRandom.current();
 
+        // Use ConcurrentLinkedQueue instead?
         // 10000
+
+        // Does this make any sense?
+        IntStream.range(0, 10000).parallel().forEach(n -> createAndAddNewFlake(rng));
+
+        /*
         for(int i = 0; i < 10000; i++) {
             WindFlake flake = new WindFlake(sprites.get(rng.nextInt(0, sprites.size())), new Vector2D(rng.nextInt(0, screenBounds.getWidth()), rng.nextInt(0, screenBounds.getHeight())), screenBounds, rng.nextInt(0, 60), rng.nextDouble(WindFlake.MIN_WIND_SPEED, WindFlake.MAX_WIND_SPEED));
             flakes.add(flake);
         }
+        */
+    }
+
+    private void createAndAddNewFlake(ThreadLocalRandom rng) {
+        WindFlake flake = new WindFlake(sprites.get(rng.nextInt(0, sprites.size())), new Vector2D(rng.nextInt(0, screenBounds.getWidth()), rng.nextInt(0, screenBounds.getHeight())), screenBounds, rng.nextInt(0, 60), rng.nextDouble(WindFlake.MIN_WIND_SPEED, WindFlake.MAX_WIND_SPEED));
+        flakes.add(flake);
     }
 
     private void initializeFlakes() {
@@ -62,9 +77,15 @@ public class WeatherEffect {
     }
 
     public void update() {
+        // Benchmark this
+        flakes.parallelStream().forEach(GameObject::update);
+
+        /*
         for(GameObject flake : flakes) {
             flake.update();
         }
+        */
+
     }
 
     public void draw(SpriteBatch spriteBatch) {

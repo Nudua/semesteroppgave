@@ -15,14 +15,6 @@ enum AnimationLoop {
 }
 */
 
-// Check if animation is done, create an event for it?
-/*
-interface IAnimatedSprite {
-    void start();
-    void stop();
-    void reset();
-}
-*/
 public class AnimatedSprite extends Sprite {
 
     public enum Status {
@@ -36,7 +28,7 @@ public class AnimatedSprite extends Sprite {
     private int frame = 0;
     private boolean looping = true;
 
-    // This method gets called if we're not loop
+    // This method gets called if we're not looping
     private Runnable completed;
 
     public AnimatedSprite(SpriteSheet spriteSheet, Rectangle initialSpriteRegion, List<AnimationFrame> animationFrames) {

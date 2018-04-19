@@ -65,7 +65,7 @@ public class Level extends LevelBase {
     @Override
     public void update() {
 
-        gameObjects.parallelStream().forEach(GameObject::update);
+        gameObjects.stream().forEach(GameObject::update);
 
         Optional<GameObject> player = gameObjects.stream().filter(n -> n instanceof Player).findFirst();
 
@@ -117,9 +117,13 @@ public class Level extends LevelBase {
         // Draw background
         graphicsContext.drawImage(backgroundImage, 0, 0, screenWidth, screenHeight);
 
+        // Can't do this!
+        //gameObjects.parallelStream().forEach(gameObject -> { gameObject.draw(spriteBatch); });
+
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spriteBatch);
         }
+
     }
 
     @Override

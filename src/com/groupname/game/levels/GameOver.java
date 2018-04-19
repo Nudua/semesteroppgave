@@ -46,7 +46,7 @@ public class GameOver extends LevelBase {
         SpriteSheet snowSheet = new SpriteSheet("snow", Content.loadImage("snow.png", ResourceType.SpriteSheet));
 
         Sprite snowSprite3 = new Sprite(snowSheet, Sprite.createSpriteRegion(2,0,30,20));
-        snowSprite3.setScale(0.9d);
+        snowSprite3.setScale(1.0d);
 
         List<Sprite> sprites = new ArrayList<>(Arrays.asList(snowSprite3));
 

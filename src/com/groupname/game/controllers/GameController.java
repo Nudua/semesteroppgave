@@ -81,7 +81,10 @@ public class GameController implements Controller {
             });
         }
 
-        //levels.add(0, new Level1(game, canvas.getGraphicsContext2D()));
+        GameOver gameOver = new GameOver(game, canvas.getGraphicsContext2D());
+        gameOver.initialize();
+
+        levels.add(0, gameOver);
 
         if(!game.isRunning()) {
             game.start();

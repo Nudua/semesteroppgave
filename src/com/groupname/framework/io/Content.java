@@ -24,7 +24,7 @@ public class Content {
 
         InputStream inputStream = loadFile(filename, type);
 
-        return new Image(inputStream);
+        return new Image(inputStream, -1, -1, true, false);
     }
 
     public static InputStream loadFile(String fileName, ResourceType type) {

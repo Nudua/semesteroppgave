@@ -21,6 +21,7 @@ import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
+import com.sun.javafx.scene.traversal.Direction;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
