@@ -1,6 +1,8 @@
 package com.groupname.game.controllers;
 
 import com.groupname.framework.core.PauseButton;
+import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
+import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
@@ -50,6 +52,8 @@ public class GameController implements Controller {
     private int creditsIndex = -1;
     private int gameOverIndex = -1;
 
+    private ScreenTransition levelCompletedTransition;
+
     // Maybe move into constructor instead
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
@@ -84,7 +88,8 @@ public class GameController implements Controller {
         GameOver gameOver = new GameOver(game, canvas.getGraphicsContext2D());
         gameOver.initialize();
 
-        levels.add(0, gameOver);
+        //levels.add(0, gameOver);
+        levelCompletedTransition = new ArrowScreenTransition(canvas.getGraphicsContext2D());
 
         if(!game.isRunning()) {
             game.start();
@@ -188,22 +193,29 @@ public class GameController implements Controller {
             LevelBase currentLevel = getCurrentLevel();
 
             if(currentLevel.getState() == LevelState.Completed) {
-                currentLevelIndex++;
 
-                // Loop around for now
-                if(currentLevelIndex >= levels.size()) {
-                    currentLevelIndex = 0;
-                }
+                if(levelCompletedTransition.isDone()) {
+                    currentLevelIndex++;
 
-                // Update to the next level
-                currentLevel = getCurrentLevel();
-                currentLevel.reset();
+                    // Loop around for now
+                    if(currentLevelIndex >= levels.size()) {
+                        currentLevelIndex = 0;
+                    }
 
-                if(currentLevel instanceof Level) {
-                    ((Level) currentLevel).setOnPlayerDead(() ->{
-                        System.out.println("Dave, everybody's dead... everybody's dead Dave");
-                        getCurrentLevel().reset();
-                    });
+                    // Update to the next level
+                    currentLevel = getCurrentLevel();
+                    currentLevel.reset();
+
+                    if(currentLevel instanceof Level) {
+                        ((Level) currentLevel).setOnPlayerDead(() ->{
+                            System.out.println("Dave, everybody's dead... everybody's dead Dave");
+                            getCurrentLevel().reset();
+                        });
+                    }
+
+                    levelCompletedTransition.reset();
+                } else {
+                    levelCompletedTransition.update();
                 }
 
             } else if(currentLevel.getState() == LevelState.GameOver) {
@@ -240,6 +252,12 @@ public class GameController implements Controller {
     }
 
     private void draw() {
-        getCurrentLevel().draw();
+        LevelBase currentLevel = getCurrentLevel();
+
+        if(currentLevel.getState() == LevelState.Playing) {
+           currentLevel.draw();
+        } else if(currentLevel.getState() == LevelState.Completed && !levelCompletedTransition.isDone()) {
+            levelCompletedTransition.draw();
+        }
     }
 }
