@@ -7,6 +7,8 @@ import com.groupname.game.data.AppSettings;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     @Override
@@ -20,16 +22,13 @@ public class Main extends Application {
         sceneManager.setPrimaryStage(primaryStage);
         SceneManager.navigate(SceneName.Title);
 
-        //Files.createDirectory(Paths.get("saveFolder"));
-        /*
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current relative path is: " + s);
-        */
         AppSettings settings = AppSettings.INSTANCE;
-        settings.load();
 
-        //System.out.println(UUID.randomUUID().toString());
+        try {
+            settings.load();
+        } catch (IOException exception) {
+            System.err.println("Unable to load settings, restoring defaults");
+        }
 
         primaryStage.show();
     }
@@ -37,9 +36,15 @@ public class Main extends Application {
     @Override
     public void stop() throws Exception {
         AppSettings settings = AppSettings.INSTANCE;
-        //settings.setCurrentLevel(UUID.randomUUID().toString());
-        settings.save();
+
         System.out.println("Saving settings...");
+
+        try {
+            settings.save();
+            System.out.println("Settings saved successfully...");
+        } catch (IOException ex) {
+            System.err.println("Unable to store settings..");
+        }
     }
 
     public static void main(String[] args) {

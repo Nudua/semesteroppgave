@@ -1,5 +1,6 @@
 package com.groupname.game.data;
 
+import com.groupname.framework.io.INIPreferences;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.util.Strings;
 import javafx.scene.shape.Rectangle;
@@ -37,6 +38,8 @@ public enum AppSettings {
     private boolean firstRun = false;
     private boolean fullScreen = false;
 
+    private INIPreferences iniPreferences;
+
     // Will be empty if not set
     public String getCurrentLevel() {
         return currentLevel;
@@ -46,19 +49,27 @@ public enum AppSettings {
         this.currentLevel = currentLevel;
     }
 
-    public void save() throws BackingStoreException {
+    public void save() throws IOException {
+        /*
         Preferences prefs = Preferences.userRoot().node("ourgame");
         prefs.putBoolean("firstRun", false);
         prefs.putBoolean("fullScreen", false);
         prefs.put("currentLevel", currentLevel);
         prefs.flush();
+        */
+
+        iniPreferences.putBoolean("firstrun", false);
+        iniPreferences.putBoolean("fullscreen", false);
+        iniPreferences.put("currentlevel", currentLevel);
+        iniPreferences.write();
     }
 
-    public void load() {
-        Preferences prefs = Preferences.userRoot().node("ourgame");
-        firstRun = prefs.getBoolean("firstRun", true);
-        fullScreen = prefs.getBoolean("fullScreen", false);
-        currentLevel = prefs.get("currentLevel", Strings.EMPTY);
+    public void load() throws IOException {
+        iniPreferences = new INIPreferences(Paths.get(FILENAME));
+
+        firstRun = iniPreferences.getBoolean("firstrun", true);
+        fullScreen = iniPreferences.getBoolean("fullscreen", false);
+        currentLevel = iniPreferences.get("currentlevel");
     }
 
     /*

@@ -2,6 +2,7 @@ package com.groupname.game.controllers;
 
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
+import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
@@ -87,7 +88,7 @@ public class GameController implements Controller {
         gameOver.initialize();
 
         //levels.add(0, gameOver);
-        levelCompletedTransition = new ArrowScreenTransition(canvas.getGraphicsContext2D());
+        levelCompletedTransition = new BlindsScreenTransition(canvas.getGraphicsContext2D());
 
         if(!game.isRunning()) {
             game.start();
@@ -176,7 +177,7 @@ public class GameController implements Controller {
         appSettings.setCurrentLevel(getCurrentLevel().getId());
         try {
             appSettings.save();
-        } catch (BackingStoreException ex) {
+        } catch (IOException ex) {
             System.out.println("Unable to store current level");
         }
     }
