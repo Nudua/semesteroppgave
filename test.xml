@@ -1,0 +1,6 @@
+<com.groupname.game.editor.metadata.EnemyMetaData>
+	<difficulty>Easy</difficulty>
+	<spriteType>BlueBlob</spriteType>
+	<name>Test</name>
+	<type>com.groupname.game.entities.enemies.HomingEnemy</type>
+</com.groupname.game.editor.metadata.EnemyMetaData>
