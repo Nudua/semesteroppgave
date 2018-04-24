@@ -27,7 +27,7 @@ public class XMLMain {
         //xmlWriter.write(Paths.get("test.xml"), new SpriteFactory());
         //xmlWriter.write(Paths.get("test.xml"), new ObjectMetaData("OSLOMET", GuardEnemy.class));
         //xmlWriter.write(Paths.get("test.xml"), new PowerUpMetaData("Test", HeartPowerUp.class, 3));
-        xmlWriter.write(Paths.get("test.xml"), new EnemyMetaData("Test", HomingEnemy.class));
+        xmlWriter.write(Paths.get("test2.xml"), new EnemyMetaData("Test", HomingEnemy.class));
 
 
 

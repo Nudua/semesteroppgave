@@ -19,38 +19,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-class XMLNode {
-    private final String name;
-    private final String value;
-
-
-    public XMLNode(String name, String value) {
-        this.name = name;
-        this.value = value;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    /**
-     * The string representation is XMLNode where name = name and value = value
-     * Where name is the name of the field you save, and value is the value of the field
-     * @return a print of the XMLNode.
-     */
-    @Override
-    public String toString() {
-        return "XMLNode{" +
-                "name='" + name + '\'' +
-                ", value='" + value + '\'' +
-                '}';
-    }
-}
-
 /**
  * XMLWriter takes an instance of a class and saves it to a file.
  * Saves as XML to file.
@@ -67,32 +35,34 @@ public class XMLWriter {
      * @throws IOException todo
      */
     public <T> void write(Path fileName, T instance) throws IllegalAccessException, IOException {
-        List<XMLNode> nodes = readFields(fileName, instance);
+        List<XMLNode> nodes = readFields(instance);
         writeXML(fileName, instance.getClass().getName(), nodes);
-
     }
 
-    private <T> List<XMLNode> readFields(Path fileName, T instance) throws IllegalAccessException {
-
+    private List<String> getWhiteList(){
         List<String> validClasses = new ArrayList<>();
 
-
+        // Classes
         validClasses.add(String.class.getName());
-
-        //Primitives
-        validClasses.add(int.class.getName());
-        validClasses.add(double.class.getName());
-        validClasses.add(float.class.getName());
-        validClasses.add(char.class.getName());
-        validClasses.add(boolean.class.getName());
         validClasses.add(Class.class.getTypeName());
         validClasses.add(Difficulty.class.getName());
         validClasses.add(EnemySpriteType.class.getName());
         validClasses.add(PowerupSpriteType.class.getName());
 
+        // Primitives
+        validClasses.add(int.class.getName());
+        validClasses.add(double.class.getName());
+        validClasses.add(float.class.getName());
+        validClasses.add(char.class.getName());
+        validClasses.add(boolean.class.getName());
+
+        return validClasses;
+    }
+
+    private <T> List<XMLNode> readFields(T instance) throws IllegalAccessException {
+        List<String> validClasses = getWhiteList();
 
         List<Field> fields = getAllFields(instance);
-        String className = instance.getClass().getName();
 
         List<XMLNode> nodes = new ArrayList<>();
 
@@ -121,20 +91,32 @@ public class XMLWriter {
 
                 nodes.add(node);
             }
-
-
-
         }
         return nodes;
+    }
+
+    private void getFieldsFromClass(List<Field> fields, Class objectOfClass) {
+        if(objectOfClass == Object.class) {
+            return;
+        }
+
+        fields.addAll(Arrays.asList(objectOfClass.getDeclaredFields()));
+
+        // Recursively get all fields from subclass until we hit the Object class
+        getFieldsFromClass(fields, objectOfClass.getSuperclass());
     }
 
     private <T> List<Field> getAllFields(T instance) {
         List<Field> fields = new ArrayList<>();
         Class objectOfClass = instance.getClass();
+
+        /*
         while(objectOfClass != Object.class){
             fields.addAll(Arrays.asList(objectOfClass.getDeclaredFields()));
             objectOfClass = objectOfClass.getSuperclass();
-        }
+        }*/
+        getFieldsFromClass(fields, objectOfClass);
+
         return fields;
     }
 
