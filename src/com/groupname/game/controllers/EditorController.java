@@ -1,16 +1,18 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.history.StackBasedUndoRedo;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.GameEditor;
-import com.groupname.game.core.LevelMetaData;
+import com.groupname.game.editor.metadata.LevelMetaData;
 import com.groupname.game.editor.MetaDataListCell;
 import com.groupname.game.editor.metadata.EnemyMetaData;
 import com.groupname.game.editor.metadata.LevelFactory;
@@ -20,8 +22,6 @@ import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Service;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -38,6 +38,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static javafx.scene.control.Alert.AlertType;
 
@@ -58,12 +60,13 @@ public class EditorController implements Controller {
     private LevelItem selectedItem = null;
 
     private LevelMetaData levelMetaData;
+    private final TaskRunner taskRunner;
 
     public EditorController() {
+        taskRunner = new TaskRunner();
         commandHistory = new StackBasedUndoRedo();
         levelItems = new ArrayList<>();
     }
-
 
     @FXML
     public void initialize() {
@@ -77,6 +80,10 @@ public class EditorController implements Controller {
         EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
         EnemyMetaData meta3 = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
         EnemyMetaData meta4 = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
+
+        EnemyMetaData meta5 = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
+        meta5.setSpriteType(EnemySpriteType.Snail);
+
         meta3.setSpriteType(EnemySpriteType.Bee);
         meta4.setSpriteType(EnemySpriteType.CrazyBee);
         meta4.setDifficulty(Difficulty.Medium);
@@ -86,10 +93,10 @@ public class EditorController implements Controller {
 
         // Move to a css file
         metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4));
+        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5));
 
 
-        metaDataListView.setCellFactory((o) -> { return new MetaDataListCell(); });
+        metaDataListView.setCellFactory((o) -> new MetaDataListCell());
 
         metaDataListView.setOnMouseClicked(this::gameItemSelected);
     }
@@ -101,6 +108,18 @@ public class EditorController implements Controller {
 
             // Create a copy of the selected item
             ObjectMetaData metaData = sourceMetaData.deepCopy();
+
+            Optional<LevelItem> playerItem = getPlayerIfExists();
+
+            if(metaData.getType() == HomingEnemy.class) {
+                if(playerItem.isPresent()) {
+                    levelFactory.setPlayer((Player)playerItem.get().getInstance());
+                } else {
+                    showError("Error", "This enemy requires a player to be placed first...");
+                    return;
+                }
+            }
+
             // Check instance of here
             GameObject gameObject = levelFactory.create(metaData);
 
@@ -306,51 +325,28 @@ public class EditorController implements Controller {
     }
 
     private void writeLevel(File selectedFile) {
+        Supplier<Boolean> writeLevel = () -> {
+            LevelWriter levelWriter = new LevelWriter();
 
-        LevelWriterService service = new LevelWriterService();
+            try {
+                levelWriter.write(levelMetaData, selectedFile.toPath());
+            } catch (IOException exception) {
+                return false;
+            }
 
-        service.setLevelMetaData(levelMetaData);
-        service.setFilePath(selectedFile.toPath());
+            return true;
+        };
 
-        service.setOnSucceeded((workerStateEvent) -> {
-            showAlert("Success", "Your level was stored successfully.", false);
-        });
-
-        service.setOnFailed((workerStateEvent) -> {
-            showError("Error", "An error occurred while trying to write the file to the disk.");
-        });
-
-        service.start();
-
-        /*
-        assert selectedFile != null;
-        assert selectedFile.canWrite();
-
-        final Task<Boolean> levelWriterTask = new Task<Boolean>() {
-            @Override
-            protected Boolean call() {
-                LevelWriter levelWriter = new LevelWriter();
-
-                try {
-                    levelWriter.write(levelMetaData, selectedFile.toPath());
-                } catch (IOException exception) {
-                    return false;
-                }
-
-                return true;
+        Consumer<Boolean> onCompleted = (success) -> {
+            if (success) {
+                showAlert("Success", "Saved the level successfully", false);
+            } else {
+                showAlert("Error", "Unable to save the level", true);
             }
         };
 
-        levelWriterTask.setOnSucceeded((workerStateEvent) -> {
-            showAlert("Success", "Your level was stored successfully.", false);
-        });
-
-        levelWriterTask.setOnFailed((workerStateEvent) -> {
-            showError("Error", "An error occurred while trying to write the file to the disk.");
-        });
-
-        levelWriterTask.run();
-        */
+        // Do this work off thread with the taskrunner then invoke back on the javafx thread with the results when done
+        taskRunner.submit(writeLevel, onCompleted);
     }
 
     private void showError(String title, String message) {
@@ -358,12 +354,24 @@ public class EditorController implements Controller {
     }
 
     private void showAlert(String title, String message, boolean isError) {
-
         AlertType alertType = isError ? AlertType.ERROR : AlertType.INFORMATION;
 
         Alert alert = new Alert(alertType, message, ButtonType.OK);
         alert.setTitle(title);
         alert.show();
+    }
+
+    @Override
+    public void exiting() {
+        if(!taskRunner.isShutdown()){
+            System.out.println("Shutting down the taskrunner thread");
+
+            try {
+                taskRunner.stop();
+            } catch (InterruptedException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
     }
 
     @FXML
@@ -372,6 +380,7 @@ public class EditorController implements Controller {
     }
 }
 
+/*
 class LevelWriterService extends Service<Boolean> {
 
     private LevelMetaData levelMetaData;
@@ -403,7 +412,7 @@ class LevelWriterService extends Service<Boolean> {
         };
     }
 }
-
+*/
 
 
 

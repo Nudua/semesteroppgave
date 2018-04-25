@@ -4,7 +4,7 @@ import com.groupname.framework.core.GameObject;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.game.core.Game;
-import com.groupname.game.core.LevelMetaData;
+import com.groupname.game.editor.metadata.LevelMetaData;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;

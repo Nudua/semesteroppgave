@@ -105,4 +105,9 @@ public class TitleController implements Controller {
         sceneManager.changeToScene(SceneName.Credits);
     }
     */
+
+    @Override
+    public void exiting() {
+
+    }
 }

@@ -218,7 +218,7 @@ public class GameEditor extends LevelBase {
     }
 
     public void deleteSelectedItem() {
-        if(selectedItem != null && !selectedItem.isPlaced()) {
+        if(selectedItem != null && selectedItem.getMetaData().getType() != Player.class && !selectedItem.isPlaced()) {
             if(levelItems.contains(selectedItem)) {
                 commandHistory.execute(new ListRemoveCommand<>(levelItems, selectedItem));
             }

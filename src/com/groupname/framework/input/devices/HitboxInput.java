@@ -1,5 +1,6 @@
 package com.groupname.framework.input.devices;
 
+import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.serial.HitboxButton;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;
@@ -8,30 +9,31 @@ import javafx.scene.input.KeyCode;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.Executors;
 
 public class HitboxInput implements InputAdapter {
     private static final int GET_STATE_COMMAND = 0xFF;
 
-    private Thread pollThread;
     private boolean enabled;
     private final SerialPort serialPort;
 
     private volatile boolean isRunning;
     private final Set<String> internalState;
+    private final TaskRunner pollThread;
 
     public HitboxInput(SerialPort serialPort) {
         this.serialPort = Objects.requireNonNull(serialPort);
 
         internalState = new HashSet<>();
 
-        pollThread = new Thread(this::run);
+        pollThread = new TaskRunner(Executors.newSingleThreadExecutor());
 
         start();
     }
 
     private void start() {
         isRunning = true;
-        pollThread.start();
+        pollThread.submit(this::run);
 
         enabled = true;
     }
@@ -54,7 +56,7 @@ public class HitboxInput implements InputAdapter {
                 }
 
             } catch (SerialPortException e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
                 isRunning = false;
                 break;
             }
@@ -89,8 +91,9 @@ public class HitboxInput implements InputAdapter {
         return (buffer[0] & 0xFF) | ((buffer[1] & 0xFF) << 8);
     }
 
-    public void stop() {
-        isRunning = true;
+    public void stop() throws InterruptedException {
+        isRunning = false;
+        pollThread.stop();
     }
 
     @Override

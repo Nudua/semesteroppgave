@@ -7,6 +7,7 @@ import com.sun.jna.win32.W32APIOptions;
 
 public class LibraryUtils {
 
+    @SuppressWarnings("unchecked")
     public static <T extends Library> T loadDll(String dllName, Class<? extends Library> c) {
         T library = null;
         try {

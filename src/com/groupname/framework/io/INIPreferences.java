@@ -209,7 +209,7 @@ public class INIPreferences {
             return;
         }
 
-        try(BufferedWriter bufferedWriter = Files.newBufferedWriter(fileName, StandardOpenOption.WRITE, StandardOpenOption.CREATE))
+        try(BufferedWriter bufferedWriter = Files.newBufferedWriter(fileName, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE))
         {
             for(Map.Entry<String, String> entry : map.entrySet()) {
                 String key = entry.getKey();

@@ -51,7 +51,7 @@ public class KeyboardInput implements InputAdapter {
     }
 
     private void OnKeyPressed(KeyEvent event) {
-        String key = Defaults.prefix + event.getCode().getName();
+        //String key = Defaults.prefix + event.getCode().getName();
 
         internalState.add(Defaults.prefix + event.getCode().getName());
 

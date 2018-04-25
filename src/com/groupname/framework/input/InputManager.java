@@ -92,6 +92,7 @@ public class InputManager {
 
         if(serialPort == null) {
             // Unable to initialize the serialport class
+            System.err.println("Unable to load the serialPort class");
             return;
         }
 
@@ -139,6 +140,18 @@ public class InputManager {
         return internalInputState.contains(keyName);
     }
 
+    public void stop() {
+        System.out.println("Stopping inputadapter...");
+        for(InputAdapter adapter : inputAdapters) {
+            if(adapter instanceof HitboxInput) {
+                try {
+                    ((HitboxInput) adapter).stop();
+                } catch (InterruptedException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        }
+    }
     /*
     // Single press
     public boolean isPressed(String keyName) {

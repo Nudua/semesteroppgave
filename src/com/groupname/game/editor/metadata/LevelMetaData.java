@@ -1,10 +1,13 @@
-package com.groupname.game.core;
+package com.groupname.game.editor.metadata;
 
+import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.util.Strings;
+import com.groupname.game.data.AppSettings;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 
 public class LevelMetaData implements Serializable {
@@ -23,11 +26,6 @@ public class LevelMetaData implements Serializable {
         objectMetaDataList = new ArrayList<>();
     }
 
-    // This one is mutable
-    public ArrayList<ObjectMetaData> getObjectMetaDataList() {
-        return objectMetaDataList;
-    }
-
     public String getId() {
         return id;
     }
@@ -35,6 +33,12 @@ public class LevelMetaData implements Serializable {
     public String getName() {
         return name;
     }
+
+    // This one is mutable
+    public ArrayList<ObjectMetaData> getObjectMetaDataList() {
+        return objectMetaDataList;
+    }
+
 
     public void setBackgroundImagePath(String backgroundImagePath) {
         // Check if file exists also

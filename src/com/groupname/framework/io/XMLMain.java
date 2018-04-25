@@ -1,15 +1,9 @@
 package com.groupname.framework.io;
 
-import com.groupname.framework.math.Vector2D;
+import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.game.editor.metadata.EnemyMetaData;
-import com.groupname.game.editor.metadata.ObjectMetaData;
-import com.groupname.game.editor.metadata.PowerUpMetaData;
-import com.groupname.game.entities.SpriteFactory;
-import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
-import com.groupname.game.entities.enemies.TowerEnemy;
-import com.groupname.game.entities.powerups.HeartPowerUp;
-import javafx.scene.shape.Path;
+import javafx.concurrent.Task;
 
 import java.nio.file.Paths;
 
@@ -27,9 +21,23 @@ public class XMLMain {
         //xmlWriter.write(Paths.get("test.xml"), new SpriteFactory());
         //xmlWriter.write(Paths.get("test.xml"), new ObjectMetaData("OSLOMET", GuardEnemy.class));
         //xmlWriter.write(Paths.get("test.xml"), new PowerUpMetaData("Test", HeartPowerUp.class, 3));
-        xmlWriter.write(Paths.get("test2.xml"), new EnemyMetaData("Test", HomingEnemy.class));
 
+        TaskRunner taskRunner = new TaskRunner();
 
+        taskRunner.submit(() -> {
+            System.out.println("Hi");
+        }, () -> System.out.println("Done!"));
 
+        Task<Boolean> task = new Task<Boolean>() {
+            @Override
+            protected Boolean call() throws Exception {
+                xmlWriter.write(Paths.get("test2.xml"), new EnemyMetaData("Test", HomingEnemy.class));
+                return true;
+            }
+        };
+
+        //taskRunner.submit(task);
+
+        taskRunner.stop();
     }
 }

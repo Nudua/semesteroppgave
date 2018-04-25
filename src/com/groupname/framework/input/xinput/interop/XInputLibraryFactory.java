@@ -1,5 +1,6 @@
 package com.groupname.framework.input.xinput.interop;
 
+import com.groupname.framework.serial.LibraryUtils;
 import com.sun.jna.Native;
 import com.sun.jna.Platform;
 
@@ -25,21 +26,22 @@ public final class XInputLibraryFactory {
         XInputLibrary xInputLibrary = null;
 
         // Try loading XInputLibrary version 1.4
-        xInputLibrary = loadDll(XINPUT_1_4);
+        xInputLibrary = LibraryUtils.loadDll(XINPUT_1_4, XInputLibrary.class);
 
         // If that failed, try loading 1.3
         if(xInputLibrary == null) {
-            xInputLibrary = loadDll(XINPUT_1_3);
+            xInputLibrary = LibraryUtils.loadDll(XINPUT_1_3, XInputLibrary.class);
         }
 
         // If even that failed, try loading 9.1.0
         if(xInputLibrary == null) {
-            xInputLibrary = loadDll(XINPUT_9_1_0);
+            xInputLibrary = LibraryUtils.loadDll(XINPUT_9_1_0, XInputLibrary.class);
         }
 
         return xInputLibrary;
     }
 
+    /*
     // Consolidate this one with the serialport one
     // Attempts to load a dll using the jna's loadLibrary, returns null if the dll was not found
     private static XInputLibrary loadDll(String dllName) {
@@ -52,5 +54,6 @@ public final class XInputLibraryFactory {
         }
         return xInputLibrary;
     }
+    */
 
 }

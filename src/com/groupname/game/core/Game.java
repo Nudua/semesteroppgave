@@ -8,12 +8,6 @@ import javafx.scene.canvas.Canvas;
 import java.util.*;
 import java.util.function.Consumer;
 
-enum View {
-    Title,
-    Game,
-    Editor
-}
-
 
 public class Game extends GameEngine {
     private Consumer<InputManager> onUpdate;

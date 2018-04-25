@@ -1,6 +1,6 @@
 package com.groupname.game.controllers;
 
-import com.groupname.game.core.LevelMetaData;
+import com.groupname.game.editor.metadata.LevelMetaData;
 
 import java.io.IOException;
 import java.io.InputStream;

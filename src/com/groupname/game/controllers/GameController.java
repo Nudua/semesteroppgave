@@ -1,7 +1,6 @@
 package com.groupname.game.controllers;
 
 import com.groupname.framework.core.PauseButton;
-import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
@@ -11,7 +10,7 @@ import com.groupname.framework.util.Strings;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
-import com.groupname.game.core.LevelMetaData;
+import com.groupname.game.editor.metadata.LevelMetaData;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.*;
@@ -30,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.prefs.BackingStoreException;
 
 public class GameController implements Controller {
     @FXML protected GridPane root;
@@ -107,7 +105,7 @@ public class GameController implements Controller {
 
         LevelReader reader = new LevelReader();
 
-        String[] levelFiles = {"level1.level", "level2.level", "level3.level"};
+        String[] levelFiles = {"level1.level"};
 
         for(String levelPath: levelFiles) {
             boolean loaded = loadLevel(reader, levelPath);
@@ -258,5 +256,10 @@ public class GameController implements Controller {
         } else if(currentLevel.getState() == LevelState.Completed && !levelCompletedTransition.isDone()) {
             levelCompletedTransition.draw();
         }
+    }
+
+    @Override
+    public void exiting() {
+
     }
 }

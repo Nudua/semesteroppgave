@@ -12,6 +12,7 @@ import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.level.Tile;
 import com.groupname.framework.level.TilePattern;
 import com.groupname.framework.level.TileType;
+import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
@@ -31,10 +32,15 @@ public class LevelFactory {
 
     private final InputManager inputManager;
     private final SpriteFactory spriteFactory;
+    private Player player;
 
     public LevelFactory(InputManager inputManager) {
         this.inputManager = Objects.requireNonNull(inputManager);
         this.spriteFactory = new SpriteFactory();
+    }
+
+    public void setPlayer(Player player) {
+        this.player = Objects.requireNonNull(player);
     }
 
     public GameObject create(ObjectMetaData metaData) {
@@ -45,11 +51,6 @@ public class LevelFactory {
         } else if(PowerUp.class.isAssignableFrom(metaData.getType())) {
             return createPowerUp(metaData);
         }
-        /*
-        else if(metaData.getType() == TileType.class) {
-            return createTile(metaData);
-        }
-        */
 
         throw new InvalidParameterException("Unsupported object");
     }
@@ -57,12 +58,12 @@ public class LevelFactory {
     /**
      * Player(s)
      */
-    private Player createPlayer(ObjectMetaData levelObject) {
+    private Player createPlayer(ObjectMetaData metaData) {
         Sprite sprite = spriteFactory.createPlayer();
 
         //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
         sprite.setScale(0.85d);
-        return new Player(sprite, levelObject.getPosition(), inputManager);
+        return new Player(sprite, metaData.getPosition(), inputManager);
     }
 
     /**
@@ -99,9 +100,11 @@ public class LevelFactory {
 
         if(enemyMetaData.getType() == GuardEnemy.class) {
             return createGuardEnemy(enemyMetaData);
+        } else if(enemyMetaData.getType() == HomingEnemy.class) {
+            return createHomingEnemy(enemyMetaData);
         }
 
-        throw new InvalidParameterException("Unsupported object");
+        throw new InvalidParameterException("Unsupported enemy");
     }
 
     private GuardEnemy createGuardEnemy(EnemyMetaData metaData) {
@@ -133,6 +136,14 @@ public class LevelFactory {
         GuardEnemy enemy = new GuardEnemy(sprite, metaData.getPosition());
         enemy.setHitPoints(hitPoints);
         enemy.setSpeed(speed);
+
+        return enemy;
+    }
+
+    private HomingEnemy createHomingEnemy(EnemyMetaData metaData) {
+        Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
+
+        HomingEnemy enemy = new HomingEnemy(sprite, metaData.getPosition(), player);
 
         return enemy;
     }
