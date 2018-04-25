@@ -59,6 +59,12 @@ public class SpriteSheet {
         return image;
     }
 
+    /**
+     * The string representation of a SpriteSheet where name = name and image = value
+     * Where name is the name of the field you save, and value is the value of the field
+     *
+     * @return a String representation of this SpriteSheet instance.
+     */
     @Override
     public String toString() {
         return "SpriteSheet{" +

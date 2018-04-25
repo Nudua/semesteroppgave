@@ -37,4 +37,17 @@ public class GameLoopTimer extends AnimationTimer {
         update.run();
         draw.run();
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "GameLoopTimer{" +
+                "update=" + update +
+                ", draw=" + draw +
+                '}';
+    }
 }
