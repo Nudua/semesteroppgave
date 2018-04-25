@@ -155,7 +155,7 @@ public class LevelFactory {
     private TowerEnemy createTowerEnemy(EnemyMetaData metaData) {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
-        TowerEnemy enemy = new TowerEnemy(sprite, metaData.getPosition(), Direction.Up, player);
+        TowerEnemy enemy = new TowerEnemy(sprite, metaData.getPosition(), player);
 
         return enemy;
     }
