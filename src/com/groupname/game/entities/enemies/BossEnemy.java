@@ -36,4 +36,9 @@ public class BossEnemy extends Enemy {
     public void draw(SpriteBatch spriteBatch) {
 
     }
+
+    @Override
+    public void reset() {
+        
+    }
 }
