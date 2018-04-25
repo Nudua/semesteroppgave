@@ -7,6 +7,7 @@ import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Enemy;
+import com.groupname.game.entities.Player;
 import com.groupname.game.entities.SpriteFactory;
 
 import java.util.List;
@@ -54,6 +55,15 @@ public class SingleBulletWeapon implements Weapon {
                     enemy.onCollides(damage);
                     myOnlyBullet.setAlive(false);
                 }
+            }
+        }
+    }
+
+    public void checkCollisionPlayer(Player player) {
+        if(myOnlyBullet.isAlive() && player.isAlive()) {
+            if(myOnlyBullet.collides(player.getHitbox())) {
+                player.onCollides(damage);
+                myOnlyBullet.setAlive(false);
             }
         }
     }

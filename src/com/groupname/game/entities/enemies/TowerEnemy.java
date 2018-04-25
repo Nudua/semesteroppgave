@@ -18,7 +18,7 @@ public class TowerEnemy extends Enemy {
 
     private Vector2D position;
     private Direction shootingDirection = Direction.Up;
-    private EnemyWeapon currentWeapon;
+    private SingleBulletWeapon currentWeapon;
     private Player player;
     private int shootingLeft;
     private int shootingRight;
@@ -29,19 +29,17 @@ public class TowerEnemy extends Enemy {
      *
      * @param sprite is an super from Enemy. Sets an default sprite for the enemy.
      * @param position is an super from Enemy. Sets the start position, on the canvas.
-     * @param shootingDirection the direction the enemy shall shoot.
      * @param player takes the player for accessing the players position.
      */
-    public TowerEnemy(Sprite sprite, Vector2D position, Direction shootingDirection, Player player) {
+    public TowerEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
-        this.shootingDirection = Objects.requireNonNull(shootingDirection);
         this.position = new Vector2D(position);
         this.player = Objects.requireNonNull(player);
         createWeapon();
     }
 
     private void createWeapon() {
-        currentWeapon = new EnemyWeapon(player);
+        currentWeapon = new SingleBulletWeapon();
         shootingLeft = (int) position.getX() - 40;
         shootingRight = (int) position.getX() + 40;
     }
@@ -75,6 +73,15 @@ public class TowerEnemy extends Enemy {
         }
         currentWeapon.update();
 
+        if(playerX < position.getY()) {
+            System.out.println("OPP");
+        } else {
+            System.out.println("NED");
+        }
+
+
+
+
         if(playerY < position.getY()) {
             if (shootingLeft < playerX) {
                 inRangeLeft = true;
@@ -96,7 +103,7 @@ public class TowerEnemy extends Enemy {
 
         if(canShoot) {
             currentWeapon.fire(position);
-            currentWeapon.checkCollision(player);
+            currentWeapon.checkCollisionPlayer(player);
         }
 
     }
