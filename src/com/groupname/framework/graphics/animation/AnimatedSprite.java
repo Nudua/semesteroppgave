@@ -7,13 +7,6 @@ import javafx.scene.shape.Rectangle;
 import java.util.List;
 import java.util.Objects;
 
-// Todo
-/*
-enum AnimationLoop {
-    Once,
-    Infinite,
-}
-*/
 
 public class AnimatedSprite extends Sprite {
 
