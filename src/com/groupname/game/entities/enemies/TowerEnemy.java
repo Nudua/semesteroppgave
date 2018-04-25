@@ -20,8 +20,11 @@ public class TowerEnemy extends Enemy {
     private Direction shootingDirection = Direction.Up;
     private SingleBulletWeapon currentWeapon;
     private Player player;
-    private int shootingLeft;
-    private int shootingRight;
+    private int shootingA;
+    private int shootingB;
+    private int shootingC;
+    private int shootingD;
+
     private boolean canShoot;
 
     /**
@@ -40,8 +43,10 @@ public class TowerEnemy extends Enemy {
 
     private void createWeapon() {
         currentWeapon = new SingleBulletWeapon();
-        shootingLeft = (int) position.getX() - 40;
-        shootingRight = (int) position.getX() + 40;
+        shootingA = (int) position.getX() - 40;
+        shootingB = (int) position.getX() + 40;
+        shootingC = (int) position.getY() - 40;
+        shootingD = (int) position.getY() + 40;
     }
 
     /**
@@ -64,7 +69,6 @@ public class TowerEnemy extends Enemy {
         boolean inRangeLeft = false;
         boolean inRangeRight = false;
 
-        currentWeapon.setDirection(shootingDirection);
 
         super.update();
 
@@ -73,27 +77,85 @@ public class TowerEnemy extends Enemy {
         }
         currentWeapon.update();
 
-        if(playerX < position.getY()) {
-            System.out.println("OPP");
-        } else {
-            System.out.println("NED");
-        }
 
-
-
-
-        if(playerY < position.getY()) {
-            if (shootingLeft < playerX) {
+        // Shoots UP
+        if(playerY < shootingC) {
+            if (shootingA < playerX) {
                 inRangeLeft = true;
             } else {
                 inRangeLeft = false;
             }
-            if (shootingRight > playerX) {
+            if (shootingB > playerX) {
                 inRangeRight = true;
             } else {
                 inRangeRight = false;
             }
-            if (inRangeLeft && inRangeRight) {
+
+            if(inRangeLeft && inRangeRight) {
+                currentWeapon.setDirection(Direction.Up);
+                canShoot = true;
+            } else {
+                canShoot = false;
+            }
+        }
+
+        // Shoots DOWN
+        if(playerY > shootingD) {
+            if (shootingA < playerX) {
+                inRangeLeft = true;
+            } else {
+                inRangeLeft = false;
+            }
+            if (shootingB > playerX) {
+                inRangeRight = true;
+            } else {
+                inRangeRight = false;
+            }
+
+            if(inRangeLeft && inRangeRight) {
+                currentWeapon.setDirection(Direction.Down);
+                canShoot = true;
+            } else {
+                canShoot = false;
+            }
+        }
+
+        // Shoots LEFT
+        if(playerX < shootingA) {
+            if(shootingC < playerY) {
+                inRangeLeft = true;
+            } else {
+                inRangeLeft = false;
+            }
+            if(shootingD > playerY) {
+                inRangeRight = true;
+            } else {
+                inRangeRight = false;
+            }
+
+            if(inRangeLeft && inRangeRight) {
+                currentWeapon.setDirection(Direction.Left);
+                canShoot = true;
+            } else {
+                canShoot = false;
+            }
+        }
+
+        // Shoots RIGHT
+        if(playerX > shootingB) {
+            if(shootingC < playerY) {
+                inRangeLeft = true;
+            } else {
+                inRangeLeft = false;
+            }
+            if(shootingD > playerY) {
+                inRangeRight = true;
+            } else {
+                inRangeRight = false;
+            }
+
+            if(inRangeLeft && inRangeRight) {
+                currentWeapon.setDirection(Direction.Right);
                 canShoot = true;
             } else {
                 canShoot = false;
