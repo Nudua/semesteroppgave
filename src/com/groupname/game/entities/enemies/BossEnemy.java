@@ -26,6 +26,7 @@ public class BossEnemy extends Enemy {
     private double positionY;
     private Vector2D basePosition;
     private Rectangle bossBounds;
+    private BoundsChecker boundsChecker = new BoundsChecker();
 
     /**
      * The constructure for an BossEnemy. Takes a sprite, start position and the player.
@@ -38,9 +39,18 @@ public class BossEnemy extends Enemy {
         super(sprite, position);
         this.player = player;
         this.basePosition = position;
-
+        createBossBounds();
     }
 
+    private void createBossBounds() {
+        double width = sprite.getWidth() + 200;
+        double height = sprite.getHeight() + 200;
+        bossBounds = new Rectangle((int)basePosition.getX() - 100, (int)basePosition.getY() - 100, (int)width, (int)height);
+    }
+
+    public Rectangle getBossBounds() {
+        return bossBounds;
+    }
 
     @Override
     public Rectangle getHitbox() {
@@ -57,12 +67,6 @@ public class BossEnemy extends Enemy {
         super.update();
         positionX = position.getX();
         positionY = position.getY();
-
-        double width = sprite.getWidth() + 200;
-        double height = sprite.getHeight() + 200;
-        BoundsChecker boundsChecker = new BoundsChecker();
-        bossBounds = new Rectangle((int)basePosition.getX() - 100, (int)basePosition.getY() - 100, (int)width, (int)height);
-
 
 
         counter++;

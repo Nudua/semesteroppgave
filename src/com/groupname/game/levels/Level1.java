@@ -177,14 +177,20 @@ public class Level1 extends LevelBase {
         for(GameObject gameObject : gameObjects) {
 
 
-            graphicsContext.setFill(Color.RED);
+            graphicsContext.setFill(Color.BLUE);
 
+            if(gameObject instanceof BossEnemy) {
+                Rectangle bounds = ((BossEnemy) gameObject).getBossBounds();
+                graphicsContext.fillRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
+            }
+            graphicsContext.setFill(Color.RED);
             // Draw hitbox
             Rectangle rect = gameObject.getHitbox();
             graphicsContext.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 
-            
             gameObject.draw(spriteBatch);
+
+
         }
         graphicsContext.setFont(Font.font(26));
         graphicsContext.setFill(Color.BLACK);
