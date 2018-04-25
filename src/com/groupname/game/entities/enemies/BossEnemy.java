@@ -10,11 +10,14 @@ import com.groupname.game.entities.Player;
  * This class extends Enemy. BossEnemy is an enemy that moves slowly, shoots a little and is hard to kill.
  */
 public class BossEnemy extends Enemy {
-    private Vector2D position;
     //private SpreadGun currentWeapon;
     private Player player;
     private int counter;
     private int delay = 120;
+    private double slowSpeed = 0.1d;
+    private double fastSpeed = 2.0d;
+    private double positionX;
+    private double positionY;
 
     /**
      * The constructure for an BossEnemy. Takes a sprite, start position and the player.
@@ -29,14 +32,6 @@ public class BossEnemy extends Enemy {
 
     }
 
-    /**
-     * Setter that sets the position of the enemy.
-     * @param position an Vector2D that is an position on the canvas.
-     */
-    @Override
-    public void setPosition(Vector2D position) {
-        this.position = position;
-    }
 
     /**
      * The specific logic for this type of enemy.
@@ -45,26 +40,33 @@ public class BossEnemy extends Enemy {
     @Override
     public void update() {
         super.update();
-
-
-
-
-
+        /*positionX = position.getX();
+        positionY = position.getY();
 
         counter++;
         if(counter >= delay) {
             System.out.println("BØ");
             counter = 0;
+        } else {
+
+
+            if(positionX > (positionX - 30)){
+                position.setX(positionX + slowSpeed);
+            }
+            if(positionY > (positionY - 20)) {
+                position.setY(positionY + slowSpeed);
+            }
+
         }
 
-
+*/
 
 
     }
 
     /**
      *
-     * @param spriteBatch
+     * @param spriteBatch jnjn
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {

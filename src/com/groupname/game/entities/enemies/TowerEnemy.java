@@ -16,8 +16,6 @@ import java.util.Objects;
  * at the player a long the axis.
  */
 public class TowerEnemy extends Enemy {
-
-    private Vector2D position;
     private Direction shootingDirection = Direction.Up;
     private SingleBulletWeapon currentWeapon;
     private Player player;
@@ -37,7 +35,6 @@ public class TowerEnemy extends Enemy {
      */
     public TowerEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
-        this.position = new Vector2D(position);
         this.player = Objects.requireNonNull(player);
         createWeapon();
     }
@@ -50,14 +47,7 @@ public class TowerEnemy extends Enemy {
         shootingD = (int) position.getY() + 40;
     }
 
-    /**
-     * Setter that sets the position of the enemy.
-     * @param position an Vector2D that is an position on the canvas.
-     */
-    @Override
-    public void setPosition(Vector2D position) {
-        this.position = position;
-    }
+   
 
     /**
      * The specific logic for this type of enemy.
