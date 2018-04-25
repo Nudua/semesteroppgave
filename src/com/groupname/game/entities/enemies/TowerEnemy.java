@@ -47,7 +47,7 @@ public class TowerEnemy extends Enemy {
         shootingD = (int) position.getY() + 40;
     }
 
-   
+
 
     /**
      * The specific logic for this type of enemy.

@@ -13,11 +13,12 @@ public class BossEnemy extends Enemy {
     //private SpreadGun currentWeapon;
     private Player player;
     private int counter;
-    private int delay = 120;
+    private int delay = 500;
     private double slowSpeed = 0.1d;
     private double fastSpeed = 2.0d;
     private double positionX;
     private double positionY;
+    private Vector2D basePosition;
 
     /**
      * The constructure for an BossEnemy. Takes a sprite, start position and the player.
@@ -29,18 +30,19 @@ public class BossEnemy extends Enemy {
     public BossEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
         this.player = player;
+        this.basePosition = position;
 
     }
 
 
     /**
      * The specific logic for this type of enemy.
-     * The BossEnemy XXXXXX.
+     * The BossEnemy XXX.
      */
     @Override
     public void update() {
         super.update();
-        /*positionX = position.getX();
+        positionX = position.getX();
         positionY = position.getY();
 
         counter++;
@@ -50,23 +52,15 @@ public class BossEnemy extends Enemy {
         } else {
 
 
-            if(positionX > (positionX - 30)){
-                position.setX(positionX + slowSpeed);
-            }
-            if(positionY > (positionY - 20)) {
-                position.setY(positionY + slowSpeed);
-            }
+
 
         }
-
-*/
-
 
     }
 
     /**
      *
-     * @param spriteBatch jnjn
+     * @param spriteBatch
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
