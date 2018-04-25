@@ -3,8 +3,14 @@ package com.groupname.game.entities.enemies;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.core.BoundsChecker;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
+import javafx.scene.shape.Rectangle;
+
+
+import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This class extends Enemy. BossEnemy is an enemy that moves slowly, shoots a little and is hard to kill.
@@ -19,6 +25,7 @@ public class BossEnemy extends Enemy {
     private double positionX;
     private double positionY;
     private Vector2D basePosition;
+    private Rectangle bossBounds;
 
     /**
      * The constructure for an BossEnemy. Takes a sprite, start position and the player.
@@ -34,6 +41,10 @@ public class BossEnemy extends Enemy {
 
     }
 
+    @Override
+    public Rectangle getHitbox() {
+        return new Rectangle(position.getX()-10, position.getY()+20, sprite.getWidth()-20, sprite.getHeight()-20);
+    }
 
     /**
      * The specific logic for this type of enemy.
@@ -45,14 +56,24 @@ public class BossEnemy extends Enemy {
         positionX = position.getX();
         positionY = position.getY();
 
+        double width = sprite.getWidth() + 200;
+        double height = sprite.getHeight() + 200;
+        BoundsChecker boundsChecker = new BoundsChecker();
+        bossBounds = new Rectangle((int)basePosition.getX() - 100, (int)basePosition.getY() - 100, (int)width, (int)height);
+
+
+
         counter++;
         if(counter >= delay) {
-            System.out.println("BØ");
+            position.addX(-fastSpeed);
             counter = 0;
         } else {
 
-
-
+        if(boundsChecker.isWithinBounds(this, bossBounds)){
+            double randomX = ThreadLocalRandom.current().nextDouble(-0.1d, 0.1d);
+            double randomY = ThreadLocalRandom.current().nextDouble(-0.1d, 0.1d);
+            position.add(randomX, randomY);
+            }
 
         }
 

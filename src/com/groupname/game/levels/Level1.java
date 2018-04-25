@@ -111,7 +111,8 @@ public class Level1 extends LevelBase {
 
         TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Squareboss), new Vector2D(300,400), player);
 
-        BossEnemy enemy8 = new BossEnemy(spriteFactory.createEnemy(EnemySpriteType.GreenWorm), new Vector2D(1000, 300), player);
+        BossEnemy enemy8 = new BossEnemy(spriteFactory.createEnemy(EnemySpriteType.PinkWorm), new Vector2D(500, 250), player);
+        enemy8.getSprite().setScale(3.0d);
 
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
         gameObjects.addAll(Arrays.asList(enemy8));
