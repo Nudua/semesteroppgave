@@ -12,7 +12,8 @@ import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import java.util.Objects;
 
 /**
- * This class extends Enemy. TowerEnemy is an enemy that stands still and shoots in just one direction.
+ * This class extends Enemy. TowerEnemy is an enemy that stands still and shoots
+ * at the player a long the axis.
  */
 public class TowerEnemy extends Enemy {
 
@@ -28,10 +29,10 @@ public class TowerEnemy extends Enemy {
     private boolean canShoot;
 
     /**
-     * The constructure for an TowerEnemy.
+     * The constructure for an TowerEnemy. Takes a sprite, a start position and the player.
      *
-     * @param sprite is an super from Enemy. Sets an default sprite for the enemy.
-     * @param position is an super from Enemy. Sets the start position, on the canvas.
+     * @param sprite Sets an default sprite for the enemy.
+     * @param position Sets the start position, on the canvas.
      * @param player takes the player for accessing the players position.
      */
     public TowerEnemy(Sprite sprite, Vector2D position, Player player) {
