@@ -12,6 +12,9 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
 
+/**
+ * This class extends Enemy. GuardEnemy is an enemy that patrols from A to B.
+ */
 public class GuardEnemy extends Enemy {
     private Vector2D endPosition;
     private Vector2D startPosition;
@@ -19,6 +22,11 @@ public class GuardEnemy extends Enemy {
     private double speed = 1.4d;
     private Direction direction = Direction.Right;
 
+    /**
+     * The constructure for an GuardEnemy.
+     * @param sprite is an super from Enemy. Sets an default sprite for the enemy.
+     * @param position is an super from Enemy. Sets the start position, on the canvas.
+     */
     public GuardEnemy(Sprite sprite, Vector2D position) {
         super(sprite, position);
         endPosition = new Vector2D(position.getX() + walkDistance, position.getY());
@@ -26,6 +34,10 @@ public class GuardEnemy extends Enemy {
         clampWalkingPath();
     }
 
+    /**
+     * Setter that sets the position of the enemy.
+     * @param position an Vector2D that is an position on the canvas.
+     */
     @Override
     public void setPosition(Vector2D position) {
         endPosition = new Vector2D(position.getX() + walkDistance, position.getY());
@@ -52,6 +64,10 @@ public class GuardEnemy extends Enemy {
         this.speed = speed;
     }
 
+    /**
+     * The specific logic for this type of enemy.
+     * The GuardEnemy walks from A to B.
+     */
     @Override
     public void update() {
         super.update();
@@ -78,6 +94,11 @@ public class GuardEnemy extends Enemy {
         }
     }
 
+    /**
+     * Draws the enemy if it is alive.
+     *
+     * @param spriteBatch draws the given sprite at the specified position
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         if(isAlive()) {
@@ -88,6 +109,9 @@ public class GuardEnemy extends Enemy {
         }
     }
 
+    /**
+     * This method is an easy way for resetting this enemy.
+     */
     @Override
     public void reset() {
 

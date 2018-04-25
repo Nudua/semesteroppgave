@@ -9,6 +9,9 @@ import com.groupname.game.entities.projectiles.EnemyWeapon;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
 
+/**
+ * This class extends Enemy. HomingEnemy is an enemy that follows the player and shoot in the direction of the player.
+ */
 public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
     private double speed = 1.8d;
@@ -17,6 +20,13 @@ public class HomingEnemy extends Enemy {
     private int counter;
     private int delay = 60;
 
+    /**
+     * This is the constructur for the HomingEnemy.
+     *
+     * @param sprite is an super from Enemy. Sets an default sprite for the enemy.
+     * @param position is an super from Enemy. Sets the start position, on the canvas.
+     * @param player is the player. This is for accessing the players position.
+     */
     public HomingEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
         startPosition = new Vector2D(position);
@@ -28,10 +38,20 @@ public class HomingEnemy extends Enemy {
         currentWeapon = new EnemyWeapon(player);
     }
 
+    /**
+     * Makes it easy to set the walking speed for the enemy.
+     *
+     * @param speed is the speed that we add/subtract to the position per frame/update in the logic.
+     */
     public void setSpeed(double speed) {
         this.speed = speed;
     }
 
+    /**
+     * The specific logic for this type of enemy.
+     * The HomingEnemy takes the players position and will always.
+     * We have a delay that trigger the shooting for instance every 60 frame or 120 frame.
+     */
     @Override
     public void update() {
         if(!isAlive()) {
@@ -67,6 +87,11 @@ public class HomingEnemy extends Enemy {
         }
     }
 
+    /**
+     * Draws the enemy if it is alive.
+     *
+     * @param spriteBatch draws the given sprite at the specified position
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         if(isAlive()) {
@@ -74,7 +99,9 @@ public class HomingEnemy extends Enemy {
             currentWeapon.draw(spriteBatch);
         }
     }
-
+    /**
+     * This method is an easy way for resetting this enemy.
+     */
     @Override
     public void reset() {
 
