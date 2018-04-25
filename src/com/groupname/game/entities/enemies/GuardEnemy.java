@@ -75,6 +75,7 @@ public class GuardEnemy extends Enemy {
         if(!isAlive()) {
             return;
         }
+        System.out.println(direction);
 
         double x = position.getX();
         double currentSpeed = speed;

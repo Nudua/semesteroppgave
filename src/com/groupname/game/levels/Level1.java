@@ -108,7 +108,7 @@ public class Level1 extends LevelBase {
         HomingEnemy enemy6 = new HomingEnemy(enemySprite, new Vector2D(100, 700), player);
         enemy6.setSpeed(2.5d);
 
-        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Snail), new Vector2D(600,300), Direction.Up, player);
+        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Squareboss), new Vector2D(300,600), Direction.Up, player);
 
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
         gameObjects.addAll(Arrays.asList(enemy7));
