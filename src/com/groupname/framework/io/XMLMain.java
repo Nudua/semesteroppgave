@@ -2,6 +2,7 @@ package com.groupname.framework.io;
 
 import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.game.editor.metadata.EnemyMetaData;
+import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import javafx.concurrent.Task;
 
@@ -33,6 +34,8 @@ public class XMLMain {
             protected Boolean call() throws Exception {
                 xmlWriter.write(Paths.get("test2.xml"), new EnemyMetaData("Test", HomingEnemy.class));
                 return true;
+
+
             }
         };
 

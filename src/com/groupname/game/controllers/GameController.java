@@ -84,7 +84,7 @@ public class GameController implements Controller {
         GameOver gameOver = new GameOver(game, canvas.getGraphicsContext2D());
         gameOver.initialize();
 
-        levels.add(0, new Level1(game, canvas.getGraphicsContext2D()));
+        //levels.add(0, new Level1(game, canvas.getGraphicsContext2D()));
         //levels.add(0, gameOver);
         levelCompletedTransition = new BlindsScreenTransition(canvas.getGraphicsContext2D());
 

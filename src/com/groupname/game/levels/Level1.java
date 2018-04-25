@@ -113,7 +113,7 @@ public class Level1 extends LevelBase {
         TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Squareboss), new Vector2D(300,400), player);
 
 
-        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PinkWorm);
+        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PurpleBlob);
         sprite.setScale(3.0d);
         BossEnemy enemy8 = new BossEnemy(sprite, new Vector2D(500, 250), player);
 
@@ -179,7 +179,7 @@ public class Level1 extends LevelBase {
         for(GameObject gameObject : gameObjects) {
 
 
-            graphicsContext.setFill(Color.BLUE);
+            //graphicsContext.setFill(Color.BLUE);
 
             if(gameObject instanceof BossEnemy) {
                 Rectangle bounds = ((BossEnemy) gameObject).getBossBounds();
@@ -187,8 +187,8 @@ public class Level1 extends LevelBase {
             }
             graphicsContext.setFill(Color.RED);
             // Draw hitbox
-            Rectangle rect = gameObject.getHitbox();
-            graphicsContext.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+            //Rectangle rect = gameObject.getHitbox();
+            //graphicsContext.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 
             gameObject.draw(spriteBatch);
 

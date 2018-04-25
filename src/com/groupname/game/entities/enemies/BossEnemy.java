@@ -21,7 +21,7 @@ public class BossEnemy extends Enemy {
     private int counterMax = 200;
     private int delay = 100;
     private double slowSpeed = 0.1d;
-    private double fastSpeed = 2.0d;
+    private double fastSpeed = 3.0d;
     private double positionX;
     private double positionY;
     private Vector2D basePosition;
@@ -72,8 +72,8 @@ public class BossEnemy extends Enemy {
         super.update();
         positionX = position.getX();
         positionY = position.getY();
-        double randomX = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
-        double randomY = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
+        double randomX = ThreadLocalRandom.current().nextDouble(-2.1d, 2.1d);
+        double randomY = ThreadLocalRandom.current().nextDouble(-2.1d, 2.1d);
         counter.step();
 
         if(counter.isDone()){
