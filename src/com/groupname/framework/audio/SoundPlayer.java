@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 
 /**
- * This class is used to play background music and soundeffect clips
+ * This Singleton is used to play background music and sound effect clips
  * It supports playing multiple sound effects at the same time.
  *
  * Users should call the stop() method when they are done using this instance.
@@ -31,10 +31,12 @@ public enum SoundPlayer {
 
     SoundPlayer() {
         soundEffectsThread = new TaskRunner(Executors.newFixedThreadPool(5));
-        //mediaPlayer = new MediaPlayer();
         soundEffects = new HashMap<>();
     }
 
+    /**
+     * Loads the music and all the sound effects used for this instance.
+     */
     public void load() {
         //punch-deck-by-force.wav
         AudioClip shoot = new AudioClip(Content.getResourcePath("test.mp3", ResourceType.SoundEffect));
@@ -43,6 +45,9 @@ public enum SoundPlayer {
         mediaPlayer = new MediaPlayer(new Media(Content.getResourcePath(MUSIC_FILENAME, ResourceType.Music)));
     }
 
+    /**
+     * Plays the default music track
+     */
     public void playMusic() {
         if(mediaPlayer.getStatus() != MediaPlayer.Status.PLAYING) {
             mediaPlayer.play();
