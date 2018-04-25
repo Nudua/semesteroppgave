@@ -1,5 +1,6 @@
 package com.groupname.game.entities.enemies;
 
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;

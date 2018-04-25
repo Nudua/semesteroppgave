@@ -1,5 +1,6 @@
 package com.groupname.game.entities.projectiles;
 
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;
@@ -43,6 +44,7 @@ public class SingleBulletWeapon implements Weapon {
     @Override
     public void fire(Vector2D startPosition) {
         if(!myOnlyBullet.isAlive()) {
+            SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
             myOnlyBullet.setPosition(startPosition);
             myOnlyBullet.setAlive(true);
         }
