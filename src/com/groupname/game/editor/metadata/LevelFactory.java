@@ -12,6 +12,7 @@ import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.level.Tile;
 import com.groupname.framework.level.TilePattern;
 import com.groupname.framework.level.TileType;
+import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.EnemySpriteType;
@@ -19,6 +20,7 @@ import com.groupname.game.entities.Player;
 import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
+import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.entities.powerups.PowerUp;
 import javafx.scene.image.Image;
@@ -102,6 +104,8 @@ public class LevelFactory {
             return createGuardEnemy(enemyMetaData);
         } else if(enemyMetaData.getType() == HomingEnemy.class) {
             return createHomingEnemy(enemyMetaData);
+        } else if(enemyMetaData.getType() == TowerEnemy.class) {
+            return createTowerEnemy(enemyMetaData);
         }
 
         throw new InvalidParameterException("Unsupported enemy");
@@ -144,6 +148,14 @@ public class LevelFactory {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
         HomingEnemy enemy = new HomingEnemy(sprite, metaData.getPosition(), player);
+
+        return enemy;
+    }
+
+    private TowerEnemy createTowerEnemy(EnemyMetaData metaData) {
+        Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
+
+        TowerEnemy enemy = new TowerEnemy(sprite, metaData.getPosition(), Direction.Up, player);
 
         return enemy;
     }

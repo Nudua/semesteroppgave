@@ -8,6 +8,7 @@ import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.enemies.HomingEnemy;
+import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
@@ -83,6 +84,9 @@ public class EditorController implements Controller {
 
         EnemyMetaData meta5 = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
         meta5.setSpriteType(EnemySpriteType.Snail);
+
+        EnemyMetaData meta6 = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
+        meta6.setSpriteType(EnemySpriteType.Squareboss);
 
         meta3.setSpriteType(EnemySpriteType.Bee);
         meta4.setSpriteType(EnemySpriteType.CrazyBee);
