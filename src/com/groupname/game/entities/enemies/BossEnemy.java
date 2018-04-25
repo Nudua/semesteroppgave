@@ -12,34 +12,6 @@ import javafx.scene.shape.Rectangle;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-class Counter {
-    private int delay;
-    private int counter;
-
-
-    public Counter(int seconds) {
-        delay = seconds * 60;
-
-    }
-
-    public void step(){
-        counter++;
-    }
-
-    public int getCounter() {
-        return counter;
-    }
-
-    public boolean isDone() {
-        return counter >= delay;
-
-    }
-
-    public void reset() {
-        counter = 0;
-    }
-}
-
 /**
  * This class extends Enemy. BossEnemy is an enemy that moves slowly, shoots a little and is hard to kill.
  */
@@ -100,14 +72,19 @@ public class BossEnemy extends Enemy {
         super.update();
         positionX = position.getX();
         positionY = position.getY();
-
+        double randomX = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
+        double randomY = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
         counter.step();
 
         if(counter.isDone()){
             if(counterInAction.getCounter() < 60) {
                 position.addX(-fastSpeed);
+                position.addY(randomY);
+                System.out.println("Hei");
             } if(counterInAction.getCounter() > 60) {
                 position.addX(fastSpeed);
+                position.addY(randomY);
+                System.out.println("Hei på deg");
             }
             counterInAction.step();
             if(counterInAction.isDone()){
@@ -117,9 +94,19 @@ public class BossEnemy extends Enemy {
         } else {
 
             if(boundsChecker.isWithinBounds(this, bossBounds)){
-                double randomX = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
-                double randomY = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
                 position.add(randomX, randomY);
+            }
+            if(position.getX() + sprite.getWidth() >= bossBounds.getX() + bossBounds.getWidth()){
+                position.addX(-100);
+            }
+            if(position.getX() <= bossBounds.getX()){
+                position.addX(100);
+            }
+            if(position.getY() + sprite.getHeight() >= bossBounds.getY() + bossBounds.getHeight()) {
+                position.addY(-100);
+            }
+            if(position.getY() <= bossBounds.getY()){
+                position.addY(100);
             }
 
         }
