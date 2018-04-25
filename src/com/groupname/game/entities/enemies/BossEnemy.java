@@ -12,14 +12,42 @@ import javafx.scene.shape.Rectangle;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+class Counter {
+    private int delay;
+    private int counter;
+
+
+    public Counter(int seconds) {
+        delay = seconds * 60;
+
+    }
+
+    public void step(){
+        counter++;
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public boolean isDone() {
+        return counter >= delay;
+
+    }
+
+    public void reset() {
+        counter = 0;
+    }
+}
+
 /**
  * This class extends Enemy. BossEnemy is an enemy that moves slowly, shoots a little and is hard to kill.
  */
 public class BossEnemy extends Enemy {
     //private SpreadGun currentWeapon;
     private Player player;
-    private int counter;
-    private int delay = 500;
+    private int counterMax = 200;
+    private int delay = 100;
     private double slowSpeed = 0.1d;
     private double fastSpeed = 2.0d;
     private double positionX;
@@ -27,6 +55,10 @@ public class BossEnemy extends Enemy {
     private Vector2D basePosition;
     private Rectangle bossBounds;
     private BoundsChecker boundsChecker = new BoundsChecker();
+    private Counter counter = new Counter(5);
+    private Counter counterInAction = new Counter(2);
+
+
 
     /**
      * The constructure for an BossEnemy. Takes a sprite, start position and the player.
@@ -40,12 +72,13 @@ public class BossEnemy extends Enemy {
         this.player = player;
         this.basePosition = position;
         createBossBounds();
+
     }
 
     private void createBossBounds() {
-        double width = sprite.getWidth() + 200;
+        double width = sprite.getWidth() + 400;
         double height = sprite.getHeight() + 200;
-        bossBounds = new Rectangle((int)basePosition.getX() - 100, (int)basePosition.getY() - 100, (int)width, (int)height);
+        bossBounds = new Rectangle((int)basePosition.getX() - 300, (int)basePosition.getY() - 100, (int)width, (int)height);
     }
 
     public Rectangle getBossBounds() {
@@ -68,20 +101,29 @@ public class BossEnemy extends Enemy {
         positionX = position.getX();
         positionY = position.getY();
 
+        counter.step();
 
-        counter++;
-        if(counter >= delay) {
-            position.addX(-fastSpeed);
-            counter = 0;
+        if(counter.isDone()){
+            if(counterInAction.getCounter() < 60) {
+                position.addX(-fastSpeed);
+            } if(counterInAction.getCounter() > 60) {
+                position.addX(fastSpeed);
+            }
+            counterInAction.step();
+            if(counterInAction.isDone()){
+                counter.reset();
+                counterInAction.reset();
+            }
         } else {
 
-        if(boundsChecker.isWithinBounds(this, bossBounds)){
-            double randomX = ThreadLocalRandom.current().nextDouble(-0.1d, 0.1d);
-            double randomY = ThreadLocalRandom.current().nextDouble(-0.1d, 0.1d);
-            position.add(randomX, randomY);
+            if(boundsChecker.isWithinBounds(this, bossBounds)){
+                double randomX = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
+                double randomY = ThreadLocalRandom.current().nextDouble(-4.1d, 4.1d);
+                position.add(randomX, randomY);
             }
 
         }
+
 
     }
 
