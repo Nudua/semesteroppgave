@@ -4,6 +4,7 @@ import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -65,7 +66,7 @@ public class SpriteBatchFX implements SpriteBatch {
      * @see SpriteFlip
      */
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
-        draw(sprite, position, flipFlags, null);
+        draw(sprite, position, flipFlags, false);
     }
 
     /**
@@ -73,9 +74,9 @@ public class SpriteBatchFX implements SpriteBatch {
      *
      * @param sprite the sprite to draw.
      * @param position the position to draw it.
-     * @param tintColor the color to tint the sprite in.
+     * @param invertColors if we should invert the colors.
      */
-    public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags, Color tintColor) {
+    public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags, boolean invertColors) {
         Objects.requireNonNull(sprite);
         Objects.requireNonNull(position);
 
@@ -101,7 +102,7 @@ public class SpriteBatchFX implements SpriteBatch {
         }
 
         // Figure out how to tint red
-        if(tintColor != null) {
+        if(invertColors) {
             graphicsContext.save();
 
             ColorAdjust monochrome = new ColorAdjust();
@@ -113,6 +114,8 @@ public class SpriteBatchFX implements SpriteBatch {
 
             graphicsContext.setEffect(monochrome);
         }
+
+        //graphicsContext.setEffect(new DropShadow());
 
         graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY() + 1, srcRect.getWidth(), srcRect.getHeight() - 1, posX, posY, spriteWidth, spriteHeight);
 

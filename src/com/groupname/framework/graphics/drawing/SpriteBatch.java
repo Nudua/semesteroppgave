@@ -37,7 +37,7 @@ public interface SpriteBatch {
      *
      * @param sprite the sprite to draw.
      * @param position the position to draw it.
-     * @param tintColor the color to tint the sprite in.
+     * @param invertColors if we should invert the colors.
      */
-    void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags, Color tintColor);
+    void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags, boolean invertColors);
 }
