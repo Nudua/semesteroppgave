@@ -13,6 +13,8 @@ public class BossEnemy extends Enemy {
     private Vector2D position;
     //private SpreadGun currentWeapon;
     private Player player;
+    private int counter;
+    private int delay = 120;
 
     /**
      * The constructure for an BossEnemy. Takes a sprite, start position and the player.
@@ -27,18 +29,57 @@ public class BossEnemy extends Enemy {
 
     }
 
+    /**
+     * Setter that sets the position of the enemy.
+     * @param position an Vector2D that is an position on the canvas.
+     */
+    @Override
+    public void setPosition(Vector2D position) {
+        this.position = position;
+    }
+
+    /**
+     * The specific logic for this type of enemy.
+     * The BossEnemy XXXXXX.
+     */
     @Override
     public void update() {
         super.update();
+
+
+
+
+
+
+        counter++;
+        if(counter >= delay) {
+            System.out.println("BØ");
+            counter = 0;
+        }
+
+
+
+
     }
 
+    /**
+     *
+     * @param spriteBatch
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        if(isAlive()) {
+            spriteBatch.draw(sprite, position);
+            //currentWeapon.draw(spriteBatch);
+        }
 
     }
 
+    /**
+     * Method for resetting of the enemy.
+     */
     @Override
     public void reset() {
-        
+
     }
 }

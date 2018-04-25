@@ -14,6 +14,7 @@ import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.SpriteFactory;
+import com.groupname.game.entities.enemies.BossEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
@@ -110,8 +111,10 @@ public class Level1 extends LevelBase {
 
         TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Squareboss), new Vector2D(300,400), player);
 
+        BossEnemy enemy8 = new BossEnemy(spriteFactory.createEnemy(EnemySpriteType.GreenWorm), new Vector2D(1000, 300), player);
+
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
-        gameObjects.addAll(Arrays.asList(enemy7));
+        gameObjects.addAll(Arrays.asList(enemy8));
 
         delay = 10;
 
