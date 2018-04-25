@@ -97,7 +97,7 @@ public class EditorController implements Controller {
 
         // Move to a css file
         metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5));
+        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5, meta6));
 
 
         metaDataListView.setCellFactory((o) -> new MetaDataListCell());
@@ -115,7 +115,7 @@ public class EditorController implements Controller {
 
             Optional<LevelItem> playerItem = getPlayerIfExists();
 
-            if(metaData.getType() == HomingEnemy.class) {
+            if(metaData.getType() == HomingEnemy.class || metaData.getType() == TowerEnemy.class) {
                 if(playerItem.isPresent()) {
                     levelFactory.setPlayer((Player)playerItem.get().getInstance());
                 } else {
