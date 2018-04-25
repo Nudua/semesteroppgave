@@ -27,6 +27,21 @@ public class Content {
         return new Image(inputStream, -1, -1, true, false);
     }
 
+    public static String getResourcePath(String fileName, ResourceType type) {
+        if(Strings.isNullOrEmpty(contentBaseFolder)) {
+            throw new ContentNotFoundException("The basefolder has to be set before using this method, call setContentBaseFolder with a valid path first.");
+        }
+
+        Strings.requireNonNullAndNotEmpty(fileName);
+        Objects.requireNonNull(type);
+
+        String folder = getFolderPathFromResourceType(type);
+
+        String fullPath = contentBaseFolder + folder + fileName;
+
+        return Content.class.getResource(fullPath).toExternalForm();
+    }
+
     public static InputStream loadFile(String fileName, ResourceType type) {
         if(Strings.isNullOrEmpty(contentBaseFolder)) {
             throw new ContentNotFoundException("The basefolder has to be set before using this method, call setContentBaseFolder with a valid path first.");

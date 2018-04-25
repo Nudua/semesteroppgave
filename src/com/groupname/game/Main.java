@@ -1,5 +1,6 @@
 package com.groupname.game;
 
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.io.Content;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
@@ -16,6 +17,7 @@ public class Main extends Application {
 
         // We have to set this before running
         Content.setContentBaseFolder("/com/groupname/game/resources");
+        SoundPlayer.INSTANCE.load();
 
         SceneManager sceneManager = SceneManager.INSTANCE;
 

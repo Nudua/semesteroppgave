@@ -1,4 +1,5 @@
 package com.groupname.game.entities;
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
@@ -77,6 +78,7 @@ public class Player extends Actor {
         if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
             currentWeapon.setDirection(Direction.Right);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
+            SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
             currentWeapon.setDirection(Direction.Left);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
