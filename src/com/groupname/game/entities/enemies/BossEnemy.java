@@ -1,6 +1,7 @@
 package com.groupname.game.entities.enemies;
 
 import com.groupname.framework.graphics.Sprite;
+import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
@@ -14,15 +15,25 @@ public class BossEnemy extends Enemy {
     private Player player;
 
     /**
+     * The constructure for an BossEnemy. Takes a sprite, start position and the player.
      *
-     * @param sprite
-     * @param position
-     * @param position1
-     * @param player
+     * @param sprite Sets an default sprite for the enemy.
+     * @param position Sets the start position, on the canvas.
+     * @param player takes the player for accessing the players position.
      */
-    public BossEnemy(Sprite sprite, Vector2D position, Vector2D position1, Player player) {
+    public BossEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
-        this.position = position1;
         this.player = player;
+
+    }
+
+    @Override
+    public void update() {
+        super.update();
+    }
+
+    @Override
+    public void draw(SpriteBatch spriteBatch) {
+
     }
 }
