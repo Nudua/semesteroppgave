@@ -41,10 +41,12 @@ public class BossEnemy extends Enemy {
 
     }
 
+
     @Override
     public Rectangle getHitbox() {
-        return new Rectangle(position.getX()-10, position.getY()+20, sprite.getWidth()-20, sprite.getHeight()-20);
+        return new Rectangle(position.getX()+30, position.getY()+70, sprite.getWidth() - 60, sprite.getHeight()-70);
     }
+
 
     /**
      * The specific logic for this type of enemy.

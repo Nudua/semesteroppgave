@@ -23,6 +23,7 @@ import com.groupname.game.levels.core.LevelState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.util.Arrays;
@@ -174,6 +175,15 @@ public class Level1 extends LevelBase {
 
         // Draw all our gameobjects, really need to sort based on sprite priority
         for(GameObject gameObject : gameObjects) {
+
+
+            graphicsContext.setFill(Color.RED);
+
+            // Draw hitbox
+            Rectangle rect = gameObject.getHitbox();
+            graphicsContext.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+
+            
             gameObject.draw(spriteBatch);
         }
         graphicsContext.setFont(Font.font(26));
