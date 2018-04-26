@@ -19,7 +19,7 @@ public class SpriteBatchFXTests {
     }
     */
 
-    // todo: Why does this suddenly not work?
+    // todo: Why does this suddenly not work (on windows)?
 
     @Test(expected = NullPointerException.class)
     public void ConstructorParameterGraphicsContextCannotBeNull() {
