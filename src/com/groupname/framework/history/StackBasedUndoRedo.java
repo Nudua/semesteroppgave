@@ -1,7 +1,5 @@
 package com.groupname.framework.history;
 
-
-
 import com.groupname.framework.history.commands.Command;
 
 import java.util.ArrayDeque;
@@ -13,9 +11,15 @@ import java.util.Deque;
  */
 public class StackBasedUndoRedo implements UndoRedo {
 
-    // Make my own limit based stack implementation
+    // The internal collections used for this implementation.
     private Deque<Command> undoStack = new ArrayDeque<>();
     private Deque<Command> redoStack = new ArrayDeque<>();
+
+    /**
+     * Creates a new instance of this class.
+     */
+    public StackBasedUndoRedo() {
+    }
 
     /**
      * Executes the command specified.
@@ -27,6 +31,7 @@ public class StackBasedUndoRedo implements UndoRedo {
         command.execute();
         undoStack.push(command);
 
+        // Clear the redo stack
         redoStack.clear();
     }
 
@@ -74,5 +79,18 @@ public class StackBasedUndoRedo implements UndoRedo {
     @Override
     public boolean canRedo() {
         return redoStack.size() > 0;
+    }
+
+    /**
+     * Returns the contents of this instance as a String, which is the undo and redo stacks and their commands if any.
+     *
+     * @return the contents of this instance as a String, which is the undo and redo stacks and their commands if any.
+     */
+    @Override
+    public String toString() {
+        return "StackBasedUndoRedo{" +
+                "undoStack=" + undoStack +
+                ", redoStack=" + redoStack +
+                '}';
     }
 }
