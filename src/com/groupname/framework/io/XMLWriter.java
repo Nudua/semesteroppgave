@@ -31,8 +31,8 @@ public class XMLWriter {
      * @param fileName filename to the file you save to.
      * @param instance the instance of the class you want to store
      * @param <T> the class type you want to store
-     * @throws IllegalAccessException todo
-     * @throws IOException todo
+     * @throws IllegalAccessException if no access to the class fields.
+     * @throws IOException issues writing the file to disk.
      */
     public <T> void write(Path fileName, T instance) throws IllegalAccessException, IOException {
         List<XMLNode> nodes = readFields(instance);
