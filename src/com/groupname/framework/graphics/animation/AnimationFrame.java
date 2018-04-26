@@ -59,10 +59,29 @@ public class AnimationFrame {
         counter = 0;
     }
 
+
+
     /**
      * Increments the counter by one, users should call IsDone() to see if the cycle is completed after calling this method.
      */
     public void step() {
         counter++;
+    }
+
+    /**
+     * Returns the state of the fields as a string representation of the object.
+     * spriteRegion is the region used by the sprite.
+     * repeatCount says how long it should show the sprite.
+     * counter tells the current position in the counter loop.
+     *
+     * @return the state of the fields as a string representation of the object.
+     */
+    @Override
+    public String toString() {
+        return "AnimationFrame{" +
+                "spriteRegion=" + spriteRegion +
+                ", repeatCount=" + repeatCount +
+                ", counter=" + counter +
+                '}';
     }
 }
