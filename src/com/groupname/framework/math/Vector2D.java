@@ -169,7 +169,7 @@ public class Vector2D implements Serializable {
 
     /**
      * Returns a string representation of the object.
-     * 
+     *
      * @return a string representation of the object.
      */
     @Override
