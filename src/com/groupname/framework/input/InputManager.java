@@ -52,6 +52,7 @@ public class InputManager {
      * @param scene the specified scene you change to.
      */
     public void updateScene(Scene scene) {
+        Objects.requireNonNull(scene);
         for(int i = 0; i < inputAdapters.size(); i++) {
             if(inputAdapters.get(i) instanceof KeyboardInput) {
                 inputAdapters.remove(inputAdapters.get(i));
