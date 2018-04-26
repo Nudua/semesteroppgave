@@ -6,11 +6,19 @@ import com.groupname.framework.serial.SerialPortException;
 import com.groupname.framework.serial.unix.internal.CLibraryUnix;
 import com.groupname.framework.serial.unix.internal.FileOpenFlags;
 import com.groupname.framework.serial.unix.internal.Termios;
+import com.groupname.framework.util.EmptyStringException;
+import com.groupname.framework.util.Strings;
 
 import static com.groupname.framework.serial.unix.internal.Termios.Constants.*;
 
 import java.security.InvalidParameterException;
 
+
+/**
+ * An unix implementation of the SerialPort interface.
+ *
+ * The default port is /dev/ttyACM0 and bounds are 9600 bits per second.
+ */
 public class SerialPortUnix implements SerialPort {
 
     public static final String DEFAULT_PORT = "/dev/ttyACM0";
@@ -20,7 +28,8 @@ public class SerialPortUnix implements SerialPort {
     private final String port;
     private final int bounds;
 
-    private int fd; // handle to the port
+    // native handle to the file (port)
+    private int fd;
     private CLibraryUnix nativeLibrary;
 
     /**
@@ -37,10 +46,11 @@ public class SerialPortUnix implements SerialPort {
      *
      * @param port the serial port to use.
      * @param bounds the rate of bits per seconds.
+     * @throws NullPointerException if port is null.
+     * @throws EmptyStringException if port is equal to an empty String "".
      */
     public SerialPortUnix(String port, int bounds) {
-        //do checking
-        this.port = port;
+        this.port = Strings.requireNonNullAndNotEmpty(port);
         this.bounds = bounds;
     }
 
@@ -183,5 +193,26 @@ public class SerialPortUnix implements SerialPort {
         }
 
         return true;
+    }
+
+    /**
+     * Returns the String representation of this Object.
+     * open, a boolean that says whether the port is open or not.
+     * port, the current port used by this object.
+     * bounds, the rate of transfer.
+     * fd, is the internal fileHandle to the underlying port.
+     * nativeLibrary, the nativeLibrary used by this class to do serialport communications.
+     *
+     * @return the String representation of this Object.
+     */
+    @Override
+    public String toString() {
+        return "SerialPortUnix{" +
+                "open=" + open +
+                ", port='" + port + '\'' +
+                ", bounds=" + bounds +
+                ", fd=" + fd +
+                ", nativeLibrary=" + nativeLibrary +
+                '}';
     }
 }

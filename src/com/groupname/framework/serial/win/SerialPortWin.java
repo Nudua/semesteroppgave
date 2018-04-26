@@ -6,12 +6,18 @@ import com.groupname.framework.serial.SerialPortException;
 import com.groupname.framework.serial.BaudRate;
 import com.groupname.framework.serial.win.internal.DCB;
 import com.groupname.framework.serial.win.internal.Kernel32Library;
+import com.groupname.framework.util.EmptyStringException;
+import com.groupname.framework.util.Strings;
 import com.sun.jna.platform.win32.*;
 import com.sun.jna.ptr.IntByReference;
 
 import java.security.InvalidParameterException;
 
-
+/**
+ * An Win32 implementation of the SerialPort interface.
+ *
+ * The default port is "COM3" and bounds are 9600 bits per second.
+ */
 public class SerialPortWin implements SerialPort {
 
     public static final String DEFAULT_PORT = "COM3";
@@ -41,11 +47,12 @@ public class SerialPortWin implements SerialPort {
      * Creates a new instance of the SerialPortWin class with the specified port and bounds.
      *
      * @param port the serial port to use.
-     * @param rate the rate of bits per seconds.
+     * @param rate the rate of bits per seconds
+     * @throws NullPointerException if port is null.
+     * @throws EmptyStringException if port is equal to an empty String "".
      */
     public SerialPortWin(String port, BaudRate rate) {
-        //do checking
-        this.port = port;
+        this.port = Strings.requireNonNullAndNotEmpty(port);
         this.baudRate = rate;
     }
 
@@ -162,5 +169,26 @@ public class SerialPortWin implements SerialPort {
         } else { // Make this an IOException instead
             throw new SerialPortException("Unable to read data from the serial port.");
         }
+    }
+
+    /**
+     * Returns the String representation of this object.
+     * open, a boolean that says whether the port is open or not.
+     * port, the current port used by this object.
+     * baudRate, the rate of transfer.
+     * nativeLibrary, the nativeLibrary used by this class to do serialport communications.
+     * handle, is the internal fileHandle to the underlying serialport.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "SerialPortWin{" +
+                "open=" + open +
+                ", port='" + port + '\'' +
+                ", baudRate=" + baudRate +
+                ", nativeLibrary=" + nativeLibrary +
+                ", handle=" + handle +
+                '}';
     }
 }
