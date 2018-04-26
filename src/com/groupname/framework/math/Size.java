@@ -1,33 +1,49 @@
 package com.groupname.framework.math;
 
-// A mutable Size class
+
+/**
+ * Has a width and a height. This class is immutable.
+ */
 public class Size {
     private int width;
     private int height;
 
+    /**
+     * Constructure with the height and width zero.
+     */
     public Size() {
         this.width = 0;
         this.height = 0;
     }
 
+    /**
+     * Constructure where you set the width and the height.
+     *
+     * @param width your width.
+     * @param height your height.
+     */
     public Size(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
+    /**
+     * Return the width.
+     *
+     * @return the width.
+     */
     public int getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
+    /**
+     * Return the height.
+     *
+     * @return the height.
+     */
     public int getHeight() {
         return height;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
+
 }

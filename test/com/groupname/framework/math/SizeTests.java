@@ -21,18 +21,6 @@ public class SizeTests {
         assertTrue(size.getHeight() == 480);
     }
 
-    @Test
-    public void setWidthAndHeightSetsCorrectValue() {
-        Size size = new Size();
 
-        assertTrue(size.getWidth() == 0);
-        assertTrue(size.getHeight() == 0);
-
-        size.setHeight(300);
-        size.setWidth(400);
-
-        assertTrue(size.getHeight() == 300);
-        assertTrue(size.getWidth() == 400);
-    }
 
 }
