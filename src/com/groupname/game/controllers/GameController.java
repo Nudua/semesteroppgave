@@ -258,7 +258,7 @@ public class GameController implements Controller {
     }
 
     @Override
-    public void exiting() {
+    public void exit() {
 
     }
 }

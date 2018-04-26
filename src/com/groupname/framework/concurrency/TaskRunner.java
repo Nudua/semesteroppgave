@@ -17,7 +17,7 @@ import java.util.function.Supplier;
  *
  * This class uses the fail-fast principle and will throw a NullPointerException if any of the calling parameters are null.
  *
- * Users must call stop() before exiting the program to avoid the ExecutorService from stalling.
+ * Users must call stop() before exit the program to avoid the ExecutorService from stalling.
  */
 public class TaskRunner {
     private final ExecutorService executor;

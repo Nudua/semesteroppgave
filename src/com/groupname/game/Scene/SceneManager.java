@@ -53,7 +53,7 @@ public enum SceneManager {
         primaryStage.setOnCloseRequest((windowEvent) -> {
             if(currentController != null) {
                 System.out.println("Closing window");
-                currentController.exiting();
+                currentController.exit();
             }
             if(game != null) {
                 game.getInputManager().stop();
@@ -76,7 +76,7 @@ public enum SceneManager {
 
         // Clean up our old controller if needed
         if(currentController != null) {
-            currentController.exiting();
+            currentController.exit();
         }
 
         SceneInfo info = scenes.get(sceneName);

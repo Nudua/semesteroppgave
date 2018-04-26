@@ -1,5 +1,7 @@
 package com.groupname.framework.math;
 
+import java.util.Objects;
+
 /**
  * A position vector with x and y.
  * x and y are ints.
@@ -96,6 +98,20 @@ public class IntVector2D {
         return y;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IntVector2D that = (IntVector2D) o;
+        return x == that.x &&
+                y == that.y;
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(x, y);
+    }
 
     /**
      * Setter for y.

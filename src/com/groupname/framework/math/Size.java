@@ -45,5 +45,16 @@ public class Size {
         return height;
     }
 
-
+    /**
+     * Returns the width and height as a string representation of the object.
+     *
+     * @return the width and height as a string representation of the object.
+     */
+    @Override
+    public String toString() {
+        return "Size{" +
+                "width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }

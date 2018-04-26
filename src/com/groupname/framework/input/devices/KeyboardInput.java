@@ -94,4 +94,19 @@ public class KeyboardInput implements InputAdapter {
         // Update the global input state with the keyboard presses
         digitalInput.addAll(internalState);
     }
+
+    /**
+     * Returns all the fields as a string representation of the object.
+     * Enabled tells if this input adapter is enabled.
+     * internalState holds all the keys currently pressed on this keyboard adapter.
+     *
+     * @return all the fields as a string representation of the object.
+     */
+    @Override
+    public String toString() {
+        return "KeyboardInput{" +
+                "enabled=" + enabled +
+                ", internalState=" + internalState +
+                '}';
+    }
 }
