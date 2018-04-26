@@ -7,8 +7,9 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-// Meant to bind player input and hotkeys
-// Haven't done much here yet
+/**
+ * This class is used to bind one String to an arbitrary amount of other bindings.
+ */
 public class InputBinding {
 
     private String name;

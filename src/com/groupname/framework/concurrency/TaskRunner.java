@@ -126,4 +126,16 @@ public class TaskRunner {
         executor.shutdownNow();
     }
 
+    /**
+     * Returns the String representation of this TaskRunner
+     * this method only returns the type of the executor used in this class.
+     *
+     * @return the type of the executor used in this class.
+     */
+    @Override
+    public String toString() {
+        return "TaskRunner{" +
+                "executor=" + executor +
+                '}';
+    }
 }
