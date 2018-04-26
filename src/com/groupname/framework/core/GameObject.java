@@ -7,8 +7,15 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.Objects;
 
+/**
+ * A baseclass for all gameobjects, which essentially contains a
+ * Sprite (Image) and a Vector2D (position).
+ *
+ * It also contains methods for generating a hitbox and checking collisions between different gameobjects.
+ *
+ * The update and draw methods must overridden.
+ */
 public abstract class GameObject implements UpdateDrawAble {
-
     protected boolean enabled;
 
     protected final Sprite sprite;
@@ -19,29 +26,62 @@ public abstract class GameObject implements UpdateDrawAble {
         this.position = Objects.requireNonNull(position, "position cannot be null");
     }
 
+    /**
+     * Returns the sprite associated with this instance.
+     *
+     * @return the sprite associated with this instance.
+     */
     public Sprite getSprite() {
         return sprite;
     }
 
-    // Not all gameobjects need a hitbox
+    /**
+     * Generates and returns a new Rectangle that represents the hitbox for this GameObject.
+     *
+     * @return a new Rectangle that represents the hitbox for this GameObject.
+     */
     public Rectangle getHitbox() {
         return new Rectangle(position.getX(), position.getY(), sprite.getWidth(), sprite.getHeight());
     }
 
-    // Simple bounding box collision detection
-    public boolean collides(Rectangle with) {
-        return getHitbox().intersects(with.getBoundsInParent());
+    /**
+     * Checks whether another rectangle intersects with the hitbox for this instance.
+     *
+     * @param other the rectangle to check if it intersects with this hitbox.
+     * @return true if the supplied rectangle collides with the hitbox if this GameObject.
+     */
+    public boolean collides(Rectangle other) {
+        return getHitbox().intersects(other.getBoundsInParent());
     }
 
+    /**
+     * Returns a copy of the position of this instance.
+     *
+     * @return a copy of the position of this instance.
+     */
     public Vector2D getPosition() {
         return new Vector2D(position);
     }
 
+    /**
+     * Updates the position to the given position (the values are copied)
+     *
+     * @param position the new Vector2D to update the internal position to.
+     */
     public void setPosition(Vector2D position) {
         this.position.set(position);
     }
-    //public abstract void onCollides(int value);
 
+    /**
+     * Implementations must override this method to update any gameobject logic.
+     */
     public abstract void update();
+
+    /**
+     * Implementations must override this method and use it to draw itself.
+     * Implementations must also validate that spriteBatch is not null. (fail-fast)
+     *
+     * @param spriteBatch the spriteBatch used to draw this gameObject.
+     */
     public abstract void draw(SpriteBatch spriteBatch);
 }
