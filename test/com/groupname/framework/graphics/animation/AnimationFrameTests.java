@@ -27,4 +27,6 @@ public class AnimationFrameTests {
         assertSame(testAnimationFrame.getSpriteRegion(), testRectangle);
     }
 
+
+
 }
