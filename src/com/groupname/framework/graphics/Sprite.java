@@ -6,7 +6,9 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 /**
- *
+ * This class is a representation for a character in a game
+ * using a region of a SpriteSheet as the backing for the Image
+ * used to draw this class.
  */
 public class Sprite {
 
@@ -84,16 +86,47 @@ public class Sprite {
         this.spriteRegion = Objects.requireNonNull(spriteRegion);
     }
 
-    //todo: move somewhere?
-    // Sort this out
+
+    /**
+     * Static helper method for creating a SpriteRegion (Rectangle) that is
+     * generally used by the Sprite class and it's subclasses to define an
+     * area of an image which is used for the sprite representation.
+     *
+     * @param width the width of the SpriteRegion (Rectangle).
+     * @param height the width of the SpriteRegion (Rectangle).
+     * @return a new Rectangle width the coordonates (0,0) and the specified width and height.
+     */
     public static Rectangle createSpriteRegion(int width, int height) {
         return createSpriteRegion(0,0, width, height);
     }
-    // Do something about this
+
+    /**
+     * Static helper method for creating a SpriteRegion (Rectangle) that is
+     * generally used by the Sprite class and it's subclasses to define an
+     * area of an image which is used for the sprite representation.
+     *
+     * @param smallX this value is multiplied by the sprite's width to give the actual coordinate within the image.
+     * @param smallY this value is multiplied by the sprite's height to give the actual coordinate within the image.
+     * @param width the width of the SpriteRegion (Rectangle).
+     * @param height the width of the SpriteRegion (Rectangle).
+     * @return a new Rectangle with the specified coordinates, width and height.
+     */
     public static Rectangle createSpriteRegion(int smallX, int smallY, int width, int height) {
         return createSpriteRegion(smallX, smallY, width, height, new IntVector2D());
     }
 
+    /**
+     * Static helper method for creating a SpriteRegion (Rectangle) that is
+     * generally used by the Sprite class and it's subclasses to define an
+     * area of an image which is used for the sprite representation.
+     *
+     * @param smallX this value is multiplied by the sprite's width to give the actual coordinate within the image.
+     * @param smallY this value is multiplied by the sprite's height to give the actual coordinate within the image.
+     * @param width the width of the SpriteRegion (Rectangle).
+     * @param height the width of the SpriteRegion (Rectangle).
+     * @param offset the offset between each SpriteRegion in pixel size.
+     * @return a new Rectangle with the specified coordinates, width, height and offset.
+     */
     public static Rectangle createSpriteRegion(int smallX, int smallY, int width, int height, IntVector2D offset) {
         return new Rectangle(smallX * width + offset.getX(), smallY * height + offset.getY(), width, height);
     }
