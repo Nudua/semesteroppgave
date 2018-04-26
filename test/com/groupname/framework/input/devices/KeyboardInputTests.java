@@ -1,4 +1,4 @@
-package com.groupname.framework.devices;
+package com.groupname.framework.input.devices;
 import com.groupname.framework.input.devices.KeyboardInput;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,7 +19,6 @@ public class KeyboardInputTests {
         MockFX.initFX();
     }
 
-    // Todo: fix on windows
     private Scene scene = new Scene(new GridPane());
 
     @Test(expected = NullPointerException.class)

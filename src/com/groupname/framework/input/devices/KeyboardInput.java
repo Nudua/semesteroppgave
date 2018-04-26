@@ -6,12 +6,18 @@ import javafx.scene.input.KeyEvent;
 
 import java.util.*;
 
+/**
+ * Input from keyboard.
+ */
 public class KeyboardInput implements InputAdapter {
-
+    /**
+     * Default keyboard binding.
+     * WADS control the waliking.
+     * Arrows control the shooting.
+     */
     public static class Defaults {
         private static final String prefix = "Keyboard - ";
 
-        // Enum maybe? maybe not
         public static final String UP = prefix + KeyCode.W.getName();
         public static final String DOWN = prefix + KeyCode.S.getName();
         public static final String LEFT = prefix + KeyCode.A.getName();
@@ -34,6 +40,11 @@ public class KeyboardInput implements InputAdapter {
     // Contains the internal keyboard state of this class
     private final Set<String> internalState;
 
+    /**
+     * Gets inputs from the specified scene.
+     *
+     * @param scene the scene you are at.
+     */
     public KeyboardInput(Scene scene) {
         Objects.requireNonNull(scene);
         internalState = new HashSet<>();
@@ -42,10 +53,20 @@ public class KeyboardInput implements InputAdapter {
         scene.setOnKeyReleased(this::OnKeyReleased);
     }
 
+    /**
+     * Return if KeyboardInput are enable or disable.
+     *
+     * @return if KeyboardInput are enable or disable.
+     */
     public boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Enable or disable KeyboardInput.
+     *
+     * @param enabled true or false.
+     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -63,6 +84,11 @@ public class KeyboardInput implements InputAdapter {
         internalState.remove(Defaults.prefix + event.getCode().getName());
     }
 
+    /**
+     * Updates the specified set with the internal currently pressed keys.
+     *
+     * @param digitalInput the collection to add the currently pressed keys.
+     */
     public void update(Set<String> digitalInput) {
         Objects.requireNonNull(digitalInput);
         // Update the global input state with the keyboard presses
