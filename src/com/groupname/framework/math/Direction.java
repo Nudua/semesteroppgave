@@ -1,9 +1,8 @@
 package com.groupname.framework.math;
 
 /**
- * Directions that can be used
+ * Specifies the current direction for an object that can be used
  * Up, Down, Left and Right.
- *
  */
 public enum Direction {
     Up,
