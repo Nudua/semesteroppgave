@@ -4,6 +4,12 @@ import com.groupname.framework.serial.SerialPortException;
 
 import java.security.InvalidParameterException;
 
+/**
+ * This interface is used to read data from an open SerialPort.
+ *
+ * Implementations must throw the SerialPortException if any errors occur when
+ * trying to open the specified port or while reading from the port.
+ */
 public interface SerialPort {
 
     /**
@@ -15,7 +21,7 @@ public interface SerialPort {
 
 
     /**
-     * Attempts to open the serial port so it is possible to read from it.
+     * Implementations must use this method to open the serial port so it is possible to read from it.
      *
      * @throws SerialPortException if there was an error while attempting to open the port.
      */
@@ -23,7 +29,7 @@ public interface SerialPort {
 
 
     /**
-     * Reads from an open serial port.
+     * Implementations must use this method to read from an open serial port.
      *
      * @param buffer the byte array to read the data into.
      * @param numBytesToRead the bytes to read from the serial port.
@@ -34,7 +40,7 @@ public interface SerialPort {
     long read(byte[] buffer, int numBytesToRead) throws SerialPortException;
 
     /**
-     * Attempts to close an already open serial port.
+     * Implementations must clean up and close an already open serial port here.
      *
      * @throws SerialPortException if a port was not open.
      */
