@@ -1,19 +1,12 @@
 package com.groupname.game.data;
 
-import com.groupname.framework.io.INIPreferences;
+import com.groupname.framework.settings.INIPreferences;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.util.Strings;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.util.Properties;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 
 
 class PlayerProgress {
