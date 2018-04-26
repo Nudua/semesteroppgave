@@ -371,7 +371,7 @@ public class EditorController implements Controller {
     }
 
     @Override
-    public void exiting() {
+    public void exit() {
         if(!taskRunner.isShutdown()){
             System.out.println("Shutting down the taskrunner thread");
 

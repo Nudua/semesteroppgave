@@ -8,5 +8,5 @@ import javafx.scene.canvas.Canvas;
  */
 public interface Controller {
     void init(Game game);
-    void exiting();
+    void exit();
 }

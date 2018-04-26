@@ -107,7 +107,7 @@ public class TitleController implements Controller {
     */
 
     @Override
-    public void exiting() {
+    public void exit() {
 
     }
 }
