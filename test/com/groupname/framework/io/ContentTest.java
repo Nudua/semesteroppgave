@@ -12,8 +12,8 @@ public class ContentTest {
 
     private final String validSpriteSheet = "player1.png";
     private final String validSprite = "sprite1.png";
-    //private final String validSoundEffect = "kabom.wav";
-    //private final String validMusicFile = "track1.mp3";
+    private final String validSoundEffect = "test.mp3";
+    private final String validMusicFile = "punch-deck-by-force.mp3";
 
     @Test(expected = NullPointerException.class)
     public void loadFilenameCannotBeNull(){
@@ -70,18 +70,15 @@ public class ContentTest {
         assertNotNull(inputStream);
     }
 
-    // Uncomment when we actually have some audio files
-    /*
+    @Test
+    public void loadsValidMusicInputStream() {
+        InputStream inputStream = Content.loadFile(validMusicFile, ResourceType.Music);
+        assertNotNull(inputStream);
+    }
+
     @Test
     public void loadsValidSoundEffectInputStream() {
         InputStream inputStream = Content.loadFile(validSoundEffect, ResourceType.SoundEffect);
         assertNotNull(inputStream);
     }
-
-    @Test
-    public void loadsValidMsuicInputStream() {
-        InputStream inputStream = Content.loadFile(validMusicFile, ResourceType.SoundEffect);
-        assertNotNull(inputStream);
-    }
-    */
 }
