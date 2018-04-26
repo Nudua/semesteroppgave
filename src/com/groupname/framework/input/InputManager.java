@@ -13,6 +13,9 @@ import javafx.scene.Scene;
 
 import java.util.*;
 
+/**
+ * Gathers and updates input from different input adapters.
+ */
 public class InputManager {
     private boolean enabled = true;
 
@@ -25,6 +28,12 @@ public class InputManager {
     private Set<String> lastState = new HashSet<>();
     private Set<String> state = new HashSet<>();
 
+    /**
+     * Creates a new instance an takes the inputs from the scene
+     * and use it with the keyboard adapter.
+     *
+     * @param parent the current scene you are at.
+     */
     public InputManager(Scene parent) {
         Objects.requireNonNull(parent);
 
@@ -37,6 +46,11 @@ public class InputManager {
         initializeInputAdapters(parent);
     }
 
+    /**
+     * Updates the keyboardInput to use this scene.
+     *
+     * @param scene the specified scene you change to.
+     */
     public void updateScene(Scene scene) {
         for(int i = 0; i < inputAdapters.size(); i++) {
             if(inputAdapters.get(i) instanceof KeyboardInput) {
@@ -46,15 +60,30 @@ public class InputManager {
         }
     }
 
+    /**
+     * Returns the bindings associated by this instance.
+     *
+     * @return the bindings associated by this instance.
+     */
     public void setBindings(Set<InputBinding> bindings) {
         this.bindings.clear();
         this.bindings.addAll(bindings);
     }
 
+    /**
+     * Return true if the current inputManager is enabled and false if it is disabled.
+     *
+     * @return true if the current inputManager is enabled and false if it is disabled.
+     */
     public boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets enable or disable the current inputManager.
+     *
+     * @param enabled true to enable and false to disable.
+     */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -126,11 +155,24 @@ public class InputManager {
         }
     }
 
+    /**
+     * Return true when the buttonName is pressed down and false if not.
+     *
+     * @param buttonName the name of the button to check if is down.
+     * @return true when the buttonName is pressed down and false if not.
+     */
     public boolean isDown(String buttonName) {
         return state.contains(buttonName);
     }
 
-    // Single press
+    /**
+     * Method to check single press.
+     * Returns true if buttonName was not pressed last frame but are pressed on the current frame.
+     * Returns false if the buttonName wass pressed last frame and are pressed at the current frame.
+     *
+     * @param buttonName the name of the button to check.
+     * @return true if buttonName was not pressed last frame but are pressed now
+     */
     public boolean wasPressed(String buttonName) {
         return !lastState.contains(buttonName) && state.contains(buttonName);
     }
@@ -140,6 +182,9 @@ public class InputManager {
         return internalInputState.contains(keyName);
     }
 
+    /**
+     * If a hitboxInput is running this method will stop the thread there it is running on.
+     */
     public void stop() {
         System.out.println("Stopping inputadapter...");
         for(InputAdapter adapter : inputAdapters) {
@@ -152,11 +197,4 @@ public class InputManager {
             }
         }
     }
-    /*
-    // Single press
-    public boolean isPressed(String keyName) {
-        return !lastInputState.contains(keyName) && globalInputState.contains(keyName);
-    }
-    */
-
 }
