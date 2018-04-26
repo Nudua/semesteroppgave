@@ -14,14 +14,13 @@ import javafx.util.Duration;
 import java.util.Objects;
 import java.util.function.Consumer;
 
+
 public abstract class GameEngine {
 
     protected Canvas canvas;
 
     protected int width;
     protected int height;
-
-    protected long frameCounter;
 
     private volatile boolean running = false;
     private volatile boolean paused = false;
