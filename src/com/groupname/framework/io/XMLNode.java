@@ -1,19 +1,38 @@
 package com.groupname.framework.io;
 
+import com.groupname.framework.util.Strings;
+
+import java.util.Objects;
+
+/**
+ * The different fields we store in our XML file.
+ */
 public class XMLNode {
     private final String name;
     private final String value;
 
-
+    /**
+     *XMLNode is the tags and its values that we store.
+     * @param name tagname.
+     * @param value the value to the tag.
+     */
     public XMLNode(String name, String value) {
-        this.name = name;
-        this.value = value;
+        this.name = Strings.requireNonNullAndNotEmpty(name);
+        this.value = Strings.requireNonNullAndNotEmpty(value);
     }
 
+    /**
+     * Getter for the name.
+     * @return the name of the node.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter for the value
+     * @return the value of the node.
+     */
     public String getValue() {
         return value;
     }
