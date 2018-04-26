@@ -32,24 +32,24 @@ public class SpriteTests {
     // Constructor parameter tests
 
     @Test(expected = NullPointerException.class)
-    public void SpriteSheetParameterCannotBeNull() {
+    public void spriteSheetParameterCannotBeNull() {
         new Sprite(null, spriteRegion);
     }
 
     @Test(expected = NullPointerException.class)
-    public void SpriteRegionParameterCannotBeNull() {
+    public void spriteRegionParameterCannotBeNull() {
         new Sprite(spriteSheet, null);
     }
 
     // Getters
     @Test
-    public void ReturnsCorrectWidth() {
+    public void returnsCorrectWidth() {
         Sprite sprite = new Sprite(spriteSheet, spriteRegion);
         assertEquals(sprite.getWidth(), spriteRegion.getWidth(), 0.0);
     }
 
     @Test
-    public void ReturnsCorrectHeight() {
+    public void returnsCorrectHeight() {
         Sprite sprite = new Sprite(spriteSheet, spriteRegion);
         assertEquals(sprite.getHeight(), spriteRegion.getHeight(), 0.0);
     }
@@ -72,15 +72,6 @@ public class SpriteTests {
         assertEquals(newWidth, sprite.getWidth(), 0.0d);
         assertEquals(newHeight, sprite.getHeight(), 0.0d);
     }
-
-    /*
-    @Test
-    public void getNameGivesCorrectValue() {
-        Sprite sprite = getValidSprite();
-
-        assertEquals(sprite.getName(), name);
-    }
-    */
 
     @Test
     public void getSpriteSheetGivesCorrectValue() {
