@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
@@ -31,7 +32,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
+import sun.audio.AudioPlayer;
 
 import java.io.*;
 import java.nio.file.*;
@@ -165,6 +168,8 @@ public class EditorController implements Controller {
         editor.initialize();
 
         levelFactory = new LevelFactory(game.getInputManager());
+
+        SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Editor);
 
         if(!game.isRunning()) {
             game.start();
