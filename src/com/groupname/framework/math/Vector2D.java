@@ -5,6 +5,7 @@ import java.util.Objects;
 
 /**
  * A position vector with x and y.
+ * x and y are doubles.
  */
 public class Vector2D implements Serializable {
 
@@ -32,8 +33,8 @@ public class Vector2D implements Serializable {
     /**
      * Constructor for Vector2D with x and y parameters.
      *
-     * @param initialX sets the x.
-     * @param initialY sets the y.
+     * @param initialX sets the x, as a double.
+     * @param initialY sets the y, as a double.
      */
     public Vector2D(double initialX, double initialY) {
         this.x = initialX;
@@ -168,9 +169,9 @@ public class Vector2D implements Serializable {
     }
 
     /**
-     * Returns a string representation of the object.
+     * Returns the x and y coordinate as a string representation of the object.
      *
-     * @return a string representation of the object.
+     * @return the x and y coordinate as a string representation of the object.
      */
     @Override
     public String toString() {
