@@ -1,4 +1,4 @@
-package com.groupname.framework.io;
+package com.groupname.framework.settings;
 
 import com.groupname.framework.util.Strings;
 
@@ -29,6 +29,7 @@ public class INIPreferences {
     private static final String TRUE_AS_STRING = Boolean.toString(true);
     private static final String FALSE_AS_STRING = Boolean.toString(false);
 
+    // The backing fileName used by this class as storage.
     private Path fileName;
     private Map<String, String> map;
     private boolean isDirty = false;
@@ -221,5 +222,23 @@ public class INIPreferences {
         }
 
         isDirty = false;
+    }
+
+    /**
+     * Gets the String representation of this object.
+     *
+     * fileName is the path used for storing the file on disk.
+     * map holds the contents of the preferences.
+     * isDirty says if the collection has been changed or not since it was last stored to the disk.
+     *
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "INIPreferences{" +
+                "fileName=" + fileName +
+                ", map=" + map +
+                ", isDirty=" + isDirty +
+                '}';
     }
 }
