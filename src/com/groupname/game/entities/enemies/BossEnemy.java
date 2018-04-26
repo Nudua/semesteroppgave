@@ -2,6 +2,7 @@ package com.groupname.game.entities.enemies;
 
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
+import com.groupname.framework.math.Counter;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.BoundsChecker;
 import com.groupname.game.entities.Enemy;
@@ -9,7 +10,6 @@ import com.groupname.game.entities.Player;
 import javafx.scene.shape.Rectangle;
 
 
-import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
