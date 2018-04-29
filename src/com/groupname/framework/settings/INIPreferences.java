@@ -58,7 +58,7 @@ public class INIPreferences {
 
             // Matches lines with the format:
             // myKey=Value
-            Pattern validLine = Pattern.compile("^(?<key>[a-z]+)=(?<value>[a-zA-Z0-9-]+)$");
+            Pattern validLine = Pattern.compile("^(?<key>[a-z]+)=(?<value>[a-zA-Z0-9-.]+)$");
 
             // Read the file line by line
             while((line = reader.readLine()) != null) {
@@ -125,6 +125,19 @@ public class INIPreferences {
     }
 
     /**
+     * Puts or updates the supplied key and double value.
+     * Note: the key may not be null or equal to "", all keys are transformed to lowercase using the Locale.ROOT locale.
+     *
+     * @param key the key to put.
+     * @param value the double value to put.
+     */
+    public void putDouble(String key, double value) {
+        String doubleAsString = Double.toString(value);
+
+        put(key, doubleAsString);
+    }
+
+    /**
      * Puts or updates the supplied key and integer value.
      * Note: the key may not be null or equal to "", all keys are transformed to lowercase using the Locale.ROOT locale.
      *
@@ -171,6 +184,31 @@ public class INIPreferences {
             } else if(value.equalsIgnoreCase(FALSE_AS_STRING)) {
                 return false;
             }
+        }
+        return defaultValue;
+    }
+
+    /**
+     * Gets the double value associated by the key supplied if the key exists and if the value is a valid integer,
+     * otherwise the defaultValue will be returned.
+     *
+     * @param key the key used to retrieve the value.
+     * @param defaultValue this value will be returned if the key does not exist.
+     * @return the double value associated by the key supplied, returns the defaultValue if no such association exists.
+     *         or if there was an issue when trying to parse the value.
+     */
+    public double getDouble(String key, double defaultValue) {
+        String lowerCaseKey = validateAndGetLowerCaseKey(key);
+
+        if(map.containsKey(lowerCaseKey)) {
+            String value = map.get(lowerCaseKey);
+
+            try {
+                return Double.parseDouble(value);
+            } catch (NumberFormatException exception) {
+                System.err.println("Unable to parse double: " + exception.getMessage());
+            }
+
         }
         return defaultValue;
     }

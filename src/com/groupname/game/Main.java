@@ -6,6 +6,7 @@ import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.data.AppSettings;
 import javafx.application.Application;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
@@ -18,15 +19,36 @@ public class Main extends Application {
 
         // We have to set this before running
         Content.setContentBaseFolder("/com/groupname/game/resources");
-        SoundPlayer soundPlayer = SoundPlayer.INSTANCE;
-        soundPlayer.load();
-        soundPlayer.playMusic();
+
+        loadSettings();
+        initSoundPlayer();
 
         SceneManager sceneManager = SceneManager.INSTANCE;
-
         sceneManager.setPrimaryStage(primaryStage);
         SceneManager.navigate(SceneName.Title);
 
+        primaryStage.show();
+    }
+
+    private void initSoundPlayer() {
+        SoundPlayer soundPlayer = SoundPlayer.INSTANCE;
+
+        try {
+            soundPlayer.load();
+
+            AppSettings settings = AppSettings.INSTANCE;
+
+            soundPlayer.setVolumeMusic(settings.getMusicVolume());
+            soundPlayer.setVolumeSoundEffect(settings.getSoundEffectVolume());
+            soundPlayer.playMusic();
+
+            System.out.println("SoundPlayer loaded successfully");
+        } catch (MediaException ex) {
+            System.err.println("Unable load SoundPlayer, audio will be disabled...");
+        }
+    }
+
+    private void loadSettings() {
         AppSettings settings = AppSettings.INSTANCE;
 
         try {
@@ -34,20 +56,18 @@ public class Main extends Application {
         } catch (IOException exception) {
             System.err.println("Unable to load settings, restoring defaults");
         }
-
-        primaryStage.show();
     }
 
     @Override
     public void stop() throws Exception {
-        System.out.printf("Stopping audio subsystem...");
+        System.out.println("Stopping audio subsystem...");
 
         SoundPlayer soundPlayer = SoundPlayer.INSTANCE;
         soundPlayer.stopMusic();
         try {
             soundPlayer.stop();
         } catch (InterruptedException ex) {
-            System.err.printf(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
 
         AppSettings settings = AppSettings.INSTANCE;

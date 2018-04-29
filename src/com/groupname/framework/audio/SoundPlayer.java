@@ -5,6 +5,7 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
 
 import java.util.HashMap;
@@ -31,6 +32,14 @@ public enum SoundPlayer {
     private final Map<MusicTrack, Media> musicTracks;
     private MediaPlayer mediaPlayer;
 
+    private static final double MAX_VOLUME = 1.0d;
+    private static final double MIN_VOLUME = 0.0d;
+
+    private double volumeMusic = MAX_VOLUME;
+    private double volumeSoundEffect = MAX_VOLUME;
+
+    private boolean initialized = false;
+
     SoundPlayer() {
         soundEffects = new HashMap<>();
         musicTracks = new HashMap<>();
@@ -39,22 +48,65 @@ public enum SoundPlayer {
     }
 
     /**
-     * Loads the music and all the sound effects used for this instance.
+     * Sets the volume for the music.
+     *
+     * Range 0.0d to 1.0d, values outside this range will be clamped.
+     *
+     * @param volume the new volume to set.
      */
-    public void load() {
-        //punch-deck-by-force.wav
+    public void setVolumeMusic(double volume) {
+        this.volumeMusic = clampVolume(volume);
+    }
+
+    /**
+     * Sets the volume for the sound effects.
+     *
+     * Range 0.0d to 1.0d, values outside this range will be clamped.
+     *
+     * @param volume the new volume to set.
+     */
+    public void setVolumeSoundEffect(double volume) {
+        this.volumeSoundEffect = clampVolume(volume);
+    }
+
+    // Clamp the volume between 0.0d (min) and 1.0d (max)
+    private double clampVolume(double volume) {
+        if(volume < MIN_VOLUME) {
+            return MIN_VOLUME;
+        } else if(volume > MAX_VOLUME) {
+            return MAX_VOLUME;
+        }
+
+        // We're inside the range of min and max so just return
+        return volume;
+    }
+
+    /**
+     * Loads the music and all the sound effects used for this instance.
+     *
+     * If there is an issue will loading the media, audio will be disabled.
+     *
+     * @throws MediaException if the mediaformat is not supported on this system.
+     */
+    public void load() throws MediaException {
         AudioClip shoot = new AudioClip(Content.getResourcePath("test.mp3", ResourceType.SoundEffect));
         soundEffects.put(SoundEffect.Shoot, shoot);
 
         musicTracks.put(MusicTrack.Main, new Media(Content.getResourcePath(MUSIC_MAIN, ResourceType.Music)));
-        musicTracks.put(MusicTrack.Editor, new Media(Content.getResourcePath(MUSIC_MAIN, ResourceType.Music)));
-        musicTracks.put(MusicTrack.Credits, new Media(Content.getResourcePath(MUSIC_MAIN, ResourceType.Music)));
+        musicTracks.put(MusicTrack.Editor, new Media(Content.getResourcePath(MUSIC_EDITOR, ResourceType.Music)));
+        musicTracks.put(MusicTrack.Credits, new Media(Content.getResourcePath(MUSIC_CREDITS, ResourceType.Music)));
+
+        initialized = true;
     }
 
     /**
      * Plays the default musicTrack which is MusicTrack.Main
      */
     public void playMusic() {
+        if(!initialized) {
+            return;
+        }
+
         playMusic(MusicTrack.Main);
     }
 
@@ -65,6 +117,10 @@ public enum SoundPlayer {
      * @param track the MusicTrack to play.
      */
     public void playMusic(MusicTrack track) {
+        if(!initialized) {
+            return;
+        }
+
         Objects.requireNonNull(track);
 
         if(mediaPlayer != null) {
@@ -72,7 +128,10 @@ public enum SoundPlayer {
             mediaPlayer.dispose();
         }
 
-        mediaPlayer = new MediaPlayer(musicTracks.get(track));
+        Media media = musicTracks.get(track);
+
+        mediaPlayer = new MediaPlayer(media);
+        mediaPlayer.setVolume(volumeMusic);
         mediaPlayer.play();
     }
 
@@ -80,7 +139,7 @@ public enum SoundPlayer {
      * Attempts to stop playing music if there are any music playing.
      */
     public void stopMusic() {
-        if(mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+        if(initialized && mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
             mediaPlayer.stop();
         }
     }
@@ -91,10 +150,18 @@ public enum SoundPlayer {
      * @param soundEffect the SoundEffect to be played on a separate thread.
      */
     public void playSoundEffect(SoundEffect soundEffect) {
+        if(!initialized) {
+            return;
+        }
+
         Objects.requireNonNull(soundEffect);
 
         soundEffectsThread.submit(() -> {
-            soundEffects.get(soundEffect).play();
+            if(soundEffects.containsKey(soundEffect)) {
+                AudioClip effect = soundEffects.get(soundEffect);
+                effect.setVolume(volumeSoundEffect);
+                effect.play();
+            }
         });
     }
 
