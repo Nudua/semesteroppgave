@@ -20,8 +20,8 @@ import java.security.InvalidParameterException;
  */
 public class SerialPortWin implements SerialPort {
 
-    public static final String DEFAULT_PORT = "COM3";
-    public static final BaudRate DEFAULT_BAUDRATE = BaudRate.CBR_9600; //9600 bits per second
+    private static final String DEFAULT_PORT = "COM3";
+    private static final BaudRate DEFAULT_BAUDRATE = BaudRate.CBR_9600; //9600 bits per second
 
     private final long GENERIC_READ = 0x8000_0000L;
     //private final long GENERIC_WRITE = 0x4000_0000L;
@@ -63,7 +63,7 @@ public class SerialPortWin implements SerialPort {
      */
     @Override
     public void open() throws SerialPortException {
-        nativeLibrary = LibraryUtils.loadDll("kernel32.dll", Kernel32Library.class);
+        nativeLibrary = LibraryUtils.loadDll(Kernel32Library.DLL_NAME, Kernel32Library.class);
 
         if(nativeLibrary == null) {
             throw new SerialPortException("The unix c library was not found.");
@@ -93,25 +93,20 @@ public class SerialPortWin implements SerialPort {
         // It's used to set and get information about the serial port.
         DCB dcb = new DCB();
 
+        // We have to set the size of the structure before using it
         dcb.DCBlength = dcb.size();
 
+        // Get the current information of the serial port and store it into the DCB structure
         if(!nativeLibrary.GetCommState(handle, dcb)) {
             throw new SerialPortException("Error while getting information about the current serial port.");
         }
 
+        // The settings we want for our serial port
         if(!nativeLibrary.BuildCommDCB("baud=9600 parity=N data=8 stop=1", dcb)) {
             throw new SerialPortException("Error while building the DCB structure");
         }
-        /*
-        // Setup default variables for the COM port.
-        dcb.BaudRate = baudRate.asInt();
-        dcb.ByteSize = 8;
-        dcb.StopBits = (byte)StopBits.ONESTOPBIT.asInt();
-        dcb.Parity = (byte)Parity.NO.asInt();
-        dcb.fBinary = 1;
-        */
-        
 
+        // Update to our requested settings for this port
         if(!nativeLibrary.SetCommState(handle, dcb)) {
             throw new SerialPortException("Error while setting information about the current serial port.");
         }
@@ -128,6 +123,7 @@ public class SerialPortWin implements SerialPort {
             throw new SerialPortException("No port has been opened yet, call open() before using this method.");
         }
 
+        // Close the serial port
         nativeLibrary.CloseHandle(handle);
 
         open = false;

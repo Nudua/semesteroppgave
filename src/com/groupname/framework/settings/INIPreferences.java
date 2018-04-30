@@ -18,7 +18,8 @@ import java.util.regex.Pattern;
 
 /**
  * This class is meant to store preferences in form of the ini file format.
- * String keys are associated by String values.
+ * String keys are associated by String values. It also supports methods for
+ * converting booleans, integers and double values to and from a String value.
  *
  * Example ini file:
  * name=bob
@@ -57,7 +58,9 @@ public class INIPreferences {
             String line = "";
 
             // Matches lines with the format:
-            // myKey=Value
+            // key=value
+            // where the key is any sequence of lowercase letters. (a to z)
+            // where value may be any letters from a to z (case insensitive) 0 to 9 or the letters '-' and '.'.
             Pattern validLine = Pattern.compile("^(?<key>[a-z]+)=(?<value>[a-zA-Z0-9-.]+)$");
 
             // Read the file line by line
@@ -89,6 +92,7 @@ public class INIPreferences {
         }
     }
 
+    // Validates that the key is not null or empty, then returns the lowercase version of the provided key.
     private String validateAndGetLowerCaseKey(String key) {
         Strings.requireNonNullAndNotEmpty(key);
         return key.toLowerCase(Locale.ROOT);
@@ -244,7 +248,7 @@ public class INIPreferences {
     public void write() throws IOException {
         // No pairs to write
         if(map.size() == 0 || !isDirty) {
-            System.out.println("preferences is already updated..");
+            System.err.println("preferences is already updated..");
             return;
         }
 

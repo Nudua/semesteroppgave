@@ -1,6 +1,5 @@
 package com.groupname.game.controllers;
 
-import com.groupname.framework.core.GameObject;
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
@@ -8,7 +7,8 @@ import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.util.Strings;
-import com.groupname.game.entities.Player;
+import com.groupname.game.editor.LevelReader;
+import com.groupname.game.editor.LevelReaderException;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
@@ -123,10 +123,7 @@ public class GameController implements Controller {
             level.initialize();
 
             levels.add(level);
-        } catch (IOException exception) {
-            error = true;
-            errorMessage = exception.getMessage();
-        } catch (ClassNotFoundException exception) {
+        } catch (LevelReaderException exception) {
             error = true;
             errorMessage = exception.getMessage();
         }

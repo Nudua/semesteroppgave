@@ -5,11 +5,15 @@ import java.util.Set;
 
 /**
  * Interface that collects the different types of inputs.
- * The implementations must implements all the methods.
  */
 
 public interface InputAdapter {
 
+    /**
+     * Implementations must return whether the adapter is enabled or not.
+     *
+     * @return true if the adapter is enabled, false otherwise.
+     */
     boolean isEnabled();
 
     /**
@@ -22,7 +26,7 @@ public interface InputAdapter {
     /**
      * The implementations must use this method to update the specified set with the internal currently pressed input.
      *
-     * @param digitalInput the collection to add the currently pressed input.
+     * @param digitalInput the collection to add the currently pressed inputs.
      */
     void update(Set<String> digitalInput);
 }

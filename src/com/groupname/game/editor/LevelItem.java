@@ -1,4 +1,4 @@
-package com.groupname.game.controllers;
+package com.groupname.game.editor;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.math.Vector2D;

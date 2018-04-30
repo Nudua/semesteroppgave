@@ -1,26 +1,20 @@
 package com.groupname.game.core;
 
-import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
-import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.history.commands.ListAddCommand;
 import com.groupname.framework.history.commands.ListRemoveCommand;
 import com.groupname.framework.input.devices.MouseInput;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
-import com.groupname.framework.level.Tile;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.game.controllers.LevelItem;
-import com.groupname.game.editor.metadata.EnemyMetaData;
+import com.groupname.game.editor.LevelItem;
 import com.groupname.game.editor.metadata.LevelFactory;
-import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
-import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.geometry.Point2D;
@@ -29,8 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

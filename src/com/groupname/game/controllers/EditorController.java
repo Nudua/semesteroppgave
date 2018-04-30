@@ -8,6 +8,10 @@ import com.groupname.framework.history.StackBasedUndoRedo;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.editor.LevelItem;
+import com.groupname.game.editor.LevelReader;
+import com.groupname.game.editor.LevelReaderException;
+import com.groupname.game.editor.LevelWriter;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.scene.SceneManager;
@@ -15,7 +19,7 @@ import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.GameEditor;
 import com.groupname.game.editor.metadata.LevelMetaData;
-import com.groupname.game.editor.MetaDataListCell;
+import com.groupname.game.editor.controls.MetaDataListCell;
 import com.groupname.game.editor.metadata.EnemyMetaData;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
@@ -32,9 +36,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
-import sun.audio.AudioPlayer;
 
 import java.io.*;
 import java.nio.file.*;
@@ -236,7 +238,6 @@ public class EditorController implements Controller {
 
         LevelReader reader = new LevelReader();
 
-        // todo: make own exception instead
         try {
             LevelMetaData level = reader.read(selectedFile.toPath());
 
@@ -259,14 +260,8 @@ public class EditorController implements Controller {
                 levelItems.add(levelItem);
             }
 
-        } catch (NoSuchFileException exception) {
-            showError("Error", "File not found!");
-            return;
-        } catch (IOException exception) {
-            showError("Error", "Error while reading the file");
-            return;
-        } catch (ClassNotFoundException exception) {
-            showError("Error", "Unable to");
+        } catch (LevelReaderException exception) {
+            showError("Error", exception.getMessage());
             return;
         }
 

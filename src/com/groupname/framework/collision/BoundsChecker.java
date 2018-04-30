@@ -1,4 +1,4 @@
-package com.groupname.game.core;
+package com.groupname.framework.collision;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.math.Size;

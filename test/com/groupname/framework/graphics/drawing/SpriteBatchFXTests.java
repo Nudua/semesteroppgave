@@ -19,6 +19,12 @@ public class SpriteBatchFXTests {
     }
     */
 
+    @BeforeClass
+    public static void init() throws InterruptedException {
+        MockFX.initFX();
+        Thread.sleep(100);
+    }
+
     // todo: Why does this suddenly not work (on windows)?
 
     @Test(expected = NullPointerException.class)

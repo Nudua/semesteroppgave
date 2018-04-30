@@ -1,4 +1,4 @@
-package com.groupname.game.controllers;
+package com.groupname.game.other;
 
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Player;

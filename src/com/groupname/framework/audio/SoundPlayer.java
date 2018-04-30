@@ -183,7 +183,7 @@ public enum SoundPlayer {
         /**
          * Shooting sound effect.
          */
-        Shoot,
+        Shoot
     }
 
     /**

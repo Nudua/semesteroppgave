@@ -9,7 +9,7 @@ public class CounterTests {
 
     @Test(expected = InvalidParameterException.class)
     public void invalidWithZeroOrLess() {
-        Counter counter = new Counter(-4);
+        new Counter(-4);
     }
 
     @Test

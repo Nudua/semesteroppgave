@@ -1,4 +1,4 @@
-package com.groupname.game.editor;
+package com.groupname.game.editor.controls;
 
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import javafx.scene.control.Label;

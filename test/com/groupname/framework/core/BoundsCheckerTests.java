@@ -2,7 +2,7 @@ package com.groupname.framework.core;
 
 import com.groupname.framework.io.Content;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.game.core.BoundsChecker;
+import com.groupname.framework.collision.BoundsChecker;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.GuardEnemy;

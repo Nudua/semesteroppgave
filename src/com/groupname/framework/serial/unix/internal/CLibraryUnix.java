@@ -2,64 +2,86 @@ package com.groupname.framework.serial.unix.internal;
 
 import com.sun.jna.Library;
 
+/**
+ * Preface: We're using JNA (Java Native Access) to map native calls to an Java interface that is easy to use.
+ *
+ * This interface is used make native calls to the unix c library, in this project it's primary use is to use the termios
+ * function calls to do communications over the serial port.
+ *
+ * All these methods are automagically mapped by the JNA library to the corresponding native methods in the standard c library.
+ *
+ */
 public interface CLibraryUnix extends Library {
 
-    /* Set the output baud rate stored in *TERMIOS_P to SPEED.  */
-    //extern int cfsetospeed (struct termios *__termios_p, speed_t __speed) __THROW;
+    /**
+     * Name of the native library.
+     */
+    String NAME = "c";
 
-    /* Set the input baud rate stored in *TERMIOS_P to SPEED.  */
-    //extern int cfsetispeed (struct termios *__termios_p, speed_t __speed) __THROW;
-
-    /* Set the state of FD to *TERMIOS_P.
-       Values for OPTIONAL_ACTIONS (TCSA*) are in <bits/termios.h>.  */
-    //extern int tcsetattr (int __fd, int __optional_actions, const struct termios *__termios_p) __THROW;
-
-    /* Put the state of FD into *TERMIOS_P.  */
-    //extern int tcgetattr (int __fd, struct termios *__termios_p) __THROW;
-
-    // Set the output baud rate stored in *TERMIOS_P to SPEED.
+    /**
+     * Set the output speed stored in the termios structure to the specified speed.
+     *
+     * @param termios the structure to update with the specified speed.
+     * @param speed the output speed to set.
+     * @return 0 if successful, -1 if there was an error.
+     */
     int cfsetospeed(Termios termios, int speed);
 
-    // Set the input baud rate stored in *TERMIOS_P to SPEED.
+
+    /**
+     * Set the input speed stored in the termios structure to the specified speed.
+     *
+     * @param termios the structure to update with the specified speed.
+     * @param speed the input speed to set.
+     * @return 0 if successful, -1 if there was an error.
+     */
     int cfsetispeed(Termios termios, int speed);
 
-    /* Put the state of FD into *TERMIOS_P.  */
+    /**
+     * Gets the attributes coupled with the current fd (file descriptor)
+     * and updates the specified termios structure with them.
+     *
+     * @param fd the file descriptor to query.
+     * @param termios the structure to update.
+     * @return 0 if successful, -1 if there was an error.
+     */
     int tcgetattr(int fd, Termios termios);
 
-    /* Set the state of FD to *TERMIOS_P.
-       Values for OPTIONAL_ACTIONS (TCSA*) are in <bits/termios.h>.  */
+    /**
+     * Sets the attributes associated with the current termios to the specified file descriptor.
+     *
+     * @param fd the file descriptor to use.
+     * @param optionalActions TCSANOW (0) means that the changes are applied immediately.
+     * @param termios the structure to update.
+     * @return 0 if successful, -1 if there was an error.
+     */
     int tcsetattr(int fd, int optionalActions, Termios termios);
 
-    /* Open FILE and return a new file descriptor for it, or -1 on error.
-   OFLAG determines the type of access used.  If O_CREAT or O_TMPFILE is set
-   in OFLAG, the third argument is taken as a `mode_t', the mode of the
-   created file.
-
-   This function is a cancellation point and therefore not marked with
-   __THROW.  */
-    //extern int open (const char *__file, int __oflag, ...) __nonnull ((1));
-
+    /**
+     * Open a FILE and returns a file descriptor for the specified fileName.
+     *
+     * @param fileName the file or device to open.
+     * @param openFlags the FileOpenFlags to use for this file / device.
+     * @return 0 if successful, -1 if there was an error.
+     * @see FileOpenFlags
+     */
     int open(String fileName, int openFlags);
 
-    /* Close the file descriptor FD.
-
-   This function is a cancellation point and therefore not marked with
-   __THROW.  */
-    //extern int close (int __fd);
+    /**
+     * Close the specified file descriptor.
+     *
+     * @param fd the file descriptor to close.
+     * @return 0 if successful, -1 if there was an error.
+     */
     int close(int fd);
 
-    /* Read NBYTES into BUF from FD.  Return the
-       number read, -1 for errors or 0 for EOF.
-
-       This function is a cancellation point and therefore not marked with
-       __THROW.  */
-    //extern ssize_t read (int __fd, void *__buf, size_t __nbytes) __wur;
+    /**
+     * Reads from the file descriptor specified and puts it into the specified byte[] array.
+     *
+     * @param fd the file descriptor to read from.
+     * @param buff the buffer to read into.
+     * @param nbytes the number of bytes to read.
+     * @return number of bytes read, -1 if there was an error or 0 if there's nothing more to read.
+     */
     long read(int fd, byte[] buff, int nbytes);
-
-    /* Write N bytes of BUF to FD.  Return the number written, or -1.
-
-       This function is a cancellation point and therefore not marked with
-       __THROW.  */
-    //extern ssize_t write (int __fd, const void *__buf, size_t __n) __wur;
-    long write(int fd, byte[] buff, int nBytes);
 }

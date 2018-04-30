@@ -1,4 +1,4 @@
-package com.groupname.game.controllers;
+package com.groupname.game.editor;
 
 import com.groupname.game.editor.metadata.LevelMetaData;
 

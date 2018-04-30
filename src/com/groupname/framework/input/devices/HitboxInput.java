@@ -11,6 +11,15 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 
+
+/**
+ * The HitboxInput is a custom built 'hitbox' input adapter that communicates
+ * the current state of the buttons via the serial port as a single command byte
+ * followed by two bytes that gives state of the joystick and buttons.
+ *
+ * Users must call the stop method before closing any applications to ensure that
+ * the thread reading from the serial port gets cleaned up.
+ */
 public class HitboxInput implements InputAdapter {
     private static final int GET_STATE_COMMAND = 0xFF;
 
@@ -21,6 +30,14 @@ public class HitboxInput implements InputAdapter {
     private final Set<String> internalState;
     private final TaskRunner pollThread;
 
+    /**
+     * Creates a new instance of this class with the specified serialPort reader.
+     * A new thread will automatically be started and will read from the device until
+     * the stop method is called, or if an SerialPort error occurs.
+     *
+     * @param serialPort the serialport used for communicating to the hitbox device.
+     *                   the port should already be open and ready for reading.
+     */
     public HitboxInput(SerialPort serialPort) {
         this.serialPort = Objects.requireNonNull(serialPort);
 
@@ -51,8 +68,6 @@ public class HitboxInput implements InputAdapter {
                     int buttonsState = readShort();
 
                     parseState(buttonsState);
-
-                    //System.out.println(buttonsState);
                 }
 
             } catch (SerialPortException e) {
@@ -73,7 +88,7 @@ public class HitboxInput implements InputAdapter {
         }
     }
 
-    // Move this into SerialPort, default method for interface?
+    // Read a single byte from the serial port
     private int readByte() throws SerialPortException {
         byte[] buffer = new byte[1];
 
@@ -83,6 +98,7 @@ public class HitboxInput implements InputAdapter {
         return (buffer[0] & 0xFF);
     }
 
+    // Read two bytes from the serial port, then shift them into a single integer.
     private int readShort() throws SerialPortException {
         byte[] buffer = new byte[2];
         serialPort.read(buffer, buffer.length);
@@ -91,21 +107,41 @@ public class HitboxInput implements InputAdapter {
         return (buffer[0] & 0xFF) | ((buffer[1] & 0xFF) << 8);
     }
 
+    /**
+     * Stops the currently running thread from polling input from the hitbox device via the serial port.
+     *
+     * @throws InterruptedException if there was an error while stopping the thread.
+     */
     public void stop() throws InterruptedException {
         isRunning = false;
         pollThread.stop();
     }
 
+    /**
+     * Returns whether this InputAdapter is currently enabled or not.
+     *
+     * @return true if the InputAdapter is currently enabled, false otherwise.
+     */
     @Override
     public boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * Sets whether this InputAdapter is enabled or not.
+     *
+     * @param enabled true to enabled, false to disable.
+     */
     @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
+    /**
+     * Updates the given Set with inputs describing the currently pressed buttons on the hitbox.
+     *
+     * @param digitalInput the collection to add the currently pressed inputs.
+     */
     @Override
     public void update(Set<String> digitalInput) {
         if(!enabled) {

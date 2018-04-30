@@ -8,6 +8,9 @@ import com.groupname.framework.serial.unix.internal.FileOpenFlags;
 import com.groupname.framework.serial.unix.internal.Termios;
 import com.groupname.framework.util.EmptyStringException;
 import com.groupname.framework.util.Strings;
+import com.sun.jna.Platform;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinNT;
 
 import static com.groupname.framework.serial.unix.internal.Termios.Constants.*;
 
@@ -21,8 +24,8 @@ import java.security.InvalidParameterException;
  */
 public class SerialPortUnix implements SerialPort {
 
-    public static final String DEFAULT_PORT = "/dev/ttyACM0";
-    public static final int DEFAULT_BOUNDS = 13; //9600 bits per second
+    private static final String DEFAULT_PORT = "/dev/ttyACM0";
+    private static final int DEFAULT_BOUNDS = 13; //9600 bits per second
 
     private boolean open;
     private final String port;
@@ -61,7 +64,7 @@ public class SerialPortUnix implements SerialPort {
      */
     @Override
     public void open() throws SerialPortException {
-        nativeLibrary = LibraryUtils.loadDll("c", CLibraryUnix.class);
+        nativeLibrary = LibraryUtils.loadDll(CLibraryUnix.NAME, CLibraryUnix.class);
 
         if(nativeLibrary == null) {
             throw new SerialPortException("The unix c library was not found.");
@@ -70,7 +73,6 @@ public class SerialPortUnix implements SerialPort {
         fd = nativeLibrary.open(port, FileOpenFlags.O_RDONLY | FileOpenFlags.O_NOCTTY | FileOpenFlags.O_SYNC);
 
         if(fd < 0) { // Unable to open the port
-            // Get the error from OS?
             throw new SerialPortException("Unable to open the specified port: " + port);
         }
 
