@@ -87,4 +87,19 @@ public class LevelMetaData implements Serializable {
     // Screentransitions, maybe just class type here?
     //private ScreenTransition startLevel;
     //private ScreenTransition endLevel;
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "LevelMetaData{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", objectMetaDataList=" + objectMetaDataList +
+                ", backgroundImagePath='" + backgroundImagePath + '\'' +
+                '}';
+    }
 }

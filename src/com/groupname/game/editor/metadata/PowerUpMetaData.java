@@ -49,4 +49,17 @@ public class PowerUpMetaData extends ObjectMetaData {
     public int getAmount() {
         return amount;
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "PowerUpMetaData{" +
+                "amount=" + amount +
+                ", spriteType=" + spriteType +
+                '}';
+    }
 }

@@ -175,4 +175,19 @@ public class LevelFactory {
             ((HomingEnemy) enemy).setFrequency(frequency);
         }
     }
+
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "LevelFactory{" +
+                "inputManager=" + inputManager +
+                ", spriteFactory=" + spriteFactory +
+                ", player=" + player +
+                '}';
+    }
 }

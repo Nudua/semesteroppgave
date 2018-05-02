@@ -78,4 +78,17 @@ public class EnemyMetaData extends ObjectMetaData {
         enemyMetaData.setSpriteType(spriteType);
         return enemyMetaData;
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "EnemyMetaData{" +
+                "difficulty=" + difficulty +
+                ", spriteType=" + spriteType +
+                '}';
+    }
 }
