@@ -72,6 +72,11 @@ public class Projectile extends GameObject {
         }
     }
 
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
     @Override
     public String toString() {
         return super.toString() +

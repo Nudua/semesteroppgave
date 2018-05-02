@@ -23,4 +23,16 @@ public enum EnemySpriteType {
     public int getIndex() {
         return index;
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "EnemySpriteType{" +
+                "index=" + index +
+                '}';
+    }
 }

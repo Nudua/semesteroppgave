@@ -65,4 +65,20 @@ public abstract class Actor extends GameObject {
     }
 
     public abstract void reset();
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "hitPoints=" + hitPoints +
+                ", alive=" + alive +
+                ", onCollide=" + onCollide +
+                ", onDeath=" + onDeath +
+                ", spriteFlip=" + spriteFlip +
+                '}';
+    }
 }

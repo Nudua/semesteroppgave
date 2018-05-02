@@ -248,4 +248,23 @@ public class Player extends Actor {
             currentWeapon.draw(spriteBatch);
         }
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "Player{" +
+                "inputManager=" + inputManager +
+                ", initialPosition=" + initialPosition +
+                ", speed=" + speed +
+                ", spriteFlip=" + spriteFlip +
+                ", direction=" + direction +
+                ", currentWeapon=" + currentWeapon +
+                ", pushBack=" + pushBack +
+                ", maxHitpoints=" + maxHitpoints +
+                '}';
+    }
 }

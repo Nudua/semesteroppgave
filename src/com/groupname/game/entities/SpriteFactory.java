@@ -78,4 +78,15 @@ public class SpriteFactory {
         return sprite;
     }
 
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "SpriteFactory{" +
+                "spriteSheets=" + spriteSheets +
+                '}';
+    }
 }

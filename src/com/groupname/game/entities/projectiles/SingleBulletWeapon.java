@@ -118,4 +118,16 @@ public class SingleBulletWeapon extends WeaponBase {
     public void update() {
         updateProjectileLogic();
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "SingleBulletWeapon{" +
+                "bulletDirection=" + bulletDirection +
+                '}';
+    }
 }

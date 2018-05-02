@@ -19,5 +19,16 @@ public abstract class Enemy extends Actor {
         this.damage = damage;
     }
 
-    // Enemy helper methods here
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "Enemy{" +
+                "speed=" + speed +
+                ", damage=" + damage +
+                '}';
+    }
 }
