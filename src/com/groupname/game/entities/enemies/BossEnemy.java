@@ -38,6 +38,7 @@ public class BossEnemy extends Enemy {
         this.player = player;
         this.basePosition = position;
         createBossBounds();
+        sprite.setScale(4.0d);
 
     }
 
@@ -52,10 +53,9 @@ public class BossEnemy extends Enemy {
     }
 
     @Override
-    public Rectangle getHitbox() { //-210
-        double scaleX = sprite.getScale() * 0.3d;
-        double scaleY = sprite.getScale() * 0.15d;
-        return new Rectangle((position.getX() * 1.015d), (position.getY() * 1.22d), sprite.getWidth() * scaleX, sprite.getHeight() * scaleY);
+    public Rectangle getHitbox() {
+        double scale = sprite.getScale();
+        return new Rectangle(position.getX() + 6 * scale, position.getY() + 40 * scale, sprite.getWidth() - 12 * scale, sprite.getHeight() - 40 * scale);
     }
 
 
