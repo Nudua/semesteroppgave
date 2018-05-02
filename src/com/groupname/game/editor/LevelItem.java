@@ -95,4 +95,19 @@ public class LevelItem {
     public GameObject getInstance() {
         return instance;
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "LevelItem{" +
+                "metaData=" + metaData +
+                ", instance=" + instance +
+                ", player=" + player +
+                ", placed=" + placed +
+                '}';
+    }
 }
