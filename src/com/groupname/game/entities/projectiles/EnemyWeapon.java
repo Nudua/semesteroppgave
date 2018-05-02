@@ -7,9 +7,9 @@ import com.groupname.game.entities.Actor;
 
 import java.util.Objects;
 
-/*
-    private final double speed = 15d;
-    private final int damage = 1;
+
+/**
+ * This weapon represents a weapon that will shoot towards the specified target.
  */
 public class EnemyWeapon extends WeaponBase {
 
@@ -24,6 +24,12 @@ public class EnemyWeapon extends WeaponBase {
         projectile = projectiles.get(0);
     }
 
+    /**
+     * Fires a projectile towards the target if possible.
+     *
+     * @param startPosition the position from where the projectile will be fired.
+     * @param direction this value is ignored.
+     */
     @Override
     public void fire(Vector2D startPosition, Direction direction) {
         Objects.requireNonNull(startPosition);
@@ -69,11 +75,19 @@ public class EnemyWeapon extends WeaponBase {
         //}
     }
 
+    /**
+     * Draws the current projectile on the screen if it's alive.
+     *
+     * @param spriteBatch the spriteBatch used to draw.
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         projectile.draw(spriteBatch);
     }
 
+    /**
+     * Updates the logic for this weapon.
+     */
     @Override
     public void update() {
         updateProjectileLogic();

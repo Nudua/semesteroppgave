@@ -12,15 +12,20 @@ import java.util.List;
 
 /**
  * The base class for all weapons, this class will automatically
- * create 10 projectiles.
- *
- * Subclasses must override t
+ * create 10 projectiles and it has methods for checking collision
+ * between the projectiles and Actor(s).
  */
 public abstract class WeaponBase implements UpdateDrawAble {
     protected final double speed;
     protected final int damage;
     protected List<Projectile> projectiles;
 
+    /**
+     * This method must be called by a subclass to set the speed and damage for the weapon.
+     *
+     * @param speed the speed of the projectiles of the weapon.
+     * @param damage the damage this weapon deals.
+     */
     public WeaponBase(double speed, int damage) {
         this.speed = speed;
         if(damage < 0) {
@@ -32,7 +37,7 @@ public abstract class WeaponBase implements UpdateDrawAble {
         createProjectiles();
     }
 
-    protected void createProjectiles() {
+    private void createProjectiles() {
         final int projectileCount = 10;
 
         SpriteFactory spriteFactory = new SpriteFactory();
@@ -43,19 +48,39 @@ public abstract class WeaponBase implements UpdateDrawAble {
         }
     }
 
+    /**
+     * Implementations must use this methods to fire new projectiles (if possible).
+     *
+     * @param startPosition the position from where the projectile will be fired.
+     * @param direction the direction to fire the weapon if applicable.
+     */
     public abstract void fire(Vector2D startPosition, Direction direction);
 
+    /**
+     * Checks collision between a list of enemies and the projectiles.
+     *
+     * @param enemies the list of actors to check for collision.
+     */
     public void checkCollision(List<Actor> enemies) {
         for(Actor actor : enemies) {
             checkCollision(actor);
         }
     }
 
-    // look over
+    /**
+     * Returns whether there is a projectile available to fire.
+     *
+     * @return true if there is an projectile available to fire, false otherwise.
+     */
     public boolean canFire() {
         return projectiles.stream().noneMatch(Projectile::isAlive);
     }
 
+    /**
+     * Checks collision between an actor and the active projectiles.
+     *
+     * @param other the actor to check for collision.
+     */
     public void checkCollision(Actor other) {
         for(Projectile projectile : projectiles) {
             if(!projectile.isAlive() || !other.isAlive()) {
@@ -68,5 +93,14 @@ public abstract class WeaponBase implements UpdateDrawAble {
                 System.out.println("Crash");
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "WeaponBase{" +
+                "speed=" + speed +
+                ", damage=" + damage +
+                ", projectiles=" + projectiles +
+                '}';
     }
 }
