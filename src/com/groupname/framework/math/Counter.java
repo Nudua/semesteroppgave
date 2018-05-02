@@ -20,7 +20,6 @@ public class Counter {
         }
 
         delay = seconds * 60;
-
     }
 
     /**

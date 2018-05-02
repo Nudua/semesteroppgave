@@ -34,12 +34,12 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
 import java.io.*;
-import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -54,6 +54,9 @@ public class EditorController implements Controller {
     @FXML protected GridPane root;
     @FXML protected Canvas canvas;
     @FXML protected ListView<ObjectMetaData> metaDataListView;
+
+    @FXML protected MenuItem editMenuItem;
+    @FXML protected MenuItem playMenuItem;
 
     private Game game;
 
@@ -72,6 +75,11 @@ public class EditorController implements Controller {
         taskRunner = new TaskRunner();
         commandHistory = new StackBasedUndoRedo();
         levelItems = new ArrayList<>();
+    }
+
+    private void setupBindings() {
+        editMenuItem.disableProperty().bindBidirectional(editor.editDisabledProperty());
+        playMenuItem.disableProperty().bindBidirectional(editor.playDisabledProperty());
     }
 
     @FXML
@@ -172,6 +180,8 @@ public class EditorController implements Controller {
         levelFactory = new LevelFactory(game.getInputManager());
 
         SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Editor);
+
+        setupBindings();
 
         if(!game.isRunning()) {
             game.start();
@@ -384,39 +394,6 @@ public class EditorController implements Controller {
     }
 }
 
-/*
-class LevelWriterService extends Service<Boolean> {
-
-    private LevelMetaData levelMetaData;
-    private Path filePath;
-
-    public void setLevelMetaData(LevelMetaData levelMetaData) {
-        this.levelMetaData = Objects.requireNonNull(levelMetaData);
-    }
-
-    public void setFilePath(Path filePath) {
-        this.filePath = Objects.requireNonNull(filePath);
-    }
-
-    @Override
-    protected Task<Boolean> createTask() {
-        return new Task<Boolean>() {
-            @Override
-            protected Boolean call() {
-                LevelWriter levelWriter = new LevelWriter();
-
-                try {
-                    levelWriter.write(levelMetaData, filePath);
-                } catch (IOException exception) {
-                    return false;
-                }
-
-                return true;
-            }
-        };
-    }
-}
-*/
 
 
 

@@ -137,6 +137,25 @@ public class Vector2D implements Serializable {
     }
 
     /**
+     * Returns a normalized vector unit vector.
+     *
+     * @return a normalized unit vector.
+     */
+    public Vector2D normalized() {
+        double length = length();
+        return new Vector2D(x / length, y / length);
+    }
+
+    /**
+     * Returns the length of this Vector2D.
+     *
+     * @return the length of this Vector2D.
+     */
+    public double length() {
+        return Math.sqrt(x * x + y * y);
+    }
+
+    /**
      * Method that tests if two vectors are equal.
      *
      * @param o the reference object with which to compare.

@@ -53,6 +53,7 @@ public class Player extends Actor {
     @Override
     public void reset() {
         position.set(initialPosition);
+        setHitPoints(5);
     }
 
     @Override

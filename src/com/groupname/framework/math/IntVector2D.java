@@ -101,7 +101,9 @@ public class IntVector2D {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (o == null || getClass() != o.getClass()) return false;
+
         IntVector2D that = (IntVector2D) o;
         return x == that.x &&
                 y == that.y;
@@ -109,7 +111,6 @@ public class IntVector2D {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(x, y);
     }
 

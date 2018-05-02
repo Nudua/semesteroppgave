@@ -3,8 +3,7 @@ package com.groupname.framework.graphics.drawing;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -101,18 +100,20 @@ public class SpriteBatchFX implements SpriteBatch {
             posY += sprite.getHeight();
         }
 
+        //graphicsContext.setEffect(null);
+
+        graphicsContext.save();
         // Figure out how to tint red
         if(invertColors) {
-            graphicsContext.save();
 
-            ColorAdjust monochrome = new ColorAdjust();
-            //monochrome.setSaturation(-1.0);
-            monochrome.setHue(-1.0d);
+            Glow glow = new Glow();
+            glow.setLevel(0.9d);
 
 
             //Blend blend = new Blend(BlendMode.MULTIPLY, monochrome, new ColorInput(posX,posY, spriteWidth, spriteHeight, Color.RED));
 
-            graphicsContext.setEffect(monochrome);
+            // do nothing for now
+            //graphicsContext.setEffect(glow);
         }
 
         //graphicsContext.setEffect(new DropShadow());

@@ -3,6 +3,7 @@ package com.groupname.game.entities.enemies;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.graphics.drawing.SpriteFlip;
+import com.groupname.framework.math.Counter;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
@@ -21,6 +22,7 @@ public class GuardEnemy extends Enemy {
     private int walkDistance = 200;
     private double speed = 1.4d;
     private Direction direction = Direction.Right;
+    private Counter hitCounter = new Counter(2);
 
     /**
      * The constructure for an GuardEnemy.
@@ -59,6 +61,16 @@ public class GuardEnemy extends Enemy {
         }
     }
 
+    @Override
+    public void onCollides(int damage) {
+        super.onCollides(damage);
+
+        if(isAlive()) {
+            hitCounter.reset();
+        }
+
+        //System.out.println("Hit!");
+    }
 
     public void setSpeed(double speed) {
         this.speed = speed;
@@ -75,7 +87,8 @@ public class GuardEnemy extends Enemy {
         if(!isAlive()) {
             return;
         }
-        System.out.println(direction);
+        //System.out.println(direction);
+        hitCounter.step();
 
         double x = position.getX();
         double currentSpeed = speed;
@@ -106,7 +119,9 @@ public class GuardEnemy extends Enemy {
 
             spriteFlip = direction == Direction.Right ? SpriteFlip.HORIZONTAL : SpriteFlip.NONE;
 
-            spriteBatch.draw(sprite, position, EnumSet.of(spriteFlip));
+            boolean invertColors = !hitCounter.isDone();
+
+            spriteBatch.draw(sprite, position, EnumSet.of(spriteFlip), invertColors);
         }
     }
 

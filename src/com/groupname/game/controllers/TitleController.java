@@ -26,7 +26,6 @@ public class TitleController implements Controller {
     private LevelBase titleLevel;
 
     public TitleController() {
-
     }
 
     // Maybe move into constructor instead
@@ -60,51 +59,12 @@ public class TitleController implements Controller {
         inputManager.update();
 
         titleMenu.update(inputManager);
-
-        /*
-        if(titleMenu.isVisible()) {
-            titleMenu.update(inputManager);
-        } else {
-            if(inputManager.wasPressed(PlayerInputDefinitions.START)) {
-                // Make titleMenu.show / hide
-                titleMenu.setVisible(true);
-            }
-        }
-        */
-
         titleLevel.update();
     }
 
     private void draw() {
         titleLevel.draw();
     }
-
-
-    /*
-    @FXML
-    protected void navigateToEditorOnClick(ActionEvent event) {
-        SceneManager sceneManager = SceneManager.INSTANCE;
-        sceneManager.changeToScene(SceneName.Editor);
-    }
-
-    @FXML
-    protected void navigateToGameOnClick(ActionEvent event) {
-        SceneManager sceneManager = SceneManager.INSTANCE;
-        sceneManager.changeToScene(SceneName.Game);
-    }
-
-
-    @FXML
-    protected void exitGameOnClick(ActionEvent event) {
-        Platform.exit();
-    }
-
-    @FXML
-    protected void navigateToCreditsOnClick(ActionEvent event) {
-        SceneManager sceneManager = SceneManager.INSTANCE;
-        sceneManager.changeToScene(SceneName.Credits);
-    }
-    */
 
     @Override
     public void exit() {

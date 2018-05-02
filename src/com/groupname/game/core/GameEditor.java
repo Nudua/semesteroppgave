@@ -1,5 +1,6 @@
 package com.groupname.game.core;
 
+import com.groupname.framework.collision.BoundsChecker;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
@@ -9,14 +10,16 @@ import com.groupname.framework.history.commands.ListRemoveCommand;
 import com.groupname.framework.input.devices.MouseInput;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
-import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.data.AppSettings;
 import com.groupname.game.editor.LevelItem;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
@@ -43,7 +46,7 @@ public class GameEditor extends LevelBase {
     private Image backgroundImage;
 
     private Mode mode = Mode.Editing;
-    private final LevelFactory levelFactory;
+    //private final LevelFactory levelFactory;
 
     //private List<GameObject> gameObjects = new ArrayList<>();
     private List<LevelItem> levelItems;
@@ -51,7 +54,12 @@ public class GameEditor extends LevelBase {
 
     private UndoRedo commandHistory;
 
-    private Rectangle levelBounds = new Rectangle(160, 80, 1280 - 160 * 2, 720 - 80 * 2);
+    private final Rectangle levelBounds = AppSettings.LEVEL_BOUNDS;//new Rectangle(160, 80, 1280 - 160 * 2, 720 - 80 * 2);
+    private final BoundsChecker boundsChecker = new BoundsChecker();
+
+    // Properties
+    private BooleanProperty playDisabled;
+    private BooleanProperty editDisabled;
 
     public GameEditor(Game game, Canvas canvas, List<LevelItem> levelItems, UndoRedo commandHistory) {
         super(game, canvas.getGraphicsContext2D());
@@ -62,44 +70,65 @@ public class GameEditor extends LevelBase {
         mouseInput = new MouseInput(canvas, levelBounds);
         backgroundColor = Color.BLACK;
 
-        levelFactory = new LevelFactory(inputManager);
+        //levelFactory = new LevelFactory(inputManager);
 
-        // MoveCommand? simply this
         mouseInput.setOnMove(this::updateItemPosition);
+        mouseInput.setOnClicked(this::onMouseClicked);
+    }
 
-        mouseInput.setOnClicked((x, y) -> {
-            boolean wasMoved = updateItemPosition(x, y);
+    // Properties
 
-            if(wasMoved) {
-                selectedItem.setPlaced(true);
+    public BooleanProperty playDisabledProperty() {
+        if(playDisabled == null) {
+            playDisabled = new SimpleBooleanProperty(false);
+        }
 
-                if(!levelItems.contains(selectedItem)) {
-                    commandHistory.execute(new ListAddCommand<>(levelItems, selectedItem));
-                } // else update position command
+        return playDisabled;
+    }
 
-                selectedItem = null;
-            } else {
+    public BooleanProperty editDisabledProperty() {
+        if(editDisabled == null) {
+            editDisabled = new SimpleBooleanProperty(true);
+        }
 
-                Point2D clickPoint = new Point2D(x,y);
-                System.out.println("Here");
+        return editDisabled;
+    }
 
-                for(LevelItem levelItem : levelItems) {
-                    //Vector2D itemPosition = levelItem.getInstance().getPosition();
-                    Vector2D itemPosition = levelItem.getPosition();
+    private void onMouseClicked(double x, double y) {
+        boolean wasMoved = updateItemPosition(x, y);
 
-                    //System.out.println("Instance:" + itemPosition.toString() + "Object: " + shouldBeSame.toString());
-                    // Horrible
-                    Rectangle hitbox = new Rectangle(itemPosition.getX(), itemPosition.getY(), levelItem.getInstance().getSprite().getWidth(), levelItem.getInstance().getSprite().getHeight());
+        if(wasMoved) {
+            selectedItem.setPlaced(true);
 
-                    if(hitbox.contains(clickPoint)) {
-                        levelItem.setPlaced(false);
-                        selectedItem = levelItem;
-                        break;
-                    }
+            if(!levelItems.contains(selectedItem)) {
+                commandHistory.execute(new ListAddCommand<>(levelItems, selectedItem));
+            } // else update position command
+
+            selectedItem = null;
+        } else {
+            Point2D clickPoint = new Point2D(x,y);
+
+            for(LevelItem levelItem : levelItems) {
+                Vector2D itemPosition = levelItem.getPosition();
+
+                //System.out.println("Instance:" + itemPosition.toString() + "Object: " + shouldBeSame.toString());
+                Rectangle hitbox = getHitbox(itemPosition, levelItem);//new Rectangle(itemPosition.getX(), itemPosition.getY(), levelItem.getInstance().getSprite().getWidth(), levelItem.getInstance().getSprite().getHeight());
+
+                if(hitbox.contains(clickPoint)) {
+                    levelItem.setPlaced(false);
+                    selectedItem = levelItem;
+                    break;
                 }
-
             }
-        });
+
+        }
+    }
+
+    private Rectangle getHitbox(Vector2D itemPosition, LevelItem levelItem) {
+        assert itemPosition != null;
+        assert levelItem != null && levelItem.getInstance() != null && levelItem.getInstance().getSprite() != null;
+
+        return new Rectangle(itemPosition.getX(), itemPosition.getY(), levelItem.getInstance().getSprite().getWidth(), levelItem.getInstance().getSprite().getHeight());
     }
 
     @Override
@@ -109,45 +138,22 @@ public class GameEditor extends LevelBase {
 
     public void setMode(Mode mode) {
         this.mode = Objects.requireNonNull(mode);
+
+        playDisabled.set(mode != Mode.Editing);
+        editDisabled.set(mode != Mode.Playing);
     }
 
     private boolean updateItemPosition(double x, double y) {
         if(selectedItem != null && !selectedItem.isPlaced()) {
             Sprite sprite = selectedItem.getInstance().getSprite();
             Vector2D newPosition = getRelativePosition(x, y, sprite);
-            if(isWithinBounds(selectedItem.getInstance(), newPosition)) {
+
+            if(boundsChecker.isWithinBounds(selectedItem.getInstance(), levelBounds, newPosition)) {
                 selectedItem.setPosition(newPosition);
                 return true;
             }
         }
         return false;
-    }
-
-    private boolean isWithinBounds(GameObject gameObject, Vector2D position) {
-        //Vector2D position = gameObject.getPosition();
-        Size size = new Size((int)gameObject.getSprite().getWidth(), (int)gameObject.getSprite().getHeight());
-
-        // Right side
-        if(position.getX() + size.getWidth() >= levelBounds.getX() + levelBounds.getWidth()) {
-            return false;
-        }
-
-        // Left side
-        if(position.getX() <= levelBounds.getX()) {
-            return false;
-        }
-
-        // Top
-        if(position.getY() <= levelBounds.getY()) {
-            return false;
-        }
-
-        // Bottom
-        if(position.getY() + size.getHeight() >= levelBounds.getY() + levelBounds.getHeight()) {
-            return false;
-        }
-
-        return true;
     }
 
     private Vector2D getRelativePosition(double x, double y, Sprite sprite) {
@@ -172,19 +178,6 @@ public class GameEditor extends LevelBase {
 
     @Override
     public void update() {
-        //inputManager.update();
-        // Clear the screen
-        /*
-        clearScreen();
-
-        Vector2D movingPosition = mouseInput.getMovingCoordinates();
-        Vector2D pressedPosition = mouseInput.getPressedCoordinates();
-
-        graphicsContext.fillText(String.format("Moving X: %f, Y: %f", movingPosition.getX(), movingPosition.getY()), 10, 20);
-        graphicsContext.fillText(String.format("Pressed X: %f, Y: %f", pressedPosition.getX(), pressedPosition.getY()), 10, 40);
-        */
-
-
         if(mode == Mode.Playing) {
             for(LevelItem item : levelItems) {
 
@@ -220,12 +213,13 @@ public class GameEditor extends LevelBase {
 
     @Override
     public void reset() {
-        mode = Mode.Editing;
+        setMode(Mode.Editing);
         for(LevelItem item : levelItems) {
             item.setPosition(item.getPosition());
 
             if(item.getInstance() instanceof Actor) {
                 ((Actor) item.getInstance()).setAlive(true);
+                //((Actor) item.getInstance()).reset();
             }
         }
     }

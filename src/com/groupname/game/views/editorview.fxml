@@ -41,8 +41,8 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Test">
                 <items>
-                    <MenuItem accelerator="F5" mnemonicParsing="false" onAction="#playOnClicked" text="Play" />
-                    <MenuItem mnemonicParsing="false" onAction="#editOnClicked" text="Edit" />
+                    <MenuItem fx:id="playMenuItem" accelerator="F5" mnemonicParsing="false" onAction="#playOnClicked" text="Play" />
+                    <MenuItem fx:id="editMenuItem" mnemonicParsing="false" onAction="#editOnClicked" text="Edit" />
                 </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Customize">

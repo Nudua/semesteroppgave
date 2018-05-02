@@ -112,9 +112,7 @@ public class InputManager {
 
         try {
             serialPort = SerialPortFactory.create();
-
             serialPort.open();
-
         } catch (SerialPortException e) {
             serialPort = null;
             System.out.println(e.getMessage());
@@ -187,7 +185,7 @@ public class InputManager {
      * If a hitboxInput is running this method will stop the thread there it is running on.
      */
     public void stop() {
-        System.out.println("Stopping inputadapter...");
+        System.out.println("Stopping inputadapters...");
         for(InputAdapter adapter : inputAdapters) {
             if(adapter instanceof HitboxInput) {
                 try {
