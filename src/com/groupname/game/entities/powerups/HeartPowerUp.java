@@ -47,4 +47,16 @@ public class HeartPowerUp extends PowerUp {
 
         player.setHitPoints(newHitpoints);
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "HeartPowerUp{" +
+                "hearts=" + hearts +
+                '}';
+    }
 }

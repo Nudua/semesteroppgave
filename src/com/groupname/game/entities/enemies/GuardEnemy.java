@@ -138,4 +138,21 @@ public class GuardEnemy extends Enemy {
     public void reset() {
 
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "GuardEnemy{" +
+                "endPosition=" + endPosition +
+                ", startPosition=" + startPosition +
+                ", walkDistance=" + walkDistance +
+                ", speed=" + speed +
+                ", direction=" + direction +
+                ", hitCounter=" + hitCounter +
+                '}';
+    }
 }

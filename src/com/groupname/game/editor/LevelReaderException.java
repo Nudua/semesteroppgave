@@ -9,5 +9,6 @@ public class LevelReaderException extends Exception {
     public LevelReaderException(String message) {
         super(message);
     }
+
 }
 

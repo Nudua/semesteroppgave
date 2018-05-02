@@ -39,4 +39,16 @@ public abstract class PowerUp extends GameObject {
             spriteBatch.draw(sprite, position);
         }
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "PowerUp{" +
+                "collected=" + collected +
+                '}';
+    }
 }

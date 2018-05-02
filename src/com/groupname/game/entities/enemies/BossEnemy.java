@@ -130,4 +130,21 @@ public class BossEnemy extends Enemy {
     public void reset() {
 
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "BossEnemy{" +
+                "player=" + player +
+                ", basePosition=" + basePosition +
+                ", bossBounds=" + bossBounds +
+                ", boundsChecker=" + boundsChecker +
+                ", counter=" + counter +
+                ", counterInAction=" + counterInAction +
+                '}';
+    }
 }
