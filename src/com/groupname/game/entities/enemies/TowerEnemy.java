@@ -174,5 +174,24 @@ public class TowerEnemy extends Enemy {
     public void reset() {
 
     }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "TowerEnemy{" +
+                "shootingDirection=" + shootingDirection +
+                ", currentWeapon=" + currentWeapon +
+                ", player=" + player +
+                ", shootingA=" + shootingA +
+                ", shootingB=" + shootingB +
+                ", shootingC=" + shootingC +
+                ", shootingD=" + shootingD +
+                ", canShoot=" + canShoot +
+                '}';
+    }
 }
 

@@ -95,6 +95,11 @@ public abstract class WeaponBase implements UpdateDrawAble {
         }
     }
 
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
     @Override
     public String toString() {
         return "WeaponBase{" +

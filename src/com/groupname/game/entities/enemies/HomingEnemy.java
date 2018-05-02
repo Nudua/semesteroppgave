@@ -110,11 +110,31 @@ public class HomingEnemy extends Enemy {
             currentWeapon.draw(spriteBatch);
         }
     }
+
+
     /**
      * This method is an easy way for resetting this enemy.
      */
     @Override
     public void reset() {
 
+    }
+
+    /**
+     * Returns the String representation of this instance.
+     *
+     * @return String representation of this instance.
+     */
+    @Override
+    public String toString() {
+        return "HomingEnemy{" +
+                "startPosition=" + startPosition +
+                ", player=" + player +
+                ", currentWeapon=" + currentWeapon +
+                ", speed=" + speed +
+                ", frequency=" + frequency +
+                ", counter=" + counter +
+                ", random=" + random +
+                '}';
     }
 }
