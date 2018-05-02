@@ -25,7 +25,6 @@ import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.entities.powerups.PowerUp;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import sun.jvm.hotspot.oops.Instance;
 
 import java.security.InvalidParameterException;
 import java.time.Instant;

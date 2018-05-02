@@ -10,6 +10,12 @@ import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The base class for all weapons, this class will automatically
+ * create 10 projectiles.
+ *
+ * Subclasses must override t
+ */
 public abstract class WeaponBase implements UpdateDrawAble {
     protected final double speed;
     protected final int damage;
