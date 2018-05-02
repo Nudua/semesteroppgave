@@ -28,6 +28,8 @@ public interface Weapon extends UpdateDrawAble {
 
     void setDirection(Direction direction);
 
+
+
     //void checkCollision(List<Enemy> enemies);
 }
 

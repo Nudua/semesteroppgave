@@ -14,7 +14,6 @@ import com.groupname.game.entities.projectiles.Weapon;
  */
 public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
-    private double speed = 1.8d;
     private Player player;
     private EnemyWeapon currentWeapon;
     private int counter;
@@ -34,18 +33,22 @@ public class HomingEnemy extends Enemy {
 
         createWeapon();
     }
-    private void createWeapon() {
-        currentWeapon = new EnemyWeapon(player);
-    }
 
     /**
      * Makes it easy to set the walking speed for the enemy.
      *
      * @param speed is the speed that we add/subtract to the position per frame/update in the logic.
      */
+    @Override
     public void setSpeed(double speed) {
-        this.speed = speed;
+        super.setSpeed(speed);
     }
+
+    private void createWeapon() {
+        currentWeapon = new EnemyWeapon(player);
+    }
+
+
 
     /**
      * The specific logic for this type of enemy.
