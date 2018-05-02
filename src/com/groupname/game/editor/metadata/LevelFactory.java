@@ -25,8 +25,10 @@ import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.entities.powerups.PowerUp;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
+import sun.jvm.hotspot.oops.Instance;
 
 import java.security.InvalidParameterException;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -127,7 +129,6 @@ public class LevelFactory {
         HomingEnemy enemy = new HomingEnemy(sprite, metaData.getPosition(), player);
         setDifficulty(metaData, enemy);
 
-
         return enemy;
     }
 
@@ -142,30 +143,37 @@ public class LevelFactory {
     private void setDifficulty(EnemyMetaData metaData, Enemy enemy) {
         int hitPoints;
         double speed;
+        int frequency;
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
         switch (metaData.getDifficulty()) {
             default:
             case Easy:
-                hitPoints = random.nextInt(1,2);
+                hitPoints = random.nextInt(1,3);
                 speed = random.nextDouble(0.5d, 3d);
+                frequency = random.nextInt(5,7);
                 break;
             case Medium:
                 hitPoints = random.nextInt(3,5);
                 speed = random.nextDouble(3d,4.5d);
+                frequency = random.nextInt(4,6);
                 break;
             case Hard:
                 hitPoints = random.nextInt(7,11);
                 speed = random.nextDouble(5d, 7d);
+                frequency = random.nextInt(3,5);
                 break;
             case Impossible:
                 hitPoints = random.nextInt(11, 15);
                 speed = random.nextDouble(7.5d, 15d);
+                frequency = random.nextInt(1,3);
                 break;
         }
 
         enemy.setHitPoints(hitPoints);
         enemy.setSpeed(speed);
-
+        if(enemy instanceof HomingEnemy) {
+            ((HomingEnemy) enemy).setFrequency(frequency);
+        }
     }
 }

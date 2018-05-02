@@ -17,10 +17,12 @@ public class HomingEnemy extends Enemy {
     private Player player;
     private EnemyWeapon currentWeapon;
     private double speed = 1.0d;
-    private Counter counter = new Counter(4);
+    private int frequency = 1;
+    private Counter counter = new Counter(frequency);
+
 
     /**
-     * This is the constructur for the HomingEnemy.
+     * This is the constructor for the HomingEnemy.
      *
      * @param sprite is an super from Enemy. Sets an default sprite for the enemy.
      * @param position is an super from Enemy. Sets the start position, on the canvas.
@@ -44,11 +46,13 @@ public class HomingEnemy extends Enemy {
         this.speed = speed;
     }
 
+    public void setFrequency(int frequency) {
+        this.frequency = frequency;
+    }
+
     private void createWeapon() {
         currentWeapon = new EnemyWeapon(player, 7, 1);
     }
-
-
 
     /**
      * The specific logic for this type of enemy.

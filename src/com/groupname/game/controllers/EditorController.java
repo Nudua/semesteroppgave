@@ -102,9 +102,13 @@ public class EditorController implements Controller {
         meta7.setSpriteType(EnemySpriteType.Snail);
         meta7.setDifficulty(Difficulty.Medium);
 
-        EnemyMetaData meta8 = new EnemyMetaData("Homing Snail - hard", HomingEnemy.class);
+        EnemyMetaData meta8 = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
         meta8.setSpriteType(EnemySpriteType.Snail);
         meta8.setDifficulty(Difficulty.Hard);
+
+        EnemyMetaData meta9 = new EnemyMetaData("Homing Snail - Impossible", HomingEnemy.class);
+        meta9.setSpriteType(EnemySpriteType.GreenBlob);
+        meta9.setDifficulty(Difficulty.Impossible);
 
 
         EnemyMetaData meta6 = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
@@ -119,7 +123,7 @@ public class EditorController implements Controller {
 
         // Move to a css file
         metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5, meta6, meta7, meta8));
+        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5, meta6, meta7, meta8, meta9));
 
 
         metaDataListView.setCellFactory((o) -> new MetaDataListCell());
