@@ -6,7 +6,7 @@ import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
-import com.groupname.game.other.delete.SingleBulletWeapon;
+import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 
 import java.util.Objects;
 
@@ -39,7 +39,7 @@ public class TowerEnemy extends Enemy {
     }
 
     private void createWeapon() {
-        currentWeapon = new SingleBulletWeapon();
+        currentWeapon = new SingleBulletWeapon(20, 1);
         shootingA = (int) position.getX() - 40;
         shootingB = (int) position.getX() + 40;
         shootingC = (int) position.getY() - 40;
@@ -82,7 +82,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                currentWeapon.setDirection(Direction.Up);
+                shootingDirection = Direction.Up;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -103,7 +103,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                currentWeapon.setDirection(Direction.Down);
+                shootingDirection = Direction.Down;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -124,7 +124,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                currentWeapon.setDirection(Direction.Left);
+                shootingDirection = Direction.Left;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -145,7 +145,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                currentWeapon.setDirection(Direction.Right);
+                shootingDirection = Direction.Right;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -154,9 +154,10 @@ public class TowerEnemy extends Enemy {
 
 
         if(canShoot) {
-            currentWeapon.fire(position);
-            currentWeapon.checkCollisionPlayer(player);
+            currentWeapon.fire(position, shootingDirection);
         }
+
+        currentWeapon.checkCollision(player);
 
     }
 
