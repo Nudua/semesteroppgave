@@ -11,13 +11,14 @@ import java.util.Objects;
 /**
  * EnemyMetaData extends ObjectMetaData and
  * giv us distinctive setters and getters for enemies.
+ * Create an enemy based on the information we give it.
  */
 public class EnemyMetaData extends ObjectMetaData {
     private Difficulty difficulty = Difficulty.Easy;
     private EnemySpriteType spriteType = EnemySpriteType.BlueBlob;
 
     /**
-     * Create a new instance of EnemyMetaData
+         * Creates a new instance of the object.
      *
      * @param name of the object.
      * @param type /class of the object.
