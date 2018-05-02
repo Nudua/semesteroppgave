@@ -72,6 +72,12 @@ public class GuardEnemy extends Enemy {
         //System.out.println("Hit!");
     }
 
+    /**
+     * Makes it easy to set the walking speed for the enemy.
+     *
+     * @param speed is the speed that we add/subtract to the position per frame/update in the logic.
+     */
+    @Override
     public void setSpeed(double speed) {
         this.speed = speed;
     }

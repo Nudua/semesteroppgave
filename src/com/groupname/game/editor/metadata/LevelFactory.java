@@ -28,6 +28,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.security.InvalidParameterException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class LevelFactory {
@@ -114,32 +115,8 @@ public class LevelFactory {
     private GuardEnemy createGuardEnemy(EnemyMetaData metaData) {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
-        int hitPoints;
-        double speed;
-
-        switch (metaData.getDifficulty()) {
-            default:
-            case Easy:
-                hitPoints = 3;
-                speed = 3;
-                break;
-            case Medium:
-                hitPoints = 5;
-                speed = 7;
-                break;
-            case Hard:
-                hitPoints = 10;
-                speed = 10;
-                break;
-            case Impossible:
-                hitPoints = 20;
-                speed = 15;
-                break;
-        }
-
         GuardEnemy enemy = new GuardEnemy(sprite, metaData.getPosition());
-        enemy.setHitPoints(hitPoints);
-        enemy.setSpeed(speed);
+        setDifficulty(metaData,enemy);
 
         return enemy;
     }
@@ -148,6 +125,7 @@ public class LevelFactory {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
         HomingEnemy enemy = new HomingEnemy(sprite, metaData.getPosition(), player);
+        setDifficulty(metaData,enemy);
 
         return enemy;
     }
@@ -158,5 +136,35 @@ public class LevelFactory {
         TowerEnemy enemy = new TowerEnemy(sprite, metaData.getPosition(), player);
 
         return enemy;
+    }
+
+    private void setDifficulty(EnemyMetaData metaData, Enemy enemy) {
+        int hitPoints;
+        double speed;
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        switch (metaData.getDifficulty()) {
+            default:
+            case Easy:
+                hitPoints = random.nextInt(1,2);
+                speed = random.nextDouble(0.5d, 3d);
+                break;
+            case Medium:
+                hitPoints = random.nextInt(3,5);
+                speed = random.nextDouble(3d,4.5d);
+                break;
+            case Hard:
+                hitPoints = random.nextInt(7,11);
+                speed = random.nextDouble(5d, 7d);
+                break;
+            case Impossible:
+                hitPoints = random.nextInt(11, 15);
+                speed = random.nextDouble(7.5d, 15d);
+                break;
+        }
+
+        enemy.setHitPoints(hitPoints);
+        enemy.setSpeed(speed);
+
     }
 }
