@@ -43,8 +43,10 @@ public class SpriteFactory {
         // Get the y-position within the spriteSheet
         int y = spriteType.getIndex();
 
-        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, y, 80, 80), 20);
-        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, y, 80, 80), 20);
+        int spriteSize = 80;
+
+        AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0, y, spriteSize, spriteSize), 20);
+        AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(1, y, spriteSize, spriteSize), 20);
         return new AnimatedSprite(spriteSheets.get(ENEMY_SPRITESHEET), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
     }
 
