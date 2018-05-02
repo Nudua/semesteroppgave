@@ -1,41 +1,67 @@
 package com.groupname.game.entities.projectiles;
 
-import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.drawing.SpriteBatch;
-import com.groupname.framework.io.Content;
-import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.core.UpdateDrawAble;
 import com.groupname.framework.math.Direction;
-import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
-import com.groupname.framework.util.Strings;
 import com.groupname.game.entities.Actor;
-import javafx.scene.image.Image;
+import com.groupname.game.entities.SpriteFactory;
 
+import java.security.InvalidParameterException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-/*
-public abstract class WeaponBase implements Weapon {
+public abstract class WeaponBase implements UpdateDrawAble {
+    protected final double speed;
+    protected final int damage;
+    protected List<ProjectileEx> projectiles;
 
-    private boolean enabled;
-    // WeaponAttributes?
+    public WeaponBase(double speed, int damage) {
+        this.speed = speed;
+        if(damage < 0) {
+            throw new InvalidParameterException("Damage cannot be less than 0.");
+        }
+        this.damage = damage;
 
-    public WeaponBase() {
-        enabled = true;
+        projectiles = new ArrayList<>();
+        createProjectiles();
     }
 
-    @Override
-    public boolean isEnabled() {
-        return enabled;
+    protected void createProjectiles() {
+        final int projectileCount = 10;
+
+        SpriteFactory spriteFactory = new SpriteFactory();
+
+        for(int i = 0; i < projectileCount; i++) {
+            ProjectileEx projectile = new ProjectileEx(spriteFactory.createProjectile());
+            projectiles.add(projectile);
+        }
     }
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public abstract void fire(Vector2D startPosition, Direction direction);
+
+    protected abstract void updateProjectileLogic();
+
+    public void checkCollision(List<Actor> enemies) {
+        for(Actor actor : enemies) {
+            checkCollision(actor);
+        }
     }
 
-    // more general?
-    protected abstract void createProjectiles();
+    // look over
+    public boolean canFire() {
+        return projectiles.stream().anyMatch(ProjectileEx::isAlive);
+    }
+
+    public void checkCollision(Actor other) {
+        for(ProjectileEx projectile : projectiles) {
+            if(!projectile.isAlive() || !other.isAlive()) {
+                continue;
+            }
+
+            if(projectile.collides(other.getHitbox())) {
+                other.onCollides(damage);
+                projectile.setAlive(false);
+            }
+        }
+    }
 }
-*/
