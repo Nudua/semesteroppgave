@@ -19,7 +19,7 @@ public class ObjectMetaData implements Serializable {
      * Creates an new instance of ObjectMetaData.
      *
      * @param name of the object.
-     * @param type /class of the object.
+     * @param type class of the object.
      */
     public ObjectMetaData(String name, Class<?> type) {
         this.name = Strings.requireNonNullAndNotEmpty(name);
