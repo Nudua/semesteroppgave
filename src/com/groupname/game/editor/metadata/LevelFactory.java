@@ -125,7 +125,8 @@ public class LevelFactory {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
         HomingEnemy enemy = new HomingEnemy(sprite, metaData.getPosition(), player);
-        setDifficulty(metaData,enemy);
+        setDifficulty(metaData, enemy);
+
 
         return enemy;
     }

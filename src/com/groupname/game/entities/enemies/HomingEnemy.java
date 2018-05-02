@@ -2,6 +2,7 @@ package com.groupname.game.entities.enemies;
 
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
+import com.groupname.framework.math.Counter;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
@@ -15,8 +16,8 @@ public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
     private Player player;
     private EnemyWeapon currentWeapon;
-    private int counter;
-    private int delay = 60;
+    private double speed = 1.0d;
+    private Counter counter = new Counter(4);
 
     /**
      * This is the constructur for the HomingEnemy.
@@ -40,11 +41,11 @@ public class HomingEnemy extends Enemy {
      */
     @Override
     public void setSpeed(double speed) {
-        super.setSpeed(speed);
+        this.speed = speed;
     }
 
     private void createWeapon() {
-        currentWeapon = new EnemyWeapon(player, 15, 1);
+        currentWeapon = new EnemyWeapon(player, 7, 1);
     }
 
 
@@ -67,23 +68,23 @@ public class HomingEnemy extends Enemy {
         }
 
         if(player.getPosition().getX() < getPosition().getX()) {
-            position.addX(-speed);
+            position.addX(-speed / 4);
         } else if (player.getPosition().getX() > getPosition().getX()) {
-            position.addX(speed);
+            position.addX(speed / 4);
         }
 
         if(player.getPosition().getY() < getPosition().getY()) {
-            position.addY(-speed);
+            position.addY(-speed / 4);
         } else if (player.getPosition().getY() > getPosition().getY()) {
-            position.addY(speed);
+            position.addY(speed / 4);
         }
 
         currentWeapon.checkCollision(player);
 
-        counter++;
-        if(counter >= delay) {
+        counter.step();
+        if(counter.isDone()) {
             currentWeapon.fire(position, Direction.None);
-            counter = 0;
+            counter.reset();
         }
 
         currentWeapon.update();
