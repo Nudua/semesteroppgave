@@ -10,7 +10,9 @@ import com.groupname.framework.input.xinput.interop.GamePadButton;
 import java.util.HashSet;
 import java.util.Set;
 
-// This should be contained within our settings class somewhere
+/**
+ * This class defines the default player input bindings for this game.
+ */
 public class PlayerInputDefinitions {
     public static final String UP = "Player 1 - Up";
     public static final String DOWN = "Player 1 - Down";
@@ -28,7 +30,11 @@ public class PlayerInputDefinitions {
     public static final String SPECIAL_1 = "Player 1 - Special 1";
     public static final String SPECIAL_2 = "Player 1 - Special 2";
 
-    // Move somewhere else?
+    /**
+     * Returns the default bindings for this class.
+     *
+     * @return the default bindings for this class.
+     */
     public static Set<InputBinding> getDefaultBindings() {
         Set<InputBinding> bindings = new HashSet<>();
 
