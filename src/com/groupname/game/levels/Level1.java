@@ -114,8 +114,8 @@ public class Level1 extends LevelBase {
 
 
         Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PurpleBlob);
-        sprite.setScale(3.0d);
-        BossEnemy enemy8 = new BossEnemy(sprite, new Vector2D(500, 250), player);
+        sprite.setScale(1d);
+        BossEnemy enemy8 = new BossEnemy(sprite, new Vector2D(750, 210), player);
 
         //gameObjects.addAll(Arrays.asList(enemy, enemy2, enemy3));
         gameObjects.addAll(Arrays.asList(enemy8));
@@ -181,14 +181,14 @@ public class Level1 extends LevelBase {
 
             //graphicsContext.setFill(Color.BLUE);
 
-            if(gameObject instanceof BossEnemy) {
+            /*if(gameObject instanceof BossEnemy) {
                 Rectangle bounds = ((BossEnemy) gameObject).getBossBounds();
                 graphicsContext.fillRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-            }
-            graphicsContext.setFill(Color.RED);
+            }*/
+            //graphicsContext.setFill(Color.RED);
             // Draw hitbox
-            //Rectangle rect = gameObject.getHitbox();
-            //graphicsContext.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+            Rectangle rect = gameObject.getHitbox();
+            graphicsContext.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
 
             gameObject.draw(spriteBatch);
 

@@ -18,12 +18,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class BossEnemy extends Enemy {
     //private SpreadGun currentWeapon;
     private Player player;
-    private int counterMax = 200;
-    private int delay = 100;
-    private double slowSpeed = 0.1d;
-    private double fastSpeed = 3.0d;
-    private double positionX;
-    private double positionY;
     private Vector2D basePosition;
     private Rectangle bossBounds;
     private BoundsChecker boundsChecker = new BoundsChecker();
@@ -33,7 +27,7 @@ public class BossEnemy extends Enemy {
 
 
     /**
-     * The constructure for an BossEnemy. Takes a sprite, start position and the player.
+     * The constructor for an BossEnemy. Takes a sprite, start position and the player.
      *
      * @param sprite Sets an default sprite for the enemy.
      * @param position Sets the start position, on the canvas.
@@ -58,8 +52,10 @@ public class BossEnemy extends Enemy {
     }
 
     @Override
-    public Rectangle getHitbox() {
-        return new Rectangle(position.getX()+30, position.getY()+70, sprite.getWidth() - 60, sprite.getHeight()-70);
+    public Rectangle getHitbox() { //-210
+        double scaleX = sprite.getScale() * 0.3d;
+        double scaleY = sprite.getScale() * 0.15d;
+        return new Rectangle((position.getX() * 1.015d), (position.getY() * 1.22d), sprite.getWidth() * scaleX, sprite.getHeight() * scaleY);
     }
 
 
@@ -70,21 +66,20 @@ public class BossEnemy extends Enemy {
     @Override
     public void update() {
         super.update();
-        positionX = position.getX();
-        positionY = position.getY();
-        double randomX = ThreadLocalRandom.current().nextDouble(-2.1d, 2.1d);
-        double randomY = ThreadLocalRandom.current().nextDouble(-2.1d, 2.1d);
+        double randomX = ThreadLocalRandom.current().nextDouble(5d, 10d);
+        double randomY = ThreadLocalRandom.current().nextDouble(-1.1d, 1.1d);
+
         counter.step();
 
         if(counter.isDone()){
             if(counterInAction.getCounter() < 60) {
-                position.addX(-fastSpeed);
+                position.addX(-randomX);
                 position.addY(randomY);
-                System.out.println("Hei");
+                System.out.println(randomX);
             } if(counterInAction.getCounter() > 60) {
-                position.addX(fastSpeed);
+                position.addX(randomX);
                 position.addY(randomY);
-                System.out.println("Hei på deg");
+                System.out.println("-"+randomX);
             }
             counterInAction.step();
             if(counterInAction.isDone()){
@@ -97,16 +92,16 @@ public class BossEnemy extends Enemy {
                 position.add(randomX, randomY);
             }
             if(position.getX() + sprite.getWidth() >= bossBounds.getX() + bossBounds.getWidth()){
-                position.addX(-100);
+                position.addX(-20);
             }
             if(position.getX() <= bossBounds.getX()){
-                position.addX(100);
+                position.addX(20);
             }
             if(position.getY() + sprite.getHeight() >= bossBounds.getY() + bossBounds.getHeight()) {
-                position.addY(-100);
+                position.addY(-20);
             }
             if(position.getY() <= bossBounds.getY()){
-                position.addY(100);
+                position.addY(20);
             }
 
         }

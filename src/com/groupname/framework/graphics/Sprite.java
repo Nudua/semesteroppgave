@@ -42,6 +42,15 @@ public class Sprite {
     }
 
     /**
+     * Return the scale value of the sprite.
+     *
+     * @return the scale value of the sprite.
+     */
+    public double getScale() {
+        return scale;
+    }
+
+    /**
      * Gets the width of the Sprite, this value is multiplied by the current scale factor.
      *
      * @return the width of the sprite multiplied by the current scale factor.
