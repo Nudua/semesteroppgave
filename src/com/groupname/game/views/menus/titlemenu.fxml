@@ -9,5 +9,5 @@
 
 <?import javafx.scene.control.Label?>
 <fx:root stylesheets="@../css/title.css" type="javafx.scene.layout.VBox" visible="true" alignment="CENTER" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1">
-       <Label styleClass="titlepaused" text="Game title here!" />
+       <Label styleClass="titlepaused" text="Aliens in the backyard" />
 </fx:root>

@@ -26,7 +26,7 @@ public class Title extends LevelBase {
         super(parent, graphicsContext);
         createObject();
 
-        backgroundColor = Color.WHITE;
+        backgroundColor = Color.rgb(53, 188, 248);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Title extends LevelBase {
         GuardEnemy enemy1 = new GuardEnemy(sprite, new Vector2D(400,50));
 
         Sprite sprite2 = spriteFactory.createEnemy(EnemySpriteType.BlueBlob);
-        GuardEnemy enemy2 = new GuardEnemy(sprite2, new Vector2D(700,500));
+        GuardEnemy enemy2 = new GuardEnemy(sprite2, new Vector2D(700,600));
 
         gameObjects.addAll(Arrays.asList(enemy1, enemy2));
     }
@@ -68,10 +68,11 @@ public class Title extends LevelBase {
     @Override
     public void draw() {
         clearScreen();
+        graphicsContext.drawImage(Content.loadImage("hill.png", ResourceType.Background), 100,420);
+
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spriteBatch);
         }
-        graphicsContext.drawImage(Content.loadImage("hill.png", ResourceType.Background), 100,420);
 
        /* graphicsContext.setFill(Color.GREEN);
         graphicsContext.setFont(Font.font(60));
