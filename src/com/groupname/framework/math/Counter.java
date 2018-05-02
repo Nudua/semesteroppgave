@@ -38,6 +38,16 @@ public class Counter {
         return counter;
     }
 
+
+    /**
+     * Setter for changing the counters value.
+     *
+     * @param counter new int value.
+     */
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
+
     /**
      * Checks if the counter is done.
      *

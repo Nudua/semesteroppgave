@@ -9,6 +9,8 @@ import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.projectiles.EnemyWeapon;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * This class extends Enemy. HomingEnemy is an enemy that follows the player and shoot in the direction of the player.
  */
@@ -19,6 +21,7 @@ public class HomingEnemy extends Enemy {
     private double speed = 1.0d;
     private int frequency = 1;
     private Counter counter = new Counter(frequency);
+    ThreadLocalRandom random = ThreadLocalRandom.current();
 
 
     /**
@@ -86,6 +89,7 @@ public class HomingEnemy extends Enemy {
         currentWeapon.checkCollision(player);
 
         counter.step();
+        counter.setCounter(counter.getCounter() + random.nextInt(1, 10));
         if(counter.isDone()) {
             currentWeapon.fire(position, Direction.None);
             counter.reset();
