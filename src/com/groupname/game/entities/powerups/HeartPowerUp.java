@@ -6,10 +6,21 @@ import com.groupname.game.entities.Player;
 
 import java.util.Objects;
 
+/**
+ * HeartPowerUp is an PowerUp that give life to the player.
+ * The amount of life it gives is controllable.
+ */
 public class HeartPowerUp extends PowerUp {
 
     private final int hearts;
 
+    /**
+     * The constructor of the object.
+     *
+     * @param sprite the sprite of the object.
+     * @param position the position of the object.
+     * @param hearts the amount of life it gives the player.
+     */
     public HeartPowerUp(Sprite sprite, Vector2D position, int hearts) {
         super(sprite, position);
         if(hearts <= 0){
@@ -18,6 +29,11 @@ public class HeartPowerUp extends PowerUp {
         this.hearts = hearts;
     }
 
+    /**
+     * Method that give life to the player when collecting the object.
+     *
+     * @param player the player that collects the object.
+     */
     // Make this a runnable instead? Strategy pattern
     @Override
     public void onCollect(Player player) {

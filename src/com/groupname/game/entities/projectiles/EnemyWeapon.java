@@ -18,6 +18,13 @@ public class EnemyWeapon extends WeaponBase {
     private Vector2D targetPosition = new Vector2D();
     private Vector2D velocity = new Vector2D();
 
+    /**
+     * Creates a new instance of this object.
+     *
+     * @param target the target of the weapon.
+     * @param speed the speed of the bullet.
+     * @param damage the amount of damage a bullet gives.
+     */
     public EnemyWeapon(Actor target, double speed, int damage) {
         super(speed, damage);
         this.target = Objects.requireNonNull(target);
