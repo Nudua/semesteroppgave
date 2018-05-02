@@ -5,6 +5,9 @@ import com.groupname.game.entities.Player;
 
 import java.util.Comparator;
 
+/**
+ * A custom comparator to order GameObjects of the Player instance first.
+ */
 public class PlayerComparator implements Comparator<ObjectMetaData> {
     @Override
     public int compare(ObjectMetaData item1, ObjectMetaData item2) {
