@@ -49,7 +49,7 @@ public abstract class WeaponBase implements UpdateDrawAble {
 
     // look over
     public boolean canFire() {
-        return projectiles.stream().anyMatch(ProjectileEx::isAlive);
+        return projectiles.stream().noneMatch(ProjectileEx::isAlive);
     }
 
     public void checkCollision(Actor other) {

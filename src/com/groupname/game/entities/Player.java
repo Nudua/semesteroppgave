@@ -10,6 +10,7 @@ import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
+import com.groupname.game.entities.projectiles.SingleBulletWeaponEx;
 import com.groupname.game.input.PlayerInputDefinitions;
 import javafx.scene.shape.Rectangle;
 
@@ -26,7 +27,7 @@ public class Player extends Actor {
     private double speed = 10.5d;
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
-    private SingleBulletWeapon currentWeapon;
+    private SingleBulletWeaponEx currentWeapon;
     private double pushBack = 150;
     private int maxHitpoints = DEFAULT_MAX_HEARTS;
 
@@ -47,7 +48,7 @@ public class Player extends Actor {
     }
 
     private void createWeapon() {
-        currentWeapon = new SingleBulletWeapon();
+        currentWeapon = new SingleBulletWeaponEx(20, 1);
     }
 
     @Override
@@ -77,8 +78,19 @@ public class Player extends Actor {
         }
 
         if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Right);
+        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Left);
+        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_DOWN)) {
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Down);
+        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_UP)) {
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Up);
+        }
+
+        /*
+        if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
             currentWeapon.setDirection(Direction.Right);
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Right);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
             currentWeapon.setDirection(Direction.Left);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
@@ -89,6 +101,7 @@ public class Player extends Actor {
             currentWeapon.setDirection(Direction.Up);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
         }
+        */
 
         currentWeapon.update();
     }
@@ -171,13 +184,14 @@ public class Player extends Actor {
     public void checkCollision(List<GameObject> gameObjects) {
 
         // Get a list of all the GameObjects that are actually of the Enemy class that are still alive
-        List<Enemy> enemies = gameObjects.stream()
-                .filter(n -> n instanceof Enemy && ((Enemy) n).isAlive())
-                .map((n) -> (Enemy) n)
+        List<Actor> enemies = gameObjects.stream()
+                .filter(n -> n instanceof Enemy && ((Actor) n).isAlive())
+                .map((n) -> (Actor) n)
                 .collect(Collectors.toList());
 
         // Check collision between the weapon projectiles and the enemies
         currentWeapon.checkCollision(enemies);
+
 
         // Check collision between player and enemies
         checkEnemyCollision(enemies);
@@ -191,8 +205,8 @@ public class Player extends Actor {
         checkPowerUpCollision(powerUps);
     }
 
-    private void checkEnemyCollision(List<Enemy> enemies) {
-        for(Enemy enemy : enemies) {
+    private void checkEnemyCollision(List<Actor> enemies) {
+        for(Actor enemy : enemies) {
             if(enemy.isAlive()) {
                 if(enemy.collides(getHitbox())) {
                     //System.out.println("CRASH");
