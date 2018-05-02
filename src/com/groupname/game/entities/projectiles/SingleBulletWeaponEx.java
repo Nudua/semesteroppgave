@@ -5,6 +5,7 @@ import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.game.entities.Actor;
 
 public class SingleBulletWeaponEx extends WeaponBase {
 
@@ -22,7 +23,7 @@ public class SingleBulletWeaponEx extends WeaponBase {
 
         if(!myOnlyBullet.isAlive()) {
 
-            System.out.println("Shooting");
+            //System.out.println("Shooting");
 
             SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
             myOnlyBullet.setPosition(startPosition);
@@ -30,8 +31,7 @@ public class SingleBulletWeaponEx extends WeaponBase {
         }
     }
 
-    @Override
-    protected void updateProjectileLogic() {
+    private void updateProjectileLogic() {
         ProjectileEx myOnlyBullet = projectiles.get(0);
 
         Vector2D position = myOnlyBullet.getPosition();
@@ -64,6 +64,18 @@ public class SingleBulletWeaponEx extends WeaponBase {
         myOnlyBullet.setPosition(position);
 
         myOnlyBullet.update();
+    }
+
+    @Override
+    public void checkCollision(Actor other) {
+        ProjectileEx myOnlyBullet = projectiles.get(0);
+
+        if(myOnlyBullet.isAlive() && other.isAlive()) {
+            if(myOnlyBullet.collides(other.getHitbox())) {
+                other.onCollides(damage);
+                myOnlyBullet.setAlive(false);
+            }
+        }
     }
 
     @Override

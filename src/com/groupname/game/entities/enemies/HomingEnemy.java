@@ -2,10 +2,12 @@ package com.groupname.game.entities.enemies;
 
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
+import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.projectiles.EnemyWeapon;
+import com.groupname.game.entities.projectiles.EnemyWeaponEx;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import com.groupname.game.entities.projectiles.Weapon;
 
@@ -15,7 +17,7 @@ import com.groupname.game.entities.projectiles.Weapon;
 public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
     private Player player;
-    private EnemyWeapon currentWeapon;
+    private EnemyWeaponEx currentWeapon;
     private int counter;
     private int delay = 60;
 
@@ -45,7 +47,7 @@ public class HomingEnemy extends Enemy {
     }
 
     private void createWeapon() {
-        currentWeapon = new EnemyWeapon(player);
+        currentWeapon = new EnemyWeaponEx(player, 15, 1);
     }
 
 
@@ -67,8 +69,6 @@ public class HomingEnemy extends Enemy {
             return;
         }
 
-        currentWeapon.update();
-
         if(player.getPosition().getX() < getPosition().getX()) {
             position.addX(-speed);
         } else if (player.getPosition().getX() > getPosition().getX()) {
@@ -85,9 +85,11 @@ public class HomingEnemy extends Enemy {
 
         counter++;
         if(counter >= delay) {
-            currentWeapon.fire(position);
+            currentWeapon.fire(position, Direction.None);
             counter = 0;
         }
+
+        currentWeapon.update();
     }
 
     /**

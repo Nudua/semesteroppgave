@@ -39,8 +39,6 @@ public abstract class WeaponBase implements UpdateDrawAble {
 
     public abstract void fire(Vector2D startPosition, Direction direction);
 
-    protected abstract void updateProjectileLogic();
-
     public void checkCollision(List<Actor> enemies) {
         for(Actor actor : enemies) {
             checkCollision(actor);
@@ -61,6 +59,7 @@ public abstract class WeaponBase implements UpdateDrawAble {
             if(projectile.collides(other.getHitbox())) {
                 other.onCollides(damage);
                 projectile.setAlive(false);
+                System.out.println("Crash");
             }
         }
     }

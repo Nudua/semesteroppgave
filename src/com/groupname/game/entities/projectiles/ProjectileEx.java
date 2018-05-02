@@ -32,10 +32,10 @@ public class ProjectileEx extends GameObject {
         if(isAlive()) {
             // Update our sprite if it's animated
             AnimatedSprite.stepIfAnimatedSprite(sprite);
-        }
 
-        // Check that our projectile is still within the screen.
-        alive = boundsChecker.isWithinBounds(this, SCREEN_BOUNDS);
+            // Check that our projectile is still within the screen.
+            alive = boundsChecker.isWithinBounds(this, SCREEN_BOUNDS);
+        }
     }
 
     @Override
