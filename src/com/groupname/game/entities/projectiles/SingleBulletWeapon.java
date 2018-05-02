@@ -7,24 +7,41 @@ import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Actor;
 
+import java.util.Objects;
+
+/**
+ * This class represents a weapon with a single projectile.
+ */
 public class SingleBulletWeapon extends WeaponBase {
 
     private Direction bulletDirection = Direction.None;
 
+    /**
+     * Creates a new instance of this class with the specified speed (for the projectile)
+     * and damage.
+     *
+     * @param speed the speed for the projectile.
+     * @param damage the damage for the projectile.
+     */
     public SingleBulletWeapon(double speed, int damage) {
         super(speed, damage);
     }
 
+    /**
+     * Fires a new projectile (if available) in the requested direction.
+     *
+     * @param startPosition the position from where the projectile will be fired.
+     * @param direction the direction to fire the weapon if applicable.
+     */
     @Override
     public void fire(Vector2D startPosition, Direction direction) {
+        Objects.requireNonNull(startPosition);
+
         Projectile myOnlyBullet = projectiles.get(0);
 
-        this.bulletDirection = direction;
+        this.bulletDirection = Objects.requireNonNull(direction);
 
         if(!myOnlyBullet.isAlive()) {
-
-            //System.out.println("Shooting");
-
             SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
             myOnlyBullet.setPosition(startPosition);
             myOnlyBullet.setAlive(true);
@@ -66,6 +83,11 @@ public class SingleBulletWeapon extends WeaponBase {
         myOnlyBullet.update();
     }
 
+    /**
+     * Checks collision between an actor and the active projectiles.
+     *
+     * @param other the actor to check for collision.
+     */
     @Override
     public void checkCollision(Actor other) {
         Projectile myOnlyBullet = projectiles.get(0);
@@ -78,12 +100,20 @@ public class SingleBulletWeapon extends WeaponBase {
         }
     }
 
+    /**
+     * Draws the current projectile on the screen if it's alive.
+     *
+     * @param spriteBatch the spriteBatch used to draw.
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         Projectile myOnlyBullet = projectiles.get(0);
         myOnlyBullet.draw(spriteBatch);
     }
 
+    /**
+     * Updates the logic for this weapon.
+     */
     @Override
     public void update() {
         updateProjectileLogic();
