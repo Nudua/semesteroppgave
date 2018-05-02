@@ -7,9 +7,6 @@ import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.projectiles.EnemyWeapon;
-import com.groupname.game.entities.projectiles.EnemyWeaponEx;
-import com.groupname.game.entities.projectiles.SingleBulletWeapon;
-import com.groupname.game.entities.projectiles.Weapon;
 
 /**
  * This class extends Enemy. HomingEnemy is an enemy that follows the player and shoot in the direction of the player.
@@ -17,7 +14,7 @@ import com.groupname.game.entities.projectiles.Weapon;
 public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
     private Player player;
-    private EnemyWeaponEx currentWeapon;
+    private EnemyWeapon currentWeapon;
     private int counter;
     private int delay = 60;
 
@@ -47,7 +44,7 @@ public class HomingEnemy extends Enemy {
     }
 
     private void createWeapon() {
-        currentWeapon = new EnemyWeaponEx(player, 15, 1);
+        currentWeapon = new EnemyWeapon(player, 15, 1);
     }
 
 

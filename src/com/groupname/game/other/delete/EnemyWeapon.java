@@ -1,33 +1,44 @@
-package com.groupname.game.entities.projectiles;
+package com.groupname.game.other.delete;
 
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Actor;
+import com.groupname.game.entities.Player;
+import com.groupname.game.entities.SpriteFactory;
+import com.groupname.game.entities.projectiles.Weapon;
 
 import java.util.Objects;
 
-/*
+
+public class EnemyWeapon implements Weapon {
+    private static final String NAME = "Enemy Weapon!";
     private final double speed = 15d;
     private final int damage = 1;
- */
-public class EnemyWeaponEx extends WeaponBase {
 
-    private final Actor target;
-    private final ProjectileEx projectile;
+    private Projectile projectile;
     private Vector2D targetPosition = new Vector2D();
     private Vector2D velocity = new Vector2D();
 
-    public EnemyWeaponEx(Actor target, double speed, int damage) {
-        super(speed, damage);
+    private final Actor target;
+
+    public EnemyWeapon(Actor target) {
         this.target = Objects.requireNonNull(target);
-        projectile = projectiles.get(0);
+        createProjectiles();
     }
 
     @Override
-    public void fire(Vector2D startPosition, Direction direction) {
-        Objects.requireNonNull(startPosition);
+    public void setDirection(Direction direction) {
+        // Ignored in this implementation
+    }
 
+    private void createProjectiles() {
+        SpriteFactory spriteFactory = new SpriteFactory();
+
+        projectile = new Projectile(spriteFactory.createProjectile());
+    }
+
+    public void fire(Vector2D startPosition) {
         if (!projectile.isAlive() && target.isAlive()) {
             projectile.setPosition(startPosition);
             projectile.setAlive(true);
@@ -41,17 +52,6 @@ public class EnemyWeaponEx extends WeaponBase {
         }
     }
 
-    private void updateProjectileLogic() {
-        if (projectile.isAlive()) {
-            projectile.update();
-            calculateVelocity();
-
-            Vector2D projectilePosition = projectile.getPosition();
-            projectilePosition.add(velocity.getX(), velocity.getY());
-
-            projectile.setPosition(projectilePosition);
-        }
-    }
 
     private void calculateVelocity() {
         Vector2D aimDirection = targetPosition.subtract(projectile.getPosition());
@@ -65,17 +65,30 @@ public class EnemyWeaponEx extends WeaponBase {
         */
 
         //if (hypotenuse > 10) {
-        velocity = new Vector2D(speed * normalizedX, speed * normalizedY);
+            velocity = new Vector2D(speed * normalizedX, speed * normalizedY);
         //}
     }
 
-    @Override
+    public void checkCollision(Player player) {
+        if(projectile.isAlive() && player.isAlive()) {
+            if(projectile.collides(player.getHitbox())) {
+                player.onCollides(damage);
+                projectile.setAlive(false);
+            }
+        }
+    }
+
+
+    public void update() {
+        if (projectile.isAlive()) {
+            projectile.update();
+            calculateVelocity();
+            projectile.getPosition().add(velocity.getX(), velocity.getY());
+        }
+    }
+
     public void draw(SpriteBatch spriteBatch) {
         projectile.draw(spriteBatch);
     }
 
-    @Override
-    public void update() {
-        updateProjectileLogic();
-    }
 }

@@ -1,91 +1,51 @@
 package com.groupname.game.entities.projectiles;
 
 import com.groupname.framework.audio.SoundPlayer;
-import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Actor;
-import com.groupname.game.entities.Enemy;
-import com.groupname.game.entities.Player;
-import com.groupname.game.entities.SpriteFactory;
 
-import java.util.List;
+public class SingleBulletWeapon extends WeaponBase {
 
-public class SingleBulletWeapon implements Weapon {
+    private Direction bulletDirection = Direction.None;
 
-    public static final String NAME = "Single Bullet Weapon!";
-    private final double speed = 20d;
-    private final int damage = 1;
-    private Projectile myOnlyBullet;
-
-    public SingleBulletWeapon() {
-        createProjectiles();
-    }
-
-    protected void createProjectiles() {
-        SpriteFactory spriteFactory = new SpriteFactory();
-
-        Sprite projectileSprite = spriteFactory.createProjectile();
-
-        myOnlyBullet = new Projectile(projectileSprite);
+    public SingleBulletWeapon(double speed, int damage) {
+        super(speed, damage);
     }
 
     @Override
-    public void setDirection(Direction direction) {
-        myOnlyBullet.setDirection(direction);
-    }
+    public void fire(Vector2D startPosition, Direction direction) {
+        Projectile myOnlyBullet = projectiles.get(0);
 
-    public boolean canFire() {
-        return !myOnlyBullet.isAlive();
-    }
+        this.bulletDirection = direction;
 
-    @Override
-    public void fire(Vector2D startPosition) {
         if(!myOnlyBullet.isAlive()) {
+
+            //System.out.println("Shooting");
+
             SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
             myOnlyBullet.setPosition(startPosition);
             myOnlyBullet.setAlive(true);
         }
     }
 
-    public void checkCollision(List<Enemy> enemies) {
-        for(Actor enemy : enemies) {
-            if(myOnlyBullet.isAlive() && enemy.isAlive()) {
-                if(myOnlyBullet.collides(enemy.getHitbox())) {
-                    enemy.onCollides(damage);
-                    myOnlyBullet.setAlive(false);
-                }
-            }
-        }
-    }
-
-    public void checkCollisionPlayer(Player player) {
-        if(myOnlyBullet.isAlive() && player.isAlive()) {
-            if(myOnlyBullet.collides(player.getHitbox())) {
-                player.onCollides(damage);
-                myOnlyBullet.setAlive(false);
-            }
-        }
-    }
-
-    @Override
-    public void update() {
+    private void updateProjectileLogic() {
+        Projectile myOnlyBullet = projectiles.get(0);
 
         Vector2D position = myOnlyBullet.getPosition();
-        Direction direction = myOnlyBullet.getDirection();
         Size screenBounds = new Size(1280, 720);
 
         double currentSpeed = speed;
 
-        if(direction == Direction.Right || direction == Direction.Down) {
+        if(bulletDirection == Direction.Right || bulletDirection == Direction.Down) {
             currentSpeed = speed;
-        } else if(direction == Direction.Left || direction == Direction.Up) {
+        } else if(bulletDirection == Direction.Left || bulletDirection == Direction.Up) {
             currentSpeed = -speed;
         }
 
-        if(direction == Direction.Up || direction == Direction.Down) {
+        if(bulletDirection == Direction.Up || bulletDirection == Direction.Down) {
             position.addY(currentSpeed);
         } else {
             position.addX(currentSpeed);
@@ -101,11 +61,31 @@ public class SingleBulletWeapon implements Weapon {
             myOnlyBullet.setAlive(false);
         }
 
+        myOnlyBullet.setPosition(position);
+
         myOnlyBullet.update();
     }
 
     @Override
+    public void checkCollision(Actor other) {
+        Projectile myOnlyBullet = projectiles.get(0);
+
+        if(myOnlyBullet.isAlive() && other.isAlive()) {
+            if(myOnlyBullet.collides(other.getHitbox())) {
+                other.onCollides(damage);
+                myOnlyBullet.setAlive(false);
+            }
+        }
+    }
+
+    @Override
     public void draw(SpriteBatch spriteBatch) {
+        Projectile myOnlyBullet = projectiles.get(0);
         myOnlyBullet.draw(spriteBatch);
+    }
+
+    @Override
+    public void update() {
+        updateProjectileLogic();
     }
 }

@@ -1,5 +1,4 @@
 package com.groupname.game.entities;
-import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
@@ -10,7 +9,6 @@ import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.entities.powerups.PowerUp;
 import com.groupname.game.entities.projectiles.SingleBulletWeapon;
-import com.groupname.game.entities.projectiles.SingleBulletWeaponEx;
 import com.groupname.game.input.PlayerInputDefinitions;
 import javafx.scene.shape.Rectangle;
 
@@ -27,7 +25,7 @@ public class Player extends Actor {
     private double speed = 10.5d;
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
     private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
-    private SingleBulletWeaponEx currentWeapon;
+    private SingleBulletWeapon currentWeapon;
     private double pushBack = 150;
     private int maxHitpoints = DEFAULT_MAX_HEARTS;
 
@@ -48,7 +46,7 @@ public class Player extends Actor {
     }
 
     private void createWeapon() {
-        currentWeapon = new SingleBulletWeaponEx(20, 1);
+        currentWeapon = new SingleBulletWeapon(20, 1);
     }
 
     @Override

@@ -1,27 +1,43 @@
-package com.groupname.game.entities.projectiles;
+package com.groupname.game.other.delete;
 
-import com.groupname.framework.collision.BoundsChecker;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
+import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
-import javafx.scene.shape.Rectangle;
+
 
 public class Projectile extends GameObject {
     private boolean alive = false;
-    private static final Rectangle SCREEN_BOUNDS = new Rectangle(AppSettings.SCREEN_BOUNDS.getWidth(), AppSettings.SCREEN_BOUNDS.getHeight());
-    private final BoundsChecker boundsChecker;
+    private Direction direction = Direction.Right;
 
     public Projectile(Sprite sprite) {
         super(sprite, new Vector2D());
-        boundsChecker = new BoundsChecker();
     }
+
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Vector2D position) {
+        this.position.set(position);
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
 
     public boolean isAlive() {
         return alive;
     }
+
 
     public void setAlive(boolean alive) {
         this.alive = alive;
@@ -32,10 +48,18 @@ public class Projectile extends GameObject {
         if(isAlive()) {
             // Update our sprite if it's animated
             AnimatedSprite.stepIfAnimatedSprite(sprite);
-
-            // Check that our projectile is still within the screen.
-            alive = boundsChecker.isWithinBounds(this, SCREEN_BOUNDS);
+            if(position.getX() < 0) {
+                alive = false;
+            } else if(position.getX() > AppSettings.SCREEN_BOUNDS.getWidth())
+                alive = false;
         }
+        if(position.getY() < 0) {
+            alive = false;
+        } else if(position.getY() > AppSettings.SCREEN_BOUNDS.getHeight()) {
+            alive = false;
+        }
+
+
     }
 
     @Override
@@ -45,3 +69,4 @@ public class Projectile extends GameObject {
         }
     }
 }
+

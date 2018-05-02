@@ -1,14 +1,12 @@
 package com.groupname.game.entities.enemies;
 
-import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
-import com.groupname.game.entities.projectiles.EnemyWeapon;
-import com.groupname.game.entities.projectiles.SingleBulletWeapon;
+import com.groupname.game.other.delete.SingleBulletWeapon;
 
 import java.util.Objects;
 

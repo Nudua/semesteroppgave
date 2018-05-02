@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class WeaponBase implements UpdateDrawAble {
     protected final double speed;
     protected final int damage;
-    protected List<ProjectileEx> projectiles;
+    protected List<Projectile> projectiles;
 
     public WeaponBase(double speed, int damage) {
         this.speed = speed;
@@ -32,7 +32,7 @@ public abstract class WeaponBase implements UpdateDrawAble {
         SpriteFactory spriteFactory = new SpriteFactory();
 
         for(int i = 0; i < projectileCount; i++) {
-            ProjectileEx projectile = new ProjectileEx(spriteFactory.createProjectile());
+            Projectile projectile = new Projectile(spriteFactory.createProjectile());
             projectiles.add(projectile);
         }
     }
@@ -47,11 +47,11 @@ public abstract class WeaponBase implements UpdateDrawAble {
 
     // look over
     public boolean canFire() {
-        return projectiles.stream().noneMatch(ProjectileEx::isAlive);
+        return projectiles.stream().noneMatch(Projectile::isAlive);
     }
 
     public void checkCollision(Actor other) {
-        for(ProjectileEx projectile : projectiles) {
+        for(Projectile projectile : projectiles) {
             if(!projectile.isAlive() || !other.isAlive()) {
                 continue;
             }
