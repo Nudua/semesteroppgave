@@ -15,7 +15,7 @@
 }
 
 .titlebutton:focused {
-    -fx-text-fill: green;
+    -fx-text-fill: #000000;
 
 }
 
