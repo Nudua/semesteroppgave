@@ -61,7 +61,7 @@ public class BossEnemy extends Enemy {
 
     /**
      * The specific logic for this type of enemy.
-     * The BossEnemy XXX.
+     * The BossEnemy continuous moves a little bit, and at some random times it takes a leap against the player.
      */
     @Override
     public void update() {
@@ -110,8 +110,9 @@ public class BossEnemy extends Enemy {
     }
 
     /**
+     * Draws the enemy if it is alive.
      *
-     * @param spriteBatch
+     * @param spriteBatch draws the given sprite at the specified position
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
