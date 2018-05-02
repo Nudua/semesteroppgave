@@ -11,6 +11,10 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
+/**
+ * Read the levels from file.
+ * The files is stored as ".level".
+ */
 public class LevelReader {
 
     public LevelMetaData read(InputStream inputStream) throws LevelReaderException {
