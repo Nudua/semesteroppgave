@@ -18,7 +18,12 @@ public class SingleBulletWeaponEx extends WeaponBase {
     public void fire(Vector2D startPosition, Direction direction) {
         ProjectileEx myOnlyBullet = projectiles.get(0);
 
+        this.bulletDirection = direction;
+
         if(!myOnlyBullet.isAlive()) {
+
+            System.out.println("Shooting");
+
             SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
             myOnlyBullet.setPosition(startPosition);
             myOnlyBullet.setAlive(true);
@@ -55,6 +60,8 @@ public class SingleBulletWeaponEx extends WeaponBase {
         if(position.getY() < 0 || position.getY() + myOnlyBullet.getSprite().getHeight() > screenBounds.getHeight()) {
             myOnlyBullet.setAlive(false);
         }
+
+        myOnlyBullet.setPosition(position);
 
         myOnlyBullet.update();
     }

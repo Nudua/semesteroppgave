@@ -10,7 +10,7 @@ import com.groupname.game.data.AppSettings;
 import javafx.scene.shape.Rectangle;
 
 public class ProjectileEx extends GameObject {
-    private boolean alive;
+    private boolean alive = false;
     private static final Rectangle SCREEN_BOUNDS = new Rectangle(AppSettings.SCREEN_BOUNDS.getWidth(), AppSettings.SCREEN_BOUNDS.getHeight());
     private final BoundsChecker boundsChecker;
 
