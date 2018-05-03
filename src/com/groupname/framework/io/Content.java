@@ -1,9 +1,15 @@
 package com.groupname.framework.io;
 
+import com.groupname.framework.serialization.ObjectSerializer;
+import com.groupname.framework.serialization.ObjectSerializerException;
 import com.groupname.framework.util.Strings;
+import com.groupname.game.editor.controls.MetaDataListCell;
+import com.groupname.game.editor.metadata.ObjectMetaData;
+import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -52,6 +58,15 @@ public final class Content {
         InputStream inputStream = loadFile(filename, type);
 
         return new Image(inputStream, -1, -1, true, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<ObjectMetaData> loadMetadata(String fileName) throws ObjectSerializerException {
+        ObjectSerializer serializer = new ObjectSerializer();
+
+        // A little messy, but required for generic types
+        Class<List<ObjectMetaData>> clazz = (Class<List<ObjectMetaData>>) ((Class)List.class);
+        return serializer.read(loadFile(fileName, ResourceType.Metadata), clazz);
     }
 
     /**
@@ -122,6 +137,8 @@ public final class Content {
                 return "/graphics/backgrounds/";
             case Level:
                 return "/levels/";
+            case Metadata:
+                return "/metadata/";
         }
 
         return Strings.EMPTY;

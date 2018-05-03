@@ -1,5 +1,6 @@
 package com.groupname.framework.io;
 
+import com.groupname.framework.serialization.XMLNode;
 import com.groupname.framework.util.EmptyStringException;
 import org.junit.Test;
 import static org.junit.Assert.*;

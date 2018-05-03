@@ -1,8 +1,8 @@
-package com.groupname.framework.io;
+package com.groupname.framework.serialization;
 
 import com.groupname.framework.concurrency.TaskRunner;
+import com.groupname.framework.io.Content;
 import com.groupname.game.editor.metadata.EnemyMetaData;
-import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import javafx.concurrent.Task;
 

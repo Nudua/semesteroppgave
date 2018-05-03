@@ -7,11 +7,16 @@ import com.groupname.framework.core.GameObject;
 import com.groupname.framework.history.StackBasedUndoRedo;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.input.InputManager;
+import com.groupname.framework.io.Content;
+import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
+import com.groupname.framework.serialization.ObjectSerializer;
+import com.groupname.framework.serialization.ObjectSerializerException;
 import com.groupname.game.editor.LevelItem;
 import com.groupname.game.editor.LevelReader;
 import com.groupname.game.editor.LevelReaderException;
 import com.groupname.game.editor.LevelWriter;
+import com.groupname.game.entities.enemies.BossEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.scene.SceneManager;
@@ -40,10 +45,8 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.nio.file.Paths;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -84,9 +87,79 @@ public class EditorController implements Controller {
 
     @FXML
     public void initialize() {
-        populateMetaDataList();
+        //writeMetaData();
+        //populateMetaDataList();
+        loadMetadata();
     }
 
+    @SuppressWarnings("unchecked")
+    private void loadMetadata() {
+        try {
+            List<ObjectMetaData> metaData = Content.loadMetadata("metadata.data");
+
+            metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
+            metaDataListView.setItems(FXCollections.observableArrayList(metaData));
+
+            metaDataListView.setCellFactory((o) -> new MetaDataListCell());
+
+            metaDataListView.setOnMouseClicked(this::gameItemSelected);
+
+        } catch (ObjectSerializerException exception) {
+            showError("Error","Unable to load level items");
+        }
+    }
+
+    // Remove
+    private void writeMetaData() {
+        List<ObjectMetaData> allData = new ArrayList<>();
+
+        ObjectMetaData player = new ObjectMetaData("Player", Player.class);
+
+        // Builder pattern instead?
+
+        // Guard enemies
+        EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
+        guardBlobEasy.setSpriteType(EnemySpriteType.BlueBlob);
+
+        EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
+        guardBeeEasy.setSpriteType(EnemySpriteType.Bee);
+
+        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
+        guardBeeMedium.setDifficulty(Difficulty.Medium);
+        guardBeeMedium.setSpriteType(EnemySpriteType.CrazyBee);
+
+        // Homing
+        EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
+        homingSnailEasy.setSpriteType(EnemySpriteType.Snail);
+
+        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing Snail - Medium", HomingEnemy.class);
+        homingSnailMedium.setSpriteType(EnemySpriteType.Snail);
+        homingSnailMedium.setDifficulty(Difficulty.Medium);
+
+        EnemyMetaData homingSnailHard = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
+        homingSnailHard.setSpriteType(EnemySpriteType.Snail);
+        homingSnailHard.setDifficulty(Difficulty.Hard);
+
+        // Tower
+        EnemyMetaData towerEasy = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
+        towerEasy.setSpriteType(EnemySpriteType.Jellyfish);
+
+        // Boss
+        EnemyMetaData boss = new EnemyMetaData("Boss", BossEnemy.class);
+        boss.setSpriteType(EnemySpriteType.Squareboss);
+
+
+        allData.addAll(Arrays.asList(player, guardBlobEasy, guardBeeEasy, guardBeeMedium, homingSnailEasy, homingSnailMedium, homingSnailHard, towerEasy, boss));
+
+        ObjectSerializer serializer = new ObjectSerializer();
+        try {
+            serializer.write(allData, Paths.get("metadata.data"));
+        } catch (ObjectSerializerException exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
+
+    /*
     private void populateMetaDataList() {
         levelMetaData = new LevelMetaData("Default level");
 
@@ -130,6 +203,7 @@ public class EditorController implements Controller {
 
         metaDataListView.setOnMouseClicked(this::gameItemSelected);
     }
+    */
 
     private void gameItemSelected(MouseEvent event) {
         ObjectMetaData sourceMetaData = metaDataListView.getSelectionModel().getSelectedItem();

@@ -6,12 +6,15 @@ import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.Game;
+import com.groupname.game.editor.metadata.EnemyMetaData;
+import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -21,10 +24,11 @@ import java.util.Arrays;
 public class Title extends LevelBase {
 
     private static final String LEVEL_ID = "0045c879-f50f-4918-b0f6-b213f7e2b522";
+    private Image backgroundImage;
 
     public Title(Game parent, GraphicsContext graphicsContext) {
         super(parent, graphicsContext);
-        createObject();
+
 
         backgroundColor = Color.rgb(53, 188, 248);
     }
@@ -36,39 +40,49 @@ public class Title extends LevelBase {
 
     @Override
     public void initialize() {
-
+        backgroundImage = Content.loadImage("hill.png", ResourceType.Background);
+        createEnemies();
     }
 
-    private void createObject() {
+    private void createEnemies() {
+        /*
         SpriteFactory spriteFactory = new SpriteFactory();
         Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PinkFish);
         GuardEnemy enemy1 = new GuardEnemy(sprite, new Vector2D(400,50));
+        */
 
+        /*
         Sprite sprite2 = spriteFactory.createEnemy(EnemySpriteType.BlueBlob);
         GuardEnemy enemy2 = new GuardEnemy(sprite2, new Vector2D(700,600));
 
         gameObjects.addAll(Arrays.asList(enemy1, enemy2));
+        */
+
+        LevelFactory levelFactory = new LevelFactory(inputManager);
+
+        EnemyMetaData worm = new EnemyMetaData("Worm", GuardEnemy.class);
+        worm.setSpriteType(EnemySpriteType.GreenWorm);
+        worm.setPosition(new Vector2D(400,50));
+
+        EnemyMetaData blueBlob = new EnemyMetaData("Blob", GuardEnemy.class);
+        blueBlob.setSpriteType(EnemySpriteType.BlueBlob);
+        blueBlob.setPosition(new Vector2D(700,600));
+
+        gameObjects.add(levelFactory.create(worm));
+        gameObjects.add(levelFactory.create(blueBlob));
     }
 
     @Override
     public void update() {
-        //inputManager.update();
-        if(inputManager.isDown(PlayerInputDefinitions.DOWN)) {
-            graphicsContext.setFill(Color.GREEN);
-            graphicsContext.setFont(Font.font(60));
-            graphicsContext.fillText("PRESSING DOWN", 10, 500);
-        }
-
         for(GameObject gameObject : gameObjects) {
             gameObject.update();
         }
-
-        }
+    }
 
     @Override
     public void draw() {
         clearScreen();
-        graphicsContext.drawImage(Content.loadImage("hill.png", ResourceType.Background), 100,420);
+        graphicsContext.drawImage(backgroundImage, 100,420);
 
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spriteBatch);

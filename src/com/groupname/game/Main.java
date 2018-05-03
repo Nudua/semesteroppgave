@@ -40,7 +40,6 @@ public class Main extends Application {
 
             soundPlayer.setVolumeMusic(settings.getMusicVolume());
             soundPlayer.setVolumeSoundEffect(settings.getSoundEffectVolume());
-            soundPlayer.playMusic();
 
             System.out.println("SoundPlayer loaded successfully");
         } catch (MediaException ex) {

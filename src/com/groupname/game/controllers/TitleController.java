@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.input.InputManager;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
@@ -36,6 +37,8 @@ public class TitleController implements Controller {
 
         titleLevel = new Title(game, canvas.getGraphicsContext2D());
         titleLevel.initialize();
+
+        SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Main);
 
         if(!game.isRunning()) {
             game.start();

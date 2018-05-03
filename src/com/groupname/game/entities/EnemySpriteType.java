@@ -7,12 +7,12 @@ public enum EnemySpriteType {
     Bee(3),
     CrazyBee(4),
     Snail(5),
-    GreenFish(7),
-    PinkFish(8),
-    GreenWorm(9),
-    PinkWorm(10),
-    Squareboss(11),
-    Jellyfish(12);
+    GreenFish(6),
+    PinkFish(7),
+    GreenWorm(8),
+    PinkWorm(9),
+    Squareboss(10),
+    Jellyfish(11);
 
     private int index;
 

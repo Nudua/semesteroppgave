@@ -32,5 +32,9 @@ public enum ResourceType {
     /**
      * An level file that contain a specific level.
      */
-    Level
+    Level,
+    /**
+     * Meta data used for creating various game objects.
+     */
+    Metadata
 }

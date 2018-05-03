@@ -1,23 +1,19 @@
-package com.groupname.framework.io;
+package com.groupname.framework.serialization;
 
 import com.groupname.framework.core.Difficulty;
 import com.groupname.game.editor.metadata.PowerupSpriteType;
 import com.groupname.game.entities.EnemySpriteType;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * XMLWriter takes an instance of a class and saves it to a file.

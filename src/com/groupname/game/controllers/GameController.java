@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
@@ -86,6 +87,8 @@ public class GameController implements Controller {
         levels.add(0, new Level1(game, canvas.getGraphicsContext2D()));
         //levels.add(0, gameOver);
         levelCompletedTransition = new BlindsScreenTransition(canvas.getGraphicsContext2D());
+
+        //SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Main);
 
         if(!game.isRunning()) {
             game.start();

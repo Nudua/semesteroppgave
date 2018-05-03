@@ -1,13 +1,12 @@
 package com.groupname.framework.io;
 
 import com.groupname.framework.math.Vector2D;
+import com.groupname.framework.serialization.XMLWriter;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import static org.junit.Assert.*;
 
 public class XMLWriterTests {
 

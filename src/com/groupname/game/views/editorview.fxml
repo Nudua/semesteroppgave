@@ -71,7 +71,7 @@
             </Menu>
         </menus>
       </MenuBar>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" styleClass="items-box" GridPane.rowIndex="1">
+      <HBox alignment="CENTER_LEFT" prefHeight="80.0" styleClass="items-box" GridPane.rowIndex="1">
          <children>
              <ListView fx:id="metaDataListView" maxWidth="1.7976931348623157E308" orientation="HORIZONTAL" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS" HBox.hgrow="ALWAYS" />
 

@@ -1,4 +1,4 @@
-package com.groupname.framework.io;
+package com.groupname.framework.serialization;
 
 import com.groupname.framework.util.Strings;
 

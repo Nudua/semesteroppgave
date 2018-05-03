@@ -2,10 +2,7 @@ package com.groupname.game.editor;
 
 import com.groupname.game.editor.metadata.LevelMetaData;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -30,7 +27,7 @@ public class LevelReader {
             InputStream inputStream = Files.newInputStream(filePath, StandardOpenOption.READ);
             return read(inputStream);
         } catch (IOException exception) {
-            throw  new LevelReaderException(exception.getMessage());
+            throw new LevelReaderException(exception.getMessage());
         }
     }
 

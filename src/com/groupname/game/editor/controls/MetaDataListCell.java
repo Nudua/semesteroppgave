@@ -21,7 +21,7 @@ public class MetaDataListCell extends ListCell<ObjectMetaData> {
         if(item != null) {
             Label label = new Label(item.getName());
             label.setWrapText(true);
-            label.setPrefSize(100,100);
+            label.setPrefSize(80,80);
             label.setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderStroke.MEDIUM)));
             setGraphic(label);
         }
