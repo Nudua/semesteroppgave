@@ -11,18 +11,19 @@ import com.groupname.game.entities.projectiles.SingleBulletWeapon;
 import java.util.Objects;
 
 /**
- * This class extends Enemy. TowerEnemy is an enemy that stands still and shoots
+ * This class extends Enemy.
+ * TowerEnemy is an enemy that stands still and shoots
  * at the player a long the axis.
  */
 public class TowerEnemy extends Enemy {
     private Direction shootingDirection = Direction.UP;
     private SingleBulletWeapon currentWeapon;
     private Player player;
+
     private int shootingA;
     private int shootingB;
     private int shootingC;
     private int shootingD;
-
     private boolean canShoot;
 
     /**
@@ -161,6 +162,11 @@ public class TowerEnemy extends Enemy {
 
     }
 
+    /**
+     * Draws TowerEnemy if it is alive.
+     *
+     * @param spriteBatch the spriteBatch used to draw this gameObject.
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         if(isAlive()) {
@@ -170,6 +176,9 @@ public class TowerEnemy extends Enemy {
 
     }
 
+    /**
+     * Resets the enemy.
+     */
     @Override
     public void reset() {
 
