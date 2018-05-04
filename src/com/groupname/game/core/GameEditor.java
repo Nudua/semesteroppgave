@@ -30,28 +30,25 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 
-// Convert to level/View
 
+
+/**
+ * This class is used in conjunction with the EditorController to create new levels for the game.
+ * Specially this class is the level board section of the editor and is used to manipulate level items.
+ */
 public class GameEditor extends LevelBase {
 
     private final static String LEVEL_ID = "cd4305d4-d624-4c4e-9ef8-77207cf9b4e1";
-
-    public enum Mode {
-        EDITING,
-        PLAYING
-    }
 
     private final MouseInput mouseInput;
     private Image backgroundImage;
 
     private Mode mode = Mode.EDITING;
-    //private final LevelFactory levelFactory;
 
-    //private List<GameObject> gameObjects = new ArrayList<>();
-    private List<LevelItem> levelItems;
+    private final List<LevelItem> levelItems;
     private LevelItem selectedItem;
 
-    private UndoRedo commandHistory;
+    private final UndoRedo commandHistory;
 
     private final Rectangle levelBounds = AppSettings.LEVEL_BOUNDS;//new Rectangle(160, 80, 1280 - 160 * 2, 720 - 80 * 2);
     private final BoundsChecker boundsChecker = new BoundsChecker();
@@ -60,6 +57,14 @@ public class GameEditor extends LevelBase {
     private BooleanProperty playDisabled;
     private BooleanProperty editDisabled;
 
+    /**
+     * Creates a new instance of this GameEditor.
+     *
+     * @param game the game that is the owner of this level.
+     * @param canvas the canvas to grab input from.
+     * @param levelItems a list that contains all the levelItems used by this gameEditor.
+     * @param commandHistory the UnDoRedo used to redo and undo commands.
+     */
     public GameEditor(Game game, Canvas canvas, List<LevelItem> levelItems, UndoRedo commandHistory) {
         super(game, canvas.getGraphicsContext2D());
 
@@ -69,14 +74,15 @@ public class GameEditor extends LevelBase {
         mouseInput = new MouseInput(canvas, levelBounds);
         backgroundColor = Color.BLACK;
 
-        //levelFactory = new LevelFactory(inputManager);
-
         mouseInput.setOnMove(this::updateItemPosition);
         mouseInput.setOnClicked(this::onMouseClicked);
     }
 
-    // Properties
-
+    /**
+     * Returns a property that describes whether the editor is in the PLAY mode.
+     *
+     * @return a property that describes whether the editor is in the PLAY mode.
+     */
     public BooleanProperty playDisabledProperty() {
         if(playDisabled == null) {
             playDisabled = new SimpleBooleanProperty(false);
@@ -85,6 +91,11 @@ public class GameEditor extends LevelBase {
         return playDisabled;
     }
 
+    /**
+     * Returns a property that describes whether the editor is in the EDIT mode.
+     *
+     * @return a property that describes whether the editor is in the EDIT mode.
+     */
     public BooleanProperty editDisabledProperty() {
         if(editDisabled == null) {
             editDisabled = new SimpleBooleanProperty(true);
@@ -130,11 +141,21 @@ public class GameEditor extends LevelBase {
         return new Rectangle(itemPosition.getX(), itemPosition.getY(), levelItem.getInstance().getSprite().getWidth(), levelItem.getInstance().getSprite().getHeight());
     }
 
+    /**
+     * Returns the unique id for this level.
+     *
+     * @return the unique id for this level.
+     */
     @Override
     public String getId() {
         return LEVEL_ID;
     }
 
+    /**
+     * Sets the mode that the GameEditor is in.
+     *
+     * @param mode the mode to change to.
+     */
     public void setMode(Mode mode) {
         this.mode = Objects.requireNonNull(mode);
 
@@ -160,11 +181,21 @@ public class GameEditor extends LevelBase {
         return new Vector2D(x - sprite.getWidth() / 2, y - sprite.getHeight() / 2);
     }
 
+    /**
+     * Sets the currently level item that is selected by the editor.
+     *
+     * @param selectedItem the level item that is selected.
+     */
     public void setSelectedItem(LevelItem selectedItem) {
         this.selectedItem = null;
         this.selectedItem = selectedItem;
     }
 
+    /**
+     * Loads all the resources required by the GameEditor and initializes it.
+     *
+     * Must be called before any call to update or draw.
+     */
     @Override
     public void initialize() {
         backgroundImage = Content.loadImage("background4.png", ResourceType.BACKGROUND);
@@ -175,6 +206,9 @@ public class GameEditor extends LevelBase {
         return levelItems.stream().map(LevelItem::getInstance).collect(Collectors.toList());
     }
 
+    /**
+     * Updates the logic used to drive this editor.
+     */
     @Override
     public void update() {
         if(mode == Mode.PLAYING) {
@@ -201,6 +235,9 @@ public class GameEditor extends LevelBase {
         }
     }
 
+    /**
+     * Attempts to delete the selected item if a item is selected.
+     */
     public void deleteSelectedItem() {
         if(selectedItem != null && selectedItem.getMetaData().getType() != Player.class && !selectedItem.isPlaced()) {
             if(levelItems.contains(selectedItem)) {
@@ -210,6 +247,9 @@ public class GameEditor extends LevelBase {
         }
     }
 
+    /**
+     * Resets the state of the editor and all of its level items and places it into editing mode.
+     */
     @Override
     public void reset() {
         setMode(Mode.EDITING);
@@ -223,6 +263,9 @@ public class GameEditor extends LevelBase {
         }
     }
 
+    /**
+     * Draws game screen of this editor.
+     */
     @Override
     public void draw() {
         drawBackground();
@@ -238,5 +281,19 @@ public class GameEditor extends LevelBase {
 
     private void drawBackground() {
         graphicsContext.drawImage(backgroundImage, 0, 0);
+    }
+
+    /**
+     * The state which the editor is in.
+     */
+    public enum Mode {
+        /**
+         * The mode when we can place new level items on the level.
+         */
+        EDITING,
+        /**
+         * This mode is used when testing the level.
+         */
+        PLAYING
     }
 }
