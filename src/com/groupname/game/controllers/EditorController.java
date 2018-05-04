@@ -51,6 +51,10 @@ import java.util.function.Supplier;
 
 import static javafx.scene.control.Alert.AlertType;
 
+/**
+ * This controller is used to connect the fxml (views/editorview.fxml)
+ * and with the GameEditor that is used to create levels for this game.
+ */
 public class EditorController implements Controller {
 
     @FXML protected GridPane root;
@@ -63,9 +67,9 @@ public class EditorController implements Controller {
     private Game game;
 
     private GameEditor editor;
-    private UndoRedo commandHistory;
+    private final UndoRedo commandHistory;
 
-    private List<LevelItem> levelItems;
+    private final List<LevelItem> levelItems;
     private LevelFactory levelFactory;
 
     private LevelItem selectedItem = null;
@@ -73,6 +77,9 @@ public class EditorController implements Controller {
     private LevelMetaData levelMetaData;
     private final TaskRunner taskRunner;
 
+    /**
+     * Creates a new instance of this controller and should be loaded with the fxml located in /views/editorview.fxml.
+     */
     public EditorController() {
         taskRunner = new TaskRunner();
         commandHistory = new StackBasedUndoRedo();
@@ -91,6 +98,7 @@ public class EditorController implements Controller {
         loadMetadata();
     }
 
+    // Loads all the metaData for the objects that are used within the game (enemies, powerups and player)
     private void loadMetadata() {
         try {
             List<ObjectMetaData> metaData = Content.loadMetadata("metadata.data");
@@ -225,6 +233,8 @@ public class EditorController implements Controller {
         SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.EDITOR);
 
         setupBindings();
+
+        newLevel();
 
         if(!game.isRunning()) {
             game.start();
@@ -438,6 +448,30 @@ public class EditorController implements Controller {
     @FXML
     protected void exitOnClicked(ActionEvent event) {
         SceneManager.navigate(SceneName.Title);
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "EditorController{" +
+                "root=" + root +
+                ", canvas=" + canvas +
+                ", metaDataListView=" + metaDataListView +
+                ", editMenuItem=" + editMenuItem +
+                ", playMenuItem=" + playMenuItem +
+                ", game=" + game +
+                ", editor=" + editor +
+                ", commandHistory=" + commandHistory +
+                ", levelItems=" + levelItems +
+                ", levelFactory=" + levelFactory +
+                ", selectedItem=" + selectedItem +
+                ", levelMetaData=" + levelMetaData +
+                ", taskRunner=" + taskRunner +
+                '}';
     }
 }
 
