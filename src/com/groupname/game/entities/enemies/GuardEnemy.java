@@ -25,8 +25,8 @@ public class GuardEnemy extends Enemy {
 
     /**
      * The constructure for an GuardEnemy.
-     * @param sprite is an super from Enemy. Sets an default sprite for the enemy.
-     * @param position is an super from Enemy. Sets the start position, on the canvas.
+     * @param sprite Sets an default sprite for the enemy.
+     * @param position Sets the start position, on the canvas.
      */
     public GuardEnemy(Sprite sprite, Vector2D position) {
         super(sprite, position);
