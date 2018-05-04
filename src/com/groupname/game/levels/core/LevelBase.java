@@ -13,16 +13,18 @@ import javafx.scene.paint.Color;
 
 import java.util.*;
 
-// Maybe remove the word base
+/**
+ * This class serves as a base for every levels contained within the game
+ * and has common components used for every level such as a SpriteBatch, InputManager
+ * and a GraphicsContext.
+ */
 public abstract class LevelBase {
 
     protected boolean initialized;
-    // Maybe just access directly from game, or create a getter?
-    //protected GraphicsContext graphicsContext;
 
-    protected SpriteBatch spriteBatch;
-    protected InputManager inputManager;
-    protected GraphicsContext graphicsContext;
+    protected final SpriteBatch spriteBatch;
+    protected final InputManager inputManager;
+    protected final GraphicsContext graphicsContext;
 
     protected LevelState state;
 
@@ -30,55 +32,48 @@ public abstract class LevelBase {
 
     protected Color backgroundColor;
 
-    private final Map<String, SpriteSheet> spriteSheets;
     protected final List<GameObject> gameObjects;
 
-
-    // Figure out the actual overloads, probably just pass the game and get stuff from there
+    /**
+     * Subclasses must call this constructor to setup the level with the required common components.
+     *
+     * @param parent the game that is the parent of this level.
+     * @param graphicsContext the graphicsContext used for drawing this level.
+     */
     public LevelBase(Game parent, GraphicsContext graphicsContext) {
         this.screenBounds = parent.getScreenBounds();
         this.inputManager = parent.getInputManager();
         this.graphicsContext = Objects.requireNonNull(graphicsContext);
 
         this.spriteBatch = new SpriteBatchFX(graphicsContext);
-        this.spriteSheets = new HashMap<>();
         this.gameObjects = new ArrayList<>();
 
         backgroundColor = Color.BLACK;
 
-        // Set to loading first when we have screen transitions
         state = LevelState.PLAYING;
     }
 
+    /**
+     * Implementations must implement this method and return a unique identifier for this level.
+     *
+     * Tip: Strong unique id's may be generated using UUID.randomUUID().toString();
+     *
+     * @return the unique identifier for this level.
+     */
     public abstract String getId();
 
-    // Remove?
-    protected void addSpriteSheet(SpriteSheet spriteSheet) {
-        spriteSheets.put(spriteSheet.getName(), spriteSheet);
-    }
-
     /**
-     * Returns the SPRITE_SHEET with the specified key if it exists
-     * @param key the name of the SPRITE_SHEET to get
-     * @return @code {SPRITE_SHEET} if successful.
-     * @throws SpriteSheetNotFoundException if no SPRITE_SHEET by that key was present
+     * Implementations must reset the state of the level using this method.
      */
-    protected SpriteSheet getSpriteSheet(String key) {
-        if(spriteSheets.containsKey(key)) {
-            return spriteSheets.get(key);
-        } else {
-            throw new SpriteSheetNotFoundException();
-        }
-    }
-
-    public void removeSpriteSheet(SpriteSheet spriteSheet) {
-        spriteSheets.remove(spriteSheet.getName());
-    }
-
     public void reset() {
         state = LevelState.PLAYING;
     }
 
+    /**
+     * Returns the current state of the level.
+     *
+     * @return the current state of the level.
+     */
     public LevelState getState() {
         return state;
     }
@@ -87,18 +82,56 @@ public abstract class LevelBase {
         clearScreen(backgroundColor);
     }
 
-    // Maybe move into the GameEngine class, or into some drawing class
+    // Clears the screen with the specified color fill
     protected void clearScreen(Color fill) {
-
         graphicsContext.setFill(fill);
         graphicsContext.fillRect(0, 0, screenBounds.getWidth(), screenBounds.getHeight());
     }
 
+    /**
+     * Returns whether this level has been successfully initialized.
+     *
+     * @return whether this level has been successfully initialized.
+     */
     public boolean isInitialized() {
         return initialized;
     }
 
+    /**
+     * Implementations must use this method to initialize the current level.
+     *
+     * They must also set initialize to true if it has been successfully initialized.
+     */
     public abstract void initialize();
+
+    /**
+     * Implementations must use this method to update any game logic.
+     * This method will be called 60 times per second.
+     */
     public abstract void update();
+
+    /**
+     * Implementations must use this method to draw the level.
+     * This method will be called 60 times per second.
+     */
     public abstract void draw();
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "LevelBase{" +
+                "initialized=" + initialized +
+                ", spriteBatch=" + spriteBatch +
+                ", inputManager=" + inputManager +
+                ", graphicsContext=" + graphicsContext +
+                ", state=" + state +
+                ", screenBounds=" + screenBounds +
+                ", backgroundColor=" + backgroundColor +
+                ", gameObjects=" + gameObjects +
+                '}';
+    }
 }

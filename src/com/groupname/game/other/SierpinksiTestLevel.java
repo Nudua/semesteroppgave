@@ -21,6 +21,7 @@ public class SierpinksiTestLevel extends LevelBase {
 
     private SierpinskiTriangleBackground sierpinskiBackground;
     private ScreenTransition arrowScreenTransition;
+    private SpriteSheet spriteSheet;
 
     public SierpinksiTestLevel(Game game, GraphicsContext graphicsContext) {
         super(game, graphicsContext);
@@ -41,7 +42,7 @@ public class SierpinksiTestLevel extends LevelBase {
 
         Image sheet1 = new Image(getClass().getResourceAsStream(spriteSheetFolder + "spritesheet1.png"));
 
-        addSpriteSheet(new SpriteSheet("sheet1", sheet1));
+        spriteSheet = new SpriteSheet("sheet1", sheet1);
     }
 
     @Override

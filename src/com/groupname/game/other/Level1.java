@@ -1,4 +1,4 @@
-package com.groupname.game.levels;
+package com.groupname.game.other;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
@@ -26,7 +26,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 
 import java.util.Arrays;
-
+/*
 public class Level1 extends LevelBase {
 
     private Player player;
@@ -135,11 +135,7 @@ public class Level1 extends LevelBase {
 
     public void update() {
         // Update input to the most recent state
-        /*
-        if(inputManager.isEnabled()) {
-            inputManager.update();
-        }
-        */
+
 
         boolean anyEnemyAlive = false;
         // Update all our gameobjects
@@ -180,10 +176,7 @@ public class Level1 extends LevelBase {
 
             //graphicsContext.setFill(Color.BLUE);
 
-            /*if(gameObject instanceof BossEnemy) {
-                Rectangle bounds = ((BossEnemy) gameObject).getBossBounds();
-                graphicsContext.fillRect(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
-            }*/
+
             //graphicsContext.setFill(Color.RED);
             // Draw hitbox
             Rectangle rect = gameObject.getHitbox();
@@ -198,3 +191,4 @@ public class Level1 extends LevelBase {
         graphicsContext.fillText(String.format("HP: %d", player.getHitPoints()), 5, 30);
     }
 }
+*/
