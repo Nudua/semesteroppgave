@@ -9,27 +9,25 @@ import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-/*
-class PlayerProgress {
-
-    private final static String FIRST_LEVEL = "";
-
-    private String currentLevel = FIRST_LEVEL;
-
-    public void setCurrentLevel(String currentLevel) {
-        this.currentLevel = currentLevel;
-    }
-}
-*/
 
 /**
- * Enum Singleton, representing the settings / preferences for this application
- * such as volume, game progress.
+ * Enum Singleton that ensures that only one instance of this class is instantiated,
+ * representing the settings / preferences for this application such as volume, game progress.
+ *
+ * Users can access this singleton by using:
+ * AppSettings appsettings = AppSettings.INSTANCE;
  */
 public enum AppSettings {
     INSTANCE;
 
+    /**
+     * The default viewport of this game.
+     */
     public static final Size SCREEN_BOUNDS = new Size(1280, 720);
+
+    /**
+     * The default bounds of the levels used by this application.
+     */
     public static final Rectangle LEVEL_BOUNDS = new Rectangle(80 * 2, 80 * 1, 1280 - 80 * 4, 720 - 80 * 2);
 
     // Constants
@@ -62,22 +60,47 @@ public enum AppSettings {
         this.currentLevel = Objects.requireNonNull(currentLevel);
     }
 
+    /**
+     * Returns the music volume.
+     *
+     * @return the music volume.
+     */
     public double getMusicVolume() {
         return musicVolume;
     }
 
+    /**
+     * Sets the music volume.
+     *
+     * @param musicVolume the new volume to set.
+     */
     public void setMusicVolume(double musicVolume) {
         this.musicVolume = musicVolume;
     }
 
+    /**
+     * Returns the sound effect volume.
+     *
+     * @return the sound effect volume.
+     */
     public double getSoundEffectVolume() {
         return soundEffectVolume;
     }
 
+    /**
+     * Sets the sound effect volume.
+     *
+     * @param soundEffectVolume the new volume to set.
+     */
     public void setSoundEffectVolume(double soundEffectVolume) {
         this.soundEffectVolume = soundEffectVolume;
     }
 
+    /**
+     * Updates and saves the current settings used by this class into the file 'appsettings.ini'.
+     *
+     * @throws IOException if there was an issue saving the file.
+     */
     public void save() throws IOException {
         iniPreferences.putBoolean(FIRSTRUN_KEY, false);
         iniPreferences.putBoolean(FULLSCREEN_KEY, false);
@@ -88,6 +111,11 @@ public enum AppSettings {
         iniPreferences.write();
     }
 
+    /**
+     * Attempts to load the settings from 'appsettings.ini' if no values exists defaults will be used.
+     *
+     * @throws IOException if there was an error while loading the settings from the file.
+     */
     public void load() throws IOException {
         iniPreferences = new INIPreferences(Paths.get(FILENAME));
 
@@ -96,5 +124,22 @@ public enum AppSettings {
         currentLevel = iniPreferences.get(CURRENT_LEVEL_KEY);
         musicVolume = iniPreferences.getDouble(MUSIC_VOLUME_KEY, DEFAULT_VOLUME);
         soundEffectVolume = iniPreferences.getDouble(SOUNDEFFECTS_VOLUME_KEY, DEFAULT_VOLUME);
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "AppSettings{" +
+                "currentLevel='" + currentLevel + '\'' +
+                ", firstRun=" + firstRun +
+                ", fullScreen=" + fullScreen +
+                ", musicVolume=" + musicVolume +
+                ", soundEffectVolume=" + soundEffectVolume +
+                ", iniPreferences=" + iniPreferences +
+                '}';
     }
 }
