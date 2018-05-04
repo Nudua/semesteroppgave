@@ -40,6 +40,7 @@ public class XMLWriter {
 
         // Classes
         validClasses.add(String.class.getName());
+
         validClasses.add(Class.class.getTypeName());
         validClasses.add(Difficulty.class.getName());
         validClasses.add(EnemySpriteType.class.getName());
@@ -47,6 +48,7 @@ public class XMLWriter {
 
         // Primitives
         validClasses.add(int.class.getName());
+        validClasses.add(long.class.getName());
         validClasses.add(double.class.getName());
         validClasses.add(float.class.getName());
         validClasses.add(char.class.getName());
@@ -79,7 +81,6 @@ public class XMLWriter {
                 }
 
                 XMLNode node = new XMLNode(field.getName(), fieldValue);
-
 
                 if(!isAccessible) {
                     field.setAccessible(false);
