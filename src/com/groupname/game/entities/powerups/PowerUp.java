@@ -8,7 +8,10 @@ import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Player;
 
 
-
+/**
+ * Base class for PowerUps.
+ * PowerUps gives the player "upgrades".
+ */
 public abstract class PowerUp extends GameObject {
 
     private boolean collected = false;
@@ -21,6 +24,9 @@ public abstract class PowerUp extends GameObject {
         return collected;
     }
 
+    /**
+     * Method for updating the base logic for PowerUps
+     */
     @Override
     public void update() {
         if(!collected) {
@@ -28,11 +34,20 @@ public abstract class PowerUp extends GameObject {
         }
     }
 
+    /**
+     * Method we call on collect.
+     *
+     * @param player the player that collect the PowerUp
+     */
     public void onCollect(Player player) {
         collected = true;
-        System.out.println("Item Collected!");
     }
 
+    /**
+     * Draw the PowerUp until its collected.
+     *
+     * @param spriteBatch the spriteBatch used to draw this gameObject.
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         if(!collected) {
