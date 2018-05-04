@@ -41,6 +41,7 @@ public abstract class LevelBase {
      * @param graphicsContext the graphicsContext used for drawing this level.
      */
     public LevelBase(Game parent, GraphicsContext graphicsContext) {
+        Objects.requireNonNull(parent);
         this.screenBounds = parent.getScreenBounds();
         this.inputManager = parent.getInputManager();
         this.graphicsContext = Objects.requireNonNull(graphicsContext);
