@@ -9,10 +9,13 @@ import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.projectiles.EnemyWeapon;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * This class extends Enemy. HomingEnemy is an enemy that follows the player and shoot in the direction of the player.
+ * This class extends Enemy.
+ * HomingEnemy is an enemy that follows the player
+ * and shoot in the direction of the player.
  */
 public class HomingEnemy extends Enemy {
     private final Vector2D startPosition;
@@ -34,7 +37,7 @@ public class HomingEnemy extends Enemy {
     public HomingEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
         startPosition = new Vector2D(position);
-        this.player = player;
+        this.player = Objects.requireNonNull(player);
 
         createWeapon();
     }
@@ -49,6 +52,11 @@ public class HomingEnemy extends Enemy {
         this.speed = speed;
     }
 
+    /**
+     * Setter for the frequency the enemy shoots.
+     *
+     * @param frequency frequency in seconds.
+     */
     public void setFrequency(int frequency) {
         this.frequency = frequency;
     }
