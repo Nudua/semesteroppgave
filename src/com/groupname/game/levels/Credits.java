@@ -18,13 +18,13 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.List;
 
-// Should probably be converted into a LEVEL
 public class Credits extends LevelBase {
 
     public final static String LEVEL_ID = "f97998bc-7db6-43b2-ada1-1a3eecf3abf7";
 
     private SpaceEffect spaceEffect;
     private ScrollingText scrollingText;
+
 
     public Credits(Game game, GraphicsContext graphicsContext) {
         super(game, graphicsContext);
