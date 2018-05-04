@@ -9,6 +9,8 @@ import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
 import javafx.scene.shape.Rectangle;
 
+import java.util.Objects;
+
 /**
  * This class represents a simple projectile.
  */
@@ -47,7 +49,7 @@ public class Projectile extends GameObject {
 
     /**
      * If this projectile is still alive, the animation will be stepped
-     * and the projective will be killed if it's outside the bounds of the screen.
+     * and the projectile will be killed if it's outside the bounds of the screen.
      */
     @Override
     public void update() {
@@ -67,6 +69,7 @@ public class Projectile extends GameObject {
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        Objects.requireNonNull(spriteBatch);
         if(isAlive()) {
             spriteBatch.draw(sprite, position);
         }
