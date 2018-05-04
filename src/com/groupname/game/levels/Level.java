@@ -3,11 +3,11 @@ package com.groupname.game.levels;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.game.editor.metadata.LevelObjectFactory;
 import com.groupname.game.other.PlayerComparator;
 import com.groupname.game.core.Game;
 import com.groupname.game.editor.metadata.LevelMetaData;
 import com.groupname.game.data.AppSettings;
-import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.Player;
@@ -75,7 +75,7 @@ public class Level extends LevelBase {
 
         List<ObjectMetaData> objectsMetaData = levelMetaData.getObjectMetaDataList();
 
-        LevelFactory factory = new LevelFactory(inputManager);
+        LevelObjectFactory factory = new LevelObjectFactory(inputManager);
 
         objectsMetaData.sort(new PlayerComparator());
 

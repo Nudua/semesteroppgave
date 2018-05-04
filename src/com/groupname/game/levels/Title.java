@@ -6,7 +6,7 @@ import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.Game;
 import com.groupname.game.editor.metadata.EnemyMetaData;
-import com.groupname.game.editor.metadata.LevelFactory;
+import com.groupname.game.editor.metadata.LevelObjectFactory;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.levels.core.LevelBase;
@@ -56,7 +56,7 @@ public class Title extends LevelBase {
     }
 
     private void createEnemies() {
-        LevelFactory levelFactory = new LevelFactory(inputManager);
+        LevelObjectFactory levelObjectFactory = new LevelObjectFactory(inputManager);
 
         EnemyMetaData worm = new EnemyMetaData("Worm", GuardEnemy.class);
         worm.setSpriteType(EnemySpriteType.GREEN_WORM);
@@ -66,8 +66,8 @@ public class Title extends LevelBase {
         blueBlob.setSpriteType(EnemySpriteType.BLUE_BLOB);
         blueBlob.setPosition(new Vector2D(700,600));
 
-        gameObjects.add(levelFactory.create(worm));
-        gameObjects.add(levelFactory.create(blueBlob));
+        gameObjects.add(levelObjectFactory.create(worm));
+        gameObjects.add(levelObjectFactory.create(blueBlob));
     }
 
     /**

@@ -25,7 +25,7 @@ import com.groupname.game.core.GameEditor;
 import com.groupname.game.editor.metadata.LevelMetaData;
 import com.groupname.game.editor.controls.MetaDataListCell;
 import com.groupname.game.editor.metadata.EnemyMetaData;
-import com.groupname.game.editor.metadata.LevelFactory;
+import com.groupname.game.editor.metadata.LevelObjectFactory;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.EnemySpriteType;
@@ -70,7 +70,7 @@ public class EditorController implements Controller {
     private final UndoRedo commandHistory;
 
     private final List<LevelItem> levelItems;
-    private LevelFactory levelFactory;
+    private LevelObjectFactory levelObjectFactory;
 
     private LevelItem selectedItem = null;
 
@@ -177,7 +177,7 @@ public class EditorController implements Controller {
 
             if(metaData.getType() == HomingEnemy.class || metaData.getType() == TowerEnemy.class) {
                 if(playerItem.isPresent()) {
-                    levelFactory.setPlayer((Player)playerItem.get().getInstance());
+                    levelObjectFactory.setPlayer((Player)playerItem.get().getInstance());
                 } else {
                     showError("Error", "This enemy requires a player to be placed first...");
                     return;
@@ -185,7 +185,7 @@ public class EditorController implements Controller {
             }
 
             // Check instance of here
-            GameObject gameObject = levelFactory.create(metaData);
+            GameObject gameObject = levelObjectFactory.create(metaData);
 
             if(gameObject != null) {
                 LevelItem newItem = new LevelItem(metaData, gameObject);
@@ -228,7 +228,7 @@ public class EditorController implements Controller {
         editor = new GameEditor(game, canvas, levelItems, commandHistory);
         editor.initialize();
 
-        levelFactory = new LevelFactory(game.getInputManager());
+        levelObjectFactory = new LevelObjectFactory(game.getInputManager());
 
         SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.EDITOR);
 
@@ -307,7 +307,7 @@ public class EditorController implements Controller {
 
             for(ObjectMetaData object : level.getObjectMetaDataList()) {
                 ObjectMetaData copy = object.deepCopy();
-                GameObject gameObject = levelFactory.create(copy);
+                GameObject gameObject = levelObjectFactory.create(copy);
 
 
                 LevelItem levelItem = new LevelItem(copy, gameObject);
@@ -467,7 +467,7 @@ public class EditorController implements Controller {
                 ", editor=" + editor +
                 ", commandHistory=" + commandHistory +
                 ", levelItems=" + levelItems +
-                ", levelFactory=" + levelFactory +
+                ", levelObjectFactory=" + levelObjectFactory +
                 ", selectedItem=" + selectedItem +
                 ", levelMetaData=" + levelMetaData +
                 ", taskRunner=" + taskRunner +

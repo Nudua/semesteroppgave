@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Takes all the objects needed to create a level and melt it down to a level.
  */
-public class LevelFactory {
+public class LevelObjectFactory {
 
     private final InputManager inputManager;
     private final SpriteFactory spriteFactory;
@@ -33,7 +33,7 @@ public class LevelFactory {
      *
      * @param inputManager the inputManager to use.
      */
-    public LevelFactory(InputManager inputManager) {
+    public LevelObjectFactory(InputManager inputManager) {
         this.inputManager = Objects.requireNonNull(inputManager);
         this.spriteFactory = new SpriteFactory();
     }
@@ -191,7 +191,7 @@ public class LevelFactory {
      */
     @Override
     public String toString() {
-        return "LevelFactory{" +
+        return "LevelObjectFactory{" +
                 "inputManager=" + inputManager +
                 ", spriteFactory=" + spriteFactory +
                 ", player=" + player +
