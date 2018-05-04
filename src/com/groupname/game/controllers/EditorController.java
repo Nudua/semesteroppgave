@@ -84,14 +84,13 @@ public class EditorController implements Controller {
         playMenuItem.disableProperty().bindBidirectional(editor.playDisabledProperty());
     }
 
+    // Gets called when the fxml has completed loading its nodes.
     @FXML
-    public void initialize() {
-        writeMetaData();
-        //populateMetaDataList();
+    protected void initialize() {
+        //writeMetaData();
         loadMetadata();
     }
 
-    @SuppressWarnings("unchecked")
     private void loadMetadata() {
         try {
             List<ObjectMetaData> metaData = Content.loadMetadata("metadata.data");
@@ -158,52 +157,6 @@ public class EditorController implements Controller {
         }
     }
 
-    /*
-    private void populateMetaDataList() {
-        levelMetaData = new LevelMetaData("Default level");
-
-        ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
-        EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - EASY", GuardEnemy.class);
-        EnemyMetaData meta3 = new EnemyMetaData("Guard BEE - EASY", GuardEnemy.class);
-        EnemyMetaData meta4 = new EnemyMetaData("Crazy BEE - MEDIUM", GuardEnemy.class);
-
-        EnemyMetaData meta5 = new EnemyMetaData("Homing SNAIL - EASY", HomingEnemy.class);
-        meta5.setSpriteType(EnemySpriteType.SNAIL);
-
-        EnemyMetaData meta7 = new EnemyMetaData("Homing SNAIL - MEDIUM", HomingEnemy.class);
-        meta7.setSpriteType(EnemySpriteType.SNAIL);
-        meta7.setDifficulty(Difficulty.MEDIUM);
-
-        EnemyMetaData meta8 = new EnemyMetaData("Homing SNAIL - HARD", HomingEnemy.class);
-        meta8.setSpriteType(EnemySpriteType.SNAIL);
-        meta8.setDifficulty(Difficulty.HARD);
-
-        EnemyMetaData meta9 = new EnemyMetaData("Homing SNAIL - IMPOSSIBLE", HomingEnemy.class);
-        meta9.setSpriteType(EnemySpriteType.GREEN_BLOB);
-        meta9.setDifficulty(Difficulty.IMPOSSIBLE);
-
-
-        EnemyMetaData meta6 = new EnemyMetaData("Tower - EASY", TowerEnemy.class);
-        meta6.setSpriteType(EnemySpriteType.SQUAREBOSS);
-
-        meta3.setSpriteType(EnemySpriteType.BEE);
-        meta4.setSpriteType(EnemySpriteType.CRAZY_BEE);
-        meta4.setDifficulty(Difficulty.MEDIUM);
-
-        //ObjectMetaData meta2 = new ObjectMetaData("Second", ObjectMetaData.class, new Vector2D());
-        //ObjectMetaData meta3 = new ObjectMetaData("Third", ObjectMetaData.class, new Vector2D());
-
-        // Move to a css file
-        metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5, meta6, meta7, meta8, meta9));
-
-
-        metaDataListView.setCellFactory((o) -> new MetaDataListCell());
-
-        metaDataListView.setOnMouseClicked(this::gameItemSelected);
-    }
-    */
-
     private void gameItemSelected(MouseEvent event) {
         ObjectMetaData sourceMetaData = metaDataListView.getSelectionModel().getSelectedItem();
 
@@ -254,7 +207,11 @@ public class EditorController implements Controller {
                 .findFirst();
     }
 
-    // Maybe move into constructor instead
+    /**
+     * Initializes the controller with the specified game to run on the specified game.
+     *
+     * @param game the game instance to use for this controller.
+     */
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
 
@@ -274,12 +231,13 @@ public class EditorController implements Controller {
         }
     }
 
-
+    // This method is used to update input and the editor logic 60 times per second
     private void update(InputManager inputManager) {
         inputManager.update();
         editor.update();
     }
 
+    // This method is used to draw the editor
     private void draw() {
         editor.draw();
     }
@@ -308,13 +266,11 @@ public class EditorController implements Controller {
 
     @FXML
     protected void editOnClicked(ActionEvent event) {
-        //editor.setMode(GameEditor.Mode.EDITING);
         editor.reset();
     }
 
     @FXML
     protected void newOnClicked(ActionEvent event) {
-        // todo: add confirmation
         newLevel();
     }
 
@@ -361,7 +317,7 @@ public class EditorController implements Controller {
             return;
         }
 
-        showAlert("Success", "LEVEL loaded successfully.", false);
+        showAlert("Success", "Level loaded successfully.", false);
     }
 
     @FXML
@@ -461,6 +417,11 @@ public class EditorController implements Controller {
         alert.show();
     }
 
+    /**
+     * Stops the current taskRunner used with this controller.
+     *
+     * Must be called when navigating away from this controller.
+     */
     @Override
     public void exit() {
         if(!taskRunner.isShutdown()){
