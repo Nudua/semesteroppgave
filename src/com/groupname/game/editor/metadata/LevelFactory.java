@@ -19,13 +19,20 @@ import java.security.InvalidParameterException;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
-
+/**
+ * Takes all the objects needed to create a level and melt it down to a level.
+ */
 public class LevelFactory {
 
     private final InputManager inputManager;
     private final SpriteFactory spriteFactory;
     private Player player;
 
+    /**
+     * Creates a new instance.
+     *
+     * @param inputManager the inputManager to use.
+     */
     public LevelFactory(InputManager inputManager) {
         this.inputManager = Objects.requireNonNull(inputManager);
         this.spriteFactory = new SpriteFactory();
