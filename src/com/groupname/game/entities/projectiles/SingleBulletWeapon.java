@@ -107,12 +107,15 @@ public class SingleBulletWeapon extends WeaponBase {
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        Objects.requireNonNull(spriteBatch);
+
         Projectile myOnlyBullet = projectiles.get(0);
         myOnlyBullet.draw(spriteBatch);
     }
 
     /**
      * Updates the logic for this weapon.
+     * Calls the logic for the projectile.
      */
     @Override
     public void update() {
