@@ -51,6 +51,10 @@ import java.util.function.Supplier;
 
 import static javafx.scene.control.Alert.AlertType;
 
+/**
+ * This controller is used to connect the fxml (views/editorview.fxml)
+ * and with the GameEditor that is used to create levels for this game.
+ */
 public class EditorController implements Controller {
 
     @FXML protected GridPane root;
@@ -63,9 +67,9 @@ public class EditorController implements Controller {
     private Game game;
 
     private GameEditor editor;
-    private UndoRedo commandHistory;
+    private final UndoRedo commandHistory;
 
-    private List<LevelItem> levelItems;
+    private final List<LevelItem> levelItems;
     private LevelFactory levelFactory;
 
     private LevelItem selectedItem = null;
@@ -73,6 +77,9 @@ public class EditorController implements Controller {
     private LevelMetaData levelMetaData;
     private final TaskRunner taskRunner;
 
+    /**
+     * Creates a new instance of this controller and should be loaded with the fxml located in /views/editorview.fxml.
+     */
     public EditorController() {
         taskRunner = new TaskRunner();
         commandHistory = new StackBasedUndoRedo();
@@ -84,14 +91,14 @@ public class EditorController implements Controller {
         playMenuItem.disableProperty().bindBidirectional(editor.playDisabledProperty());
     }
 
+    // Gets called when the fxml has completed loading its nodes.
     @FXML
-    public void initialize() {
-        writeMetaData();
-        //populateMetaDataList();
+    protected void initialize() {
+        //writeMetaData();
         loadMetadata();
     }
 
-    @SuppressWarnings("unchecked")
+    // Loads all the metaData for the objects that are used within the game (enemies, powerups and player)
     private void loadMetadata() {
         try {
             List<ObjectMetaData> metaData = Content.loadMetadata("metadata.data");
@@ -158,52 +165,6 @@ public class EditorController implements Controller {
         }
     }
 
-    /*
-    private void populateMetaDataList() {
-        levelMetaData = new LevelMetaData("Default level");
-
-        ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
-        EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - EASY", GuardEnemy.class);
-        EnemyMetaData meta3 = new EnemyMetaData("Guard BEE - EASY", GuardEnemy.class);
-        EnemyMetaData meta4 = new EnemyMetaData("Crazy BEE - MEDIUM", GuardEnemy.class);
-
-        EnemyMetaData meta5 = new EnemyMetaData("Homing SNAIL - EASY", HomingEnemy.class);
-        meta5.setSpriteType(EnemySpriteType.SNAIL);
-
-        EnemyMetaData meta7 = new EnemyMetaData("Homing SNAIL - MEDIUM", HomingEnemy.class);
-        meta7.setSpriteType(EnemySpriteType.SNAIL);
-        meta7.setDifficulty(Difficulty.MEDIUM);
-
-        EnemyMetaData meta8 = new EnemyMetaData("Homing SNAIL - HARD", HomingEnemy.class);
-        meta8.setSpriteType(EnemySpriteType.SNAIL);
-        meta8.setDifficulty(Difficulty.HARD);
-
-        EnemyMetaData meta9 = new EnemyMetaData("Homing SNAIL - IMPOSSIBLE", HomingEnemy.class);
-        meta9.setSpriteType(EnemySpriteType.GREEN_BLOB);
-        meta9.setDifficulty(Difficulty.IMPOSSIBLE);
-
-
-        EnemyMetaData meta6 = new EnemyMetaData("Tower - EASY", TowerEnemy.class);
-        meta6.setSpriteType(EnemySpriteType.SQUAREBOSS);
-
-        meta3.setSpriteType(EnemySpriteType.BEE);
-        meta4.setSpriteType(EnemySpriteType.CRAZY_BEE);
-        meta4.setDifficulty(Difficulty.MEDIUM);
-
-        //ObjectMetaData meta2 = new ObjectMetaData("Second", ObjectMetaData.class, new Vector2D());
-        //ObjectMetaData meta3 = new ObjectMetaData("Third", ObjectMetaData.class, new Vector2D());
-
-        // Move to a css file
-        metaDataListView.setStyle("-fx-control-inner-background-alt: -fx-control-inner-background;");
-        metaDataListView.setItems(FXCollections.observableArrayList(meta1, meta2, meta3, meta4, meta5, meta6, meta7, meta8, meta9));
-
-
-        metaDataListView.setCellFactory((o) -> new MetaDataListCell());
-
-        metaDataListView.setOnMouseClicked(this::gameItemSelected);
-    }
-    */
-
     private void gameItemSelected(MouseEvent event) {
         ObjectMetaData sourceMetaData = metaDataListView.getSelectionModel().getSelectedItem();
 
@@ -254,7 +215,11 @@ public class EditorController implements Controller {
                 .findFirst();
     }
 
-    // Maybe move into constructor instead
+    /**
+     * Initializes the controller with the specified game to run on the specified game.
+     *
+     * @param game the game instance to use for this controller.
+     */
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
 
@@ -269,17 +234,20 @@ public class EditorController implements Controller {
 
         setupBindings();
 
+        newLevel();
+
         if(!game.isRunning()) {
             game.start();
         }
     }
 
-
+    // This method is used to update input and the editor logic 60 times per second
     private void update(InputManager inputManager) {
         inputManager.update();
         editor.update();
     }
 
+    // This method is used to draw the editor
     private void draw() {
         editor.draw();
     }
@@ -308,13 +276,11 @@ public class EditorController implements Controller {
 
     @FXML
     protected void editOnClicked(ActionEvent event) {
-        //editor.setMode(GameEditor.Mode.EDITING);
         editor.reset();
     }
 
     @FXML
     protected void newOnClicked(ActionEvent event) {
-        // todo: add confirmation
         newLevel();
     }
 
@@ -361,7 +327,7 @@ public class EditorController implements Controller {
             return;
         }
 
-        showAlert("Success", "LEVEL loaded successfully.", false);
+        showAlert("Success", "Level loaded successfully.", false);
     }
 
     @FXML
@@ -461,6 +427,11 @@ public class EditorController implements Controller {
         alert.show();
     }
 
+    /**
+     * Stops the current taskRunner used with this controller.
+     *
+     * Must be called when navigating away from this controller.
+     */
     @Override
     public void exit() {
         if(!taskRunner.isShutdown()){
@@ -477,6 +448,30 @@ public class EditorController implements Controller {
     @FXML
     protected void exitOnClicked(ActionEvent event) {
         SceneManager.navigate(SceneName.Title);
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "EditorController{" +
+                "root=" + root +
+                ", canvas=" + canvas +
+                ", metaDataListView=" + metaDataListView +
+                ", editMenuItem=" + editMenuItem +
+                ", playMenuItem=" + playMenuItem +
+                ", game=" + game +
+                ", editor=" + editor +
+                ", commandHistory=" + commandHistory +
+                ", levelItems=" + levelItems +
+                ", levelFactory=" + levelFactory +
+                ", selectedItem=" + selectedItem +
+                ", levelMetaData=" + levelMetaData +
+                ", taskRunner=" + taskRunner +
+                '}';
     }
 }
 

@@ -41,23 +41,19 @@ public class GameController implements Controller {
 
     private List<LevelBase> levels = new ArrayList<>();
 
-    private LevelBase credits;
     private boolean isPaused = false;
     private int currentLevelIndex = 0;
 
-    private int creditsIndex = -1;
-    private int gameOverIndex = -1;
-
     private ScreenTransition levelCompletedTransition;
 
-    // Maybe move into constructor instead
+    private LevelBase gameOver;
+
+
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
 
         game.initialize(canvas, this::update, this::draw);
 
-        //currentLevel = new Level1(game, canvas.getGraphicsContext2D());
-        //currentLevel.initialize();
         loadLevels();
 
         String levelId = AppSettings.INSTANCE.getCurrentLevel();
@@ -66,8 +62,7 @@ public class GameController implements Controller {
             Optional<LevelBase> level = levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
 
             if(level.isPresent()) {
-                int index = levels.indexOf(level.get());
-                currentLevelIndex = index;
+                currentLevelIndex = levels.indexOf(level.get());
                 System.out.println("Restoring from level: " + currentLevelIndex);
             }
         }
@@ -81,7 +76,7 @@ public class GameController implements Controller {
             });
         }
 
-        GameOver gameOver = new GameOver(game, canvas.getGraphicsContext2D());
+        gameOver = new GameOver(game, canvas.getGraphicsContext2D());
         gameOver.initialize();
         //levels.add(0, new Level1(game, canvas.getGraphicsContext2D()));
         //levels.add(0, gameOver);
@@ -101,7 +96,7 @@ public class GameController implements Controller {
     }
 
     private void loadLevels() {
-        credits = new Credits(game, canvas.getGraphicsContext2D());
+        LevelBase credits = new Credits(game, canvas.getGraphicsContext2D());
         credits.initialize();
 
         LevelReader reader = new LevelReader();
@@ -160,13 +155,13 @@ public class GameController implements Controller {
             unPause();
         });
         pauseMenu.setOnClicked(PauseButton.Save, this::save);
-        //pauseMenu.setButtonEnabled(PauseButton.Save, false);
 
         root.getChildren().add(pauseMenu);
 
         unPause();
     }
 
+    // Save our current progress
     private void save() {
         AppSettings appSettings = AppSettings.INSTANCE;
 
