@@ -18,6 +18,9 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * This level represents the credits for this game.
+ */
 public class Credits extends LevelBase {
 
     public final static String LEVEL_ID = "f97998bc-7db6-43b2-ada1-1a3eecf3abf7";
@@ -25,18 +28,31 @@ public class Credits extends LevelBase {
     private SpaceEffect spaceEffect;
     private ScrollingText scrollingText;
 
-
+    /**
+     * Creates a new instance of this class with the specified game and graphicscontext.
+     *
+     * @param game the game used to run this level.
+     * @param graphicsContext the graphics context used to draw this level.
+     */
     public Credits(Game game, GraphicsContext graphicsContext) {
         super(game, graphicsContext);
 
         backgroundColor = Color.BLACK;
     }
 
+    /**
+     * Returns the ID of this "level".
+     *
+     * @return the ID of this "level".
+     */
     @Override
     public String getId() {
         return LEVEL_ID;
     }
 
+    /**
+     * Initialize the level.
+     */
     @Override
     public void initialize() {
         createSpaceEffect();
@@ -61,23 +77,18 @@ public class Credits extends LevelBase {
         scrollingText = new ScrollingText();
     }
 
+    /**
+     * Method that update the logic of this "level".
+     */
     @Override
     public void update() {
-        // Update input to the most recent state
-        /*
-        if(inputManager.isEnabled()) {
-            inputManager.update();
-        }
-        */
-
-        if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
-            state = LevelState.COMPLETED;
-        }
-
         spaceEffect.update();
         scrollingText.update();
     }
 
+    /**
+     * Draws the level.
+     */
     @Override
     public void draw() {
         clearScreen();
@@ -87,5 +98,19 @@ public class Credits extends LevelBase {
     private void drawSpace() {
         spaceEffect.draw(spriteBatch);
         scrollingText.draw(graphicsContext);
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return super.toString() +
+                "Credits{" +
+                "spaceEffect=" + spaceEffect +
+                ", scrollingText=" + scrollingText +
+                '}';
     }
 }
