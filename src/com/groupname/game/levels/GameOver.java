@@ -53,11 +53,6 @@ public class GameOver extends LevelBase {
 
     @Override
     public void update() {
-        // Update input to the most recent state
-        if(inputManager.isEnabled()) {
-            inputManager.update();
-        }
-
         weatherEffect.update();
 
         if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {

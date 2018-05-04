@@ -50,6 +50,7 @@ public class GameController implements Controller {
     private int currentLevelIndex = 0;
 
     private ScreenTransition levelCompletedTransition;
+    private int gameOverIndex = 0;
 
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
@@ -107,6 +108,8 @@ public class GameController implements Controller {
         gameOver.initialize();
 
         levels.add(gameOver);
+
+        gameOverIndex = levels.indexOf(gameOver);
     }
 
     private boolean loadLevel(LevelReader reader, String fileName) {
@@ -172,11 +175,14 @@ public class GameController implements Controller {
         if(level instanceof Level) {
             ((Level) level).setOnPlayerDead(() ->{
 
+                /*
                 Optional<LevelBase> gameOver = getLevelFromId(GameOver.LEVEL_ID);
 
                 if(gameOver.isPresent()) {
                     currentLevelIndex = levels.indexOf(gameOver.get());
                 }
+                */
+                currentLevelIndex = gameOverIndex;
 
                 System.out.println("Dave, everybody's dead... everybody's dead Dave");
                 //getCurrentLevel().reset();
