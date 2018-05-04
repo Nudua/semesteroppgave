@@ -113,6 +113,7 @@ public class HomingEnemy extends Enemy {
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        Objects.requireNonNull(spriteBatch);
         if(isAlive()) {
             spriteBatch.draw(sprite, position);
             currentWeapon.draw(spriteBatch);

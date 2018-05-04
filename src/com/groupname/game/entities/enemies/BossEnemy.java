@@ -10,10 +10,13 @@ import com.groupname.game.entities.Player;
 import javafx.scene.shape.Rectangle;
 
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * This class extends Enemy. BossEnemy is an enemy that moves slowly, shoots a little and is hard to kill.
+ * This class extends Enemy.
+ * BossEnemy is an enemy that moves slowly,
+ * shoots a little and is hard to kill.
  */
 public class BossEnemy extends Enemy {
     //private SpreadGun currentWeapon;
@@ -35,8 +38,8 @@ public class BossEnemy extends Enemy {
      */
     public BossEnemy(Sprite sprite, Vector2D position, Player player) {
         super(sprite, position);
-        this.player = player;
-        this.basePosition = position;
+        this.player = Objects.requireNonNull(player);
+        this.basePosition = Objects.requireNonNull(position);
         createBossBounds();
         sprite.setScale(4.0d);
 
@@ -48,10 +51,12 @@ public class BossEnemy extends Enemy {
         bossBounds = new Rectangle((int)basePosition.getX() - 300, (int)basePosition.getY() - 100, (int)width, (int)height);
     }
 
-    public Rectangle getBossBounds() {
-        return bossBounds;
-    }
 
+    /**
+     * Returns a modified Hitbox for BossEnemy.
+     *
+     * @return a modified Hitbox for BossEnemy.
+     */
     @Override
     public Rectangle getHitbox() {
         double scale = sprite.getScale();
@@ -112,7 +117,7 @@ public class BossEnemy extends Enemy {
     /**
      * Draws the enemy if it is alive.
      *
-     * @param spriteBatch draws the given sprite at the specified position
+     * @param spriteBatch draws the given sprite at the specified position.
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
