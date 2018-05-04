@@ -8,6 +8,7 @@ import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
 import com.groupname.game.entities.SpriteFactory;
+import com.groupname.game.entities.enemies.BossEnemy;
 import com.groupname.game.entities.enemies.GuardEnemy;
 import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.enemies.TowerEnemy;
@@ -95,6 +96,8 @@ public class LevelFactory {
             return createHomingEnemy(enemyMetaData);
         } else if(enemyMetaData.getType() == TowerEnemy.class) {
             return createTowerEnemy(enemyMetaData);
+        } else if(enemyMetaData.getType() == BossEnemy.class) {
+            return createBossEnemy(enemyMetaData);
         }
 
         throw new InvalidParameterException("Unsupported enemy");
@@ -122,6 +125,16 @@ public class LevelFactory {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
         TowerEnemy enemy = new TowerEnemy(sprite, metaData.getPosition(), player);
+        setDifficulty(metaData, enemy);
+
+        return enemy;
+    }
+
+    private BossEnemy createBossEnemy(EnemyMetaData metaData) {
+        Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
+
+        BossEnemy enemy = new BossEnemy(sprite, metaData.getPosition(), player);
+        setDifficulty(metaData, enemy);
 
         return enemy;
     }
