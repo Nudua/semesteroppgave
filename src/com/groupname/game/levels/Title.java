@@ -81,7 +81,7 @@ public class Title extends LevelBase {
     }
 
     /**
-     * Draws the context.
+     * Draws the level.
      */
     @Override
     public void draw() {

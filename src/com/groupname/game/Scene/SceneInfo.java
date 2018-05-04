@@ -1,51 +1,53 @@
 package com.groupname.game.scene;
 
-import javafx.scene.Scene;
+import com.groupname.framework.util.Strings;
 
+/**
+ * This immutable class holds the title and viewPath (fxml) for scenes used by this application.
+ */
 public class SceneInfo {
 
-    private final SceneName sceneName;
     private final String title;
     private final String viewPath;
-    private Runnable init;
-    private Scene scene;
 
-    public SceneInfo(SceneName sceneName, String title, String viewPath) {
-        this(sceneName,title, viewPath, null);
-    }
-
-    public SceneInfo(SceneName sceneName, String title, String viewPath, Runnable init) {
-        this.sceneName = sceneName;
+    /**
+     * Creates a new instance of this class with the specified title and viewPath to the fxml.
+     * @param title the title to use for this info.
+     * @param viewPath the viewPath to the fxml used by this sceneInfo.
+     */
+    public SceneInfo(String title, String viewPath) {
         this.title = title;
-        this.viewPath = viewPath;
-        this.init = init;
+        this.viewPath = Strings.requireNonNullAndNotEmpty(viewPath);
     }
 
-    public Scene getScene() {
-        return scene;
-    }
-
-    public void setScene(Scene scene) {
-        this.scene = scene;
-    }
-
-    public SceneName getSceneName() {
-        return sceneName;
-    }
-
+    /**
+     * Returns the viewPath to the fxml file used by this info.
+     *
+     * @return the viewPath to the fxml file used by this info.
+     */
     public String getViewPath() {
         return viewPath;
     }
 
-    public Runnable getInit() {
-        return init;
-    }
-
-    public void setInit(Runnable init) {
-        this.init = init;
-    }
-
+    /**
+     * Returns the title to the scene.
+     *
+     * @return the title to the scene.
+     */
     public String getTitle() {
         return title;
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "SceneInfo{" +
+                "title='" + title + '\'' +
+                ", viewPath='" + viewPath + '\'' +
+                '}';
     }
 }

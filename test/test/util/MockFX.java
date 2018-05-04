@@ -5,11 +5,16 @@ import javafx.stage.Stage;
 
 public class MockFX extends Application {
 
+    private static Stage stage;
     private static boolean initialized;
+
+    public static Stage getStage() {
+        return stage;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        // do nothing
+        stage = primaryStage;
     }
 
     public static void initFX() {

@@ -36,14 +36,13 @@ public enum SceneManager {
 
     private void setupGame(Scene scene) {
         assert scene != null;
-
         game = new Game(scene, AppSettings.SCREEN_BOUNDS.getWidth(), AppSettings.SCREEN_BOUNDS.getHeight());
     }
 
     private void createSceneInfos() {
-        SceneInfo title= new SceneInfo(SceneName.TITLE, "TITLE - Untitled GAME", "/com/groupname/game/views/titleview.fxml");
-        SceneInfo game = new SceneInfo(SceneName.GAME, "GAME - Untitled GAME", "/com/groupname/game/views/gameview.fxml");
-        SceneInfo editor = new SceneInfo(SceneName.EDITOR, "Level editor!", "/com/groupname/game/views/editorview.fxml");
+        SceneInfo title= new SceneInfo("TITLE - Untitled GAME", "/com/groupname/game/views/titleview.fxml");
+        SceneInfo game = new SceneInfo("GAME - Untitled GAME", "/com/groupname/game/views/gameview.fxml");
+        SceneInfo editor = new SceneInfo("Level editor!", "/com/groupname/game/views/editorview.fxml");
 
         scenes.put(SceneName.TITLE, title);
         scenes.put(SceneName.GAME, game);
@@ -119,5 +118,21 @@ public enum SceneManager {
         } catch (IOException exception) { // throw other exception
             exception.printStackTrace();
         }
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "SceneManager{" +
+                "primaryStage=" + primaryStage +
+                ", scenes=" + scenes +
+                ", initialized=" + initialized +
+                ", game=" + game +
+                ", currentController=" + currentController +
+                '}';
     }
 }
