@@ -32,7 +32,10 @@ import java.util.*;
 
 /**
  * This controller is used to connect the fxml (views/gameview.fxml)
- * and handles the lifecycle of the
+ * and handles the lifecycle of the game itself. It also handles
+ * loading levels and switching between the current levels.
+ *
+ * Note: consider making a level manager.
  */
 public class GameController implements Controller {
     @FXML protected GridPane root;
@@ -42,7 +45,6 @@ public class GameController implements Controller {
     private Game game;
 
     private GameMenuFX<PauseButton> pauseMenu;
-    //private LevelBase currentLevel;
 
     private List<LevelBase> levels = new ArrayList<>();
 
@@ -52,6 +54,17 @@ public class GameController implements Controller {
     private ScreenTransition levelCompletedTransition;
     private int gameOverIndex = 0;
 
+    /**
+     * Creates a new instance of this controller.
+     */
+    public GameController() {
+    }
+
+    /**
+     * Initializes the controller with the specified game to run on the specified game.
+     *
+     * @param game the game instance to use for this controller.
+     */
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
 
@@ -160,6 +173,7 @@ public class GameController implements Controller {
     }
 
     // Save our current progress
+    // todo: switch to xmlwriter
     private void save() {
         AppSettings appSettings = AppSettings.INSTANCE;
 
@@ -174,18 +188,7 @@ public class GameController implements Controller {
     private void onPlayerDead(LevelBase level) {
         if(level instanceof Level) {
             ((Level) level).setOnPlayerDead(() ->{
-
-                /*
-                Optional<LevelBase> gameOver = getLevelFromId(GameOver.LEVEL_ID);
-
-                if(gameOver.isPresent()) {
-                    currentLevelIndex = levels.indexOf(gameOver.get());
-                }
-                */
                 currentLevelIndex = gameOverIndex;
-
-                System.out.println("Dave, everybody's dead... everybody's dead Dave");
-                //getCurrentLevel().reset();
             });
         }
     }
@@ -261,8 +264,10 @@ public class GameController implements Controller {
         }
     }
 
+    /**
+     * Stub method, this nothing in this controller.
+     */
     @Override
     public void exit() {
-
     }
 }
