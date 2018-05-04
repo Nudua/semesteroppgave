@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * Creates sprites for our objects based on the object type.
+ */
 public class SpriteFactory {
     private final Map<String, SpriteSheet> spriteSheets;
     private final static String ENEMY_SPRITESHEET_FILENAME = "enemies.png";
@@ -24,6 +27,9 @@ public class SpriteFactory {
     private final static String PROJECTILE_SPRITESHEET = "projectiles";
 
 
+    /**
+     * Creates a new instance of this object.
+     */
     public SpriteFactory() {
         spriteSheets = new HashMap<>();
         createSpriteSheets();
@@ -37,6 +43,13 @@ public class SpriteFactory {
         spriteSheets.put(ENEMY_SPRITESHEET, new SpriteSheet(ENEMY_SPRITESHEET, enemySheet));
     }
 
+    /**
+     * Method for creating animated sprites for enemies.
+     * Returns an animated sprite.
+     *
+     * @param spriteType the sprite type for your enemy.
+     * @return an animated sprite.
+     */
     public Sprite createEnemy(EnemySpriteType spriteType) {
         Objects.requireNonNull(spriteType);
 
@@ -50,6 +63,11 @@ public class SpriteFactory {
         return new AnimatedSprite(spriteSheets.get(ENEMY_SPRITESHEET), frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));
     }
 
+    /**
+     * Return an animated sprite of the player.
+     *
+     * @return an animated sprite of the player.
+     */
     public Sprite createPlayer() {
         // Idle animation, player class need a lot of work for animations!
         AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(0,0, 124, 124), 60 * 2);
@@ -64,6 +82,11 @@ public class SpriteFactory {
         return animatedSprite;
     }
 
+    /**
+     * Returns an animated sprite of the projectile.
+     *
+     * @return an animated sprite of the projectile.
+     */
     public Sprite createProjectile() {
         Image bulletSheet = Content.loadImage(PROJECTILE_SPRITESHEET_FILENAME, ResourceType.SPRITE_SHEET);
         SpriteSheet bulletSpriteSheet = new SpriteSheet(PROJECTILE_SPRITESHEET, bulletSheet);
