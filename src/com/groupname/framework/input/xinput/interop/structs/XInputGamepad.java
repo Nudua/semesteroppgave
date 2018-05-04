@@ -23,19 +23,19 @@ public class XInputGamepad extends Structure {
     public byte RightTrigger;
 
     // Thumbsticks general info for 'ThumbLX', 'ThumbLY', 'ThumbRX' and 'ThumbRY'
-    // Negative values represent a movement to the Left or Down on the thumbstick.
-    // While positive values represent a movement to the Right or Up.
+    // Negative values represent a movement to the LEFT or DOWN on the thumbstick.
+    // While positive values represent a movement to the RIGHT or UP.
 
-    // Left Thumbstick on the x-axis. Values range between -32768 and 32767.
+    // LEFT Thumbstick on the x-axis. Values range between -32768 and 32767.
     public short ThumbLX;
 
-    // Left Thumbstick on the y-axis. Values range between -32768 and 32767.
+    // LEFT Thumbstick on the y-axis. Values range between -32768 and 32767.
     public short ThumbLY;
 
-    // Right Thumbstick on the x-axis. Values range between -32768 and 32767.
+    // RIGHT Thumbstick on the x-axis. Values range between -32768 and 32767.
     public short ThumbRX;
 
-    // Right Thumbstick on the y-axis. Values range between -32768 and 32767.
+    // RIGHT Thumbstick on the y-axis. Values range between -32768 and 32767.
     public short ThumbRY;
 
     @SuppressWarnings("rawtypes")

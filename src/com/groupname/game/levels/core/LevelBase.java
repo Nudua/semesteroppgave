@@ -1,6 +1,5 @@
 package com.groupname.game.levels.core;
 
-import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.SpriteSheetNotFoundException;
@@ -48,7 +47,7 @@ public abstract class LevelBase {
         backgroundColor = Color.BLACK;
 
         // Set to loading first when we have screen transitions
-        state = LevelState.Playing;
+        state = LevelState.PLAYING;
     }
 
     public abstract String getId();
@@ -59,10 +58,10 @@ public abstract class LevelBase {
     }
 
     /**
-     * Returns the SpriteSheet with the specified key if it exists
-     * @param key the name of the SpriteSheet to get
-     * @return @code {SpriteSheet} if successful.
-     * @throws SpriteSheetNotFoundException if no SpriteSheet by that key was present
+     * Returns the SPRITE_SHEET with the specified key if it exists
+     * @param key the name of the SPRITE_SHEET to get
+     * @return @code {SPRITE_SHEET} if successful.
+     * @throws SpriteSheetNotFoundException if no SPRITE_SHEET by that key was present
      */
     protected SpriteSheet getSpriteSheet(String key) {
         if(spriteSheets.containsKey(key)) {
@@ -77,7 +76,7 @@ public abstract class LevelBase {
     }
 
     public void reset() {
-        state = LevelState.Playing;
+        state = LevelState.PLAYING;
     }
 
     public LevelState getState() {

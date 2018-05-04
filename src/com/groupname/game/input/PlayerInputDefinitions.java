@@ -14,15 +14,15 @@ import java.util.Set;
  * This class defines the default player input bindings for this game.
  */
 public class PlayerInputDefinitions {
-    public static final String UP = "Player 1 - Up";
-    public static final String DOWN = "Player 1 - Down";
-    public static final String LEFT = "Player 1 - Left";
-    public static final String RIGHT = "Player 1 - Right";
+    public static final String UP = "Player 1 - UP";
+    public static final String DOWN = "Player 1 - DOWN";
+    public static final String LEFT = "Player 1 - LEFT";
+    public static final String RIGHT = "Player 1 - RIGHT";
 
-    public static final String SHOOT_UP = "Player 1 - Shoot Up";
-    public static final String SHOOT_DOWN = "Player 1 - Shoot Down";
-    public static final String SHOOT_LEFT = "Player 1 - Shoot Left";
-    public static final String SHOOT_RIGHT = "Player 1 - Shoot Right";
+    public static final String SHOOT_UP = "Player 1 - SHOOT UP";
+    public static final String SHOOT_DOWN = "Player 1 - SHOOT DOWN";
+    public static final String SHOOT_LEFT = "Player 1 - SHOOT LEFT";
+    public static final String SHOOT_RIGHT = "Player 1 - SHOOT RIGHT";
 
     public static final String START = "Player 1 - Start";
     public static final String SELECT = "Player 1 - Select";

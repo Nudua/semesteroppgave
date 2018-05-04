@@ -23,7 +23,7 @@ public class BoundsCheckerTests {
         BoundsChecker boundsChecker = new BoundsChecker();
         SpriteFactory spriteFactory = new SpriteFactory();
 
-        GuardEnemy object = new GuardEnemy((spriteFactory.createEnemy(EnemySpriteType.Bee)), new Vector2D(100,100));
+        GuardEnemy object = new GuardEnemy((spriteFactory.createEnemy(EnemySpriteType.BEE)), new Vector2D(100,100));
 
         assertTrue(boundsChecker.isWithinBounds(object, new Rectangle(1000,1000)));
     }
@@ -33,7 +33,7 @@ public class BoundsCheckerTests {
         BoundsChecker boundsChecker = new BoundsChecker();
         SpriteFactory spriteFactory = new SpriteFactory();
 
-        GuardEnemy object = new GuardEnemy((spriteFactory.createEnemy(EnemySpriteType.Bee)), new Vector2D(100,100));
+        GuardEnemy object = new GuardEnemy((spriteFactory.createEnemy(EnemySpriteType.BEE)), new Vector2D(100,100));
 
         assertFalse(boundsChecker.isWithinBounds(object, new Rectangle(1,1)));
     }

@@ -90,25 +90,25 @@ public enum SoundPlayer {
      * @throws MediaException if the mediaformat is not supported on this system.
      */
     public void load() throws MediaException {
-        AudioClip shoot = new AudioClip(Content.getResourcePath("test.mp3", ResourceType.SoundEffect));
-        soundEffects.put(SoundEffect.Shoot, shoot);
+        AudioClip shoot = new AudioClip(Content.getResourcePath("test.mp3", ResourceType.SOUND_EFFECT));
+        soundEffects.put(SoundEffect.SHOOT, shoot);
 
-        musicTracks.put(MusicTrack.Main, new Media(Content.getResourcePath(MUSIC_MAIN, ResourceType.Music)));
-        musicTracks.put(MusicTrack.Editor, new Media(Content.getResourcePath(MUSIC_EDITOR, ResourceType.Music)));
-        musicTracks.put(MusicTrack.Credits, new Media(Content.getResourcePath(MUSIC_CREDITS, ResourceType.Music)));
+        musicTracks.put(MusicTrack.MAIN, new Media(Content.getResourcePath(MUSIC_MAIN, ResourceType.MUSIC)));
+        musicTracks.put(MusicTrack.EDITOR, new Media(Content.getResourcePath(MUSIC_EDITOR, ResourceType.MUSIC)));
+        musicTracks.put(MusicTrack.CREDITS, new Media(Content.getResourcePath(MUSIC_CREDITS, ResourceType.MUSIC)));
 
         initialized = true;
     }
 
     /**
-     * Plays the default musicTrack which is MusicTrack.Main
+     * Plays the default musicTrack which is MusicTrack.MAIN
      */
     public void playMusic() {
         if(!initialized) {
             return;
         }
 
-        playMusic(MusicTrack.Main);
+        playMusic(MusicTrack.MAIN);
     }
 
 
@@ -146,9 +146,9 @@ public enum SoundPlayer {
     }
 
     /**
-     * Submits a SoundEffect to be played on a separate thread.
+     * Submits a SOUND_EFFECT to be played on a separate thread.
      *
-     * @param soundEffect the SoundEffect to be played on a separate thread.
+     * @param soundEffect the SOUND_EFFECT to be played on a separate thread.
      */
     public void playSoundEffect(SoundEffect soundEffect) {
         if(!initialized) {
@@ -184,7 +184,7 @@ public enum SoundPlayer {
         /**
          * Shooting sound effect.
          */
-        Shoot
+        SHOOT
     }
 
     /**
@@ -192,17 +192,17 @@ public enum SoundPlayer {
      */
     public enum MusicTrack {
         /**
-         * The Main theme of this game.
+         * The MAIN theme of this game.
          */
-        Main,
+        MAIN,
         /**
          * The editor theme of this game. (elevator-esque music)
          */
-        Editor,
+        EDITOR,
         /**
          * The credits theme of this game.
          */
-        Credits
+        CREDITS
     }
 
     /**

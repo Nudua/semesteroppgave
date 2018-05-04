@@ -30,8 +30,8 @@ public class SpriteFactory {
     }
 
     private void createSpriteSheets() {
-        Image playerSheet = Content.loadImage(PLAYER_SPRITESHEET_FILENAME, ResourceType.SpriteSheet);
-        Image enemySheet = Content.loadImage(ENEMY_SPRITESHEET_FILENAME, ResourceType.SpriteSheet);
+        Image playerSheet = Content.loadImage(PLAYER_SPRITESHEET_FILENAME, ResourceType.SPRITE_SHEET);
+        Image enemySheet = Content.loadImage(ENEMY_SPRITESHEET_FILENAME, ResourceType.SPRITE_SHEET);
 
         spriteSheets.put(PLAYER_SPRITESHEET, new SpriteSheet(PLAYER_SPRITESHEET, playerSheet));
         spriteSheets.put(ENEMY_SPRITESHEET, new SpriteSheet(ENEMY_SPRITESHEET, enemySheet));
@@ -65,7 +65,7 @@ public class SpriteFactory {
     }
 
     public Sprite createProjectile() {
-        Image bulletSheet = Content.loadImage(PROJECTILE_SPRITESHEET_FILENAME, ResourceType.SpriteSheet);
+        Image bulletSheet = Content.loadImage(PROJECTILE_SPRITESHEET_FILENAME, ResourceType.SPRITE_SHEET);
         SpriteSheet bulletSpriteSheet = new SpriteSheet(PROJECTILE_SPRITESHEET, bulletSheet);
 
         AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(4, 0, 66, 66), 6);

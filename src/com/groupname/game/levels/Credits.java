@@ -1,10 +1,8 @@
 package com.groupname.game.levels;
 
-import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.background.space.SpaceEffect;
-import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.IntVector2D;
@@ -20,7 +18,7 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.List;
 
-// Should probably be converted into a Level
+// Should probably be converted into a LEVEL
 public class Credits extends LevelBase {
 
     public final static String LEVEL_ID = "f97998bc-7db6-43b2-ada1-1a3eecf3abf7";
@@ -46,7 +44,7 @@ public class Credits extends LevelBase {
     }
 
     private void createSpaceEffect() {
-        SpriteSheet starSpriteSheet = new SpriteSheet("star", Content.loadImage("star.png", ResourceType.SpriteSheet));
+        SpriteSheet starSpriteSheet = new SpriteSheet("star", Content.loadImage("star.png", ResourceType.SPRITE_SHEET));
 
         Sprite bigStar = new Sprite(starSpriteSheet, Sprite.createSpriteRegion(32,32));
         bigStar.setScale(0.7d);
@@ -71,7 +69,7 @@ public class Credits extends LevelBase {
         }
 
         if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
-            state = LevelState.Completed;
+            state = LevelState.COMPLETED;
         }
 
         spaceEffect.update();

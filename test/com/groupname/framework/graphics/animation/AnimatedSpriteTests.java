@@ -18,7 +18,7 @@ public class AnimatedSpriteTests {
 
     private AnimationFrame frame1 = new AnimationFrame(Sprite.createSpriteRegion(100,100), frame1Delay);
     private AnimationFrame frame2 = new AnimationFrame(Sprite.createSpriteRegion(300,100), frame2Delay);
-    private SpriteSheet spriteSheet = new SpriteSheet("testSheet", Content.loadImage("projectiles.png", ResourceType.SpriteSheet));
+    private SpriteSheet spriteSheet = new SpriteSheet("testSheet", Content.loadImage("projectiles.png", ResourceType.SPRITE_SHEET));
 
     public AnimatedSprite getValidAnimatedSprite() {
         return new AnimatedSprite(spriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2));

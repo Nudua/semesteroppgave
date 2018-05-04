@@ -91,7 +91,7 @@ public class HomingEnemy extends Enemy {
         counter.step();
         counter.setCounter(counter.getCounter() + random.nextInt(1, 10));
         if(counter.isDone()) {
-            currentWeapon.fire(position, Direction.None);
+            currentWeapon.fire(position, Direction.NONE);
             counter.reset();
         }
 

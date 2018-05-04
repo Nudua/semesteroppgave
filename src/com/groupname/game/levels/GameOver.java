@@ -1,10 +1,8 @@
 package com.groupname.game.levels;
 
-import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.background.gameover.WeatherEffect;
-import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.game.core.Game;
@@ -43,7 +41,7 @@ public class GameOver extends LevelBase {
     }
 
     private void createWeatherEffect() {
-        SpriteSheet snowSheet = new SpriteSheet("snow", Content.loadImage("snow.png", ResourceType.SpriteSheet));
+        SpriteSheet snowSheet = new SpriteSheet("snow", Content.loadImage("snow.png", ResourceType.SPRITE_SHEET));
 
         Sprite snowSprite3 = new Sprite(snowSheet, Sprite.createSpriteRegion(2,0,30,20));
         snowSprite3.setScale(1.0d);
@@ -63,7 +61,7 @@ public class GameOver extends LevelBase {
         weatherEffect.update();
 
         if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
-            state = LevelState.Completed;
+            state = LevelState.COMPLETED;
         }
     }
 

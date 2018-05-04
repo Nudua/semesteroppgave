@@ -1,18 +1,18 @@
 package com.groupname.game.entities;
 
 public enum EnemySpriteType {
-    GreenBlob(0),
-    PurpleBlob(1),
-    BlueBlob(2),
-    Bee(3),
-    CrazyBee(4),
-    Snail(5),
-    GreenFish(6),
-    PinkFish(7),
-    GreenWorm(8),
-    PinkWorm(9),
-    Squareboss(10),
-    Jellyfish(11);
+    GREEN_BLOB(0),
+    PURPLE_BLOB(1),
+    BLUE_BLOB(2),
+    BEE(3),
+    CRAZY_BEE(4),
+    SNAIL(5),
+    GREEN_FISH(6),
+    PINK_FISH(7),
+    GREEN_WORM(8),
+    PINK_WORM(9),
+    SQUAREBOSS(10),
+    JELLYFISH(11);
 
     private int index;
 

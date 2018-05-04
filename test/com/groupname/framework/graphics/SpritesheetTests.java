@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class SpritesheetTests {
 
-    private Image img = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
+    private Image img = Content.loadImage("projectiles.png", ResourceType.SPRITE_SHEET);
 
     @Test(expected = NullPointerException.class)
     public void nameCannotBeNull() {

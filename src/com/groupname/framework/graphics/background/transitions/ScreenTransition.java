@@ -2,7 +2,7 @@ package com.groupname.framework.graphics.background.transitions;
 
 /**
  * Represents a full-screen animation that is meant to be run
- * when the user starts or completes a Level.
+ * when the user starts or completes a LEVEL.
  */
 public interface ScreenTransition {
 

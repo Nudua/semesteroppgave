@@ -15,7 +15,7 @@ import java.util.Objects;
  * at the player a long the axis.
  */
 public class TowerEnemy extends Enemy {
-    private Direction shootingDirection = Direction.Up;
+    private Direction shootingDirection = Direction.UP;
     private SingleBulletWeapon currentWeapon;
     private Player player;
     private int shootingA;
@@ -82,7 +82,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                shootingDirection = Direction.Up;
+                shootingDirection = Direction.UP;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -103,7 +103,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                shootingDirection = Direction.Down;
+                shootingDirection = Direction.DOWN;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -124,7 +124,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                shootingDirection = Direction.Left;
+                shootingDirection = Direction.LEFT;
                 canShoot = true;
             } else {
                 canShoot = false;
@@ -145,7 +145,7 @@ public class TowerEnemy extends Enemy {
             }
 
             if(inRangeLeft && inRangeRight) {
-                shootingDirection = Direction.Right;
+                shootingDirection = Direction.RIGHT;
                 canShoot = true;
             } else {
                 canShoot = false;

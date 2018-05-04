@@ -48,7 +48,7 @@ public class Level extends LevelBase {
     public void initialize() {
         gameObjects.clear();
 
-        backgroundImage = Content.loadImage(levelMetaData.getBackgroundImagePath(), ResourceType.Background);
+        backgroundImage = Content.loadImage(levelMetaData.getBackgroundImagePath(), ResourceType.BACKGROUND);
 
         List<ObjectMetaData> objectsMetaData = levelMetaData.getObjectMetaDataList();
 
@@ -93,7 +93,7 @@ public class Level extends LevelBase {
         */
 
         if(allEnemiesDead()) {
-            state = LevelState.Completed;
+            state = LevelState.COMPLETED;
         }
 
         if(playerDead()) {

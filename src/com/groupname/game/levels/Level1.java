@@ -7,7 +7,6 @@ import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.graphics.animation.AnimationFrame;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
-import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.Game;
 import com.groupname.game.entities.Enemy;
@@ -60,8 +59,8 @@ public class Level1 extends LevelBase {
     }
 
     private void createSpriteSheets() {
-        Image playerSheet = Content.loadImage("player1.png", ResourceType.SpriteSheet);
-        Image enemySheet = Content.loadImage("projectiles.png", ResourceType.SpriteSheet);
+        Image playerSheet = Content.loadImage("player1.png", ResourceType.SPRITE_SHEET);
+        Image enemySheet = Content.loadImage("projectiles.png", ResourceType.SPRITE_SHEET);
 
         addSpriteSheet(new SpriteSheet("player1", playerSheet));
         addSpriteSheet(new SpriteSheet("enemy1", enemySheet));
@@ -77,13 +76,13 @@ public class Level1 extends LevelBase {
 
     private void gameOver() {
         //reset();
-        //SceneManager.INSTANCE.changeToScene(SceneName.GameOver);
-        state = LevelState.GameOver;
+        //SceneManager.INSTANCE.changeToScene(SceneName.GAME_OVER);
+        state = LevelState.GAME_OVER;
     }
 
     private void createEnemy1() {
 
-        SpriteSheet sp1 = new SpriteSheet("spritesheet1", Content.loadImage("spritesheet1.png", ResourceType.SpriteSheet));
+        SpriteSheet sp1 = new SpriteSheet("spritesheet1", Content.loadImage("spritesheet1.png", ResourceType.SPRITE_SHEET));
 
         int delay = 10;
         AnimationFrame eframe1 = new AnimationFrame(Sprite.createSpriteRegion(0,0,66,66), delay);
@@ -110,10 +109,10 @@ public class Level1 extends LevelBase {
         HomingEnemy enemy6 = new HomingEnemy(enemySprite, new Vector2D(100, 700), player);
         enemy6.setSpeed(2.5d);
 
-        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.Squareboss), new Vector2D(300,400), player);
+        TowerEnemy enemy7 = new TowerEnemy(spriteFactory.createEnemy(EnemySpriteType.SQUAREBOSS), new Vector2D(300,400), player);
 
 
-        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PurpleBlob);
+        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PURPLE_BLOB);
         sprite.setScale(1d);
         BossEnemy enemy8 = new BossEnemy(sprite, new Vector2D(750, 210), player);
 
@@ -162,8 +161,8 @@ public class Level1 extends LevelBase {
         }
 
         if(!anyEnemyAlive) {
-            state = LevelState.Completed;
-            //SceneManager.INSTANCE.changeToScene(SceneName.Credits);
+            state = LevelState.COMPLETED;
+            //SceneManager.INSTANCE.changeToScene(SceneName.CREDITS);
         }
     }
 

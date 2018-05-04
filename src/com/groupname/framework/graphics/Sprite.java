@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
  * This class is a representation for a character in a game
- * using a region of a SpriteSheet as the backing for the Image
+ * using a region of a SPRITE_SHEET as the backing for the Image
  * used to draw this class.
  */
 public class Sprite {
@@ -29,7 +29,7 @@ public class Sprite {
     }
 
     /**
-     * Sets the scale of the Sprite.
+     * Sets the scale of the SPRITE.
      *
      * @param scale any value above 0.0
      * @throws IllegalArgumentException if the scale value was less than or equal to 0.0 (double).
@@ -51,7 +51,7 @@ public class Sprite {
     }
 
     /**
-     * Gets the width of the Sprite, this value is multiplied by the current scale factor.
+     * Gets the width of the SPRITE, this value is multiplied by the current scale factor.
      *
      * @return the width of the sprite multiplied by the current scale factor.
      */
@@ -60,7 +60,7 @@ public class Sprite {
     }
 
     /**
-     * Gets the height of the Sprite, this value is multiplied by the current scale factor.
+     * Gets the height of the SPRITE, this value is multiplied by the current scale factor.
      * @return the height of the sprite multiplied by the current scale factor.
      */
     public double getHeight() {
@@ -98,7 +98,7 @@ public class Sprite {
 
     /**
      * Static helper method for creating a SpriteRegion (Rectangle) that is
-     * generally used by the Sprite class and it's subclasses to define an
+     * generally used by the SPRITE class and it's subclasses to define an
      * area of an image which is used for the sprite representation.
      *
      * @param width the width of the SpriteRegion (Rectangle).
@@ -111,7 +111,7 @@ public class Sprite {
 
     /**
      * Static helper method for creating a SpriteRegion (Rectangle) that is
-     * generally used by the Sprite class and it's subclasses to define an
+     * generally used by the SPRITE class and it's subclasses to define an
      * area of an image which is used for the sprite representation.
      *
      * @param smallX this value is multiplied by the sprite's width to give the actual coordinate within the image.
@@ -126,7 +126,7 @@ public class Sprite {
 
     /**
      * Static helper method for creating a SpriteRegion (Rectangle) that is
-     * generally used by the Sprite class and it's subclasses to define an
+     * generally used by the SPRITE class and it's subclasses to define an
      * area of an image which is used for the sprite representation.
      *
      * @param smallX this value is multiplied by the sprite's width to give the actual coordinate within the image.

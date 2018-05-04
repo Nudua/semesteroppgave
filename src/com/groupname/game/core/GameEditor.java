@@ -13,7 +13,6 @@ import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.editor.LevelItem;
-import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.entities.Actor;
 import com.groupname.game.entities.Player;
 import com.groupname.game.input.PlayerInputDefinitions;
@@ -38,14 +37,14 @@ public class GameEditor extends LevelBase {
     private final static String LEVEL_ID = "cd4305d4-d624-4c4e-9ef8-77207cf9b4e1";
 
     public enum Mode {
-        Editing,
-        Playing
+        EDITING,
+        PLAYING
     }
 
     private final MouseInput mouseInput;
     private Image backgroundImage;
 
-    private Mode mode = Mode.Editing;
+    private Mode mode = Mode.EDITING;
     //private final LevelFactory levelFactory;
 
     //private List<GameObject> gameObjects = new ArrayList<>();
@@ -139,8 +138,8 @@ public class GameEditor extends LevelBase {
     public void setMode(Mode mode) {
         this.mode = Objects.requireNonNull(mode);
 
-        playDisabled.set(mode != Mode.Editing);
-        editDisabled.set(mode != Mode.Playing);
+        playDisabled.set(mode != Mode.EDITING);
+        editDisabled.set(mode != Mode.PLAYING);
     }
 
     private boolean updateItemPosition(double x, double y) {
@@ -168,7 +167,7 @@ public class GameEditor extends LevelBase {
 
     @Override
     public void initialize() {
-        backgroundImage = Content.loadImage("background4.png", ResourceType.Background);
+        backgroundImage = Content.loadImage("background4.png", ResourceType.BACKGROUND);
 
     }
 
@@ -178,7 +177,7 @@ public class GameEditor extends LevelBase {
 
     @Override
     public void update() {
-        if(mode == Mode.Playing) {
+        if(mode == Mode.PLAYING) {
             for(LevelItem item : levelItems) {
 
                 if(item.getInstance() instanceof Player) {
@@ -213,7 +212,7 @@ public class GameEditor extends LevelBase {
 
     @Override
     public void reset() {
-        setMode(Mode.Editing);
+        setMode(Mode.EDITING);
         for(LevelItem item : levelItems) {
             item.setPosition(item.getPosition());
 

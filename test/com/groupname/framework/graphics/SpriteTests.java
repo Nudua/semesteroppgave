@@ -3,9 +3,7 @@ package com.groupname.framework.graphics;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.IntVector2D;
-import com.groupname.framework.util.EmptyStringException;
 import javafx.scene.shape.Rectangle;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -17,7 +15,7 @@ public class SpriteTests {
 
     // Helper methods
     private SpriteSheet getValidSpriteSheet() {
-        return new SpriteSheet("testSheet", Content.loadImage("projectiles.png", ResourceType.SpriteSheet));
+        return new SpriteSheet("testSheet", Content.loadImage("projectiles.png", ResourceType.SPRITE_SHEET));
     }
 
     private Sprite getValidSprite() {

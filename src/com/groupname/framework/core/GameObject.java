@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  * A baseclass for all gameobjects, which essentially contains a
- * Sprite (Image) and a Vector2D (position).
+ * SPRITE (Image) and a Vector2D (position).
  *
  * It also contains methods for generating a hitbox and checking collisions between different gameobjects.
  *

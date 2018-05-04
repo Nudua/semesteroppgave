@@ -14,7 +14,7 @@ import java.util.Objects;
  */
 public class SingleBulletWeapon extends WeaponBase {
 
-    private Direction bulletDirection = Direction.None;
+    private Direction bulletDirection = Direction.NONE;
 
     /**
      * Creates a new instance of this class with the specified speed (for the projectile)
@@ -42,7 +42,7 @@ public class SingleBulletWeapon extends WeaponBase {
         this.bulletDirection = Objects.requireNonNull(direction);
 
         if(!myOnlyBullet.isAlive()) {
-            SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.Shoot);
+            SoundPlayer.INSTANCE.playSoundEffect(SoundPlayer.SoundEffect.SHOOT);
             myOnlyBullet.setPosition(startPosition);
             myOnlyBullet.setAlive(true);
         }
@@ -56,13 +56,13 @@ public class SingleBulletWeapon extends WeaponBase {
 
         double currentSpeed = speed;
 
-        if(bulletDirection == Direction.Right || bulletDirection == Direction.Down) {
+        if(bulletDirection == Direction.RIGHT || bulletDirection == Direction.DOWN) {
             currentSpeed = speed;
-        } else if(bulletDirection == Direction.Left || bulletDirection == Direction.Up) {
+        } else if(bulletDirection == Direction.LEFT || bulletDirection == Direction.UP) {
             currentSpeed = -speed;
         }
 
-        if(bulletDirection == Direction.Up || bulletDirection == Direction.Down) {
+        if(bulletDirection == Direction.UP || bulletDirection == Direction.DOWN) {
             position.addY(currentSpeed);
         } else {
             position.addX(currentSpeed);

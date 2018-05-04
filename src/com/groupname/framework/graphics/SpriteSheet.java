@@ -18,7 +18,7 @@ public class SpriteSheet {
      * The name parameter cannot be null or empty "".
      *
      * @param name the name to use for this Spritesheet.
-     * @param image the image to use for this SpriteSheet.
+     * @param image the image to use for this SPRITE_SHEET.
      * @throws NullPointerException if either name or image is null.
      */
     public SpriteSheet(String name, Image image) {
@@ -27,47 +27,47 @@ public class SpriteSheet {
     }
 
     /**
-     * Gets the width of the Image used by this SpriteSheet.
-     * @return the width of the Image used by this SpriteSheet.
+     * Gets the width of the Image used by this SPRITE_SHEET.
+     * @return the width of the Image used by this SPRITE_SHEET.
      */
     public int getWidth() {
         return (int)image.getWidth();
     }
 
     /**
-     * Gets the height of the Image used by this SpriteSheet.
-     * @return the height of the Image used by this SpriteSheet.
+     * Gets the height of the Image used by this SPRITE_SHEET.
+     * @return the height of the Image used by this SPRITE_SHEET.
      */
     public int getHeight() {
         return (int)image.getHeight();
     }
 
     /**
-     * Gets the name of this SpriteSheet.
+     * Gets the name of this SPRITE_SHEET.
      *
-     * @return the name of this SpriteSheet.
+     * @return the name of this SPRITE_SHEET.
      */
     public String getName() {
         return name;
     }
 
     /**
-     * Gets the Image used by this SpriteSheet.
-     * @return the Image used by this SpriteSheet.
+     * Gets the Image used by this SPRITE_SHEET.
+     * @return the Image used by this SPRITE_SHEET.
      */
     public Image getImage() {
         return image;
     }
 
     /**
-     * The string representation of a SpriteSheet where name = name and image = value
+     * The string representation of a SPRITE_SHEET where name = name and image = value
      * Where name is the name of the field you save, and value is the value of the field
      *
-     * @return a String representation of this SpriteSheet instance.
+     * @return a String representation of this SPRITE_SHEET instance.
      */
     @Override
     public String toString() {
-        return "SpriteSheet{" +
+        return "SPRITE_SHEET{" +
                 "name='" + name + '\'' +
                 ", image=" + image +
                 '}';

@@ -13,7 +13,7 @@ import com.groupname.framework.input.InputManager;
  *          *****************
  *          * Resume        *
  *          * Save          *
- *          * Restart Level *
+ *          * Restart LEVEL *
  *          * Restart Game  *
  *          * Exit          *
  *          *****************

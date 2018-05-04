@@ -1,6 +1,5 @@
 package com.groupname.game.controllers;
 
-import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
@@ -88,7 +87,7 @@ public class GameController implements Controller {
         //levels.add(0, gameOver);
         levelCompletedTransition = new BlindsScreenTransition(canvas.getGraphicsContext2D());
 
-        //SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Main);
+        //SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.MAIN);
 
         if(!game.isRunning()) {
             game.start();
@@ -120,7 +119,7 @@ public class GameController implements Controller {
         String errorMessage = "";
 
         try {
-            LevelMetaData levelMetaData = reader.read(Content.loadFile(fileName, ResourceType.Level));
+            LevelMetaData levelMetaData = reader.read(Content.loadFile(fileName, ResourceType.LEVEL));
 
             Level level = new Level(game, canvas.getGraphicsContext2D(), levelMetaData);
             level.initialize();
@@ -188,7 +187,7 @@ public class GameController implements Controller {
         } else {
             LevelBase currentLevel = getCurrentLevel();
 
-            if(currentLevel.getState() == LevelState.Completed) {
+            if(currentLevel.getState() == LevelState.COMPLETED) {
 
                 if(levelCompletedTransition.isDone()) {
                     currentLevelIndex++;
@@ -214,7 +213,7 @@ public class GameController implements Controller {
                     levelCompletedTransition.update();
                 }
 
-            } else if(currentLevel.getState() == LevelState.GameOver) {
+            } else if(currentLevel.getState() == LevelState.GAME_OVER) {
 
             }
 
@@ -250,9 +249,9 @@ public class GameController implements Controller {
     private void draw() {
         LevelBase currentLevel = getCurrentLevel();
 
-        if(currentLevel.getState() == LevelState.Playing) {
+        if(currentLevel.getState() == LevelState.PLAYING) {
            currentLevel.draw();
-        } else if(currentLevel.getState() == LevelState.Completed && !levelCompletedTransition.isDone()) {
+        } else if(currentLevel.getState() == LevelState.COMPLETED && !levelCompletedTransition.isDone()) {
             levelCompletedTransition.draw();
         }
     }

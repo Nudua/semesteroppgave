@@ -7,34 +7,34 @@ public enum ResourceType {
     /**
      * An image file with multiple sprites.
      */
-    SpriteSheet,
+    SPRITE_SHEET,
 
     /**
      * An image file that represents a sprite.
      */
-    Sprite,
+    SPRITE,
 
     /**
      * An audio file that plays in the background.
      */
-    Music,
+    MUSIC,
 
     /**
      * An audio file that get triggered by specific actions.
      */
-    SoundEffect,
+    SOUND_EFFECT,
 
     /**
      * An image file that represent a background.
      */
-    Background,
+    BACKGROUND,
 
     /**
      * An level file that contain a specific level.
      */
-    Level,
+    LEVEL,
     /**
      * Meta data used for creating various game objects.
      */
-    Metadata
+    METADATA
 }

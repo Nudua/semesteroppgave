@@ -21,7 +21,7 @@ import java.util.Objects;
  * Supports drawing sprites at the position given, horizontal and vertical flipping of these sprites,
  * as well as tinting the sprites in a specified color.
  *
- * Example usage: (assume that we already have a Sprite called mySprite.)
+ * Example usage: (assume that we already have a SPRITE called mySprite.)
  *
  * // We need a Canvas to draw on.
  * Canvas canvas = new Canvas();

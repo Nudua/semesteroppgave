@@ -8,7 +8,6 @@ import com.groupname.framework.history.StackBasedUndoRedo;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
-import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.serialization.ObjectSerializer;
 import com.groupname.framework.serialization.ObjectSerializerException;
@@ -118,35 +117,35 @@ public class EditorController implements Controller {
         // Builder pattern instead?
 
         // Guard enemies
-        EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
-        guardBlobEasy.setSpriteType(EnemySpriteType.BlueBlob);
+        EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - EASY", GuardEnemy.class);
+        guardBlobEasy.setSpriteType(EnemySpriteType.BLUE_BLOB);
 
-        EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
-        guardBeeEasy.setSpriteType(EnemySpriteType.Bee);
+        EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard BEE - EASY", GuardEnemy.class);
+        guardBeeEasy.setSpriteType(EnemySpriteType.BEE);
 
-        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
-        guardBeeMedium.setDifficulty(Difficulty.Medium);
-        guardBeeMedium.setSpriteType(EnemySpriteType.CrazyBee);
+        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy BEE - MEDIUM", GuardEnemy.class);
+        guardBeeMedium.setDifficulty(Difficulty.MEDIUM);
+        guardBeeMedium.setSpriteType(EnemySpriteType.CRAZY_BEE);
 
         // Homing
-        EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
-        homingSnailEasy.setSpriteType(EnemySpriteType.Snail);
+        EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing SNAIL - EASY", HomingEnemy.class);
+        homingSnailEasy.setSpriteType(EnemySpriteType.SNAIL);
 
-        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing Snail - Medium", HomingEnemy.class);
-        homingSnailMedium.setSpriteType(EnemySpriteType.Snail);
-        homingSnailMedium.setDifficulty(Difficulty.Medium);
+        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing SNAIL - MEDIUM", HomingEnemy.class);
+        homingSnailMedium.setSpriteType(EnemySpriteType.SNAIL);
+        homingSnailMedium.setDifficulty(Difficulty.MEDIUM);
 
-        EnemyMetaData homingSnailHard = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
-        homingSnailHard.setSpriteType(EnemySpriteType.Snail);
-        homingSnailHard.setDifficulty(Difficulty.Hard);
+        EnemyMetaData homingSnailHard = new EnemyMetaData("Homing SNAIL - HARD", HomingEnemy.class);
+        homingSnailHard.setSpriteType(EnemySpriteType.SNAIL);
+        homingSnailHard.setDifficulty(Difficulty.HARD);
 
         // Tower
-        EnemyMetaData towerEasy = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
-        towerEasy.setSpriteType(EnemySpriteType.Jellyfish);
+        EnemyMetaData towerEasy = new EnemyMetaData("Tower - EASY", TowerEnemy.class);
+        towerEasy.setSpriteType(EnemySpriteType.JELLYFISH);
 
         // Boss
         EnemyMetaData boss = new EnemyMetaData("Boss", BossEnemy.class);
-        boss.setSpriteType(EnemySpriteType.Squareboss);
+        boss.setSpriteType(EnemySpriteType.SQUAREBOSS);
 
 
         allData.addAll(Arrays.asList(player, guardBlobEasy, guardBeeEasy, guardBeeMedium, homingSnailEasy, homingSnailMedium, homingSnailHard, towerEasy, boss));
@@ -164,32 +163,32 @@ public class EditorController implements Controller {
         levelMetaData = new LevelMetaData("Default level");
 
         ObjectMetaData meta1 = new ObjectMetaData("Player", Player.class);
-        EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
-        EnemyMetaData meta3 = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
-        EnemyMetaData meta4 = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
+        EnemyMetaData meta2 = new EnemyMetaData("Guard Blob - EASY", GuardEnemy.class);
+        EnemyMetaData meta3 = new EnemyMetaData("Guard BEE - EASY", GuardEnemy.class);
+        EnemyMetaData meta4 = new EnemyMetaData("Crazy BEE - MEDIUM", GuardEnemy.class);
 
-        EnemyMetaData meta5 = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
-        meta5.setSpriteType(EnemySpriteType.Snail);
+        EnemyMetaData meta5 = new EnemyMetaData("Homing SNAIL - EASY", HomingEnemy.class);
+        meta5.setSpriteType(EnemySpriteType.SNAIL);
 
-        EnemyMetaData meta7 = new EnemyMetaData("Homing Snail - Medium", HomingEnemy.class);
-        meta7.setSpriteType(EnemySpriteType.Snail);
-        meta7.setDifficulty(Difficulty.Medium);
+        EnemyMetaData meta7 = new EnemyMetaData("Homing SNAIL - MEDIUM", HomingEnemy.class);
+        meta7.setSpriteType(EnemySpriteType.SNAIL);
+        meta7.setDifficulty(Difficulty.MEDIUM);
 
-        EnemyMetaData meta8 = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
-        meta8.setSpriteType(EnemySpriteType.Snail);
-        meta8.setDifficulty(Difficulty.Hard);
+        EnemyMetaData meta8 = new EnemyMetaData("Homing SNAIL - HARD", HomingEnemy.class);
+        meta8.setSpriteType(EnemySpriteType.SNAIL);
+        meta8.setDifficulty(Difficulty.HARD);
 
-        EnemyMetaData meta9 = new EnemyMetaData("Homing Snail - Impossible", HomingEnemy.class);
-        meta9.setSpriteType(EnemySpriteType.GreenBlob);
-        meta9.setDifficulty(Difficulty.Impossible);
+        EnemyMetaData meta9 = new EnemyMetaData("Homing SNAIL - IMPOSSIBLE", HomingEnemy.class);
+        meta9.setSpriteType(EnemySpriteType.GREEN_BLOB);
+        meta9.setDifficulty(Difficulty.IMPOSSIBLE);
 
 
-        EnemyMetaData meta6 = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
-        meta6.setSpriteType(EnemySpriteType.Squareboss);
+        EnemyMetaData meta6 = new EnemyMetaData("Tower - EASY", TowerEnemy.class);
+        meta6.setSpriteType(EnemySpriteType.SQUAREBOSS);
 
-        meta3.setSpriteType(EnemySpriteType.Bee);
-        meta4.setSpriteType(EnemySpriteType.CrazyBee);
-        meta4.setDifficulty(Difficulty.Medium);
+        meta3.setSpriteType(EnemySpriteType.BEE);
+        meta4.setSpriteType(EnemySpriteType.CRAZY_BEE);
+        meta4.setDifficulty(Difficulty.MEDIUM);
 
         //ObjectMetaData meta2 = new ObjectMetaData("Second", ObjectMetaData.class, new Vector2D());
         //ObjectMetaData meta3 = new ObjectMetaData("Third", ObjectMetaData.class, new Vector2D());
@@ -266,7 +265,7 @@ public class EditorController implements Controller {
 
         levelFactory = new LevelFactory(game.getInputManager());
 
-        SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Editor);
+        SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.EDITOR);
 
         setupBindings();
 
@@ -304,12 +303,12 @@ public class EditorController implements Controller {
 
     @FXML
     protected void playOnClicked(ActionEvent event) {
-        editor.setMode(GameEditor.Mode.Playing);
+        editor.setMode(GameEditor.Mode.PLAYING);
     }
 
     @FXML
     protected void editOnClicked(ActionEvent event) {
-        //editor.setMode(GameEditor.Mode.Editing);
+        //editor.setMode(GameEditor.Mode.EDITING);
         editor.reset();
     }
 
@@ -362,7 +361,7 @@ public class EditorController implements Controller {
             return;
         }
 
-        showAlert("Success", "Level loaded successfully.", false);
+        showAlert("Success", "LEVEL loaded successfully.", false);
     }
 
     @FXML

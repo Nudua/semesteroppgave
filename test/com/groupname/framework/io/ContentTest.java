@@ -17,12 +17,12 @@ public class ContentTest {
 
     @Test(expected = NullPointerException.class)
     public void loadFilenameCannotBeNull(){
-        Content.loadFile(null,ResourceType.Sprite);
+        Content.loadFile(null,ResourceType.SPRITE);
     }
 
     @Test(expected = EmptyStringException.class)
     public void loadFileNameCannotBeEmpty(){
-        Content.loadFile("",ResourceType.Sprite);
+        Content.loadFile("",ResourceType.SPRITE);
     }
 
     @Test(expected = NullPointerException.class)
@@ -33,12 +33,12 @@ public class ContentTest {
 
     @Test(expected = NullPointerException.class)
     public void loadImageNameCannotBeNull(){
-        Content.loadImage(null,ResourceType.Sprite);
+        Content.loadImage(null,ResourceType.SPRITE);
     }
 
     @Test(expected = EmptyStringException.class)
     public void loadImageNameCannotBeEmpty(){
-        Content.loadImage("",ResourceType.Sprite);
+        Content.loadImage("",ResourceType.SPRITE);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -48,37 +48,37 @@ public class ContentTest {
 
     @Test
     public void loadsValidSpriteSheetImage() {
-        Image image = Content.loadImage(validSpriteSheet, ResourceType.SpriteSheet);
+        Image image = Content.loadImage(validSpriteSheet, ResourceType.SPRITE_SHEET);
         assertNotNull(image);
     }
 
     @Test
     public void loadsValidSpriteSheetInputStream() {
-        InputStream inputStream = Content.loadFile(validSpriteSheet, ResourceType.SpriteSheet);
+        InputStream inputStream = Content.loadFile(validSpriteSheet, ResourceType.SPRITE_SHEET);
         assertNotNull(inputStream);
     }
 
     @Test
     public void loadsValidSpriteImage() {
-        Image image = Content.loadImage(validSprite, ResourceType.Sprite);
+        Image image = Content.loadImage(validSprite, ResourceType.SPRITE);
         assertNotNull(image);
     }
 
     @Test
     public void loadsValidSpriteInputStream() {
-        InputStream inputStream = Content.loadFile(validSprite, ResourceType.Sprite);
+        InputStream inputStream = Content.loadFile(validSprite, ResourceType.SPRITE);
         assertNotNull(inputStream);
     }
 
     @Test
     public void loadsValidMusicInputStream() {
-        InputStream inputStream = Content.loadFile(validMusicFile, ResourceType.Music);
+        InputStream inputStream = Content.loadFile(validMusicFile, ResourceType.MUSIC);
         assertNotNull(inputStream);
     }
 
     @Test
     public void loadsValidSoundEffectInputStream() {
-        InputStream inputStream = Content.loadFile(validSoundEffect, ResourceType.SoundEffect);
+        InputStream inputStream = Content.loadFile(validSoundEffect, ResourceType.SOUND_EFFECT);
         assertNotNull(inputStream);
     }
 }

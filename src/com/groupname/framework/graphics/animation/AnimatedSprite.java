@@ -9,8 +9,8 @@ import java.util.Objects;
 
 /**
  * This class is a representation for a character in a game
- * using a region of a SpriteSheet as the backing for the Image
- * used to draw this class and is a subclass of the Sprite class that supports
+ * using a region of a SPRITE_SHEET as the backing for the Image
+ * used to draw this class and is a subclass of the SPRITE class that supports
  * animation via different AnimationFrames.
  */
 public class AnimatedSprite extends Sprite {
@@ -19,9 +19,9 @@ public class AnimatedSprite extends Sprite {
 
     /**
      * Creates a new AnimatedSprite with the specified spriteSheet, initialSprieRegion and the
-     * list of animationFrames used for animating this Sprite.
+     * list of animationFrames used for animating this SPRITE.
      *
-     * @param spriteSheet the SpriteSheet used by this instance.
+     * @param spriteSheet the SPRITE_SHEET used by this instance.
      * @param initialSpriteRegion the first spriteRegion used by this instance.
      * @param animationFrames the list of animationFrames used for animating.
      * @throws NullPointerException if any of the parameters are null.
@@ -73,7 +73,7 @@ public class AnimatedSprite extends Sprite {
     }
 
     /**
-     * Static method used to check if a Sprite is a superclass of a AnimatedSprite,
+     * Static method used to check if a SPRITE is a superclass of a AnimatedSprite,
      * and calls te step() method to further it's animation.
      *
      * @param sprite to check if this instance is a superclass of the type AnimatedSprite,

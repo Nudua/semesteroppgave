@@ -48,12 +48,12 @@ public class BoundsChecker {
 
         Size size = new Size((int)gameObject.getSprite().getWidth(), (int)gameObject.getSprite().getHeight());
 
-        // Right side
+        // RIGHT side
         if(position.getX() + size.getWidth() >= bounds.getX() + bounds.getWidth()) {
             return false;
         }
 
-        // Left side
+        // LEFT side
         if(position.getX() <= bounds.getX()) {
             return false;
         }

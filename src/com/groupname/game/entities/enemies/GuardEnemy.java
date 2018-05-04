@@ -8,7 +8,6 @@ import com.groupname.framework.math.Direction;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.game.data.AppSettings;
 import com.groupname.game.entities.Enemy;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
@@ -21,7 +20,7 @@ public class GuardEnemy extends Enemy {
     private Vector2D startPosition;
     private int walkDistance = 200;
     private double speed = 1.4d;
-    private Direction direction = Direction.Right;
+    private Direction direction = Direction.RIGHT;
     private Counter hitCounter = new Counter(2);
 
     /**
@@ -98,9 +97,9 @@ public class GuardEnemy extends Enemy {
 
         double x = position.getX();
         double currentSpeed = speed;
-        if(direction == Direction.Right) {
+        if(direction == Direction.RIGHT) {
             currentSpeed = speed;
-        } else if(direction == Direction.Left) {
+        } else if(direction == Direction.LEFT) {
             currentSpeed = -speed;
         }
 
@@ -108,9 +107,9 @@ public class GuardEnemy extends Enemy {
 
         x = position.getX();
         if(x >= endPosition.getX()) {
-            direction = Direction.Left;
+            direction = Direction.LEFT;
         } else if(x <= startPosition.getX()) {
-            direction = Direction.Right;
+            direction = Direction.RIGHT;
         }
     }
 
@@ -123,7 +122,7 @@ public class GuardEnemy extends Enemy {
     public void draw(SpriteBatch spriteBatch) {
         if(isAlive()) {
 
-            spriteFlip = direction == Direction.Right ? SpriteFlip.HORIZONTAL : SpriteFlip.NONE;
+            spriteFlip = direction == Direction.RIGHT ? SpriteFlip.HORIZONTAL : SpriteFlip.NONE;
 
             boolean invertColors = !hitCounter.isDone();
 

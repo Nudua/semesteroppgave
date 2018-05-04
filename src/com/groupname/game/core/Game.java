@@ -111,8 +111,8 @@ public class Game extends GameEngine {
 
     private void createLevels() {
         LevelBase level1 = new Level1(this, inputManager);
-        LevelBase credits = new Credits(this, inputManager);
-        gameOver = new GameOver(this, inputManager);
+        LevelBase credits = new CREDITS(this, inputManager);
+        gameOver = new GAME_OVER(this, inputManager);
 
         // Save initialize for the loading? Or maybe just load all the levels at start...
         credits.initialize();
@@ -151,12 +151,12 @@ public class Game extends GameEngine {
 
         //GameMenu<PauseButton> menu = new GameMenuFX<>(PauseButton.class, null);
 
-        if(currentLevel.getState() == LevelState.GameOver) {
+        if(currentLevel.getState() == LevelState.GAME_OVER) {
             currentLevel.reset();
             gameOver.reset();
 
             currentLevel = gameOver;
-        } else if (currentLevel.getState() == LevelState.Completed) {
+        } else if (currentLevel.getState() == LevelState.COMPLETED) {
             // Change to the next level
             currentLevelIndex++;
 

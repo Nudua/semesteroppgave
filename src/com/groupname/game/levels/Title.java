@@ -1,7 +1,6 @@
 package com.groupname.game.levels;
 
 import com.groupname.framework.core.GameObject;
-import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
@@ -9,17 +8,11 @@ import com.groupname.game.core.Game;
 import com.groupname.game.editor.metadata.EnemyMetaData;
 import com.groupname.game.editor.metadata.LevelFactory;
 import com.groupname.game.entities.EnemySpriteType;
-import com.groupname.game.entities.SpriteFactory;
 import com.groupname.game.entities.enemies.GuardEnemy;
-import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-
-import java.nio.file.Path;
-import java.util.Arrays;
 
 public class Title extends LevelBase {
 
@@ -40,19 +33,19 @@ public class Title extends LevelBase {
 
     @Override
     public void initialize() {
-        backgroundImage = Content.loadImage("hill.png", ResourceType.Background);
+        backgroundImage = Content.loadImage("hill.png", ResourceType.BACKGROUND);
         createEnemies();
     }
 
     private void createEnemies() {
         /*
         SpriteFactory spriteFactory = new SpriteFactory();
-        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.PinkFish);
+        SPRITE sprite = spriteFactory.createEnemy(EnemySpriteType.PINK_FISH);
         GuardEnemy enemy1 = new GuardEnemy(sprite, new Vector2D(400,50));
         */
 
         /*
-        Sprite sprite2 = spriteFactory.createEnemy(EnemySpriteType.BlueBlob);
+        SPRITE sprite2 = spriteFactory.createEnemy(EnemySpriteType.BLUE_BLOB);
         GuardEnemy enemy2 = new GuardEnemy(sprite2, new Vector2D(700,600));
 
         gameObjects.addAll(Arrays.asList(enemy1, enemy2));
@@ -61,11 +54,11 @@ public class Title extends LevelBase {
         LevelFactory levelFactory = new LevelFactory(inputManager);
 
         EnemyMetaData worm = new EnemyMetaData("Worm", GuardEnemy.class);
-        worm.setSpriteType(EnemySpriteType.GreenWorm);
+        worm.setSpriteType(EnemySpriteType.GREEN_WORM);
         worm.setPosition(new Vector2D(400,50));
 
         EnemyMetaData blueBlob = new EnemyMetaData("Blob", GuardEnemy.class);
-        blueBlob.setSpriteType(EnemySpriteType.BlueBlob);
+        blueBlob.setSpriteType(EnemySpriteType.BLUE_BLOB);
         blueBlob.setPosition(new Vector2D(700,600));
 
         gameObjects.add(levelFactory.create(worm));

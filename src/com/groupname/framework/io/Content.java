@@ -3,9 +3,7 @@ package com.groupname.framework.io;
 import com.groupname.framework.serialization.ObjectSerializer;
 import com.groupname.framework.serialization.ObjectSerializerException;
 import com.groupname.framework.util.Strings;
-import com.groupname.game.editor.controls.MetaDataListCell;
 import com.groupname.game.editor.metadata.ObjectMetaData;
-import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 
 import java.io.InputStream;
@@ -42,16 +40,16 @@ public final class Content {
 
     /**
      * Attempts to load a new Image from the specified filename.
-     * The ResourceType must be either ResourceType.Sprite, ResourceType.SpriteSheet or ResourceType.Background.
+     * The ResourceType must be either ResourceType.SPRITE, ResourceType.SPRITE_SHEET or ResourceType.BACKGROUND.
      *
      * @param filename the filename of the Image to load.
-     * @param type the resourceType to load. Must be ResourceType.Sprite, ResourceType.SpriteSheet or ResourceType.Background.
+     * @param type the resourceType to load. Must be ResourceType.SPRITE, ResourceType.SPRITE_SHEET or ResourceType.BACKGROUND.
      * @return the requested Image if successful.
      * @throws NullPointerException if the specified file was not found.
      */
     public static Image loadImage(String filename, ResourceType type) {
-        // ResourceType has to be either a Sprite, SpriteSheet or a Background
-        if(!(type == ResourceType.Sprite || type == ResourceType.SpriteSheet || type == ResourceType.Background)) {
+        // ResourceType has to be either a SPRITE, SPRITE_SHEET or a BACKGROUND
+        if(!(type == ResourceType.SPRITE || type == ResourceType.SPRITE_SHEET || type == ResourceType.BACKGROUND)) {
             throw new IllegalArgumentException();
         }
 
@@ -66,7 +64,7 @@ public final class Content {
 
         // A little messy, but required for generic types
         Class<List<ObjectMetaData>> clazz = (Class<List<ObjectMetaData>>) ((Class)List.class);
-        return serializer.read(loadFile(fileName, ResourceType.Metadata), clazz);
+        return serializer.read(loadFile(fileName, ResourceType.METADATA), clazz);
     }
 
     /**
@@ -125,19 +123,19 @@ public final class Content {
     // gets the full path from the specified ResourceType
     private static String getFolderPathFromResourceType(ResourceType resourceType) {
         switch (resourceType) {
-            case SpriteSheet:
+            case SPRITE_SHEET:
                 return "/graphics/spritesheets/";
-            case Sprite:
+            case SPRITE:
                 return "/graphics/sprites/";
-            case Music:
+            case MUSIC:
                 return "/audio/music/";
-            case SoundEffect:
+            case SOUND_EFFECT:
                 return "/audio/soundeffects/";
-            case Background:
+            case BACKGROUND:
                 return "/graphics/backgrounds/";
-            case Level:
+            case LEVEL:
                 return "/levels/";
-            case Metadata:
+            case METADATA:
                 return "/metadata/";
         }
 

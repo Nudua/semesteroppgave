@@ -1,8 +1,8 @@
 package com.groupname.game.levels.core;
 
 public enum LevelState {
-    Loading,
-    Playing,
-    Completed,
-    GameOver
+    LOADING,
+    PLAYING,
+    COMPLETED,
+    GAME_OVER
 }

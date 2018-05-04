@@ -13,9 +13,9 @@ import java.util.Objects;
 public class Star extends GameObject {
 
     public enum StarType {
-        Small,
-        Medium,
-        Big
+        SMALL,
+        MEDIUM,
+        BIG
     }
 
     private final static double SPEED_SLOW = 1.4d;
@@ -37,11 +37,11 @@ public class Star extends GameObject {
 
     public static Sprite getSpriteFromType(StarType starType, List<Sprite> sprites) {
         switch(starType) {
-            case Small:
+            case SMALL:
                 return sprites.get(0);
-            case Medium:
+            case MEDIUM:
                 return sprites.get(1);
-            case Big:
+            case BIG:
                 return sprites.get(2);
             default:
                 return sprites.get(0);
@@ -50,11 +50,11 @@ public class Star extends GameObject {
 
     private double getStarSpeedFromType() {
         switch(starType) {
-            case Small:
+            case SMALL:
                 return SPEED_SLOW;
-            case Medium:
+            case MEDIUM:
                 return SPEED_MEDIUM;
-            case Big:
+            case BIG:
                 return SPEED_FAST;
                 default:
                     return SPEED_SLOW;
@@ -65,7 +65,7 @@ public class Star extends GameObject {
     @Override
     public void update() {
         // Just moving from right to left
-        //Left
+        //LEFT
         position.addX(-speed);
 
         if(position.getX() <= 0) {
@@ -73,7 +73,7 @@ public class Star extends GameObject {
         }
 
 
-        // Right
+        // RIGHT
         /*
         position.addX(speed);
 

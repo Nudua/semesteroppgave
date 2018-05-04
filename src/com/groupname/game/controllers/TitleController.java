@@ -38,7 +38,7 @@ public class TitleController implements Controller {
         titleLevel = new Title(game, canvas.getGraphicsContext2D());
         titleLevel.initialize();
 
-        SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.Main);
+        SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.MAIN);
 
         if(!game.isRunning()) {
             game.start();

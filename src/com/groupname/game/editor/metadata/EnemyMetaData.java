@@ -1,10 +1,8 @@
 package com.groupname.game.editor.metadata;
 
 import com.groupname.framework.core.Difficulty;
-import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.EnemySpriteType;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 
@@ -14,8 +12,8 @@ import java.util.Objects;
  * Create an enemy based on the information we give it.
  */
 public class EnemyMetaData extends ObjectMetaData {
-    private Difficulty difficulty = Difficulty.Easy;
-    private EnemySpriteType spriteType = EnemySpriteType.BlueBlob;
+    private Difficulty difficulty = Difficulty.EASY;
+    private EnemySpriteType spriteType = EnemySpriteType.BLUE_BLOB;
 
     /**
          * Creates a new instance of the object.
@@ -29,7 +27,7 @@ public class EnemyMetaData extends ObjectMetaData {
 
     /**
      * Method for changing sprite for the object.
-     * For example: GreenBlob, PurpleBlob, BlueBlob.
+     * For example: GREEN_BLOB, PURPLE_BLOB, BLUE_BLOB.
      *
      * @param spriteType name of the SpriteType.
      */
@@ -48,7 +46,7 @@ public class EnemyMetaData extends ObjectMetaData {
 
     /**
      * Setter for the difficulty of the object.
-     * For example: Easy, Medium, Hard, Impossible.
+     * For example: EASY, MEDIUM, HARD, IMPOSSIBLE.
      *
      * @param difficulty the difficulty.
      */

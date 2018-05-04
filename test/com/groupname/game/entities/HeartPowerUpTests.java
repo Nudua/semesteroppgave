@@ -1,7 +1,6 @@
 package com.groupname.game.entities;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
@@ -12,7 +11,7 @@ import static org.junit.Assert.*;
 
 public class HeartPowerUpTests {
 
-    SpriteSheet testSheet = new SpriteSheet("spriteSheet", Content.loadImage("player1.png", ResourceType.SpriteSheet));
+    SpriteSheet testSheet = new SpriteSheet("spriteSheet", Content.loadImage("player1.png", ResourceType.SPRITE_SHEET));
     Sprite testSprite = new Sprite(testSheet, Sprite.createSpriteRegion(66,66));
 
     @Test(expected = NullPointerException.class)

@@ -17,7 +17,7 @@
             <Button mnemonicParsing="false" onAction="#navigateToGameOnClick" styleClass="titlebutton" text="Start" />
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navigateToEditorOnClick" styleClass="titlebutton" text="Go To editor" />
             <Button mnemonicParsing="false" onAction="#navigateToGameOnClick" styleClass="titlebutton" text="Continue" />
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navigateToCreditsOnClick" styleClass="titlebutton" text="Credits" />
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#navigateToCreditsOnClick" styleClass="titlebutton" text="CREDITS" />
             <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#exitGameOnClick" styleClass="titlebutton" text="Exit" />
 
          </children>

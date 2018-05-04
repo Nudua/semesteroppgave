@@ -24,7 +24,7 @@ public class Player extends Actor {
     private final Vector2D initialPosition;
     private double speed = 10.5d;
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
-    private EnumSet<Direction> direction = EnumSet.of(Direction.Right);
+    private EnumSet<Direction> direction = EnumSet.of(Direction.RIGHT);
     private SingleBulletWeapon currentWeapon;
     private double pushBack = 150;
     private int maxHitpoints = DEFAULT_MAX_HEARTS;
@@ -76,27 +76,27 @@ public class Player extends Actor {
         }
 
         if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Right);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.RIGHT);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Left);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.LEFT);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_DOWN)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Down);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.DOWN);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_UP)) {
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Up);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.UP);
         }
 
         /*
         if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
-            currentWeapon.setDirection(Direction.Right);
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.Right);
+            currentWeapon.setDirection(Direction.RIGHT);
+            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.RIGHT);
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
-            currentWeapon.setDirection(Direction.Left);
+            currentWeapon.setDirection(Direction.LEFT);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_DOWN)) {
-            currentWeapon.setDirection(Direction.Down);
+            currentWeapon.setDirection(Direction.DOWN);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_UP)) {
-            currentWeapon.setDirection(Direction.Up);
+            currentWeapon.setDirection(Direction.UP);
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
         }
         */
@@ -118,7 +118,7 @@ public class Player extends Actor {
             }
 
             spriteFlip = SpriteFlip.NONE;
-            setDirection(Direction.Left);
+            setDirection(Direction.LEFT);
             isMoving = true;
         } else if (inputManager.isDown((PlayerInputDefinitions.RIGHT))) {
             if(position.getX() + sprite.getWidth() + speed >= levelBounds.getX() + levelBounds.getWidth()) {
@@ -128,7 +128,7 @@ public class Player extends Actor {
             }
 
             spriteFlip = SpriteFlip.HORIZONTAL;
-            setDirection(Direction.Right);
+            setDirection(Direction.RIGHT);
             isMoving = true;
         }
 
@@ -139,7 +139,7 @@ public class Player extends Actor {
                 position.addY(-speed);
             }
 
-            setDirection(Direction.Up);
+            setDirection(Direction.UP);
             isMoving = true;
         } else if (inputManager.isDown(PlayerInputDefinitions.DOWN)) {
 
@@ -149,14 +149,14 @@ public class Player extends Actor {
                 position.addY(speed);
             }
 
-            setDirection(Direction.Down);
+            setDirection(Direction.DOWN);
             isMoving = true;
         }
 
         // Remove this
         if(!isMoving) {
             direction.clear();
-            direction.add(Direction.Left);
+            direction.add(Direction.LEFT);
         }
     }
 
@@ -164,17 +164,17 @@ public class Player extends Actor {
         direction.add(newDirection);
 
         switch (newDirection) {
-            case Right:
-                direction.remove(Direction.Left);
+            case RIGHT:
+                direction.remove(Direction.LEFT);
                 break;
-            case Left:
-                direction.remove(Direction.Right);
+            case LEFT:
+                direction.remove(Direction.RIGHT);
                 break;
-            case Up:
-                direction.remove(Direction.Down);
+            case UP:
+                direction.remove(Direction.DOWN);
                 break;
-            case Down:
-                direction.remove(Direction.Up);
+            case DOWN:
+                direction.remove(Direction.UP);
                 break;
         }
     }
@@ -212,14 +212,14 @@ public class Player extends Actor {
                     if(isAlive()){
                         onCollides(1);
 
-                        if(direction.contains(Direction.Right)){
+                        if(direction.contains(Direction.RIGHT)){
                             position.setX(position.getX()-pushBack);
-                        } else if (direction.contains(Direction.Left)){
+                        } else if (direction.contains(Direction.LEFT)){
                             position.setX(position.getX()+pushBack);
                         }
-                        if(direction.contains(Direction.Up)){
+                        if(direction.contains(Direction.UP)){
                             position.setY(position.getY()+pushBack);
-                        } else if (direction.contains(Direction.Down)){
+                        } else if (direction.contains(Direction.DOWN)){
                             position.setY(position.getY()-pushBack);
                         }
 

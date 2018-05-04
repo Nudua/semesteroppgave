@@ -13,7 +13,7 @@ public class ScrollingText implements UpdateAble {
 
     public ScrollingText() {
         position = new Vector2D(1280 / 2 - 150, 720);
-        lines = new String[] {"Credits...", "thank", "you", "for", "playing", "our", "game", "...", "now", "we", "just", "have", "to", "make", "it", "\uD83D\uDE0A"};
+        lines = new String[] {"CREDITS...", "thank", "you", "for", "playing", "our", "game", "...", "now", "we", "just", "have", "to", "make", "it", "\uD83D\uDE0A"};
     }
 
     public void draw(GraphicsContext graphicsContext) {

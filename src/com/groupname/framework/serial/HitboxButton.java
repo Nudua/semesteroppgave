@@ -4,10 +4,10 @@ package com.groupname.framework.serial;
  * This enum and it's bitwise values map directly to the buttons of our custom built hitbox InputAdapter.
  *
  *   // Joystick
- *   Pin 2:    Up = 0x01
- *   Pin 3:    Down = 0x02
- *   Pin 4:    Left = 0x04
- *   Pin 5:    Right = 0x08
+ *   Pin 2:    UP = 0x01
+ *   Pin 3:    DOWN = 0x02
+ *   Pin 4:    LEFT = 0x04
+ *   Pin 5:    RIGHT = 0x08
  *
  *   // Buttons
  *   Pin 6:    Start = 0x10

@@ -1,11 +1,9 @@
 package com.groupname.game.other;
 
-import com.groupname.framework.core.GameEngine;
 import com.groupname.framework.graphics.SpriteSheet;
 import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.graphics.background.SierpinskiTriangleBackground;
-import com.groupname.framework.input.InputManager;
 import com.groupname.game.core.Game;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
@@ -53,7 +51,7 @@ public class SierpinksiTestLevel extends LevelBase {
         }
 
         if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
-            state = LevelState.Completed;
+            state = LevelState.COMPLETED;
             arrowScreenTransition.reset();
         }
 

@@ -3,17 +3,7 @@ package com.groupname.game.editor.metadata;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.graphics.Sprite;
-import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.animation.AnimatedSprite;
-import com.groupname.framework.graphics.animation.AnimationFrame;
 import com.groupname.framework.input.InputManager;
-import com.groupname.framework.io.Content;
-import com.groupname.framework.io.ResourceType;
-import com.groupname.framework.level.Tile;
-import com.groupname.framework.level.TilePattern;
-import com.groupname.framework.level.TileType;
-import com.groupname.framework.math.Direction;
-import com.groupname.framework.math.Vector2D;
 import com.groupname.game.entities.Enemy;
 import com.groupname.game.entities.EnemySpriteType;
 import com.groupname.game.entities.Player;
@@ -23,11 +13,8 @@ import com.groupname.game.entities.enemies.HomingEnemy;
 import com.groupname.game.entities.enemies.TowerEnemy;
 import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.entities.powerups.PowerUp;
-import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
 
 import java.security.InvalidParameterException;
-import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -65,7 +52,7 @@ public class LevelFactory {
     private Player createPlayer(ObjectMetaData metaData) {
         Sprite sprite = spriteFactory.createPlayer();
 
-        //Sprite p1Sprite = new Sprite(spriteSheets.get("player1"), Sprite.createSpriteRegion(2,0, 124, 124));
+        //SPRITE p1Sprite = new SPRITE(spriteSheets.get("player1"), SPRITE.createSpriteRegion(2,0, 124, 124));
         sprite.setScale(0.85d);
         return new Player(sprite, metaData.getPosition(), inputManager);
     }
@@ -88,7 +75,7 @@ public class LevelFactory {
     }
 
     private HeartPowerUp createHeartPowerUp(PowerUpMetaData metaData) {
-        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.Jellyfish);// new Sprite(spriteSheets.get("enemies"), Sprite.createSpriteRegion(0, 1, 66, 66));
+        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.JELLYFISH);// new SPRITE(spriteSheets.get("enemies"), SPRITE.createSpriteRegion(0, 1, 66, 66));
         return new HeartPowerUp(sprite, metaData.getPosition(), metaData.getAmount());
     }
 
@@ -147,22 +134,22 @@ public class LevelFactory {
 
         switch (metaData.getDifficulty()) {
             default:
-            case Easy:
+            case EASY:
                 hitPoints = random.nextInt(1,3);
                 speed = random.nextDouble(0.5d, 3d);
                 frequency = random.nextInt(5,7);
                 break;
-            case Medium:
+            case MEDIUM:
                 hitPoints = random.nextInt(3,5);
                 speed = random.nextDouble(3d,4.5d);
                 frequency = random.nextInt(4,6);
                 break;
-            case Hard:
+            case HARD:
                 hitPoints = random.nextInt(7,11);
                 speed = random.nextDouble(5d, 7d);
                 frequency = random.nextInt(3,5);
                 break;
-            case Impossible:
+            case IMPOSSIBLE:
                 hitPoints = random.nextInt(11, 15);
                 speed = random.nextDouble(7.5d, 15d);
                 frequency = random.nextInt(1,3);
