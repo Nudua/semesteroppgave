@@ -91,7 +91,7 @@ public class Game extends GameEngine {
     @Override
     public String toString() {
         return super.toString() +
-                "Game{" +
+                "GAME{" +
                 "onUpdate=" + onUpdate +
                 ", onDraw=" + onDraw +
                 ", inputManager=" + inputManager +

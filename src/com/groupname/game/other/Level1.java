@@ -30,7 +30,7 @@ import java.util.Arrays;
 public class Level1 extends LevelBase {
 
     private Player player;
-    public Level1(Game game, GraphicsContext graphicsContext) {
+    public Level1(GAME game, GraphicsContext graphicsContext) {
         super(game, graphicsContext);
 
         backgroundColor = Color.CORNFLOWERBLUE;

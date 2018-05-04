@@ -7,7 +7,6 @@ import com.groupname.game.scene.SceneName;
 import com.groupname.game.data.AppSettings;
 import javafx.application.Application;
 import javafx.scene.media.MediaException;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class Main extends Application {
 
         SceneManager sceneManager = SceneManager.INSTANCE;
         sceneManager.setPrimaryStage(primaryStage);
-        SceneManager.navigate(SceneName.Title);
+        SceneManager.navigate(SceneName.TITLE);
 
         primaryStage.show();
     }

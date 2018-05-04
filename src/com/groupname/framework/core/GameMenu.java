@@ -14,7 +14,7 @@ import com.groupname.framework.input.InputManager;
  *          * Resume        *
  *          * Save          *
  *          * Restart LEVEL *
- *          * Restart Game  *
+ *          * Restart GAME  *
  *          * Exit          *
  *          *****************
  */

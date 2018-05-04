@@ -21,7 +21,7 @@ public enum LevelState {
     COMPLETED,
 
     /**
-     * Game over.
+     * GAME over.
      */
     GAME_OVER
 }

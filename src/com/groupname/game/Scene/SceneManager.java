@@ -13,14 +13,18 @@ import java.security.InvalidParameterException;
 import java.util.*;
 
 
-
-
+/**
+ * This enum singleton is used to load and switch between different scenes inside the application.
+ *
+ * setPrimaryStage must be set before using the navigate method.
+ */
 public enum SceneManager {
     INSTANCE;
 
     private Stage primaryStage = null;
     private final Map<SceneName, SceneInfo> scenes;
     private boolean initialized;
+
     private Game game;
     private Controller currentController;
 
@@ -33,20 +37,24 @@ public enum SceneManager {
     private void setupGame(Scene scene) {
         assert scene != null;
 
-        // Get width and height from canvas instead?
         game = new Game(scene, AppSettings.SCREEN_BOUNDS.getWidth(), AppSettings.SCREEN_BOUNDS.getHeight());
     }
 
     private void createSceneInfos() {
-        SceneInfo title= new SceneInfo(SceneName.Title, "Title - Untitled Game", "/com/groupname/game/views/titleview.fxml");
-        SceneInfo game = new SceneInfo(SceneName.Game, "Game - Untitled Game", "/com/groupname/game/views/gameview.fxml");
-        SceneInfo editor = new SceneInfo(SceneName.Editor, "LEVEL editor!", "/com/groupname/game/views/editorview.fxml");
+        SceneInfo title= new SceneInfo(SceneName.TITLE, "TITLE - Untitled GAME", "/com/groupname/game/views/titleview.fxml");
+        SceneInfo game = new SceneInfo(SceneName.GAME, "GAME - Untitled GAME", "/com/groupname/game/views/gameview.fxml");
+        SceneInfo editor = new SceneInfo(SceneName.EDITOR, "Level editor!", "/com/groupname/game/views/editorview.fxml");
 
-        scenes.put(SceneName.Title, title);
-        scenes.put(SceneName.Game, game);
-        scenes.put(SceneName.Editor, editor);
+        scenes.put(SceneName.TITLE, title);
+        scenes.put(SceneName.GAME, game);
+        scenes.put(SceneName.EDITOR, editor);
     }
 
+    /**
+     * Sets the primaryStage that is used to change between scenes.
+     *
+     * @param primaryStage to use for changing between scenes.
+     */
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = Objects.requireNonNull(primaryStage, "primaryStage cannot be null");
 
@@ -63,6 +71,11 @@ public enum SceneManager {
         initialized = true;
     }
 
+    /**
+     * Attempts to navigate to the specified sceneName.
+     *
+     * @param sceneName to navigate to.
+     */
     public static void navigate(SceneName sceneName) {
         INSTANCE.changeToScene(sceneName);
     }
@@ -100,17 +113,8 @@ public enum SceneManager {
 
             currentController.init(game);
 
-            /*
-            if(!game.isRunning()) {
-                game.start();
-            }
-            */
-
-
             primaryStage.setTitle(info.getTitle());
             primaryStage.setScene(scene);
-
-            // Change out the canvas we're drawing to in the game class
 
         } catch (IOException exception) { // throw other exception
             exception.printStackTrace();

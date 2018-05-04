@@ -1,11 +1,16 @@
 package com.groupname.game.scene;
 
+/**
+ * Represents the different scenes within the application.
+ * Used to navigate between them using the SceneManager singleton.
+ *
+ * To navigate to another scene u should use the
+ * SceneManager.INSTANCE.navigate method.
+ */
 public enum SceneName {
-    None,
-    Title,
-    Game,
-    GameOver,
-    Credits,
-    HighScore,
-    Editor
+    NONE,
+    TITLE,
+    GAME,
+    CREDITS,
+    EDITOR
 }

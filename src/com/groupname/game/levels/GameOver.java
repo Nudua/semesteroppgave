@@ -71,6 +71,6 @@ public class GameOver extends LevelBase {
 
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font(80));
-        graphicsContext.fillText("Game Over ...", 1280 / 2 - 250, 720 / 2);
+        graphicsContext.fillText("GAME Over ...", 1280 / 2 - 250, 720 / 2);
     }
 }

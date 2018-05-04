@@ -1,6 +1,5 @@
 package com.groupname.game.controllers;
 
-import com.groupname.framework.core.GameObject;
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
@@ -153,7 +152,7 @@ public class GameController implements Controller {
         pauseMenu = new GameMenuFX<>(PauseButton.class, "/com/groupname/game/views/menus/pausemenu.fxml");
 
         pauseMenu.setOnClicked(PauseButton.Resume, this::unPause);
-        pauseMenu.setOnClicked(PauseButton.MainMenu, () -> SceneManager.navigate(SceneName.Title));
+        pauseMenu.setOnClicked(PauseButton.MainMenu, () -> SceneManager.navigate(SceneName.TITLE));
         pauseMenu.setOnClicked(PauseButton.RestartLevel, () -> {
             getCurrentLevel().reset();
             unPause();

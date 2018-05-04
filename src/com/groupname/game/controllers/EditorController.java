@@ -447,7 +447,7 @@ public class EditorController implements Controller {
 
     @FXML
     protected void exitOnClicked(ActionEvent event) {
-        SceneManager.navigate(SceneName.Title);
+        SceneManager.navigate(SceneName.TITLE);
     }
 
     /**

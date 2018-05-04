@@ -28,7 +28,7 @@ import java.util.Optional;
  *          * Resume        * <- GameMenu.Resume
  *          * Save          * <- GameMenu.Save etc.
  *          * Restart LEVEL *
- *          * Restart Game  *
+ *          * Restart GAME  *
  *          * Exit          *
  *          *****************
  *

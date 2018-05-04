@@ -51,8 +51,8 @@ public class TitleController implements Controller {
         titleMenu = new GameMenuFX<>(TitleMenuNames.class, "/com/groupname/game/views/menus/titlemenu.fxml");
 
         titleMenu.setOnClicked(TitleMenuNames.Exit, Platform::exit);
-        titleMenu.setOnClicked(TitleMenuNames.Start, () -> SceneManager.navigate(SceneName.Game));
-        titleMenu.setOnClicked(TitleMenuNames.Editor, () -> SceneManager.navigate(SceneName.Editor));
+        titleMenu.setOnClicked(TitleMenuNames.Start, () -> SceneManager.navigate(SceneName.GAME));
+        titleMenu.setOnClicked(TitleMenuNames.Editor, () -> SceneManager.navigate(SceneName.EDITOR));
         //titleMenu.setOnClicked(TitleMenuNames.Continue, () -> titleMenu.setVisible(false));
 
         root.getChildren().add(titleMenu);

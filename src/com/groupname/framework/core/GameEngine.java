@@ -7,7 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
- * The base class used to drive a Game which contains an AnimatingTimer that
+ * The base class used to drive a GAME which contains an AnimatingTimer that
  * updates 60 times per second.
  *
  * Subclasses must override update (logic) and draw (used to draw the game world).
