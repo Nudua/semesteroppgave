@@ -86,7 +86,7 @@ public class EditorController implements Controller {
 
     @FXML
     public void initialize() {
-        //writeMetaData();
+        writeMetaData();
         //populateMetaDataList();
         loadMetadata();
     }
