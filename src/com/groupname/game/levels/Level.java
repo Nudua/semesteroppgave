@@ -81,17 +81,6 @@ public class Level extends LevelBase {
             player1.checkCollision(gameObjects);
         }
 
-
-        /*
-        for(GameObject gameObject : gameObjects) {
-            gameObject.update();
-
-            if(gameObject instanceof Player) {
-                ((Player) gameObject).checkCollision(gameObjects);
-            }
-        }
-        */
-
         if(allEnemiesDead()) {
             state = LevelState.COMPLETED;
         }

@@ -64,9 +64,11 @@ public class Credits extends LevelBase {
     @Override
     public void update() {
         // Update input to the most recent state
+        /*
         if(inputManager.isEnabled()) {
             inputManager.update();
         }
+        */
 
         if(inputManager.wasPressed(PlayerInputDefinitions.SELECT)) {
             state = LevelState.COMPLETED;
