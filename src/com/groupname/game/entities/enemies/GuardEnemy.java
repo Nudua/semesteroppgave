@@ -13,7 +13,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.EnumSet;
 
 /**
- * This class extends Enemy. GuardEnemy is an enemy that patrols from A to B.
+ * This class extends Enemy.
+ * GuardEnemy is an enemy that patrols from A to B.
  */
 public class GuardEnemy extends Enemy {
     private Vector2D endPosition;
@@ -24,9 +25,10 @@ public class GuardEnemy extends Enemy {
     private Counter hitCounter = new Counter(2);
 
     /**
-     * The constructure for an GuardEnemy.
-     * @param sprite Sets an default sprite for the enemy.
-     * @param position Sets the start position, on the canvas.
+     * Creates a new instance of this class with the specific parameters.
+     *
+     * @param sprite The sprite of the object.
+     * @param position The start position of the object.
      */
     public GuardEnemy(Sprite sprite, Vector2D position) {
         super(sprite, position);
@@ -36,8 +38,9 @@ public class GuardEnemy extends Enemy {
     }
 
     /**
-     * Setter that sets the position of the enemy.
-     * @param position an Vector2D that is an position on the canvas.
+     * Setter that sets the position of the object.
+     *
+     * @param position an Vector2D that is the position on the canvas.
      */
     @Override
     public void setPosition(Vector2D position) {
@@ -60,6 +63,12 @@ public class GuardEnemy extends Enemy {
         }
     }
 
+    /**
+     * Method for the event on collide.
+     * Enemies give damage on collide.
+     *
+     * @param damage the amount of damage it gets.
+     */
     @Override
     public void onCollides(int damage) {
         super.onCollides(damage);
@@ -68,13 +77,12 @@ public class GuardEnemy extends Enemy {
             hitCounter.reset();
         }
 
-        //System.out.println("Hit!");
     }
 
     /**
-     * Makes it easy to set the walking speed for the enemy.
+     * Sets the speed of the enemy.
      *
-     * @param speed is the speed that we add/subtract to the position per frame/update in the logic.
+     * @param speed takes a double for the speed of the enemy.
      */
     @Override
     public void setSpeed(double speed) {
@@ -131,7 +139,7 @@ public class GuardEnemy extends Enemy {
     }
 
     /**
-     * This method is an easy way for resetting this enemy.
+     * Method for resetting the enemy.
      */
     @Override
     public void reset() {
