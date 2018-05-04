@@ -11,10 +11,11 @@ import com.groupname.game.entities.Enemy;
 import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 /**
- * This class extends Enemy.
  * GuardEnemy is an enemy that patrols from A to B.
+ * This class extends Enemy.
  */
 public class GuardEnemy extends Enemy {
     private Vector2D endPosition;
@@ -128,6 +129,7 @@ public class GuardEnemy extends Enemy {
      */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        Objects.requireNonNull(spriteBatch);
         if(isAlive()) {
 
             spriteFlip = direction == Direction.RIGHT ? SpriteFlip.HORIZONTAL : SpriteFlip.NONE;
@@ -143,7 +145,6 @@ public class GuardEnemy extends Enemy {
      */
     @Override
     public void reset() {
-
     }
 
     /**
