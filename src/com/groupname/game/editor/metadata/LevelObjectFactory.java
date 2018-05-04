@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Takes all the objects needed to create a level and melt it down to a level.
+ * Takes all the objects needed to create a level of it.
  */
 public class LevelObjectFactory {
 
@@ -38,10 +38,21 @@ public class LevelObjectFactory {
         this.spriteFactory = new SpriteFactory();
     }
 
+    /**
+     * Setter for the player.
+     *
+     * @param player the player to use.
+     */
     public void setPlayer(Player player) {
         this.player = Objects.requireNonNull(player);
     }
 
+    /**
+     * Returns the created objects.
+     *
+     * @param metaData info about the objects.
+     * @return the created objects.
+     */
     public GameObject create(ObjectMetaData metaData) {
         if(metaData.getType() == Player.class) {
             return createPlayer(metaData);
