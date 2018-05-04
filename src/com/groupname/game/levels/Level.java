@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+/**
+ * This class generates gameObjects based on the LevelMetaData that is given.
+ */
 public class Level extends LevelBase {
 
     private final LevelMetaData levelMetaData;
@@ -30,20 +33,40 @@ public class Level extends LevelBase {
 
     private Runnable onPlayerDead = null;
 
+    /**
+     * Creates a new instance of this level with the specified LevelMetaData to generate the contents of this level.
+     * @param parent the owner of this game.
+     * @param graphicsContext the context used to draw this level.
+     * @param levelMetaData the metaData used to create the content for this level.
+     */
     public Level(Game parent, GraphicsContext graphicsContext, LevelMetaData levelMetaData) {
         super(parent, graphicsContext);
         this.levelMetaData = Objects.requireNonNull(levelMetaData);
     }
 
+    /**
+     * Sets a runnable that gets executed when the player dies.
+     *
+     * @param onPlayerDead the runnable to set.
+     */
     public void setOnPlayerDead(Runnable onPlayerDead) {
         this.onPlayerDead = onPlayerDead;
     }
 
+    /**
+     * Returns the ID of this "level".
+     *
+     * @return the ID of this "level".
+     */
     @Override
     public String getId() {
         return levelMetaData.getId();
     }
 
+    /**
+     * Loads and initializes all the gameObjects used by this level
+     * from the LevelMetaData specified by the constructor.
+     */
     @Override
     public void initialize() {
         gameObjects.clear();
@@ -67,8 +90,12 @@ public class Level extends LevelBase {
         }
 
         System.out.println("Loaded level successfully: " + levelMetaData.getId());
+        initialized = true;
     }
 
+    /**
+     * Updates the game logic for this level.
+     */
     @Override
     public void update() {
 
@@ -109,6 +136,9 @@ public class Level extends LevelBase {
                 .noneMatch(n -> ((Enemy) n).isAlive());
     }
 
+    /**
+     * Draws the level.
+     */
     @Override
     public void draw() {
         // Draw background
@@ -123,9 +153,28 @@ public class Level extends LevelBase {
 
     }
 
+    /**
+     * Resets this level to it's original state.
+     */
     @Override
     public void reset() {
         initialize();
         super.reset();
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return super.toString() + "Level{" +
+                "levelMetaData=" + levelMetaData +
+                ", backgroundImage=" + backgroundImage +
+                ", screenWidth=" + screenWidth +
+                ", screenHeight=" + screenHeight +
+                ", onPlayerDead=" + onPlayerDead +
+                '}';
     }
 }
