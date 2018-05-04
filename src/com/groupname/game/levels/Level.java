@@ -97,6 +97,7 @@ public class Level extends LevelBase {
         }
 
         if(playerDead()) {
+            state = LevelState.GAME_OVER;
             if(onPlayerDead != null) {
                 onPlayerDead.run();
             }

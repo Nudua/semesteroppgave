@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.core.GameObject;
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
@@ -29,6 +30,10 @@ import javafx.scene.layout.GridPane;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * This controller is used to connect the fxml (views/gameview.fxml)
+ * and handles the lifecycle of the
+ */
 public class GameController implements Controller {
     @FXML protected GridPane root;
     @FXML protected Canvas canvas;
@@ -46,9 +51,6 @@ public class GameController implements Controller {
 
     private ScreenTransition levelCompletedTransition;
 
-    private LevelBase gameOver;
-
-
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
 
@@ -59,7 +61,7 @@ public class GameController implements Controller {
         String levelId = AppSettings.INSTANCE.getCurrentLevel();
 
         if(!Strings.isNullOrEmpty(levelId)) {
-            Optional<LevelBase> level = levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
+            Optional<LevelBase> level = getLevelFromId(levelId); //levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
 
             if(level.isPresent()) {
                 currentLevelIndex = levels.indexOf(level.get());
@@ -69,26 +71,19 @@ public class GameController implements Controller {
 
         LevelBase currentLevel = getCurrentLevel();
 
-        if(currentLevel instanceof Level) {
-            ((Level) currentLevel).setOnPlayerDead(() ->{
-                System.out.println("Dave, everybody's dead... everybody's dead Dave");
-                getCurrentLevel().reset();
-            });
-        }
+        onPlayerDead(currentLevel);
 
-        gameOver = new GameOver(game, canvas.getGraphicsContext2D());
-        gameOver.initialize();
-        //levels.add(0, new Level1(game, canvas.getGraphicsContext2D()));
-        //levels.add(0, gameOver);
         levelCompletedTransition = new BlindsScreenTransition(canvas.getGraphicsContext2D());
-
-        //SoundPlayer.INSTANCE.playMusic(SoundPlayer.MusicTrack.MAIN);
 
         if(!game.isRunning()) {
             game.start();
         }
 
         setupMenu();
+    }
+
+    private Optional<LevelBase> getLevelFromId(String levelId) {
+        return levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
     }
 
     private LevelBase getCurrentLevel() {
@@ -107,6 +102,11 @@ public class GameController implements Controller {
             boolean loaded = loadLevel(reader, levelPath);
         }
         levels.add(credits);
+
+        LevelBase gameOver = new GameOver(game, canvas.getGraphicsContext2D());
+        gameOver.initialize();
+
+        levels.add(gameOver);
     }
 
     private boolean loadLevel(LevelReader reader, String fileName) {
@@ -146,12 +146,7 @@ public class GameController implements Controller {
             currentLevelIndex = 0;
             LevelBase currentLevel = getCurrentLevel();
             currentLevel.reset();
-            if(currentLevel instanceof Level) {
-                ((Level) currentLevel).setOnPlayerDead(() ->{
-                    System.out.println("Dave, everybody's dead... everybody's dead Dave");
-                    getCurrentLevel().reset();
-                });
-            }
+            onPlayerDead(currentLevel);
             unPause();
         });
         pauseMenu.setOnClicked(PauseButton.Save, this::save);
@@ -170,6 +165,22 @@ public class GameController implements Controller {
             appSettings.save();
         } catch (IOException ex) {
             System.out.println("Unable to store current level");
+        }
+    }
+
+    private void onPlayerDead(LevelBase level) {
+        if(level instanceof Level) {
+            ((Level) level).setOnPlayerDead(() ->{
+
+                Optional<LevelBase> gameOver = getLevelFromId(GameOver.LEVEL_ID);
+
+                if(gameOver.isPresent()) {
+                    currentLevelIndex = levels.indexOf(gameOver.get());
+                }
+
+                System.out.println("Dave, everybody's dead... everybody's dead Dave");
+                //getCurrentLevel().reset();
+            });
         }
     }
 
@@ -196,19 +207,12 @@ public class GameController implements Controller {
                     currentLevel = getCurrentLevel();
                     currentLevel.reset();
 
-                    if(currentLevel instanceof Level) {
-                        ((Level) currentLevel).setOnPlayerDead(() ->{
-                            System.out.println("Dave, everybody's dead... everybody's dead Dave");
-                            getCurrentLevel().reset();
-                        });
-                    }
+                    onPlayerDead(currentLevel);
 
                     levelCompletedTransition.reset();
                 } else {
                     levelCompletedTransition.update();
                 }
-
-            } else if(currentLevel.getState() == LevelState.GAME_OVER) {
 
             }
 
