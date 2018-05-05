@@ -11,8 +11,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The Main for our application.
+ */
 public class Main extends Application {
 
+    /**
+     * Starts the music, load the settings and takes you to the TITLE screen.
+     *
+     * @param primaryStage
+     * @throws Exception Throws exception if SoundPlayer or loadSettings fails.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
 
@@ -56,6 +65,11 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Method that stops all the processes when stopping the game.
+     *
+     * @throws Exception Throws an exeption if the soundPlayer.stopMusic fails or AppSettings cannot be saved.
+     */
     @Override
     public void stop() throws Exception {
         System.out.println("Stopping audio subsystem...");
@@ -80,6 +94,11 @@ public class Main extends Application {
         }
     }
 
+    /**
+     * Launch the application.
+     *
+     * @param args an array of command-line arguments for the application
+     */
     public static void main(String[] args) {
         launch(args);
     }
