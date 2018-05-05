@@ -16,6 +16,9 @@ import javafx.scene.layout.GridPane;
 
 import java.util.Objects;
 
+/**
+ * Controls the title menu.
+ */
 public class TitleController implements Controller {
 
     @FXML protected GridPane root;
@@ -26,10 +29,17 @@ public class TitleController implements Controller {
     private GameMenuFX<TitleMenuNames> titleMenu;
     private LevelBase titleLevel;
 
+    /**
+     * Creates a new instance of this class.
+     */
     public TitleController() {
     }
 
-    // Maybe move into constructor instead
+    /**
+     * Initializes the controller with the specified game to run on the specified game.
+     *
+      * @param game the game instance to use for this controller.
+     */
     public void init(Game game) {
         this.game = Objects.requireNonNull(game);
 
@@ -69,6 +79,9 @@ public class TitleController implements Controller {
         titleLevel.draw();
     }
 
+    /**
+     * Exit method.
+     */
     @Override
     public void exit() {
 
