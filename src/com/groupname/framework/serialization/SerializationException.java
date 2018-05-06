@@ -1,14 +1,14 @@
 package com.groupname.framework.serialization;
 
 /**
- * Represents an Exception (checked) that gets used by the ObjectSerialized when an error occurs
+ * Represents an Exception (checked) that gets used if an error occurs
  * while serializing or de-serializing an object.
  */
-public class ObjectSerializerException extends Exception {
+public class SerializationException extends Exception {
     /**
      * Creates a new instance without any custom message specified.
      */
-    public ObjectSerializerException() {
+    public SerializationException() {
     }
 
     /**
@@ -16,7 +16,7 @@ public class ObjectSerializerException extends Exception {
      *
      * @param message the message to use.
      */
-    public ObjectSerializerException(String message) {
+    public SerializationException(String message) {
         super(message);
     }
 }

@@ -17,8 +17,8 @@ public class SpriteSheet {
      * Creates a new instance of this class with the specified name and image.
      * The name parameter cannot be null or empty "".
      *
-     * @param name the name to use for this Spritesheet.
-     * @param image the image to use for this SPRITE_SHEET.
+     * @param name the name to use for this spritesheet.
+     * @param image the image to use for this spritesheet.
      * @throws NullPointerException if either name or image is null.
      */
     public SpriteSheet(String name, Image image) {
@@ -27,16 +27,16 @@ public class SpriteSheet {
     }
 
     /**
-     * Gets the width of the Image used by this SPRITE_SHEET.
-     * @return the width of the Image used by this SPRITE_SHEET.
+     * Gets the width of the Image used by this spritesheet.
+     * @return the width of the Image used by this spritesheet.
      */
     public int getWidth() {
         return (int)image.getWidth();
     }
 
     /**
-     * Gets the height of the Image used by this SPRITE_SHEET.
-     * @return the height of the Image used by this SPRITE_SHEET.
+     * Gets the height of the Image used by this spritesheet.
+     * @return the height of the Image used by this spritesheet.
      */
     public int getHeight() {
         return (int)image.getHeight();
@@ -52,18 +52,18 @@ public class SpriteSheet {
     }
 
     /**
-     * Gets the Image used by this SPRITE_SHEET.
-     * @return the Image used by this SPRITE_SHEET.
+     * Gets the Image used by this spritesheet.
+     * @return the Image used by this spritesheet.
      */
     public Image getImage() {
         return image;
     }
 
     /**
-     * The string representation of a SPRITE_SHEET where name = name and image = value
+     * The string representation of a spritesheet where name = name and image = value
      * Where name is the name of the field you save, and value is the value of the field
      *
-     * @return a String representation of this SPRITE_SHEET instance.
+     * @return a String representation of this spritesheet instance.
      */
     @Override
     public String toString() {

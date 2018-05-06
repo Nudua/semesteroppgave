@@ -1,6 +1,7 @@
-package com.groupname.framework.serialization;
+package com.groupname.framework.serialization.xml;
 
 import com.groupname.framework.core.Difficulty;
+import com.groupname.framework.serialization.SerializationException;
 import com.groupname.game.editor.metadata.PowerupSpriteType;
 import com.groupname.game.entities.EnemySpriteType;
 
@@ -27,12 +28,17 @@ public class XMLWriter {
      * @param fileName filename to the file you save to.
      * @param instance the instance of the class you want to store
      * @param <T> the class type you want to store
-     * @throws IllegalAccessException if no access to the class fields.
-     * @throws IOException issues writing the file to disk.
+     * @throws SerializationException if there was an issue while serializing the given instance.
      */
-    public <T> void write(Path fileName, T instance) throws IllegalAccessException, IOException {
-        List<XMLNode> nodes = readFields(instance);
-        writeXML(fileName, instance.getClass().getName(), nodes);
+    public <T> void write(Path fileName, T instance) throws SerializationException {
+        try {
+            List<XMLNode> nodes = readFields(instance);
+            writeXML(fileName, instance.getClass().getName(), nodes);
+        } catch (IllegalAccessException exception) {
+            throw new SerializationException("Error while reading the instance class");
+        } catch (IOException exception) {
+            throw new SerializationException("Error while writing to the file.");
+        }
     }
 
     private List<String> getWhiteList(){
@@ -107,11 +113,6 @@ public class XMLWriter {
         List<Field> fields = new ArrayList<>();
         Class objectOfClass = instance.getClass();
 
-        /*
-        while(objectOfClass != Object.class){
-            fields.addAll(Arrays.asList(objectOfClass.getDeclaredFields()));
-            objectOfClass = objectOfClass.getSuperclass();
-        }*/
         getFieldsFromClass(fields, objectOfClass);
 
         return fields;

@@ -46,7 +46,7 @@ public class PlayerInputDefinitions {
         bindings.add(new InputBinding(SHOOT_UP, KeyboardInput.Defaults.SHOOT_UP, HitboxInput.Defaults.SHOOT_UP, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_Y)));
         bindings.add(new InputBinding(SHOOT_DOWN, KeyboardInput.Defaults.SHOOT_DOWN, HitboxInput.Defaults.SHOOT_DOWN, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_A)));
         bindings.add(new InputBinding(SHOOT_LEFT, KeyboardInput.Defaults.SHOOT_LEFT, HitboxInput.Defaults.SHOOT_LEFT, HitboxInput.Defaults.SELECT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_X)));
-        bindings.add(new InputBinding(SHOOT_RIGHT, KeyboardInput.Defaults.SHOOT_RIGHT, HitboxInput.Defaults.SHOOT_RIGHT, HitboxInput.Defaults.START, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_B)));
+        bindings.add(new InputBinding(SHOOT_RIGHT, KeyboardInput.Defaults.SHOOT_RIGHT, HitboxInput.Defaults.SHOOT_RIGHT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_B)));
 
         bindings.add(new InputBinding(START, KeyboardInput.Defaults.START, HitboxInput.Defaults.START, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_START)));
         bindings.add(new InputBinding(SELECT, KeyboardInput.Defaults.SELECT, HitboxInput.Defaults.SELECT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_BACK)));

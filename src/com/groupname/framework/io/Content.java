@@ -1,7 +1,7 @@
 package com.groupname.framework.io;
 
 import com.groupname.framework.serialization.ObjectSerializer;
-import com.groupname.framework.serialization.ObjectSerializerException;
+import com.groupname.framework.serialization.SerializationException;
 import com.groupname.framework.util.Strings;
 import com.groupname.game.editor.metadata.ObjectMetaData;
 import javafx.scene.image.Image;
@@ -59,7 +59,7 @@ public final class Content {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<ObjectMetaData> loadMetadata(String fileName) throws ObjectSerializerException {
+    public static List<ObjectMetaData> loadMetadata(String fileName) throws SerializationException {
         ObjectSerializer serializer = new ObjectSerializer();
 
         // A little messy, but required for generic types

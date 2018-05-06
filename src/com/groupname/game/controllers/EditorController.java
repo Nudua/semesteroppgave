@@ -10,7 +10,7 @@ import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.serialization.ObjectSerializer;
-import com.groupname.framework.serialization.ObjectSerializerException;
+import com.groupname.framework.serialization.SerializationException;
 import com.groupname.game.editor.LevelItem;
 import com.groupname.game.editor.LevelReader;
 import com.groupname.game.editor.LevelReaderException;
@@ -110,7 +110,7 @@ public class EditorController implements Controller {
 
             metaDataListView.setOnMouseClicked(this::gameItemSelected);
 
-        } catch (ObjectSerializerException exception) {
+        } catch (SerializationException exception) {
             showError("Error","Unable to load level items");
         }
     }
@@ -160,7 +160,7 @@ public class EditorController implements Controller {
         ObjectSerializer serializer = new ObjectSerializer();
         try {
             serializer.write(allData, Paths.get("metadata.data"));
-        } catch (ObjectSerializerException exception) {
+        } catch (SerializationException exception) {
             System.out.println(exception.getMessage());
         }
     }

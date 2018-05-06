@@ -1,4 +1,4 @@
-package com.groupname.framework.serialization;
+package com.groupname.framework.serialization.xml;
 
 import com.groupname.framework.util.Strings;
 

@@ -20,17 +20,17 @@ public class ObjectSerializer {
      * @param targetClass the class to cast the deserialized file into.
      * @param <T> the target class type to read.
      * @return The deserialized object requested.
-     * @throws ObjectSerializerException if the file does not exist or if it was not possible to cast the file into the requested class type.
+     * @throws SerializationException if the file does not exist or if it was not possible to cast the file into the requested class type.
      *                                   or if there was an unexpected io error while reading the file.
      */
-    public <T> T read(InputStream inputStream, Class<T> targetClass) throws ObjectSerializerException {
+    public <T> T read(InputStream inputStream, Class<T> targetClass) throws SerializationException {
         Objects.requireNonNull(inputStream);
         Objects.requireNonNull(targetClass);
 
         try (InputStream stream = inputStream; ObjectInputStream objectInputStream = new ObjectInputStream(stream)) {
             return targetClass.cast(objectInputStream.readObject());
         } catch (IOException | ClassNotFoundException | ClassCastException exception) {
-            throw new ObjectSerializerException(exception.getMessage());
+            throw new SerializationException(exception.getMessage());
         }
     }
 
@@ -41,10 +41,10 @@ public class ObjectSerializer {
      * @param targetClass the class to cast the deserialized file into.
      * @param <T> the target class type to read.
      * @return The deserialized object requested.
-     * @throws ObjectSerializerException if the file does not exist or if it was not possible to cast the file into the requested class type.
+     * @throws SerializationException if the file does not exist or if it was not possible to cast the file into the requested class type.
      *                                   or if there was an unexpected io error while reading the file.
      */
-    public <T> T read(Path filePath, Class<T> targetClass) throws ObjectSerializerException {
+    public <T> T read(Path filePath, Class<T> targetClass) throws SerializationException {
         Objects.requireNonNull(filePath);
         Objects.requireNonNull(targetClass);
 
@@ -52,9 +52,9 @@ public class ObjectSerializer {
             InputStream inputStream = Files.newInputStream(filePath, StandardOpenOption.READ);
             return read(inputStream, targetClass);
         } catch (NoSuchFileException exception) {
-            throw new ObjectSerializerException("File not found..");
+            throw new SerializationException("File not found..");
         } catch (IOException exception) {
-            throw new ObjectSerializerException(exception.getMessage());
+            throw new SerializationException(exception.getMessage());
         }
     }
 
@@ -64,9 +64,9 @@ public class ObjectSerializer {
      * @param data the object to serialize.
      * @param filePath the filePath to save the file.
      * @param <T> the class type of the object.
-     * @throws ObjectSerializerException if there was an io error while writing the file.
+     * @throws SerializationException if there was an io error while writing the file.
      */
-    public <T> void write(T data, Path filePath) throws ObjectSerializerException {
+    public <T> void write(T data, Path filePath) throws SerializationException {
         Objects.requireNonNull(data);
         Objects.requireNonNull(filePath);
 
@@ -74,7 +74,7 @@ public class ObjectSerializer {
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
             objectOutputStream.writeObject(data);
         } catch (IOException exception) {
-            throw new ObjectSerializerException(exception.getMessage());
+            throw new SerializationException(exception.getMessage());
         }
     }
 }
