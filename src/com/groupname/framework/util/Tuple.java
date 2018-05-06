@@ -1,4 +1,4 @@
-package com.groupname.framework.serialization;
+package com.groupname.framework.util;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 package com.groupname.framework.serialization.xml;
 
 import com.groupname.framework.serialization.SerializationException;
-import com.groupname.framework.serialization.Tuple;
+import com.groupname.framework.util.Tuple;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

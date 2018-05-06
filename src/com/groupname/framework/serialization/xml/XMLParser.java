@@ -1,6 +1,6 @@
 package com.groupname.framework.serialization.xml;
 
-import com.groupname.framework.serialization.Tuple;
+import com.groupname.framework.util.Tuple;
 import com.groupname.framework.util.Strings;
 
 import java.io.BufferedReader;
