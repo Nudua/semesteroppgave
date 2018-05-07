@@ -66,9 +66,7 @@ public class XInput implements InputAdapter {
         }
     }
 
-    public static class Defaults {
-        public static String get(PlayerIndex playerIndex, GamePadButton gamePadButton) {
-            return String.format("XInput Controller %d - %s", playerIndex.getIndex() + 1, gamePadButton.name());
-        }
+    public static String getButtonAsString(PlayerIndex playerIndex, GamePadButton gamePadButton) {
+        return String.format("XInput Controller %d - %s", playerIndex.getIndex() + 1, gamePadButton.name());
     }
 }

@@ -7,7 +7,7 @@ import com.groupname.framework.graphics.animation.AnimatedSprite;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.history.commands.ListAddCommand;
 import com.groupname.framework.history.commands.ListRemoveCommand;
-import com.groupname.framework.input.devices.MouseInput;
+import com.groupname.framework.input.devices.ContainedMouseInput;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.Vector2D;
@@ -40,7 +40,7 @@ public class GameEditor extends LevelBase {
 
     private final static String LEVEL_ID = "cd4305d4-d624-4c4e-9ef8-77207cf9b4e1";
 
-    private final MouseInput mouseInput;
+    private final ContainedMouseInput mouseInput;
     private Image backgroundImage;
 
     private Mode mode = Mode.EDITING;
@@ -71,7 +71,7 @@ public class GameEditor extends LevelBase {
         this.levelItems = Objects.requireNonNull(levelItems);
         this.commandHistory = Objects.requireNonNull(commandHistory);
 
-        mouseInput = new MouseInput(canvas, levelBounds);
+        mouseInput = new ContainedMouseInput(canvas, levelBounds);
         backgroundColor = Color.BLACK;
 
         mouseInput.setOnMove(this::updateItemPosition);

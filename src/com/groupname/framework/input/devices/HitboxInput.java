@@ -21,6 +21,7 @@ import java.util.concurrent.Executors;
  * the thread reading from the serial port gets cleaned up.
  */
 public class HitboxInput implements InputAdapter {
+    private static final String BUTTON_PREFIX = "Hitbox - ";
     private static final int GET_STATE_COMMAND = 0xFF;
 
     private boolean enabled;
@@ -83,7 +84,7 @@ public class HitboxInput implements InputAdapter {
 
         for(HitboxButton button : hitboxButtons) {
             if((buttonsState & button.getBitmask()) == button.getBitmask()) {
-                internalState.add(Defaults.get(button));
+                internalState.add(getButtonAsString(button));
             }
         }
     }
@@ -153,26 +154,14 @@ public class HitboxInput implements InputAdapter {
         internalState.clear();
     }
 
-    public static class Defaults {
-
-        private static final String PREFIX = "Hitbox - ";
-
-        public static final String UP = PREFIX + HitboxButton.UP.name();
-        public static final String DOWN = PREFIX + HitboxButton.DOWN.name();
-        public static final String LEFT = PREFIX + HitboxButton.LEFT.name();
-        public static final String RIGHT = PREFIX + HitboxButton.RIGHT.name();
-
-        public static final String SHOOT_UP = PREFIX + HitboxButton.SHOOT_UP.name();
-        public static final String SHOOT_DOWN = PREFIX + HitboxButton.SHOOT_DOWN.name();
-        public static final String SHOOT_LEFT = PREFIX + HitboxButton.SHOOT_LEFT.name();
-        public static final String SHOOT_RIGHT = PREFIX + HitboxButton.SHOOT_RIGHT.name();
-
-        public static final String START = PREFIX + HitboxButton.START.name();
-        public static final String SELECT = PREFIX + HitboxButton.SELECT.name();
-
-        // Maybe refactor to this
-        public static String get(HitboxButton button) {
-            return PREFIX + button.name();
-        }
+    /**
+     * Helper method that gets the String representation of the specified HitboxButton
+     * with the prefix used internally.
+     *
+     * @param button the button to get the String representation of.
+     * @return the String representation of the HitboxButton with the prefix used internally.
+     */
+    public static String getButtonAsString(HitboxButton button) {
+        return BUTTON_PREFIX + button.name();
     }
 }

@@ -6,6 +6,8 @@ import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.input.xinput.PlayerIndex;
 import com.groupname.framework.input.xinput.XInput;
 import com.groupname.framework.input.xinput.interop.GamePadButton;
+import com.groupname.framework.serial.HitboxButton;
+import javafx.scene.input.KeyCode;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -27,32 +29,26 @@ public class PlayerInputDefinitions {
     public static final String START = "Player 1 - Start";
     public static final String SELECT = "Player 1 - Select";
 
-    public static final String SPECIAL_1 = "Player 1 - Special 1";
-    public static final String SPECIAL_2 = "Player 1 - Special 2";
-
     /**
-     * Returns the default bindings for this class.
+     * Returns the default bindings.
      *
-     * @return the default bindings for this class.
+     * @return the default bindings.
      */
     public static Set<InputBinding> getDefaultBindings() {
         Set<InputBinding> bindings = new HashSet<>();
 
-        bindings.add(new InputBinding(UP, KeyboardInput.Defaults.UP, HitboxInput.Defaults.UP, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_UP)));
-        bindings.add(new InputBinding(DOWN, KeyboardInput.Defaults.DOWN, HitboxInput.Defaults.DOWN, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_DOWN)));
-        bindings.add(new InputBinding(LEFT, KeyboardInput.Defaults.LEFT, HitboxInput.Defaults.LEFT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_LEFT)));
-        bindings.add(new InputBinding(RIGHT, KeyboardInput.Defaults.RIGHT, HitboxInput.Defaults.RIGHT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_RIGHT)));
+        bindings.add(new InputBinding(UP, KeyboardInput.getKeyCodeAsString(KeyCode.W), HitboxInput.getButtonAsString(HitboxButton.UP), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_UP)));
+        bindings.add(new InputBinding(DOWN, KeyboardInput.getKeyCodeAsString(KeyCode.S), HitboxInput.getButtonAsString(HitboxButton.DOWN), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_DOWN)));
+        bindings.add(new InputBinding(LEFT, KeyboardInput.getKeyCodeAsString(KeyCode.A), HitboxInput.getButtonAsString(HitboxButton.LEFT), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_LEFT)));
+        bindings.add(new InputBinding(RIGHT, KeyboardInput.getKeyCodeAsString(KeyCode.D), HitboxInput.getButtonAsString(HitboxButton.RIGHT), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_DPAD_RIGHT)));
 
-        bindings.add(new InputBinding(SHOOT_UP, KeyboardInput.Defaults.SHOOT_UP, HitboxInput.Defaults.SHOOT_UP, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_Y)));
-        bindings.add(new InputBinding(SHOOT_DOWN, KeyboardInput.Defaults.SHOOT_DOWN, HitboxInput.Defaults.SHOOT_DOWN, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_A)));
-        bindings.add(new InputBinding(SHOOT_LEFT, KeyboardInput.Defaults.SHOOT_LEFT, HitboxInput.Defaults.SHOOT_LEFT, HitboxInput.Defaults.SELECT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_X)));
-        bindings.add(new InputBinding(SHOOT_RIGHT, KeyboardInput.Defaults.SHOOT_RIGHT, HitboxInput.Defaults.SHOOT_RIGHT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_B)));
+        bindings.add(new InputBinding(SHOOT_UP, KeyboardInput.getKeyCodeAsString(KeyCode.UP), HitboxInput.getButtonAsString(HitboxButton.SHOOT_UP), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_Y)));
+        bindings.add(new InputBinding(SHOOT_DOWN, KeyboardInput.getKeyCodeAsString(KeyCode.DOWN), HitboxInput.getButtonAsString(HitboxButton.SHOOT_DOWN), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_A)));
+        bindings.add(new InputBinding(SHOOT_LEFT, KeyboardInput.getKeyCodeAsString(KeyCode.LEFT), HitboxInput.getButtonAsString(HitboxButton.SHOOT_LEFT), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_X)));
+        bindings.add(new InputBinding(SHOOT_RIGHT, KeyboardInput.getKeyCodeAsString(KeyCode.RIGHT), HitboxInput.getButtonAsString(HitboxButton.SHOOT_RIGHT), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_B)));
 
-        bindings.add(new InputBinding(START, KeyboardInput.Defaults.START, HitboxInput.Defaults.START, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_START)));
-        bindings.add(new InputBinding(SELECT, KeyboardInput.Defaults.SELECT, HitboxInput.Defaults.SELECT, XInput.Defaults.get(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_BACK)));
-
-        bindings.add(new InputBinding(SPECIAL_1, KeyboardInput.Defaults.SPECIAL_1));
-        bindings.add(new InputBinding(SPECIAL_2, KeyboardInput.Defaults.SPECIAL_2));
+        bindings.add(new InputBinding(START, KeyboardInput.getKeyCodeAsString(KeyCode.ENTER), HitboxInput.getButtonAsString(HitboxButton.START), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_START)));
+        bindings.add(new InputBinding(SELECT, KeyboardInput.getKeyCodeAsString(KeyCode.ESCAPE), HitboxInput.getButtonAsString(HitboxButton.SELECT), XInput.getButtonAsString(PlayerIndex.One, GamePadButton.XINPUT_GAMEPAD_BACK)));
 
         return bindings;
     }

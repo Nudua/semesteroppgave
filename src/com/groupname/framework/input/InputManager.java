@@ -20,7 +20,6 @@ public class InputManager {
     private boolean enabled = true;
 
     private final List<InputAdapter> inputAdapters;
-
     private final Set<String> internalInputState;
 
     private Set<InputBinding> bindings;
@@ -115,7 +114,7 @@ public class InputManager {
             serialPort.open();
         } catch (SerialPortException e) {
             serialPort = null;
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
 
         if(serialPort == null) {
@@ -182,7 +181,7 @@ public class InputManager {
     }
 
     /**
-     * If a hitboxInput is running this method will stop the thread there it is running on.
+     * If a hitboxInput is running this method will stop the thread that its running on.
      */
     public void stop() {
         System.out.println("Stopping inputadapters...");
@@ -195,5 +194,22 @@ public class InputManager {
                 }
             }
         }
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "InputManager{" +
+                "enabled=" + enabled +
+                ", inputAdapters=" + inputAdapters +
+                ", internalInputState=" + internalInputState +
+                ", bindings=" + bindings +
+                ", lastState=" + lastState +
+                ", state=" + state +
+                '}';
     }
 }

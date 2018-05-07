@@ -24,5 +24,18 @@ public abstract class ListCommand<E> implements Command {
         this.list = Objects.requireNonNull(list);
         this.item = Objects.requireNonNull(item);
     }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "ListCommand{" +
+                "list=" + list +
+                ", item=" + item +
+                '}';
+    }
 }
 

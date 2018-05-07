@@ -59,7 +59,7 @@ public class GamePad {
 
         for(GamePadButton button : digitalButtons) {
             if(isDown(button)) {
-                internalState.add(XInput.Defaults.get(playerIndex, button));
+                internalState.add(XInput.getButtonAsString(playerIndex, button));
             }
         }
 
