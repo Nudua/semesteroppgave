@@ -1,10 +1,8 @@
 package com.groupname.framework.input.devices;
 
 import com.groupname.framework.concurrency.TaskRunner;
-import com.groupname.framework.serial.HitboxButton;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;
-import javafx.scene.input.KeyCode;
 
 import java.util.HashSet;
 import java.util.Objects;

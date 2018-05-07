@@ -159,7 +159,7 @@ public class Vector2D implements Serializable {
      * Method that tests if two vectors are equal.
      *
      * @param o the reference object with which to compare.
-     * @return true if this object is the same as the obj argument; false otherwise.
+     * @return true if the x and y coordinates of this instance are considered the same as in 'o'.
      */
     @Override
     public boolean equals(Object o) {

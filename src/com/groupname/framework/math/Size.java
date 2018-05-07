@@ -9,7 +9,7 @@ public class Size {
     private int height;
 
     /**
-     * Constructure with the height and width zero.
+     * Creates a new instance with width = 0 and height = 0.
      */
     public Size() {
         this.width = 0;
@@ -17,7 +17,7 @@ public class Size {
     }
 
     /**
-     * Constructure where you set the width and the height.
+     * Creates a new instance with the specified width and height.
      *
      * @param width your width.
      * @param height your height.

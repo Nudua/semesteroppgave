@@ -267,13 +267,13 @@ public class INIPreferences {
     }
 
     /**
-     * Gets the String representation of this object.
+     * Returns the String representation of this object.
      *
      * fileName is the path used for storing the file on disk.
      * map holds the contents of the preferences.
      * isDirty says if the collection has been changed or not since it was last stored to the disk.
      *
-     * @return
+     * @return the String representation of this object.
      */
     @Override
     public String toString() {

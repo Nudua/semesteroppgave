@@ -6,7 +6,7 @@ import com.groupname.framework.input.devices.KeyboardInput;
 import com.groupname.framework.input.xinput.PlayerIndex;
 import com.groupname.framework.input.xinput.XInput;
 import com.groupname.framework.input.xinput.interop.GamePadButton;
-import com.groupname.framework.serial.HitboxButton;
+import com.groupname.framework.input.devices.HitboxButton;
 import javafx.scene.input.KeyCode;
 
 import java.util.HashSet;

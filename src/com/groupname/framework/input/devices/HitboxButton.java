@@ -1,4 +1,4 @@
-package com.groupname.framework.serial;
+package com.groupname.framework.input.devices;
 
 /**
  * This enum and it's bitwise values map directly to the buttons of our custom built hitbox InputAdapter.
