@@ -1,8 +1,6 @@
 package com.groupname.game.levels.core;
 
 import com.groupname.framework.core.GameObject;
-import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.SpriteSheetNotFoundException;
 import com.groupname.framework.graphics.drawing.SpriteBatch;
 import com.groupname.framework.graphics.drawing.SpriteBatchFX;
 import com.groupname.framework.input.InputManager;

@@ -3,21 +3,10 @@ package com.groupname.framework.core;
 import com.groupname.framework.input.InputManager;
 
 /**
- * Represents a menu that is shown when the game is paused.
+ * Represents a dynamically generated menu for a game or application.
  *
  * Implementations must generate all the buttons specified by the Enum<T> supplied.
- *
- * Example:
- *          *****************
- *          *     PAUSED    *
- *          *****************
- *          * Resume        *
- *          * Save          *
- *          * Restart LEVEL *
- *          * Restart GAME  *
- *          * Exit          *
- *          *****************
- */
+*/
 public interface GameMenu<T extends Enum<T>> {
 
     /**

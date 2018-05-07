@@ -58,24 +58,12 @@ public class SpriteBatchFX implements SpriteBatch {
     }
 
     /**
-     * Draws the given sprite at the specified position with the specified spriteFlip flags.
-     *
-     * @param sprite the sprite to draw.
-     * @param position the position to draw it.
-     * @see SpriteFlip
-     */
-    public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
-        draw(sprite, position, flipFlags, false);
-    }
-
-    /**
      * Draws the given sprite at the specified position with the specified spriteFlip flags and color tint.
      *
      * @param sprite the sprite to draw.
      * @param position the position to draw it.
-     * @param invertColors if we should invert the colors.
      */
-    public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags, boolean invertColors) {
+    public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
         Objects.requireNonNull(sprite);
         Objects.requireNonNull(position);
 
@@ -100,26 +88,6 @@ public class SpriteBatchFX implements SpriteBatch {
             posY += sprite.getHeight();
         }
 
-        //graphicsContext.setEffect(null);
-
-        graphicsContext.save();
-        // Figure out how to tint red
-        if(invertColors) {
-
-            Glow glow = new Glow();
-            glow.setLevel(0.9d);
-
-
-            //Blend blend = new Blend(BlendMode.MULTIPLY, monochrome, new ColorInput(posX,posY, spriteWidth, spriteHeight, Color.RED));
-
-            // do nothing for now
-            //graphicsContext.setEffect(glow);
-        }
-
-        //graphicsContext.setEffect(new DropShadow());
-
         graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY() + 1, srcRect.getWidth(), srcRect.getHeight() - 1, posX, posY, spriteWidth, spriteHeight);
-
-        graphicsContext.restore();
     }
 }

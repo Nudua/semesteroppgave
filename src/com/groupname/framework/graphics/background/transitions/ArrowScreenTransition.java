@@ -100,4 +100,19 @@ public class ArrowScreenTransition implements ScreenTransition {
 
         return new Point2D[] {top, bottom, middleRight};
     }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "ArrowScreenTransition{" +
+                "graphicsContext=" + graphicsContext +
+                ", triangleStartPos=" + triangleStartPos +
+                ", trianglePosition=" + trianglePosition +
+                ", done=" + done +
+                '}';
+    }
 }

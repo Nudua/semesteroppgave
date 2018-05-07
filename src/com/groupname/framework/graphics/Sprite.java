@@ -95,6 +95,19 @@ public class Sprite {
         this.spriteRegion = Objects.requireNonNull(spriteRegion);
     }
 
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "Sprite{" +
+                "spriteSheet=" + spriteSheet +
+                ", spriteRegion=" + spriteRegion +
+                ", scale=" + scale +
+                '}';
+    }
 
     /**
      * Static helper method for creating a SpriteRegion (Rectangle) that is

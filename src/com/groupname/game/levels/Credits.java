@@ -2,16 +2,15 @@ package com.groupname.game.levels;
 
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.graphics.SpriteSheet;
-import com.groupname.framework.graphics.background.space.SpaceEffect;
+import com.groupname.framework.graphics.background.effects.space.SpaceEffect;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.math.IntVector2D;
+import com.groupname.framework.math.Vector2D;
 import com.groupname.game.core.Game;
 import com.groupname.game.data.AppSettings;
-import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.core.LevelBase;
 import com.groupname.framework.graphics.background.ScrollingText;
-import com.groupname.game.levels.core.LevelState;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -20,6 +19,8 @@ import java.util.List;
 
 /**
  * This level represents the credits for this game.
+ *
+ * It contains a space background effect and some scrolling text with the credits.
  */
 public class Credits extends LevelBase {
 
@@ -65,7 +66,7 @@ public class Credits extends LevelBase {
         Sprite bigStar = new Sprite(starSpriteSheet, Sprite.createSpriteRegion(32,32));
         bigStar.setScale(0.7d);
 
-        Sprite mediumStar = new Sprite( starSpriteSheet, Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
+        Sprite mediumStar = new Sprite(starSpriteSheet, Sprite.createSpriteRegion(0,0,16,16, new IntVector2D(0,40)));
         mediumStar.setScale(0.7d);
 
         Sprite smallStar = new Sprite(starSpriteSheet, Sprite.createSpriteRegion(0,0,8,8, new IntVector2D(0,64)));
@@ -74,7 +75,14 @@ public class Credits extends LevelBase {
         List<Sprite> sprites = Arrays.asList(smallStar, mediumStar, bigStar);
 
         spaceEffect = new SpaceEffect(sprites, AppSettings.SCREEN_BOUNDS);
-        scrollingText = new ScrollingText();
+
+        // Slightly off-center to the left.
+        double screenPosition = AppSettings.SCREEN_BOUNDS.getWidth() / 2 - 150;
+        scrollingText = new ScrollingText(generateCredits(), new Vector2D(screenPosition, AppSettings.SCREEN_BOUNDS.getHeight()));
+    }
+
+    private String[] generateCredits() {
+        return new String[] {"CREDITS...", "thank", "you", "for", "playing", "our", "game", "...", "now", "we", "just", "have", "to", "make", "it", "\uD83D\uDE0A"};
     }
 
     /**
@@ -98,6 +106,14 @@ public class Credits extends LevelBase {
     private void drawSpace() {
         spaceEffect.draw(spriteBatch);
         scrollingText.draw(graphicsContext);
+    }
+
+    /**
+     * Resets the credits to the beginning.
+     */
+    @Override
+    public void reset() {
+        initialize();
     }
 
     /**

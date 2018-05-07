@@ -24,7 +24,7 @@ public class AnimationFrame {
      * @param repeatCount the amount of frames that this AnimationFrame will use before it's cycle is completed.
      *                    this value cannot be less than 0.
      * @throws IllegalArgumentException if the repeatCount is less than 0.
-     * @throws NullPointerException if the spriteRegion was null.
+     * @throws NullPointerException if the spriteRegion is null.
      */
     public AnimationFrame(Rectangle spriteRegion, int repeatCount) {
         this.spriteRegion = Objects.requireNonNull(spriteRegion);

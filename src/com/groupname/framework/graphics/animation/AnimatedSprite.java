@@ -9,7 +9,7 @@ import java.util.Objects;
 
 /**
  * This class is a representation for a character in a game
- * using a region of a SPRITE_SHEET as the backing for the Image
+ * using a region of a SpriteSheet as the backing for the Image
  * used to draw this class and is a subclass of the SPRITE class that supports
  * animation via different AnimationFrames.
  */
@@ -21,7 +21,7 @@ public class AnimatedSprite extends Sprite {
      * Creates a new AnimatedSprite with the specified spriteSheet, initialSprieRegion and the
      * list of animationFrames used for animating this SPRITE.
      *
-     * @param spriteSheet the SPRITE_SHEET used by this instance.
+     * @param spriteSheet the SpriteSheet used by this instance.
      * @param initialSpriteRegion the first spriteRegion used by this instance.
      * @param animationFrames the list of animationFrames used for animating.
      * @throws NullPointerException if any of the parameters are null.
@@ -68,7 +68,6 @@ public class AnimatedSprite extends Sprite {
      */
     @Override
     public Rectangle getSpriteRegion() {
-        // getRegion instead?
         return animationFrames.get(frame).getSpriteRegion();
     }
 
@@ -95,7 +94,7 @@ public class AnimatedSprite extends Sprite {
      */
     @Override
     public String toString() {
-        return "AnimatedSprite{" +
+        return super.toString() + "AnimatedSprite{" +
                 "animationFrames=" + animationFrames +
                 ", frame=" + frame +
                 '}';

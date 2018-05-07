@@ -23,7 +23,6 @@ public class GuardEnemy extends Enemy {
     private int walkDistance = 200;
     private double speed = 1.4d;
     private Direction direction = Direction.RIGHT;
-    private Counter hitCounter = new Counter(2);
 
     /**
      * Creates a new instance of this class with the specific parameters.
@@ -74,10 +73,6 @@ public class GuardEnemy extends Enemy {
     public void onCollides(int damage) {
         super.onCollides(damage);
 
-        if(isAlive()) {
-            hitCounter.reset();
-        }
-
     }
 
     /**
@@ -101,8 +96,6 @@ public class GuardEnemy extends Enemy {
         if(!isAlive()) {
             return;
         }
-        //System.out.println(direction);
-        hitCounter.step();
 
         double x = position.getX();
         double currentSpeed = speed;
@@ -134,9 +127,7 @@ public class GuardEnemy extends Enemy {
 
             spriteFlip = direction == Direction.RIGHT ? SpriteFlip.HORIZONTAL : SpriteFlip.NONE;
 
-            boolean invertColors = !hitCounter.isDone();
-
-            spriteBatch.draw(sprite, position, EnumSet.of(spriteFlip), invertColors);
+            spriteBatch.draw(sprite, position, EnumSet.of(spriteFlip));
         }
     }
 
@@ -160,7 +151,6 @@ public class GuardEnemy extends Enemy {
                 ", walkDistance=" + walkDistance +
                 ", speed=" + speed +
                 ", direction=" + direction +
-                ", hitCounter=" + hitCounter +
                 '}';
     }
 }

@@ -43,9 +43,9 @@ public class SpriteSheet {
     }
 
     /**
-     * Gets the name of this SPRITE_SHEET.
+     * Gets the name of this Spritesheet.
      *
-     * @return the name of this SPRITE_SHEET.
+     * @return the name of this Spritesheet.
      */
     public String getName() {
         return name;
@@ -67,7 +67,7 @@ public class SpriteSheet {
      */
     @Override
     public String toString() {
-        return "SPRITE_SHEET{" +
+        return "Spritesheet{" +
                 "name='" + name + '\'' +
                 ", image=" + image +
                 '}';

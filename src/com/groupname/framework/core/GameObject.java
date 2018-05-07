@@ -8,8 +8,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 /**
- * A baseclass for all gameobjects, which essentially contains a
- * SPRITE (Image) and a Vector2D (position).
+ * A base class for all gameobjects, which essentially contains a
+ * Sprite (Image) and a Vector2D (position).
  *
  * It also contains methods for generating a hitbox and checking collisions between different gameobjects.
  *
@@ -45,7 +45,7 @@ public abstract class GameObject implements UpdateDrawAble {
     }
 
     /**
-     * Checks whether another rectangle intersects with the hitbox for this instance.
+     * Checks whether another rectangle collides (intersects) with the hitbox for this instance.
      *
      * @param other the rectangle to check if it intersects with this hitbox.
      * @return true if the supplied rectangle collides with the hitbox if this GameObject.
@@ -84,4 +84,18 @@ public abstract class GameObject implements UpdateDrawAble {
      * @param spriteBatch the spriteBatch used to draw this gameObject.
      */
     public abstract void draw(SpriteBatch spriteBatch);
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "GameObject{" +
+                "enabled=" + enabled +
+                ", sprite=" + sprite +
+                ", position=" + position +
+                '}';
+    }
 }

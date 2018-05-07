@@ -1,4 +1,4 @@
-package com.groupname.framework.graphics.background.space;
+package com.groupname.framework.graphics.background.effects.space;
 
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.core.UpdateDrawAble;
@@ -12,14 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import static com.groupname.framework.graphics.background.space.Star.StarType;
+import static com.groupname.framework.graphics.background.effects.space.Star.Type;
 
+/**
+ * This class will create 100 small, 30 medium and 10 big stars with each group moving at different speed,
+ * giving the illusion of a space effect.
+ */
 public class SpaceEffect implements UpdateDrawAble {
 
     private final List<Sprite> spriteList;
     private final List<GameObject> stars;
     private final Size screenBounds;
 
+    /**
+     * Creates a new instance of this class with the specified sprites.
+     *
+     * Note: the spriteList must contain 3 sprites.
+     *
+     * @param spriteList a list containing 3 sprites that will be used for generating the stars for this effect.
+     * @param screenBounds the bounds of the screen.
+     */
     public SpaceEffect(List<Sprite> spriteList, Size screenBounds) {
         this.spriteList = Objects.requireNonNull(spriteList);
 
@@ -38,14 +50,14 @@ public class SpaceEffect implements UpdateDrawAble {
     private void createStars() {
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
-        StarType[] starTypes = StarType.values();
+        Type[] starTypes = Star.Type.values();
         int[] starCount = {100, 30, 10};
         //int[] starCount = {1000, 500, 250};
 
         // Create 20 stars for each type and place them at a random position
         for(int z = 0; z < starTypes.length; z++) {
 
-            StarType starType = starTypes[z];
+            Type starType = starTypes[z];
             int count = starCount[z];
 
             for(int i = 0; i < count; i++) {
@@ -63,21 +75,34 @@ public class SpaceEffect implements UpdateDrawAble {
 
     }
 
+    /**
+     * Updates the logic required to move all the stars drawn by this effect.
+     */
     @Override
     public void update() {
-
-        //stars.parallelStream().forEach(GameObject::update);
-
         for(GameObject star : stars) {
             star.update();
         }
-
     }
 
+    /**
+     * Draws all the stars used by this instance.
+     *
+     * @param spriteBatch the spriteBatch used for drawing any sprites.
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
         for(GameObject star : stars) {
             star.draw(spriteBatch);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "SpaceEffect{" +
+                "spriteList=" + spriteList +
+                ", stars=" + stars +
+                ", screenBounds=" + screenBounds +
+                '}';
     }
 }
