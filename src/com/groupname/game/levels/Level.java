@@ -3,6 +3,7 @@ package com.groupname.game.levels;
 import com.groupname.framework.core.GameObject;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.game.core.HitPointsDisplay;
 import com.groupname.game.editor.metadata.LevelObjectFactory;
 import com.groupname.game.other.PlayerComparator;
 import com.groupname.game.core.Game;
@@ -27,6 +28,7 @@ public class Level extends LevelBase {
 
     private final LevelMetaData levelMetaData;
     private Image backgroundImage;
+    private HitPointsDisplay hitPointsDisplay;
 
     private int screenWidth = AppSettings.SCREEN_BOUNDS.getWidth();
     private int screenHeight = AppSettings.SCREEN_BOUNDS.getHeight();
@@ -83,6 +85,7 @@ public class Level extends LevelBase {
             GameObject gameObject = factory.create(objectMetaData);
 
             if(gameObject instanceof Player) {
+                hitPointsDisplay = new HitPointsDisplay((Player)gameObject);
                 factory.setPlayer((Player)gameObject);
             }
 
@@ -118,6 +121,8 @@ public class Level extends LevelBase {
                 onPlayerDead.run();
             }
         }
+
+        hitPointsDisplay.update();
     }
 
     private boolean playerDead() {
@@ -150,6 +155,7 @@ public class Level extends LevelBase {
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spriteBatch);
         }
+        hitPointsDisplay.draw(spriteBatch);
 
     }
 

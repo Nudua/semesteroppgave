@@ -21,10 +21,12 @@ public class SpriteFactory {
     private final static String ENEMY_SPRITESHEET_FILENAME = "enemies.png";
     private final static String PLAYER_SPRITESHEET_FILENAME = "alien-works.png";
     private final static String PROJECTILE_SPRITESHEET_FILENAME = "projectiles.png";
+    private final static String HEART_SPRITESHEET_FILENAME = "heart.png";
 
     private final static String ENEMY_SPRITESHEET = "enemies";
     private final static String PLAYER_SPRITESHEET = "player1";
     private final static String PROJECTILE_SPRITESHEET = "projectiles";
+    private final static String HEART_SPRITESHEET = "heart";
 
 
     /**
@@ -99,6 +101,20 @@ public class SpriteFactory {
         AnimatedSprite sprite = new AnimatedSprite(bulletSpriteSheet, frame1.getSpriteRegion(), Arrays.asList(frame1, frame2, frame3, frame4));
         sprite.setScale(0.5d);
         return sprite;
+    }
+
+    public Sprite[] createHeart() {
+        Image heart = Content.loadImage(HEART_SPRITESHEET_FILENAME, ResourceType.SPRITE_SHEET);
+        SpriteSheet heartSpriteSheet = new SpriteSheet(HEART_SPRITESHEET, heart);
+
+        Sprite on = new Sprite(heartSpriteSheet,Sprite.createSpriteRegion(300,300));
+        Sprite off = new Sprite(heartSpriteSheet, Sprite.createSpriteRegion(2,0,300,300));
+
+        on.setScale(0.2d);
+        off.setScale(0.2d);
+
+        return new Sprite[] {on, off};
+
     }
 
     /**
