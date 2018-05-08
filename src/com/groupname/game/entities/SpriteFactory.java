@@ -103,6 +103,12 @@ public class SpriteFactory {
         return sprite;
     }
 
+    /**
+     * Returns an array with two sprites, heart on and heart off.
+     * Heart on represents a life, heart off represents a lost life.
+     *
+     * @return an array with two sprites, heart on and heart off.
+     */
     public Sprite[] createHeart() {
         Image heart = Content.loadImage(HEART_SPRITESHEET_FILENAME, ResourceType.SPRITE_SHEET);
         SpriteSheet heartSpriteSheet = new SpriteSheet(HEART_SPRITESHEET, heart);
