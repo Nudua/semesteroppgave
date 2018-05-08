@@ -1,7 +1,7 @@
 package com.groupname.framework.serialization.xml;
 
 import com.groupname.framework.io.Content;
-import com.groupname.framework.serialization.SaveData;
+import com.groupname.game.data.SaveData;
 import com.groupname.framework.serialization.SerializationException;
 import com.groupname.game.levels.Credits;
 

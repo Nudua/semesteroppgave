@@ -1,5 +1,8 @@
 package com.groupname.game.data;
 
+import com.groupname.framework.serialization.SerializationException;
+import com.groupname.framework.serialization.xml.XMLReader;
+import com.groupname.framework.serialization.xml.XMLWriter;
 import com.groupname.framework.settings.INIPreferences;
 import com.groupname.framework.math.Size;
 import com.groupname.framework.util.Strings;
@@ -31,8 +34,9 @@ public enum AppSettings {
     public static final Rectangle LEVEL_BOUNDS = new Rectangle(80 * 2, 80 * 1, 1280 - 80 * 4, 720 - 80 * 2);
 
     // Constants
-    private static final String FILENAME = "appsettings.ini";
+    private static final String APPSETTINGS_INI = "appsettings.ini";
     private static final double DEFAULT_VOLUME = 0.8d;
+    private static final String SAVEDATA_FILENAME = "save.xml";
 
     // Keys for our preferences
     private static final String FIRSTRUN_KEY = "firstrun";
@@ -40,6 +44,9 @@ public enum AppSettings {
     private static final String CURRENT_LEVEL_KEY = "currentlevel";
     private static final String MUSIC_VOLUME_KEY = "musicvolume";
     private static final String SOUNDEFFECTS_VOLUME_KEY = "soundeffectsvolume";
+
+    // SaveData
+    private SaveData saveData = new SaveData();
 
     // Preferences
     private String currentLevel = Strings.EMPTY;
@@ -97,6 +104,23 @@ public enum AppSettings {
     }
 
     /**
+     * Returns the saveData used by this application. (used to store player progress)
+     *
+     * @return the saveData used by this application. (used to store player progress)
+     */
+    public SaveData getSaveData() {
+        return saveData;
+    }
+
+    /**
+     * Sets the saveData field to the specified saveData.
+     * @param saveData the saveData to set.
+     */
+    public void setSaveData(SaveData saveData) {
+        this.saveData = Objects.requireNonNull(saveData);
+    }
+
+    /**
      * Updates and saves the current settings used by this class into the file 'appsettings.ini'.
      *
      * @throws IOException if there was an issue saving the file.
@@ -112,12 +136,27 @@ public enum AppSettings {
     }
 
     /**
+     * Loads the current save data from file.
+     *
+     * @throws SerializationException if there was an issue de-serializing the file.
+     */
+    public void loadSaveData() throws SerializationException {
+        XMLReader xmlReader = new XMLReader();
+        saveData = xmlReader.read(Paths.get(SAVEDATA_FILENAME));
+    }
+
+    public void saveSaveData() throws SerializationException {
+        XMLWriter xmlWriter = new XMLWriter();
+        xmlWriter.write(Paths.get(SAVEDATA_FILENAME), saveData);
+    }
+
+    /**
      * Attempts to load the settings from 'appsettings.ini' if no values exists defaults will be used.
      *
      * @throws IOException if there was an error while loading the settings from the file.
      */
     public void load() throws IOException {
-        iniPreferences = new INIPreferences(Paths.get(FILENAME));
+        iniPreferences = new INIPreferences(Paths.get(APPSETTINGS_INI));
 
         firstRun = iniPreferences.getBoolean(FIRSTRUN_KEY, true);
         fullScreen = iniPreferences.getBoolean(FULLSCREEN_KEY, false);
