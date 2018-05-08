@@ -6,7 +6,9 @@ import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.serialization.SerializationException;
 import com.groupname.framework.util.Strings;
+import com.groupname.game.data.SaveData;
 import com.groupname.game.editor.LevelReader;
 import com.groupname.game.editor.LevelReaderException;
 import com.groupname.game.scene.SceneManager;
@@ -71,6 +73,8 @@ public class GameController implements Controller {
 
         loadLevels();
 
+        loadPlayerProgress();
+        /*
         String levelId = AppSettings.INSTANCE.getCurrentLevel();
 
         if(!Strings.isNullOrEmpty(levelId)) {
@@ -81,6 +85,7 @@ public class GameController implements Controller {
                 System.out.println("Restoring from level: " + currentLevelIndex);
             }
         }
+        */
 
         LevelBase currentLevel = getCurrentLevel();
 
@@ -93,6 +98,40 @@ public class GameController implements Controller {
         }
 
         setupMenu();
+    }
+
+    private void loadPlayerProgress() {
+
+        AppSettings appSettings = AppSettings.INSTANCE;
+
+        // Nothing to load if the app is first launched
+        /*
+        if(appSettings.isFirstRun()) {
+            return;
+        }
+        */
+
+        try {
+            appSettings.loadSaveData();
+
+            SaveData data = appSettings.getSaveData();
+
+            String levelId = data.getCurrentLevel();
+
+            if(!Strings.isNullOrEmpty(levelId)) {
+                Optional<LevelBase> level = getLevelFromId(levelId);
+
+                if(level.isPresent()) {
+                    currentLevelIndex = levels.indexOf(level.get());
+                    System.out.println("Restoring from level: " + currentLevelIndex);
+                }
+            }
+
+        } catch (SerializationException exception) {
+            // Do alert instead
+            System.err.println("Error loading saveData");
+        }
+
     }
 
     private Optional<LevelBase> getLevelFromId(String levelId) {
@@ -109,7 +148,7 @@ public class GameController implements Controller {
 
         LevelReader reader = new LevelReader();
 
-        String[] levelFiles = {"level1.level"};
+        String[] levelFiles = {"level1.level", "level2.level"};
 
         for(String levelPath: levelFiles) {
             boolean loaded = loadLevel(reader, levelPath);
@@ -172,15 +211,16 @@ public class GameController implements Controller {
     }
 
     // Save our current progress
-    // todo: switch to xmlwriter
     private void save() {
         AppSettings appSettings = AppSettings.INSTANCE;
 
-        appSettings.setCurrentLevel(getCurrentLevel().getId());
+        appSettings.setSaveData(new SaveData(getCurrentLevel().getId(), 0));
+
         try {
-            appSettings.save();
-        } catch (IOException ex) {
-            System.out.println("Unable to store current level");
+            appSettings.saveSaveData();
+            System.out.println("Progress saved");
+        } catch (SerializationException exception) {
+            System.err.println("Unable to store progress :(");
         }
     }
 

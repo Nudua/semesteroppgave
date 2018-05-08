@@ -63,6 +63,10 @@ public enum AppSettings {
         return currentLevel;
     }
 
+    public boolean isFirstRun() {
+        return firstRun;
+    }
+
     public void setCurrentLevel(String currentLevel) {
         this.currentLevel = Objects.requireNonNull(currentLevel);
     }
