@@ -18,7 +18,7 @@ public class XMLNode {
      */
     public XMLNode(String name, String value) {
         this.name = Strings.requireNonNullAndNotEmpty(name);
-        this.value = Strings.requireNonNullAndNotEmpty(value);
+        this.value = value;
     }
 
     /**
