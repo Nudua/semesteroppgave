@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * The XInputGamepad structure represents
- * the current state of a GamePad game controller.
+ * The XInputGamepad structure represents the current state of a GamePad game controller.
  *
  * All the fields in this class has to be public to interface with jna's (native) Library interface.
  */

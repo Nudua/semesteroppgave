@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class represents a single XInput GamePad and it allows for polling the state of it's buttons.
+ */
 public class GamePad {
 
     private final PlayerIndex playerIndex;
@@ -19,11 +22,22 @@ public class GamePad {
     private static final int disconnectedDelay = 60;
     private int disconnectedCounter = 0;
 
+    /**
+     * Creates a new instance of this XInput GamePad with the specified PlayerIndex.
+     *
+     * @param playerIndex the playerIndex to use for this GamePad.
+     */
     public GamePad(PlayerIndex playerIndex) {
         this.playerIndex = Objects.requireNonNull(playerIndex);
     }
 
+    /**
+     * Updates the state of this controller using the specified
+     * @param library
+     */
     public void poll(XInputLibrary library) {
+        Objects.requireNonNull(library);
+
         // Don't poll as often if we're not connected
         if(!connected && disconnectedCounter <= disconnectedDelay) {
             disconnectedCounter++;
@@ -39,14 +53,16 @@ public class GamePad {
         if(status == XInputLibrary.ERROR_DEVICE_NOT_CONNECTED) {
             connected = false;
             disconnectedCounter = 0;
-            //System.out.format("GamePad #%d was disconnected\n", playerIndex.getIndex() + 1);
         } else {
             connected = true;
-            //checkJoySticks();
-            //System.out.format("GamePad #%d was connected\n", playerIndex.getIndex() + 1);
         }
     }
 
+    /**
+     * Returns the current state of all the digital buttons for this GamePad.
+     *
+     * @return the current state of all the digital buttons for this GamePad.
+     */
     public Set<String> getState() {
         if(!connected) {
             // Just return an empty Set if we're not connected
@@ -66,15 +82,25 @@ public class GamePad {
         return internalState;
     }
 
-    //todo
-    private void checkJoySticks() {
-        int leftThumb = (int)currentState.XInputGamepad.ThumbLX;
-
-        System.out.println(leftThumb);
-    }
-
     // Check if a digital button is being pressed
     private boolean isDown(GamePadButton button) {
+        assert button != null;
         return (currentState.XInputGamepad.Buttons & button.getBitmask()) == button.getBitmask();
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+
+    @Override
+    public String toString() {
+        return "GamePad{" +
+                "playerIndex=" + playerIndex +
+                ", connected=" + connected +
+                ", currentState=" + currentState +
+                ", disconnectedCounter=" + disconnectedCounter +
+                '}';
     }
 }

@@ -117,6 +117,7 @@ public enum SceneManager {
             if(game == null) {
                 setupGame(scene);
             } else {
+                // For keyboard input we have to make sure that the inputManager polls input from the current scene
                 game.getInputManager().updateScene(scene);
             }
 

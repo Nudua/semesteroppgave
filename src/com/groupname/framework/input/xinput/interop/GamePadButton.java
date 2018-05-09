@@ -1,5 +1,9 @@
 package com.groupname.framework.input.xinput.interop;
 
+/**
+ * Represents all the digital buttons used by a XInput GamePad and their native bitmask value.
+ * Names match the ones used by the Xinput dll natively.
+ */
 public enum GamePadButton {
     XINPUT_GAMEPAD_DPAD_UP(0x0001),
     XINPUT_GAMEPAD_DPAD_DOWN(0x0002),
@@ -26,7 +30,22 @@ public enum GamePadButton {
         this.bitmask = bitmask;
     }
 
+    /**
+     * Gets the bitmask value of this enum constant.
+     *
+     * @return the bitmask value of this enum constant.
+     */
     public long getBitmask() {
         return bitmask;
+    }
+
+    /**
+     * Returns the bitmask value of this enum constant as a String.
+     *
+     * @return the bitmask value of this enum constant as a String.
+     */
+    @Override
+    public String toString() {
+        return "bitmask=" + bitmask;
     }
 }

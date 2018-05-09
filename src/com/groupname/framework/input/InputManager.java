@@ -14,7 +14,7 @@ import javafx.scene.Scene;
 import java.util.*;
 
 /**
- * Gathers and updates input from different input adapters.
+ * Gathers and updates input from different input adapters. (Keyboard, gamepads, custom controllers)
  */
 public class InputManager {
     private boolean enabled = true;
@@ -102,7 +102,7 @@ public class InputManager {
             xInput.initialize();
             inputAdapters.add(xInput);
         } catch (LibraryNotFoundException ex) {
-            System.out.println("XInput library not found");
+            System.err.println("XInput library not found");
         }
     }
 
@@ -126,6 +126,9 @@ public class InputManager {
         inputAdapters.add(new HitboxInput(serialPort));
     }
 
+    /**
+     * Consolidates input from every inputAdapter.
+     */
     public void update() {
         // Clear the old state of the inputs
         lastState.clear();

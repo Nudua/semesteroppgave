@@ -3,6 +3,10 @@ package com.groupname.framework.input.xinput.interop;
 import com.groupname.framework.serial.LibraryUtils;
 import com.sun.jna.Platform;
 
+/**
+ * Factory class meant for creating an instance the XInputLibrary
+ * by attempting to load the XInput dll version 1.4, 1.3 or 9.1.0 using JNA (Java Native Access).
+ */
 public final class XInputLibraryFactory {
 
     private static final String XINPUT_1_4 = "xinput1_4.dll";
@@ -39,20 +43,4 @@ public final class XInputLibraryFactory {
 
         return xInputLibrary;
     }
-
-    /*
-    // Consolidate this one with the serialport one
-    // Attempts to load a dll using the jna's loadLibrary, returns null if the dll was not found
-    private static XInputLibrary load(String dllName) {
-        XInputLibrary xInputLibrary = null;
-        try {
-            xInputLibrary = Native.loadLibrary(dllName, XInputLibrary.class);
-        }
-        catch (UnsatisfiedLinkError error) {
-            System.out.println(String.format("Unable to load: %s", dllName));
-        }
-        return xInputLibrary;
-    }
-    */
-
 }
