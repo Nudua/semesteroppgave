@@ -9,6 +9,7 @@ import com.groupname.framework.util.Strings;
 import javafx.scene.shape.Rectangle;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
@@ -144,14 +145,14 @@ public enum AppSettings {
      *
      * @throws SerializationException if there was an issue de-serializing the file.
      */
-    public void loadSaveData() throws SerializationException {
+    public void loadSaveData(Path fileName) throws SerializationException {
         XMLReader xmlReader = new XMLReader();
-        saveData = xmlReader.read(Paths.get(SAVEDATA_FILENAME));
+        saveData = xmlReader.read(fileName);
     }
 
-    public void saveSaveData() throws SerializationException {
+    public void saveSaveData(Path fileName) throws SerializationException {
         XMLWriter xmlWriter = new XMLWriter();
-        xmlWriter.write(Paths.get(SAVEDATA_FILENAME), saveData);
+        xmlWriter.write(fileName, saveData);
     }
 
     /**

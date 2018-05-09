@@ -26,7 +26,7 @@ public class PlayerInputDefinitions {
     public static final String SHOOT_LEFT = "Player 1 - SHOOT LEFT";
     public static final String SHOOT_RIGHT = "Player 1 - SHOOT RIGHT";
 
-    public static final String START = "Player 1 - Start";
+    public static final String START = "Player 1 - NewGame";
     public static final String SELECT = "Player 1 - Select";
 
     /**

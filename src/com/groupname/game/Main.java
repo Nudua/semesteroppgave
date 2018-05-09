@@ -11,6 +11,7 @@ import javafx.scene.media.MediaException;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * The Main for our application.
@@ -101,7 +102,7 @@ public class Main extends Application {
         }
 
         try {
-            settings.saveSaveData();
+            settings.saveSaveData(Paths.get("save.xml"));
         } catch (SerializationException exception) {
             System.err.println("Unable to save player progress.");
         }

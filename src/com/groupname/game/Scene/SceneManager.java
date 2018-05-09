@@ -76,10 +76,20 @@ public enum SceneManager {
      * @param sceneName to navigate to.
      */
     public static void navigate(SceneName sceneName) {
-        INSTANCE.changeToScene(sceneName);
+        INSTANCE.changeToScene(sceneName, null);
     }
 
-    private void changeToScene(SceneName sceneName) {
+    /**
+     * Attempts to navigate to the specified sceneName.
+     *
+     * @param sceneName to navigate to.
+     * @param parameters optional parameters when navigating to this new scene.
+     */
+    public static void navigate(SceneName sceneName, Object parameters) {
+        INSTANCE.changeToScene(sceneName, parameters);
+    }
+
+    private void changeToScene(SceneName sceneName, Object parameters) {
         Objects.requireNonNull(sceneName);
 
         if(!scenes.containsKey(sceneName)) {
@@ -110,7 +120,7 @@ public enum SceneManager {
                 game.getInputManager().updateScene(scene);
             }
 
-            currentController.init(game);
+            currentController.init(game, parameters);
 
             primaryStage.setTitle(info.getTitle());
             primaryStage.setScene(scene);

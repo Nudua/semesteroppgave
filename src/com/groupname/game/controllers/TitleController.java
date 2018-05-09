@@ -2,6 +2,12 @@ package com.groupname.game.controllers;
 
 import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.input.InputManager;
+import com.groupname.framework.serialization.SerializationException;
+import com.groupname.framework.util.Alerts;
+import com.groupname.framework.util.Strings;
+import com.groupname.game.data.AppSettings;
+import com.groupname.game.data.SaveData;
+import com.groupname.game.levels.Credits;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
@@ -14,7 +20,9 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.GridPane;
 
+import java.nio.file.Paths;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Controls the title menu.
@@ -38,9 +46,10 @@ public class TitleController implements Controller {
     /**
      * Initializes the controller with the specified game to run on the specified game.
      *
-      * @param game the game instance to use for this controller.
+     * @param game the game instance to use for this controller.
+     * @param parameters optional parameters that you want to pass to the controller when initializing.
      */
-    public void init(Game game) {
+    public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 
         game.initialize(canvas, this::update, this::draw);
@@ -61,11 +70,35 @@ public class TitleController implements Controller {
         titleMenu = new GameMenuFX<>(TitleMenuNames.class, "/com/groupname/game/views/menus/titlemenu.fxml");
 
         titleMenu.setOnClicked(TitleMenuNames.Exit, Platform::exit);
-        titleMenu.setOnClicked(TitleMenuNames.Start, () -> SceneManager.navigate(SceneName.GAME));
+        titleMenu.setOnClicked(TitleMenuNames.NewGame, () -> SceneManager.navigate(SceneName.GAME));
         titleMenu.setOnClicked(TitleMenuNames.Editor, () -> SceneManager.navigate(SceneName.EDITOR));
-        //titleMenu.setOnClicked(TitleMenuNames.Continue, () -> titleMenu.setVisible(false));
+        titleMenu.setOnClicked(TitleMenuNames.Credits, () -> SceneManager.navigate(SceneName.GAME, Credits.LEVEL_ID));
+        titleMenu.setOnClicked(TitleMenuNames.Continue, this::continueOnClicked);
 
         root.getChildren().add(titleMenu);
+    }
+
+    private void continueOnClicked() {
+        String currentLevel = loadPlayerProgress();
+
+        if(!Strings.isNullOrEmpty(currentLevel)) {
+            SceneManager.navigate(SceneName.GAME, currentLevel);
+        }
+    }
+
+    private String loadPlayerProgress() {
+        AppSettings appSettings = AppSettings.INSTANCE;
+
+        try {
+            appSettings.loadSaveData(Paths.get("save.xml"));
+
+            SaveData data = appSettings.getSaveData();
+
+            return data.getCurrentLevel();
+        } catch (SerializationException exception) {
+            Alerts.showError("Unable to load save file (file is corrupt)");
+        }
+        return Strings.EMPTY;
     }
 
     private void update(InputManager inputManager) {

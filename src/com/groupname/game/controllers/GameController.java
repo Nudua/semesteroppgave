@@ -6,11 +6,10 @@ import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
+import com.groupname.framework.serialization.ObjectSerializer;
 import com.groupname.framework.serialization.SerializationException;
 import com.groupname.framework.util.Strings;
 import com.groupname.game.data.SaveData;
-import com.groupname.game.editor.LevelReader;
-import com.groupname.game.editor.LevelReaderException;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
@@ -28,7 +27,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
-import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -65,27 +64,20 @@ public class GameController implements Controller {
      * Initializes the controller with the specified game to run on the specified game.
      *
      * @param game the game instance to use for this controller.
+     * @param parameters the String id of the level that you want to start on.
      */
-    public void init(Game game) {
+    public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 
         game.initialize(canvas, this::update, this::draw);
 
         loadLevels();
 
-        loadPlayerProgress();
-        /*
-        String levelId = AppSettings.INSTANCE.getCurrentLevel();
-
-        if(!Strings.isNullOrEmpty(levelId)) {
-            Optional<LevelBase> level = getLevelFromId(levelId); //levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
-
-            if(level.isPresent()) {
-                currentLevelIndex = levels.indexOf(level.get());
-                System.out.println("Restoring from level: " + currentLevelIndex);
-            }
+        // The parameters may be the String id of the level to load
+        if(parameters instanceof String) {
+            Optional<LevelBase> level = getLevelFromId((String)parameters);
+            level.ifPresent((n) -> currentLevelIndex = levels.indexOf(level.get()));
         }
-        */
 
         LevelBase currentLevel = getCurrentLevel();
 
@@ -100,40 +92,6 @@ public class GameController implements Controller {
         setupMenu();
     }
 
-    private void loadPlayerProgress() {
-
-        AppSettings appSettings = AppSettings.INSTANCE;
-
-        // Nothing to load if the app is first launched
-        /*
-        if(appSettings.isFirstRun()) {
-            return;
-        }
-        */
-
-        try {
-            appSettings.loadSaveData();
-
-            SaveData data = appSettings.getSaveData();
-
-            String levelId = data.getCurrentLevel();
-
-            if(!Strings.isNullOrEmpty(levelId)) {
-                Optional<LevelBase> level = getLevelFromId(levelId);
-
-                if(level.isPresent()) {
-                    currentLevelIndex = levels.indexOf(level.get());
-                    System.out.println("Restoring from level: " + currentLevelIndex);
-                }
-            }
-
-        } catch (SerializationException exception) {
-            // Do alert instead
-            System.err.println("Error loading saveData");
-        }
-
-    }
-
     private Optional<LevelBase> getLevelFromId(String levelId) {
         return levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
     }
@@ -146,7 +104,7 @@ public class GameController implements Controller {
         LevelBase credits = new Credits(game, canvas.getGraphicsContext2D());
         credits.initialize();
 
-        LevelReader reader = new LevelReader();
+        ObjectSerializer reader = new ObjectSerializer();
 
         String[] levelFiles = {"level1.level", "level2.level"};
 
@@ -163,18 +121,18 @@ public class GameController implements Controller {
         gameOverIndex = levels.indexOf(gameOver);
     }
 
-    private boolean loadLevel(LevelReader reader, String fileName) {
+    private boolean loadLevel(ObjectSerializer reader, String fileName) {
         boolean error = false;
         String errorMessage = "";
 
         try {
-            LevelMetaData levelMetaData = reader.read(Content.loadFile(fileName, ResourceType.LEVEL));
+            LevelMetaData levelMetaData = reader.read(Content.loadFile(fileName, ResourceType.LEVEL), LevelMetaData.class);
 
             Level level = new Level(game, canvas.getGraphicsContext2D(), levelMetaData);
             level.initialize();
 
             levels.add(level);
-        } catch (LevelReaderException exception) {
+        } catch (SerializationException exception) {
             error = true;
             errorMessage = exception.getMessage();
         }
@@ -217,7 +175,7 @@ public class GameController implements Controller {
         appSettings.setSaveData(new SaveData(getCurrentLevel().getId(), 0));
 
         try {
-            appSettings.saveSaveData();
+            appSettings.saveSaveData(Paths.get("save.xml"));
             System.out.println("Progress saved");
         } catch (SerializationException exception) {
             System.err.println("Unable to store progress :(");

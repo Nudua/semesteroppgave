@@ -8,6 +8,6 @@ public class TitleControllerTests {
     @Test(expected = NullPointerException.class)
     public void gameCannotBeNull() {
         TitleController controller = new TitleController();
-        controller.init(null);
+        controller.init(null, null);
     }
 }

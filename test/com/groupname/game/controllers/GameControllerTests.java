@@ -7,7 +7,7 @@ public class GameControllerTests {
     @Test(expected = NullPointerException.class)
     public void gameCannotBeNull() {
         GameController controller = new GameController();
-        controller.init(null);
+        controller.init(null, null);
     }
 
 }

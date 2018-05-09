@@ -8,7 +8,7 @@ public class EditorControllerTests {
     @Test(expected = NullPointerException.class)
     public void gameCannotBeNull() {
         EditorController controller = new EditorController();
-        controller.init(null);
+        controller.init(null, null);
     }
 
 }

@@ -8,48 +8,38 @@ import com.groupname.framework.history.StackBasedUndoRedo;
 import com.groupname.framework.history.UndoRedo;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
+import com.groupname.framework.math.Size;
 import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.serialization.ObjectSerializer;
 import com.groupname.framework.serialization.SerializationException;
-import com.groupname.game.editor.LevelItem;
-import com.groupname.game.editor.LevelReader;
-import com.groupname.game.editor.LevelReaderException;
-import com.groupname.game.editor.LevelWriter;
-import com.groupname.game.entities.enemies.BossEnemy;
-import com.groupname.game.entities.enemies.HomingEnemy;
-import com.groupname.game.entities.enemies.TowerEnemy;
-import com.groupname.game.scene.SceneManager;
-import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.core.GameEditor;
-import com.groupname.game.editor.metadata.LevelMetaData;
+import com.groupname.game.data.AppSettings;
+import com.groupname.game.editor.*;
 import com.groupname.game.editor.controls.MetaDataListCell;
-import com.groupname.game.editor.metadata.EnemyMetaData;
-import com.groupname.game.editor.metadata.LevelObjectFactory;
-import com.groupname.game.editor.metadata.ObjectMetaData;
-import com.groupname.game.entities.Enemy;
-import com.groupname.game.entities.EnemySpriteType;
-import com.groupname.game.entities.Player;
-import com.groupname.game.entities.enemies.GuardEnemy;
+import com.groupname.game.editor.metadata.*;
+import com.groupname.game.entities.*;
+import com.groupname.game.entities.enemies.*;
+import com.groupname.game.scene.*;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static javafx.scene.control.Alert.AlertType;
+import static com.groupname.framework.util.Alerts.*;
 
 /**
  * This controller is used to connect the fxml (views/editorview.fxml)
@@ -111,7 +101,7 @@ public class EditorController implements Controller {
             metaDataListView.setOnMouseClicked(this::gameItemSelected);
 
         } catch (SerializationException exception) {
-            showError("Error","Unable to load level items");
+            showError("Unable to load level items");
         }
     }
 
@@ -121,33 +111,31 @@ public class EditorController implements Controller {
 
         ObjectMetaData player = new ObjectMetaData("Player", Player.class);
 
-        // Builder pattern instead?
-
         // Guard enemies
-        EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - EASY", GuardEnemy.class);
+        EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
         guardBlobEasy.setSpriteType(EnemySpriteType.BLUE_BLOB);
 
-        EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard BEE - EASY", GuardEnemy.class);
+        EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
         guardBeeEasy.setSpriteType(EnemySpriteType.BEE);
 
-        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy BEE - MEDIUM", GuardEnemy.class);
+        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy BEE - Medium", GuardEnemy.class);
         guardBeeMedium.setDifficulty(Difficulty.MEDIUM);
         guardBeeMedium.setSpriteType(EnemySpriteType.CRAZY_BEE);
 
         // Homing
-        EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing SNAIL - EASY", HomingEnemy.class);
+        EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
         homingSnailEasy.setSpriteType(EnemySpriteType.SNAIL);
 
-        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing SNAIL - MEDIUM", HomingEnemy.class);
+        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing Snail - Medium", HomingEnemy.class);
         homingSnailMedium.setSpriteType(EnemySpriteType.SNAIL);
         homingSnailMedium.setDifficulty(Difficulty.MEDIUM);
 
-        EnemyMetaData homingSnailHard = new EnemyMetaData("Homing SNAIL - HARD", HomingEnemy.class);
+        EnemyMetaData homingSnailHard = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
         homingSnailHard.setSpriteType(EnemySpriteType.SNAIL);
         homingSnailHard.setDifficulty(Difficulty.HARD);
 
         // Tower
-        EnemyMetaData towerEasy = new EnemyMetaData("Tower - EASY", TowerEnemy.class);
+        EnemyMetaData towerEasy = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
         towerEasy.setSpriteType(EnemySpriteType.JELLYFISH);
 
         // Boss
@@ -175,11 +163,11 @@ public class EditorController implements Controller {
 
             Optional<LevelItem> playerItem = getPlayerIfExists();
 
-            if(metaData.getType() == HomingEnemy.class || metaData.getType() == TowerEnemy.class) {
+            if(metaData.getType() == HomingEnemy.class || metaData.getType() == TowerEnemy.class || metaData.getType() == BossEnemy.class) {
                 if(playerItem.isPresent()) {
                     levelObjectFactory.setPlayer((Player)playerItem.get().getInstance());
                 } else {
-                    showError("Error", "This enemy requires a player to be placed first...");
+                    showError("This enemy requires a player to be placed first...");
                     return;
                 }
             }
@@ -199,7 +187,9 @@ public class EditorController implements Controller {
                     selectedItem = newItem;
                 }
 
-                selectedItem.setPosition(new Vector2D(1280 / 2, 720 / 2));
+                Size screenBounds = AppSettings.SCREEN_BOUNDS;
+
+                selectedItem.setPosition(new Vector2D(screenBounds.getWidth() / 2, screenBounds.getHeight() / 2));
                 selectedItem.setPlaced(false);
 
                 editor.setSelectedItem(selectedItem);
@@ -218,9 +208,9 @@ public class EditorController implements Controller {
     /**
      * Initializes the controller with the specified game to run on the specified game.
      *
-     * @param game the game instance to use for this controller.
+     * @param parameters optional parameters that you want to pass to the controller when initializing.
      */
-    public void init(Game game) {
+    public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 
         game.initialize(canvas, this::update, this::draw);
@@ -268,7 +258,6 @@ public class EditorController implements Controller {
         }
     }
 
-
     @FXML
     protected void playOnClicked(ActionEvent event) {
         editor.setMode(GameEditor.Mode.PLAYING);
@@ -294,14 +283,14 @@ public class EditorController implements Controller {
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if(selectedFile == null) {
-            showError("Error", "No file was selected, aborting...");
+            showError("No file was selected, aborting...");
             return;
         }
 
-        LevelReader reader = new LevelReader();
+        ObjectSerializer reader = new ObjectSerializer();
 
         try {
-            LevelMetaData level = reader.read(selectedFile.toPath());
+            LevelMetaData level = reader.read(selectedFile.toPath(), LevelMetaData.class);
 
             levelMetaData = level;
 
@@ -322,12 +311,12 @@ public class EditorController implements Controller {
                 levelItems.add(levelItem);
             }
 
-        } catch (LevelReaderException exception) {
-            showError("Error", exception.getMessage());
+        } catch (SerializationException exception) {
+            showError(exception.getMessage());
             return;
         }
 
-        showAlert("Success", "Level loaded successfully.", false);
+        showAlert("Success", "Level loaded successfully.");
     }
 
     @FXML
@@ -341,8 +330,6 @@ public class EditorController implements Controller {
         selectedItem = null;
         editor.setSelectedItem(null);
     }
-
-
 
     @FXML
     protected void saveAsOnClicked(ActionEvent event) {
@@ -360,7 +347,7 @@ public class EditorController implements Controller {
         File selectedFile = fileChooser.showSaveDialog(null);
 
         if(selectedFile == null) {
-            showError("Error", "No file was selected, aborting...");
+            showError("No file was selected, aborting...");
             return;
         }
 
@@ -392,11 +379,11 @@ public class EditorController implements Controller {
 
     private void writeLevel(File selectedFile) {
         Supplier<Boolean> writeLevel = () -> {
-            LevelWriter levelWriter = new LevelWriter();
+            ObjectSerializer serializer = new ObjectSerializer();
 
             try {
-                levelWriter.write(levelMetaData, selectedFile.toPath());
-            } catch (IOException exception) {
+                serializer.write(levelMetaData, selectedFile.toPath());
+            } catch (SerializationException exception) {
                 return false;
             }
 
@@ -405,26 +392,14 @@ public class EditorController implements Controller {
 
         Consumer<Boolean> onCompleted = (success) -> {
             if (success) {
-                showAlert("Success", "Saved the level successfully", false);
+                showAlert("Success", "Saved the level successfully");
             } else {
-                showAlert("Error", "Unable to save the level", true);
+                showAlert("Error", "Unable to save the level");
             }
         };
 
         // Do this work off thread with the taskrunner then invoke back on the javafx thread with the results when done
         taskRunner.submit(writeLevel, onCompleted);
-    }
-
-    private void showError(String title, String message) {
-        showAlert(title, message, true);
-    }
-
-    private void showAlert(String title, String message, boolean isError) {
-        AlertType alertType = isError ? AlertType.ERROR : AlertType.INFORMATION;
-
-        Alert alert = new Alert(alertType, message, ButtonType.OK);
-        alert.setTitle(title);
-        alert.show();
     }
 
     /**

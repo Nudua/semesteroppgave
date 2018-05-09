@@ -10,7 +10,7 @@ package com.groupname.framework.input.devices;
  *   Pin 5:    RIGHT = 0x08
  *
  *   // Buttons
- *   Pin 6:    Start = 0x10
+ *   Pin 6:    NewGame = 0x10
  *   Pin 7:    Select = 0x20
  *
  *   Pin 8:    ShootUp = 0x40

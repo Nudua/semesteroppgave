@@ -70,7 +70,7 @@ public class XMLParser {
                     String endTag = nodeMatcher.group("EndTag");
 
                     if(!startTag.equals(endTag)) {
-                        throw new XMLParseException("Start and end tag does not much for xml node");
+                        throw new XMLParseException("NewGame and end tag does not much for xml node");
                     }
 
                     String value = nodeMatcher.group("Value");
