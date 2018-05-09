@@ -20,7 +20,6 @@ import java.security.InvalidParameterException;
  * The default port is /dev/ttyACM0 and bounds are 9600 bits per second.
  */
 public class SerialPortUnix implements SerialPort {
-
     private static final String DEFAULT_PORT = "/dev/ttyACM0";
     private static final int DEFAULT_BOUNDS = 13; //9600 bits per second
 
@@ -28,7 +27,7 @@ public class SerialPortUnix implements SerialPort {
     private final String port;
     private final int bounds;
 
-    // native handle to the file (port)
+    // Native handle to the file (port)
     private int fd;
     private CLibraryUnix nativeLibrary;
 
@@ -74,11 +73,11 @@ public class SerialPortUnix implements SerialPort {
         }
 
         // Setup the port
-        if(!setInterfaceAttributes(bounds, 0)) {
+        if(!setInterfaceAttributes(bounds)) {
             throw new SerialPortException("Unable to setup interface attributes for the SerialPort");
         }
 
-        if(!setBlocking(0)) {
+        if(!setNonBlockingRead()) {
             throw new SerialPortException("Unable to setup blocking attributes for the SerialPort");
         }
 
@@ -133,61 +132,74 @@ public class SerialPortUnix implements SerialPort {
         return nativeLibrary.read(fd, buffer, numBytesToRead);
     }
 
-    private boolean setInterfaceAttributes(int speed, int parity) {
+    private boolean setInterfaceAttributes(int speed) {
         assert fd > 0;
 
         Termios termios = new Termios();
 
         if(nativeLibrary.tcgetattr(fd, termios) < 0) {
-            System.out.println("error in tcgetattr");
+            System.err.println("error in tcgetattr");
             return false;
         }
 
         nativeLibrary.cfsetospeed(termios, speed);
         nativeLibrary.cfsetispeed(termios, speed);
 
-        termios.c_cflag = (termios.c_cflag & ~CSIZE) | CS8;     // 8-bit chars
-        // disable IGNBRK for mismatched speed tests; otherwise receive break
-        // as \000 chars
-        termios.c_iflag &= ~IGNBRK;         // disable break processing
-        termios.c_lflag = 0;                // no signaling chars, no echo,
-        // no canonical processing
-        termios.c_oflag = 0;                // no remapping, no delays
-        termios.c_cc[VMIN]  = 0;            // read doesn't block
-        termios.c_cc[VTIME] = 5;            // 0.5 seconds read timeout
+        // Use 8-bit chars
+        termios.c_cflag = (termios.c_cflag & ~CSIZE) | CS8;
 
-        termios.c_iflag &= ~(IXON | IXOFF | IXANY); // shut off xon/xoff ctrl
+        // No break processing
+        termios.c_iflag &= ~IGNBRK;
+        // No signalling chars
+        termios.c_lflag = 0;
 
-        termios.c_cflag |= (CLOCAL | CREAD);        // ignore modem controls,
-        // enable reading
-        termios.c_cflag &= ~(PARENB | PARODD);      // shut off parity
-        termios.c_cflag |= parity;
+        // No remapping of characters
+        termios.c_oflag = 0;
+
+        // Reading does not block
+        termios.c_cc[VMIN]  = 0;
+
+        // 0.6 seconds reading timeout
+        termios.c_cc[VTIME] = 6;
+
+        // Turns off xon/xoff control characters
+        termios.c_iflag &= ~(IXON | IXOFF | IXANY);
+
+        // Turn on reading
+        termios.c_cflag |= (CLOCAL | CREAD);
+
+        //Parity off
+        termios.c_cflag &= ~(PARENB | PARODD);
+
+        termios.c_cflag |= 0;
         termios.c_cflag &= ~CSTOPB;
         termios.c_cflag &= ~CRTSCTS;
 
         if(nativeLibrary.tcsetattr(fd, TCSANOW, termios) != 0) {
-            System.out.println("error in tcsetattr");
+            System.err.println("error in tcsetattr");
             return false;
         }
 
         return true;
     }
 
-    private boolean setBlocking(int shouldBlock) {
+    private boolean setNonBlockingRead() {
         assert fd > 0;
 
         Termios termios = new Termios();
 
         if(nativeLibrary.tcgetattr(fd, termios) != 0) {
-            System.out.println("error in tcgetattr (blocking)");
+            System.err.println("error in tcgetattr (blocking)");
             return false;
         }
 
-        termios.c_cc[VMIN] = shouldBlock == 1 ? (short)1 : (short)0;
-        termios.c_cc[VTIME] = 5;        // 0.5 seconds read timeout
+        // Set to non-blocking read
+        termios.c_cc[VMIN] = 0;
+        // read timeout set to 0.6 seconds
+        termios.c_cc[VTIME] = 6;
 
         if(nativeLibrary.tcsetattr(fd, TCSANOW, termios) != 0) {
-            System.out.println("error in tcsetattr (blocking)");
+            System.err.println("error in tcsetattr (blocking)");
             return false;
         }
 
