@@ -86,4 +86,43 @@ public class DCB extends Structure {
                 "fInX","fErrorChar","fNull","fRtsControl","fAbortOnError","fDummy2","wReserved","XonLim","XoffLim",
                 "ByteSize","Parity","StopBits","XonChar","XoffChar","ErrorChar","EofChar","EvtChar","wReserved1");
     }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "DCB{" +
+                "DCBlength=" + DCBlength +
+                ", BaudRate=" + BaudRate +
+                ", fBinary=" + fBinary +
+                ", fParity=" + fParity +
+                ", fOutxCtsFlow=" + fOutxCtsFlow +
+                ", fOutxDsrFlow=" + fOutxDsrFlow +
+                ", fDtrControl=" + fDtrControl +
+                ", fDsrSensitivity=" + fDsrSensitivity +
+                ", fTXContinueOnXoff=" + fTXContinueOnXoff +
+                ", fOutX=" + fOutX +
+                ", fInX=" + fInX +
+                ", fErrorChar=" + fErrorChar +
+                ", fNull=" + fNull +
+                ", fRtsControl=" + fRtsControl +
+                ", fAbortOnError=" + fAbortOnError +
+                ", fDummy2=" + fDummy2 +
+                ", wReserved=" + wReserved +
+                ", XonLim=" + XonLim +
+                ", XoffLim=" + XoffLim +
+                ", ByteSize=" + ByteSize +
+                ", Parity=" + Parity +
+                ", StopBits=" + StopBits +
+                ", XonChar=" + XonChar +
+                ", XoffChar=" + XoffChar +
+                ", ErrorChar=" + ErrorChar +
+                ", EofChar=" + EofChar +
+                ", EvtChar=" + EvtChar +
+                ", wReserved1=" + wReserved1 +
+                '}';
+    }
 }
