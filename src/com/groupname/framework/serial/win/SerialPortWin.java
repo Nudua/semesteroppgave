@@ -63,7 +63,7 @@ public class SerialPortWin implements SerialPort {
      */
     @Override
     public void open() throws SerialPortException {
-        nativeLibrary = LibraryUtils.loadDll(Kernel32Library.DLL_NAME, Kernel32Library.class);
+        nativeLibrary = LibraryUtils.load(Kernel32Library.DLL_NAME, Kernel32Library.class);
 
         if(nativeLibrary == null) {
             throw new SerialPortException("The unix c library was not found.");

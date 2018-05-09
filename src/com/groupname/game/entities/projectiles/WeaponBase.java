@@ -90,7 +90,6 @@ public abstract class WeaponBase implements UpdateDrawAble {
             if(projectile.collides(other.getHitbox())) {
                 other.onCollides(damage);
                 projectile.setAlive(false);
-                System.out.println("Crash");
             }
         }
     }

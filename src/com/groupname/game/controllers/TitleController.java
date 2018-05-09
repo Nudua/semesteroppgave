@@ -30,7 +30,6 @@ import java.util.Optional;
  * Controls the title menu.
  */
 public class TitleController implements Controller {
-
     @FXML protected GridPane root;
     @FXML protected Canvas canvas;
 

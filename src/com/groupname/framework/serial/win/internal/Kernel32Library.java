@@ -18,7 +18,7 @@ import static  com.sun.jna.platform.win32.WinNT.HANDLE;
  * Getting an actual instance of this library, you can use the LibraryUtils to load it. (Only supported on Windows)
  *
  * Example:
- * Kernel32Library library = LibraryUtils.loadDll(Kernel32Library.DLL_NAME, Kernel32Library.class);
+ * Kernel32Library library = LibraryUtils.load(Kernel32Library.DLL_NAME, Kernel32Library.class);
  *
  * Note: library will be null if we failed to load the library (probably on an unsupported platform)
  */

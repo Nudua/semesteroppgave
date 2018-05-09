@@ -50,7 +50,7 @@ public class GameEditor extends LevelBase {
 
     private final UndoRedo commandHistory;
 
-    private final Rectangle levelBounds = AppSettings.LEVEL_BOUNDS;//new Rectangle(160, 80, 1280 - 160 * 2, 720 - 80 * 2);
+    private final Rectangle levelBounds = AppSettings.LEVEL_BOUNDS;
     private final BoundsChecker boundsChecker = new BoundsChecker();
 
     // Properties
@@ -112,7 +112,7 @@ public class GameEditor extends LevelBase {
 
             if(!levelItems.contains(selectedItem)) {
                 commandHistory.execute(new ListAddCommand<>(levelItems, selectedItem));
-            } // else update position command
+            }
 
             selectedItem = null;
         } else {
@@ -121,8 +121,7 @@ public class GameEditor extends LevelBase {
             for(LevelItem levelItem : levelItems) {
                 Vector2D itemPosition = levelItem.getPosition();
 
-                //System.out.println("Instance:" + itemPosition.toString() + "Object: " + shouldBeSame.toString());
-                Rectangle hitbox = getHitbox(itemPosition, levelItem);//new Rectangle(itemPosition.getX(), itemPosition.getY(), levelItem.getInstance().getSprite().getWidth(), levelItem.getInstance().getSprite().getHeight());
+                Rectangle hitbox = getHitbox(itemPosition, levelItem);
 
                 if(hitbox.contains(clickPoint)) {
                     levelItem.setPlaced(false);
@@ -258,7 +257,6 @@ public class GameEditor extends LevelBase {
 
             if(item.getInstance() instanceof Actor) {
                 ((Actor) item.getInstance()).setAlive(true);
-                //((Actor) item.getInstance()).reset();
             }
         }
     }

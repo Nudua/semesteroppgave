@@ -1,6 +1,7 @@
 package com.groupname.game.controllers;
 
 import com.groupname.framework.core.PauseButton;
+import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
@@ -85,7 +86,7 @@ public class GameController implements Controller {
 
         onPlayerDead(currentLevel);
 
-        levelCompletedTransition = new BlindsScreenTransition(canvas.getGraphicsContext2D());
+        levelCompletedTransition = new ArrowScreenTransition(canvas.getGraphicsContext2D());
 
         if(!game.isRunning()) {
             game.start();
@@ -169,8 +170,6 @@ public class GameController implements Controller {
 
         unPause();
     }
-
-
 
     // Save our current progress
     private void save() {

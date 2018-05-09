@@ -27,7 +27,6 @@
             <items>
                   <MenuItem mnemonicParsing="false" text="New" onAction="#newOnClicked" />
                   <MenuItem mnemonicParsing="false" onAction="#openOnClicked" text="Open..." />
-                  <MenuItem mnemonicParsing="false" text="Save" />
                   <MenuItem mnemonicParsing="false" onAction="#saveAsOnClicked" text="Save As..." />
               <MenuItem mnemonicParsing="false" onAction="#exitOnClicked" text="Exit editor" />
             </items>
@@ -44,30 +43,6 @@
                     <MenuItem fx:id="playMenuItem" accelerator="F5" mnemonicParsing="false" onAction="#playOnClicked" text="Play" />
                     <MenuItem fx:id="editMenuItem" mnemonicParsing="false" onAction="#editOnClicked" text="Edit" />
                 </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Customize">
-               <items>
-                  <Menu mnemonicParsing="false" text="Background">
-                    <items>
-                        <CheckMenuItem mnemonicParsing="false" text="Background1" />
-                        <CheckMenuItem mnemonicParsing="false" text="Background2" />
-                    </items>
-                  </Menu>
-                  <Menu mnemonicParsing="false" text="Screen transitions">
-                    <items>
-                        <Menu mnemonicParsing="false" text="Start Level">
-                          <items>
-                              <CheckMenuItem mnemonicParsing="false" text="Arrow" />
-                          </items>
-                        </Menu>
-                        <Menu mnemonicParsing="false" text="End Level">
-                           <items>
-                              <CheckMenuItem mnemonicParsing="false" text="Arrow" />
-                           </items>
-                        </Menu>
-                    </items>
-                  </Menu>
-               </items>
             </Menu>
         </menus>
       </MenuBar>

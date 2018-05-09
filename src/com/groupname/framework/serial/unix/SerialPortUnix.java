@@ -8,9 +8,6 @@ import com.groupname.framework.serial.unix.internal.FileOpenFlags;
 import com.groupname.framework.serial.unix.internal.Termios;
 import com.groupname.framework.util.EmptyStringException;
 import com.groupname.framework.util.Strings;
-import com.sun.jna.Platform;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinNT;
 
 import static com.groupname.framework.serial.unix.internal.Termios.Constants.*;
 
@@ -64,7 +61,7 @@ public class SerialPortUnix implements SerialPort {
      */
     @Override
     public void open() throws SerialPortException {
-        nativeLibrary = LibraryUtils.loadDll(CLibraryUnix.NAME, CLibraryUnix.class);
+        nativeLibrary = LibraryUtils.load(CLibraryUnix.NAME, CLibraryUnix.class);
 
         if(nativeLibrary == null) {
             throw new SerialPortException("The unix c library was not found.");

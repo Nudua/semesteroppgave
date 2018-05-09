@@ -118,7 +118,7 @@ public class EditorController implements Controller {
         EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
         guardBeeEasy.setSpriteType(EnemySpriteType.BEE);
 
-        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy BEE - Medium", GuardEnemy.class);
+        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
         guardBeeMedium.setDifficulty(Difficulty.MEDIUM);
         guardBeeMedium.setSpriteType(EnemySpriteType.CRAZY_BEE);
 
@@ -149,7 +149,7 @@ public class EditorController implements Controller {
         try {
             serializer.write(allData, Paths.get("metadata.data"));
         } catch (SerializationException exception) {
-            System.out.println(exception.getMessage());
+            System.err.println(exception.getMessage());
         }
     }
 
@@ -193,8 +193,6 @@ public class EditorController implements Controller {
                 selectedItem.setPlaced(false);
 
                 editor.setSelectedItem(selectedItem);
-
-                System.out.println("SelectedItem set to: " + metaData.getName());
             }
         }
     }
@@ -275,8 +273,6 @@ public class EditorController implements Controller {
 
     @FXML
     protected void openOnClicked(ActionEvent event) {
-        newLevel();
-
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save level");
 
@@ -287,36 +283,52 @@ public class EditorController implements Controller {
             return;
         }
 
-        ObjectSerializer reader = new ObjectSerializer();
+        newLevel();
 
-        try {
-            LevelMetaData level = reader.read(selectedFile.toPath(), LevelMetaData.class);
+        readLevel(selectedFile);
+    }
 
-            levelMetaData = level;
+    private void readLevel(File selectedFile) {
+        assert selectedFile != null;
 
-            for(ObjectMetaData object : level.getObjectMetaDataList()) {
-                ObjectMetaData copy = object.deepCopy();
-                GameObject gameObject = levelObjectFactory.create(copy);
+        Supplier<Boolean> readLevelAction = () -> {
+            ObjectSerializer reader = new ObjectSerializer();
 
+            try {
+                LevelMetaData level = reader.read(selectedFile.toPath(), LevelMetaData.class);
 
-                LevelItem levelItem = new LevelItem(copy, gameObject);
+                levelMetaData = level;
 
-                levelItem.setPosition(levelItem.getPosition());
-                levelItem.setPlaced(true);
+                for(ObjectMetaData object : level.getObjectMetaDataList()) {
+                    ObjectMetaData copy = object.deepCopy();
+                    GameObject gameObject = levelObjectFactory.create(copy);
 
-                if(gameObject instanceof Player) {
-                    levelItem.setPlayer(true);
+                    LevelItem levelItem = new LevelItem(copy, gameObject);
+
+                    levelItem.setPosition(levelItem.getPosition());
+                    levelItem.setPlaced(true);
+
+                    if(gameObject instanceof Player) {
+                        levelItem.setPlayer(true);
+                    }
+
+                    levelItems.add(levelItem);
                 }
-
-                levelItems.add(levelItem);
+                return true;
+            } catch (SerializationException exception) {
+                System.err.println(exception.getMessage());
+                return false;
             }
+        };
 
-        } catch (SerializationException exception) {
-            showError(exception.getMessage());
-            return;
-        }
-
-        showAlert("Success", "Level loaded successfully.");
+        // Run this Supplier on a different thread then invoke back in the JavaFX UI Thread when done.
+        taskRunner.submit(readLevelAction, (success) -> {
+            if(success) {
+                showAlert("Level loaded successfully.");
+            } else {
+                showError("Unable to read level (file corrupt?)");
+            }
+        });
     }
 
     @FXML

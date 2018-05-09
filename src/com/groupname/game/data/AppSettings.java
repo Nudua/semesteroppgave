@@ -24,6 +24,8 @@ import java.util.Objects;
 public enum AppSettings {
     INSTANCE;
 
+    public static final String GAME_NAME = "Aliens in the backyard";
+
     /**
      * The default viewport of this game.
      */

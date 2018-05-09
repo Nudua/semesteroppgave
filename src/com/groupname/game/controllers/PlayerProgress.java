@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.serialization.SerializationException;
 import com.groupname.framework.util.Alerts;
 import com.groupname.game.data.AppSettings;
@@ -10,6 +11,8 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * This class is used to load and save the players progression through the game.
@@ -56,12 +59,34 @@ public class PlayerProgress {
 
         appSettings.setSaveData(saveData);
 
-        try {
-            appSettings.saveSaveData(targetFile.toPath());
-            Alerts.showAlert("Save data was saved successfully ...");
-        } catch (SerializationException exception) {
-            Alerts.showError("Unable to save the file :(");
-        }
+        // Save the data off thread to keep the UI responsive
+        final TaskRunner taskRunner = new TaskRunner();
+
+        Supplier<Boolean> saveAction = () -> {
+            try {
+                appSettings.saveSaveData(targetFile.toPath());
+                return true;
+            } catch (SerializationException exception) {
+                return false;
+            }
+        };
+
+        Consumer<Boolean> saveResults = (success) -> {
+            if(success) {
+                Alerts.showAlert("Save data was saved successfully ...");
+            } else {
+                Alerts.showError("Unable to save the file :(");
+            }
+
+            // Stop the taskrunner
+            try {
+                taskRunner.stop();
+            } catch (InterruptedException exception) {
+                System.err.println("Error stopping the taskrunner.");
+            }
+        };
+
+        taskRunner.submit(saveAction, saveResults);
     }
 
     /**
