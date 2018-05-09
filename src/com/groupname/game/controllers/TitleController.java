@@ -19,7 +19,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
@@ -79,26 +81,11 @@ public class TitleController implements Controller {
     }
 
     private void continueOnClicked() {
-        String currentLevel = loadPlayerProgress();
+        PlayerProgress playerProgress = new PlayerProgress();
 
-        if(!Strings.isNullOrEmpty(currentLevel)) {
-            SceneManager.navigate(SceneName.GAME, currentLevel);
-        }
-    }
+        Optional<SaveData> saveData = playerProgress.load();
 
-    private String loadPlayerProgress() {
-        AppSettings appSettings = AppSettings.INSTANCE;
-
-        try {
-            appSettings.loadSaveData(Paths.get("save.xml"));
-
-            SaveData data = appSettings.getSaveData();
-
-            return data.getCurrentLevel();
-        } catch (SerializationException exception) {
-            Alerts.showError("Unable to load save file (file is corrupt)");
-        }
-        return Strings.EMPTY;
+        saveData.ifPresent(save -> SceneManager.navigate(SceneName.GAME, save.getCurrentLevel()));
     }
 
     private void update(InputManager inputManager) {

@@ -342,7 +342,12 @@ public class EditorController implements Controller {
         }
 
         FileChooser fileChooser = new FileChooser();
+
         fileChooser.setTitle("Save level");
+        fileChooser.setInitialDirectory(Paths.get(".").toFile());
+
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Level (*.level)", "*.level"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All types (*.*)", "*.*"));
 
         File selectedFile = fileChooser.showSaveDialog(null);
 
@@ -351,7 +356,6 @@ public class EditorController implements Controller {
             return;
         }
 
-        // Split
         writeLevel(selectedFile);
     }
 
@@ -392,9 +396,9 @@ public class EditorController implements Controller {
 
         Consumer<Boolean> onCompleted = (success) -> {
             if (success) {
-                showAlert("Success", "Saved the level successfully");
+                showAlert("Success", "Saved the level successfully.");
             } else {
-                showAlert("Error", "Unable to save the level");
+                showAlert("Error", "Unable to save the level.");
             }
         };
 

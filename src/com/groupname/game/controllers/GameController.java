@@ -26,7 +26,9 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -168,18 +170,12 @@ public class GameController implements Controller {
         unPause();
     }
 
+
+
     // Save our current progress
     private void save() {
-        AppSettings appSettings = AppSettings.INSTANCE;
-
-        appSettings.setSaveData(new SaveData(getCurrentLevel().getId(), 0));
-
-        try {
-            appSettings.saveSaveData(Paths.get("save.xml"));
-            System.out.println("Progress saved");
-        } catch (SerializationException exception) {
-            System.err.println("Unable to store progress :(");
-        }
+        PlayerProgress playerProgress = new PlayerProgress();
+        playerProgress.save(new SaveData(getCurrentLevel().getId(), 0));
     }
 
     private void onPlayerDead(LevelBase level) {
