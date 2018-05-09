@@ -83,7 +83,8 @@ public enum SoundPlayer {
     }
 
     /**
-     * Loads the music and all the sound effects used for this instance.
+     * Loads the music and all the sound effects used for this instance
+     * and attempts to start playing the main theme of the game.
      *
      * If there is an issue will loading the media, audio will be disabled.
      *
@@ -96,6 +97,10 @@ public enum SoundPlayer {
         musicTracks.put(MusicTrack.MAIN, new Media(Content.getResourcePath(MUSIC_MAIN, ResourceType.MUSIC)));
         musicTracks.put(MusicTrack.EDITOR, new Media(Content.getResourcePath(MUSIC_EDITOR, ResourceType.MUSIC)));
         musicTracks.put(MusicTrack.CREDITS, new Media(Content.getResourcePath(MUSIC_CREDITS, ResourceType.MUSIC)));
+
+        mediaPlayer = new MediaPlayer(musicTracks.get(MusicTrack.MAIN));
+        mediaPlayer.setVolume(volumeMusic);
+        mediaPlayer.play();
 
         initialized = true;
     }

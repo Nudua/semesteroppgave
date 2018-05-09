@@ -42,12 +42,12 @@ public class Main extends Application {
         SoundPlayer soundPlayer = SoundPlayer.INSTANCE;
 
         try {
-            soundPlayer.load();
-
             AppSettings settings = AppSettings.INSTANCE;
 
             soundPlayer.setVolumeMusic(settings.getMusicVolume());
             soundPlayer.setVolumeSoundEffect(settings.getSoundEffectVolume());
+
+            soundPlayer.load();
 
             System.out.println("SoundPlayer loaded successfully");
         } catch (MediaException ex) {
