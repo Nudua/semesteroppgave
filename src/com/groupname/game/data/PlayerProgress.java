@@ -1,4 +1,4 @@
-package com.groupname.game.controllers;
+package com.groupname.game.data;
 
 import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.serialization.SerializationException;
