@@ -2,10 +2,7 @@ package com.groupname.game.controllers;
 
 import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.input.InputManager;
-import com.groupname.framework.serialization.SerializationException;
-import com.groupname.framework.util.Alerts;
-import com.groupname.framework.util.Strings;
-import com.groupname.game.data.AppSettings;
+import com.groupname.game.data.PlayerProgress;
 import com.groupname.game.data.SaveData;
 import com.groupname.game.levels.Credits;
 import com.groupname.game.scene.SceneManager;
@@ -19,11 +16,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.GridPane;
-import javafx.scene.media.MediaException;
-import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Optional;
 

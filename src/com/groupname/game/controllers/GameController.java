@@ -2,20 +2,18 @@ package com.groupname.game.controllers;
 
 import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
-import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
 import com.groupname.framework.io.Content;
 import com.groupname.framework.io.ResourceType;
 import com.groupname.framework.serialization.ObjectSerializer;
 import com.groupname.framework.serialization.SerializationException;
-import com.groupname.framework.util.Strings;
+import com.groupname.game.data.PlayerProgress;
 import com.groupname.game.data.SaveData;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import com.groupname.game.core.Game;
 import com.groupname.game.editor.metadata.LevelMetaData;
-import com.groupname.game.data.AppSettings;
 import com.groupname.game.input.PlayerInputDefinitions;
 import com.groupname.game.levels.*;
 import com.groupname.game.levels.core.LevelBase;
@@ -27,10 +25,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import javafx.stage.FileChooser;
 
-import java.io.File;
-import java.nio.file.Paths;
 import java.util.*;
 
 /**
