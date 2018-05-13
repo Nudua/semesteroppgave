@@ -1,6 +1,6 @@
 package com.groupname.framework.serial.win;
 
-import com.groupname.framework.serial.LibraryUtils;
+import com.groupname.framework.util.LibraryUtils;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;
 import com.groupname.framework.serial.BaudRate;
@@ -66,13 +66,13 @@ public class SerialPortWin implements SerialPort {
         nativeLibrary = LibraryUtils.load(Kernel32Library.DLL_NAME, Kernel32Library.class);
 
         if(nativeLibrary == null) {
-            throw new SerialPortException("The unix c library was not found.");
+            throw new SerialPortException("Kernel32.dll was not found.");
         }
 
         // Attempt to get an native handle to the COM3 serial port
         handle = nativeLibrary.CreateFile(
                 "COM3",
-                GENERIC_READ, //| GENERIC_WRITE,
+                GENERIC_READ,
                 0,
                 null,
                 OPEN_EXISTING,

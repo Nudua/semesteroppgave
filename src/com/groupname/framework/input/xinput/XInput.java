@@ -4,6 +4,7 @@ import com.groupname.framework.input.devices.InputAdapter;
 import com.groupname.framework.input.xinput.interop.GamePadButton;
 import com.groupname.framework.input.xinput.interop.XInputLibrary;
 import com.groupname.framework.input.xinput.interop.XInputLibraryFactory;
+import com.groupname.framework.util.LibraryNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;

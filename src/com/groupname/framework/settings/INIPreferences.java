@@ -65,7 +65,7 @@ public class INIPreferences {
 
             // Read the file line by line
             while((line = reader.readLine()) != null) {
-                if(line.startsWith(";")) { // Ignore empty and lines that start with ;
+                if(line.startsWith(";")) { // Ignore lines that start with ;
                     continue;
                 }
 
@@ -252,7 +252,9 @@ public class INIPreferences {
             return;
         }
 
-        try(BufferedWriter bufferedWriter = Files.newBufferedWriter(fileName, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.CREATE))
+        try(BufferedWriter bufferedWriter = Files.newBufferedWriter(fileName,
+                StandardOpenOption.TRUNCATE_EXISTING,
+                StandardOpenOption.CREATE))
         {
             for(Map.Entry<String, String> entry : map.entrySet()) {
                 String key = entry.getKey();

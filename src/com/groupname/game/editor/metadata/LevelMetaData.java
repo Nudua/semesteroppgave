@@ -7,6 +7,7 @@ import com.groupname.game.editor.metadata.ObjectMetaData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ public class LevelMetaData implements Serializable {
 
     private final String id; // Generate from AppSettings
     private final String name;
-    private final ArrayList<ObjectMetaData> objectMetaDataList;
+    private final List<ObjectMetaData> objectMetaDataList;
 
     private String backgroundImagePath = DEFAULT_BACKGROUND;
 
@@ -60,7 +61,7 @@ public class LevelMetaData implements Serializable {
      *
      * @return a list of objects.
      */
-    public ArrayList<ObjectMetaData> getObjectMetaDataList() {
+    public List<ObjectMetaData> getObjectMetaDataList() {
         return objectMetaDataList;
     }
 

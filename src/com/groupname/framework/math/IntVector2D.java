@@ -10,8 +10,6 @@ public class IntVector2D {
     private int x;
     private int y;
 
-    //public final static Vector2D ZERO = Zero();
-
     /**
      * Constructor for a vector with x = zero and y = zero.
      */
@@ -98,6 +96,12 @@ public class IntVector2D {
         return y;
     }
 
+    /**
+     * Method that tests if two vectors are considered equal.
+     *
+     * @param o the reference object with which to compare.
+     * @return true if the x and y coordinates of this instance are considered the same as in 'o'.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,6 +113,11 @@ public class IntVector2D {
                 y == that.y;
     }
 
+    /**
+     * Returns a hashcode for the contents of this object.
+     *
+     * @return a hashcode for the contents of this object.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(x, y);

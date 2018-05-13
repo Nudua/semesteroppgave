@@ -10,18 +10,13 @@ import javafx.scene.shape.Rectangle;
 import java.util.EnumSet;
 import java.util.Objects;
 
-// Facade - https://en.wikipedia.org/wiki/Facade_pattern
-// Provides a simple way to draw sprites, hiding the complexity of JavaFX's graphicsContext
-// Make an interface? then have the implementation be SpriteBatchFX
-
-
 /**
  * An JavaFX based implementation of the SpriteBatch interface which uses the GraphicsContext2D class to draw Sprites.
  *
  * Supports drawing sprites at the position given, horizontal and vertical flipping of these sprites,
  * as well as tinting the sprites in a specified color.
  *
- * Example usage: (assume that we already have a SPRITE called mySprite.)
+ * Example usage: (assume that we already have a Sprite called mySprite.)
  *
  * // We need a Canvas to draw on.
  * Canvas canvas = new Canvas();
@@ -54,7 +49,6 @@ public class SpriteBatchFX implements SpriteBatch {
      */
     public void draw(Sprite sprite, Vector2D position) {
         draw(sprite, position, EnumSet.noneOf(SpriteFlip.class));
-
     }
 
     /**

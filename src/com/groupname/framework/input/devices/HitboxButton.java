@@ -10,13 +10,13 @@ package com.groupname.framework.input.devices;
  *   Pin 5:    RIGHT = 0x08
  *
  *   // Buttons
- *   Pin 6:    NewGame = 0x10
- *   Pin 7:    Select = 0x20
+ *   Pin 6:    START = 0x10
+ *   Pin 7:    SELECT = 0x20
  *
- *   Pin 8:    ShootUp = 0x40
- *   Pin 9:    ShootDown = 0x80
- *   Pin 10:   ShootLeft = 0x100
- *   Pin 11:   ShootRight = 0x200
+ *   Pin 8:    SHOOT_UP = 0x40
+ *   Pin 9:    SHOOT_DOWN = 0x80
+ *   Pin 10:   SHOOT_LEFT = 0x100
+ *   Pin 11:   SHOOT_RIGHT = 0x200
  *
  *   See gamepad-arduino.txt for more information.
  */

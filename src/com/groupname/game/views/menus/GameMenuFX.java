@@ -19,21 +19,9 @@ import java.util.Optional;
 
 
 /**
- * Represents a menu that is shown when the game is paused.
+ * Represents a dynamically generated menu for a game or application written as a JavaFX custom Control.
  *
- * Implementations must support all the buttons in the GameMenu enumeration:
- *          *****************
- *          *     PAUSED    * <- Sample header
- *          *****************
- *          * Resume        * <- GameMenu.Resume
- *          * Save          * <- GameMenu.Save etc.
- *          * Restart LEVEL *
- *          * Restart GAME  *
- *          * Exit          *
- *          *****************
- *
- *  This implementation is based on FXML with the buttons and general layout is defined within the pausemenu.fxml file
- *  and the style is contained within pausemenu.css.
+ * The buttons for this GameMenu will be generated from the Enum given.
  */
 public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
 
@@ -63,7 +51,7 @@ public class GameMenuFX<T extends Enum<T>> extends VBox implements GameMenu<T> {
      * @throws NullPointerException if fxmlSource is null.
      * @throws EmptyStringException if fxmlSource is equal to an empty String.
      */
-    public GameMenuFX(Class <T> enumType, String fxmlSource) {
+    public GameMenuFX(Class<T> enumType, String fxmlSource) {
         menuItems = new HashMap<>();
         Strings.requireNonNullAndNotEmpty(fxmlSource);
 

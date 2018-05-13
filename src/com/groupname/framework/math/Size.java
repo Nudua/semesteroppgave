@@ -1,6 +1,8 @@
 package com.groupname.framework.math;
 
 
+import java.util.Objects;
+
 /**
  * Has a width and a height. This class is immutable.
  */
@@ -43,6 +45,38 @@ public class Size {
      */
     public int getHeight() {
         return height;
+    }
+
+    /**
+     * Method that tests if two size instances are equal.
+     *
+     * @param o the reference object with which to compare.
+     * @return true if the width and height of this instance are considered the same as in 'o'.
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Size size = (Size) o;
+
+        return width == size.width &&
+                height == size.height;
+    }
+
+    /**
+     * Returns a hashcode for the contents of this object.
+     *
+     * @return a hashcode for the contents of this object.
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(width, height);
     }
 
     /**

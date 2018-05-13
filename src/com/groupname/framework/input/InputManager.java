@@ -3,7 +3,7 @@ package com.groupname.framework.input;
 import com.groupname.framework.input.devices.HitboxInput;
 import com.groupname.framework.input.devices.InputAdapter;
 import com.groupname.framework.input.devices.KeyboardInput;
-import com.groupname.framework.input.xinput.LibraryNotFoundException;
+import com.groupname.framework.util.LibraryNotFoundException;
 import com.groupname.framework.input.xinput.XInput;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;

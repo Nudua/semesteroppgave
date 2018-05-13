@@ -178,9 +178,9 @@ public class Vector2D implements Serializable {
     }
 
     /**
-     * Returns a hash code value for the object
+     * Returns a hashcode for the contents of this object.
      *
-     * @return a hash code value for this object.
+     * @return a hashcode for the contents of this object.
      */
     @Override
     public int hashCode() {

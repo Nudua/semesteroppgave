@@ -11,7 +11,7 @@ import java.util.Objects;
 /**
  * A full screen arrow animation implementation of the ScreenTransition interface.
  *
- * This implementation will draw a triangle (arrow) flying across the screen from left to right until the screen is completely filled.
+ * This implementation will recursively draw blinds up the screen.
  * Users should check the isDone() method every frame to see if the animation has completed.
  */
 public class BlindsScreenTransition implements ScreenTransition {
@@ -42,7 +42,6 @@ public class BlindsScreenTransition implements ScreenTransition {
         currentHeight+= speed;
 
         if(currentHeight >= targetHeight) {
-            //currentHeight = targetHeight;
             currentHeight = 0;
             done = true;
         }

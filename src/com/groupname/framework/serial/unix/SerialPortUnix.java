@@ -1,6 +1,6 @@
 package com.groupname.framework.serial.unix;
 
-import com.groupname.framework.serial.LibraryUtils;
+import com.groupname.framework.util.LibraryUtils;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;
 import com.groupname.framework.serial.unix.internal.CLibraryUnix;

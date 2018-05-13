@@ -1,4 +1,4 @@
-package com.groupname.framework.input.xinput;
+package com.groupname.framework.util;
 
 /**
  * This checked exception should be thrown if a library was not found.

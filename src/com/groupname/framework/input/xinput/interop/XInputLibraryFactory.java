@@ -1,6 +1,6 @@
 package com.groupname.framework.input.xinput.interop;
 
-import com.groupname.framework.serial.LibraryUtils;
+import com.groupname.framework.util.LibraryUtils;
 import com.sun.jna.Platform;
 
 /**

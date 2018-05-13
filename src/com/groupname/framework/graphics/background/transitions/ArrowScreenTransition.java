@@ -17,7 +17,6 @@ public class ArrowScreenTransition implements ScreenTransition {
     private static final double END_POSITION = 1280 + 400;
 
     private GraphicsContext graphicsContext;
-   // private double radius = 100;
 
     private Point2D triangleStartPos = new Point2D(-200, 720 / 2);
     private Point2D trianglePosition = triangleStartPos;

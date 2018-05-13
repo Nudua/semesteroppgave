@@ -87,6 +87,11 @@ public class Star extends GameObject {
         spriteBatch.draw(sprite, position);
     }
 
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
     @Override
     public String toString() {
         return super.toString() + "Star{" +

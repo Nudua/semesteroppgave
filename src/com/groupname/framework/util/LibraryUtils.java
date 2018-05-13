@@ -1,4 +1,4 @@
-package com.groupname.framework.serial;
+package com.groupname.framework.util;
 
 import com.sun.jna.Library;
 import com.sun.jna.Native;
