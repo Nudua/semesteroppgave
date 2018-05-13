@@ -22,28 +22,4 @@ public class GameLoopTimerTests {
     public void drawParameterCannotBeNull() {
         new GameLoopTimer(validUpdate, null);
     }
-
-    /*
-    @Test
-    public void updateRunnableGetsCalled() {
-        AnimationTimer timer = new GameLoopTimer(validUpdate, validDraw);
-        timer.start();
-
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        assertEquals(updateTestValue, counter);
-    }
-
-    @Test
-    public void drawRunnableGetsCalled() {
-        AnimationTimer timer = new GameLoopTimer(validUpdate, validDraw);
-        timer.start();
-
-        assertEquals(drawTestValue, counter);
-    }
-    */
 }

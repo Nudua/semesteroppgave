@@ -249,7 +249,7 @@ public class GameController implements Controller {
     }
 
     /**
-     * Stub method, this nothing in this controller.
+     * Stub method, does nothing in this controller.
      */
     @Override
     public void exit() {
