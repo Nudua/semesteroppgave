@@ -22,11 +22,12 @@ import java.util.Objects;
  *      /music
  *      /soundeffects
  * /levels (file)
+ * /metadata (file)
  */
 public final class Content {
 
     // Maybe set this at start?
-    private static String contentBaseFolder;// = "/com/groupname/game/resources";
+    private static String contentBaseFolder;
 
     /**
      * Sets the basefolder used for loading all the content for this class.
@@ -48,6 +49,7 @@ public final class Content {
      * @throws NullPointerException if the specified file was not found.
      */
     public static Image loadImage(String filename, ResourceType type) {
+        ensureBaseFolderIsSet();
         // ResourceType has to be either a SPRITE, SPRITE_SHEET or a BACKGROUND
         if(!(type == ResourceType.SPRITE || type == ResourceType.SPRITE_SHEET || type == ResourceType.BACKGROUND)) {
             throw new IllegalArgumentException();
@@ -58,11 +60,20 @@ public final class Content {
         return new Image(inputStream, -1, -1, true, false);
     }
 
+    /**
+     * Deserializes a List of ObjectMetaData from the specified file.
+     *
+     * @param fileName the file to load from.
+     * @return a List of ObjectMetaData
+     * @throws SerializationException if the file doesn't exist of there was an issue deserializing the list.
+     */
     @SuppressWarnings("unchecked")
     public static List<ObjectMetaData> loadMetadata(String fileName) throws SerializationException {
+        ensureBaseFolderIsSet();
+
         ObjectSerializer serializer = new ObjectSerializer();
 
-        // A little messy, but required for generic types
+        // A little messy, but required for generic List types
         Class<List<ObjectMetaData>> clazz = (Class<List<ObjectMetaData>>) ((Class)List.class);
         return serializer.read(loadFile(fileName, ResourceType.METADATA), clazz);
     }
@@ -75,9 +86,7 @@ public final class Content {
      * @return the fully qualified path of the requested file.
      */
     public static String getResourcePath(String fileName, ResourceType type) {
-        if(Strings.isNullOrEmpty(contentBaseFolder)) {
-            throw new ContentNotFoundException("The basefolder has to be set before using this method, call setContentBaseFolder with a valid path first.");
-        }
+        ensureBaseFolderIsSet();
 
         Strings.requireNonNullAndNotEmpty(fileName);
         Objects.requireNonNull(type);
@@ -87,6 +96,12 @@ public final class Content {
         String fullPath = contentBaseFolder + folder + fileName;
 
         return Content.class.getResource(fullPath).toExternalForm();
+    }
+
+    private static void ensureBaseFolderIsSet() {
+        if(Strings.isNullOrEmpty(contentBaseFolder)) {
+            throw new ContentNotFoundException("The basefolder has to be set before using this method, call setContentBaseFolder with a valid path first.");
+        }
     }
 
     /**
@@ -99,9 +114,7 @@ public final class Content {
      * @throws ContentNotFoundException if the requested content was not found.
      */
     public static InputStream loadFile(String fileName, ResourceType type) {
-        if(Strings.isNullOrEmpty(contentBaseFolder)) {
-            throw new ContentNotFoundException("The basefolder has to be set before using this method, call setContentBaseFolder with a valid path first.");
-        }
+        ensureBaseFolderIsSet();
 
         Strings.requireNonNullAndNotEmpty(fileName);
         Objects.requireNonNull(type);
