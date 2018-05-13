@@ -20,6 +20,7 @@ import com.groupname.game.editor.controls.MetaDataListCell;
 import com.groupname.game.editor.metadata.*;
 import com.groupname.game.entities.*;
 import com.groupname.game.entities.enemies.*;
+import com.groupname.game.entities.powerups.HeartPowerUp;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
 import javafx.collections.FXCollections;
@@ -83,7 +84,7 @@ public class EditorController implements Controller {
     // Gets called when the fxml has completed loading its nodes.
     @FXML
     protected void initialize() {
-        //writeMetaData();
+        writeMetaData();
         loadMetadata();
     }
 
@@ -114,10 +115,10 @@ public class EditorController implements Controller {
         EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
         guardBlobEasy.setSpriteType(EnemySpriteType.BLUE_BLOB);
 
-        EnemyMetaData guardBeeEasy = new EnemyMetaData("Guard Bee - Easy", GuardEnemy.class);
-        guardBeeEasy.setSpriteType(EnemySpriteType.BEE);
+        EnemyMetaData guardWormEasy = new EnemyMetaData("Guard Worm - Easy", GuardEnemy.class);
+        guardWormEasy.setSpriteType(EnemySpriteType.GREEN_WORM);
 
-        EnemyMetaData guardBeeMedium = new EnemyMetaData("Crazy Bee - Medium", GuardEnemy.class);
+        EnemyMetaData guardBeeMedium = new EnemyMetaData("Guard Crazy Bee - Medium", GuardEnemy.class);
         guardBeeMedium.setDifficulty(Difficulty.MEDIUM);
         guardBeeMedium.setSpriteType(EnemySpriteType.CRAZY_BEE);
 
@@ -125,8 +126,8 @@ public class EditorController implements Controller {
         EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
         homingSnailEasy.setSpriteType(EnemySpriteType.SNAIL);
 
-        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing Snail - Medium", HomingEnemy.class);
-        homingSnailMedium.setSpriteType(EnemySpriteType.SNAIL);
+        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing Fish - Medium", HomingEnemy.class);
+        homingSnailMedium.setSpriteType(EnemySpriteType.GREEN_FISH);
         homingSnailMedium.setDifficulty(Difficulty.MEDIUM);
 
         EnemyMetaData homingSnailHard = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
@@ -137,12 +138,43 @@ public class EditorController implements Controller {
         EnemyMetaData towerEasy = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
         towerEasy.setSpriteType(EnemySpriteType.JELLYFISH);
 
+        EnemyMetaData towerMedium = new EnemyMetaData("Tower - Medium", TowerEnemy.class);
+        towerMedium.setSpriteType(EnemySpriteType.JELLYFISH);
+
+        EnemyMetaData towerHard = new EnemyMetaData("Tower - Hard", TowerEnemy.class);
+        towerHard.setSpriteType(EnemySpriteType.JELLYFISH);
+
         // Boss
         EnemyMetaData boss = new EnemyMetaData("Boss", BossEnemy.class);
         boss.setSpriteType(EnemySpriteType.SQUAREBOSS);
 
+        PowerUpMetaData oneHeartPowerUp = new PowerUpMetaData("PowerUp - 1 Heart", HeartPowerUp.class);
+        PowerUpMetaData twoHeartPowerUp = new PowerUpMetaData("PowerUp - 2 Hearts", HeartPowerUp.class);
+        twoHeartPowerUp.setAmount(2);
+        PowerUpMetaData threeHeartPowerUp = new PowerUpMetaData("PowerUp - 3 Hearts", HeartPowerUp.class);
+        threeHeartPowerUp.setAmount(3);
 
-        allData.addAll(Arrays.asList(player, guardBlobEasy, guardBeeEasy, guardBeeMedium, homingSnailEasy, homingSnailMedium, homingSnailHard, towerEasy, boss));
+
+        allData.addAll(Arrays.asList(
+                player,
+
+                oneHeartPowerUp,
+                twoHeartPowerUp,
+                threeHeartPowerUp,
+
+                guardBlobEasy,
+                guardWormEasy,
+                guardBeeMedium,
+
+                homingSnailEasy,
+                homingSnailMedium,
+                homingSnailHard,
+
+                towerEasy,
+                towerMedium,
+                towerHard,
+                boss
+        ));
 
         ObjectSerializer serializer = new ObjectSerializer();
         try {

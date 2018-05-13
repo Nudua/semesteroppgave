@@ -71,7 +71,6 @@ public class LevelObjectFactory {
     private Player createPlayer(ObjectMetaData metaData) {
         Sprite sprite = spriteFactory.createPlayer();
 
-        //SPRITE p1Sprite = new SPRITE(spriteSheets.get("player1"), SPRITE.createSpriteRegion(2,0, 124, 124));
         sprite.setScale(0.85d);
         return new Player(sprite, metaData.getPosition(), inputManager);
     }
@@ -81,7 +80,7 @@ public class LevelObjectFactory {
      */
     private PowerUp createPowerUp(ObjectMetaData metaData) {
         if(!(metaData instanceof PowerUpMetaData)) {
-            throw new InvalidParameterException(); // Make custom exception
+            throw new InvalidParameterException();
         }
 
         PowerUpMetaData powerUpMetaData = (PowerUpMetaData)metaData;
@@ -94,7 +93,7 @@ public class LevelObjectFactory {
     }
 
     private HeartPowerUp createHeartPowerUp(PowerUpMetaData metaData) {
-        Sprite sprite = spriteFactory.createEnemy(EnemySpriteType.JELLYFISH);// new SPRITE(spriteSheets.get("enemies"), SPRITE.createSpriteRegion(0, 1, 66, 66));
+        Sprite sprite = spriteFactory.createHeart()[0];
         return new HeartPowerUp(sprite, metaData.getPosition(), metaData.getAmount());
     }
 
@@ -103,7 +102,7 @@ public class LevelObjectFactory {
      */
     private Enemy createEnemy(ObjectMetaData levelObject) {
         if(!(levelObject instanceof EnemyMetaData)) {
-            throw new InvalidParameterException(); // Make custom exception
+            throw new InvalidParameterException();
         }
 
         EnemyMetaData enemyMetaData = (EnemyMetaData)levelObject;

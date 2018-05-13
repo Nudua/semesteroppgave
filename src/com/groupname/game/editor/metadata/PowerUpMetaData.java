@@ -1,44 +1,31 @@
 package com.groupname.game.editor.metadata;
 
-import java.util.Objects;
 
 /**
  * PowerUpMetaData extends ObjectMetaData and
- * giv us distinctive setters and getters for PowerUps.
+ * gives us distinctive setters and getters for PowerUps.
  * Create an PowerUp based on the information we give it.
  */
 public class PowerUpMetaData extends ObjectMetaData {
-    private final int amount;
-    private PowerupSpriteType spriteType = PowerupSpriteType.Heart;
+    private int amount = 1;
 
     /**
      * Creates a new instance of the object.
      *
      * @param name The name of the object.
      * @param type The type/class of the object.
-     * @param amount the amount of for example live the player get.
      */
-    public PowerUpMetaData(String name, Class<?> type, int amount) {
+    public PowerUpMetaData(String name, Class<?> type) {
         super(name, type);
+    }
+
+    /**
+     * Sets the amount this powerup gives.
+     *
+     * @param amount the amount this powerup gives.
+     */
+    public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    /**
-     * Method for changing sprite for the object.
-     *
-     * @param spriteType name of the SpriteType.
-     */
-    public void setSpriteType(PowerupSpriteType spriteType) {
-        this.spriteType = Objects.requireNonNull(spriteType);
-    }
-
-    /**
-     * Returns the value of the SpriteType.
-     *
-     * @return the value of the SpriteType.
-     */
-    public PowerupSpriteType getSpriteType() {
-        return spriteType;
     }
 
     /**
@@ -51,15 +38,26 @@ public class PowerUpMetaData extends ObjectMetaData {
     }
 
     /**
+     * Returns a deep copy of this metadata.
+     *
+     * @return a deep copy of this metadata.
+     */
+    @Override
+    public ObjectMetaData deepCopy() {
+        PowerUpMetaData copy = new PowerUpMetaData(getName(), getType());
+        copy.setAmount(amount);
+        return copy;
+    }
+
+    /**
      * Returns the String representation of this instance.
      *
      * @return String representation of this instance.
      */
     @Override
     public String toString() {
-        return "PowerUpMetaData{" +
+        return super.toString() + "PowerUpMetaData{" +
                 "amount=" + amount +
-                ", spriteType=" + spriteType +
                 '}';
     }
 }

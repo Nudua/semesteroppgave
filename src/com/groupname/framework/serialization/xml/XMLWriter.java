@@ -2,7 +2,6 @@ package com.groupname.framework.serialization.xml;
 
 import com.groupname.framework.core.Difficulty;
 import com.groupname.framework.serialization.SerializationException;
-import com.groupname.game.editor.metadata.PowerupSpriteType;
 import com.groupname.game.entities.EnemySpriteType;
 
 import java.io.BufferedWriter;
@@ -50,7 +49,6 @@ public class XMLWriter {
         validClasses.add(Class.class.getTypeName());
         validClasses.add(Difficulty.class.getName());
         validClasses.add(EnemySpriteType.class.getName());
-        validClasses.add(PowerupSpriteType.class.getName());
 
         // Primitives
         validClasses.add(int.class.getName());
