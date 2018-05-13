@@ -14,21 +14,37 @@ import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * This is the player class, used to control our hero via the inputManager.
+ * It also handles firing weapon and checking for collision between enemies and powerups.
+ */
 public class Player extends Actor {
 
-    public static final int DEFAULT_MAX_HEARTS = 5;
+    private static final int DEFAULT_MAX_HEARTS = 5;
+    private static final double KNOCKBACK_AMOUNT = 150;
 
     private final InputManager inputManager;
     private final Vector2D initialPosition;
+
     private double speed = 10.5d;
     private SpriteFlip spriteFlip = SpriteFlip.NONE;
+
     private EnumSet<Direction> direction = EnumSet.of(Direction.RIGHT);
     private SingleBulletWeapon currentWeapon;
-    private double pushBack = 150;
+
     private int maxHitpoints = DEFAULT_MAX_HEARTS;
 
+    /**
+     * Creates a new instance of our Player with the specified sprite, the starting position of the player
+     * and the inputManager used to control this player.
+     *
+     * @param sprite the sprite used for this instance.
+     * @param position the initial position of this player.
+     * @param inputManager the inputManager to use for controlling this player.
+     */
     public Player(Sprite sprite, Vector2D position, InputManager inputManager) {
         super(sprite, position);
         this.inputManager = inputManager;
@@ -37,21 +53,31 @@ public class Player extends Actor {
         createWeapon();
     }
 
+    /**
+     * Returns the max amount of hitpoints that this player can have.
+     *
+     * @return the max amount of hitpoints that this player can have.
+     */
     public int getMaxHitpoints() {
         return maxHitpoints;
     }
-
 
     private void createWeapon() {
         currentWeapon = new SingleBulletWeapon(20, 1);
     }
 
+    /**
+     * Resets the player to it's original position and hitpoints.
+     */
     @Override
     public void reset() {
         position.set(initialPosition);
         setHitPoints(5);
     }
 
+    /**
+     * Updates logic for this player. Should be called 60 times per second.
+     */
     @Override
     public void update() {
         // Step our animation if needed
@@ -66,7 +92,6 @@ public class Player extends Actor {
     }
 
     private void handleWeapon() {
-
         if(!currentWeapon.canFire()) {
             currentWeapon.update();
             return;
@@ -81,22 +106,6 @@ public class Player extends Actor {
         } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_UP)) {
             currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.UP);
         }
-
-        /*
-        if(inputManager.isDown(PlayerInputDefinitions.SHOOT_RIGHT)) {
-            currentWeapon.setDirection(Direction.RIGHT);
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()), Direction.RIGHT);
-        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_LEFT)) {
-            currentWeapon.setDirection(Direction.LEFT);
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
-        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_DOWN)) {
-            currentWeapon.setDirection(Direction.DOWN);
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
-        } else if(inputManager.isDown(PlayerInputDefinitions.SHOOT_UP)) {
-            currentWeapon.setDirection(Direction.UP);
-            currentWeapon.fire(new Vector2D(position.getX() + sprite.getWidth() / 2, position.getY()));
-        }
-        */
 
         currentWeapon.update();
     }
@@ -176,6 +185,12 @@ public class Player extends Actor {
         }
     }
 
+    /**
+     * Checks collision between the player and different gameobjects such as enemies and powerups.
+     * Also checks collision between our weapon's bullets and enemies.
+     *
+     * @param gameObjects the list of gameobjects to check for collision.
+     */
     public void checkCollision(List<GameObject> gameObjects) {
 
         // Get a list of all the GameObjects that are actually of the Enemy class that are still alive
@@ -201,6 +216,9 @@ public class Player extends Actor {
     }
 
     private void checkEnemyCollision(List<Actor> enemies) {
+        assert enemies != null;
+        assert enemies.size() != 0;
+
         for(Actor enemy : enemies) {
             if(enemy.isAlive()) {
                 if(enemy.collides(getHitbox())) {
@@ -208,15 +226,16 @@ public class Player extends Actor {
                     if(isAlive()){
                         onCollides(1);
 
+                        // Knockback our player if we collide with an enemy
                         if(direction.contains(Direction.RIGHT)){
-                            position.setX(position.getX()-pushBack);
+                            position.setX(position.getX()- KNOCKBACK_AMOUNT);
                         } else if (direction.contains(Direction.LEFT)){
-                            position.setX(position.getX()+pushBack);
+                            position.setX(position.getX()+ KNOCKBACK_AMOUNT);
                         }
                         if(direction.contains(Direction.UP)){
-                            position.setY(position.getY()+pushBack);
+                            position.setY(position.getY()+ KNOCKBACK_AMOUNT);
                         } else if (direction.contains(Direction.DOWN)){
-                            position.setY(position.getY()-pushBack);
+                            position.setY(position.getY()- KNOCKBACK_AMOUNT);
                         }
 
                     }
@@ -225,7 +244,10 @@ public class Player extends Actor {
         }
     }
 
+    // Checks if our player is picking up any powerups
     private void checkPowerUpCollision(List<PowerUp> powerUps) {
+        assert powerUps != null;
+
         for(PowerUp item : powerUps) {
             if(!item.isCollected()) {
                 if(item.collides(getHitbox())) {
@@ -235,8 +257,15 @@ public class Player extends Actor {
         }
     }
 
+    /**
+     * Used to draw this player using the specified spriteBatch instance.
+     *
+     * @param spriteBatch the spriteBatch used to draw this gameObject.
+     */
     @Override
     public void draw(SpriteBatch spriteBatch) {
+        Objects.requireNonNull(spriteBatch);
+
         if(isAlive()) {
             spriteBatch.draw(sprite,position, EnumSet.of(spriteFlip));
 
@@ -251,14 +280,13 @@ public class Player extends Actor {
      */
     @Override
     public String toString() {
-        return "Player{" +
+        return super.toString() + "Player{" +
                 "inputManager=" + inputManager +
                 ", initialPosition=" + initialPosition +
                 ", speed=" + speed +
                 ", spriteFlip=" + spriteFlip +
                 ", direction=" + direction +
                 ", currentWeapon=" + currentWeapon +
-                ", pushBack=" + pushBack +
                 ", maxHitpoints=" + maxHitpoints +
                 '}';
     }

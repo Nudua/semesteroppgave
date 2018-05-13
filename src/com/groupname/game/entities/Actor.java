@@ -7,18 +7,14 @@ import com.groupname.framework.graphics.drawing.SpriteFlip;
 import com.groupname.framework.math.Vector2D;
 
 /**
- * Base class for game object that moves,
- * for example Player and Enemy.
+ * Base class for game object that is alive.
  */
 public abstract class Actor extends GameObject {
-
     private static final int DEFAULT_HITPOINTS = 5;
 
     private int hitPoints = DEFAULT_HITPOINTS;
     private boolean alive = true;
 
-    // Think about these
-    private Runnable onCollide;
     private Runnable onDeath;
 
     protected SpriteFlip spriteFlip = SpriteFlip.NONE;
@@ -34,9 +30,9 @@ public abstract class Actor extends GameObject {
     }
 
     /**
-     * Returns the hit points.
+     * Returns the hitpoints.
      *
-     * @return the hit points.
+     * @return the hitpoints.
      */
     public int getHitPoints() {
         return hitPoints;
@@ -45,23 +41,23 @@ public abstract class Actor extends GameObject {
     /**
      * Sets the hit points.
      *
-     * @param hitPoints the hit points to set.
+     * @param hitPoints the hitpoints to set.
      */
     public void setHitPoints(int hitPoints) {
         this.hitPoints = hitPoints;
     }
 
     /**
-     * Returns is alive.
+     * Returns whether this actor is alive.
      *
-     * @return is alive.
+     * @return whether this actor is alive.
      */
     public boolean isAlive() {
         return alive;
     }
 
     /**
-     * Sets is alive.
+     * Sets if this actor is alive or not.
      *
      * @param alive true or false, representing if it is alive.
      */
@@ -119,10 +115,9 @@ public abstract class Actor extends GameObject {
      */
     @Override
     public String toString() {
-        return "Actor{" +
+        return super.toString() + "Actor{" +
                 "hitPoints=" + hitPoints +
                 ", alive=" + alive +
-                ", onCollide=" + onCollide +
                 ", onDeath=" + onDeath +
                 ", spriteFlip=" + spriteFlip +
                 '}';

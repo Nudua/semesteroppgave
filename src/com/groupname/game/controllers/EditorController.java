@@ -84,7 +84,6 @@ public class EditorController implements Controller {
     // Gets called when the fxml has completed loading its nodes.
     @FXML
     protected void initialize() {
-        writeMetaData();
         loadMetadata();
     }
 
@@ -102,85 +101,6 @@ public class EditorController implements Controller {
 
         } catch (SerializationException exception) {
             showError("Unable to load level items");
-        }
-    }
-
-    // Remove
-    private void writeMetaData() {
-        List<ObjectMetaData> allData = new ArrayList<>();
-
-        ObjectMetaData player = new ObjectMetaData("Player", Player.class);
-
-        // Guard enemies
-        EnemyMetaData guardBlobEasy = new EnemyMetaData("Guard Blob - Easy", GuardEnemy.class);
-        guardBlobEasy.setSpriteType(EnemySpriteType.BLUE_BLOB);
-
-        EnemyMetaData guardWormEasy = new EnemyMetaData("Guard Worm - Easy", GuardEnemy.class);
-        guardWormEasy.setSpriteType(EnemySpriteType.GREEN_WORM);
-
-        EnemyMetaData guardBeeMedium = new EnemyMetaData("Guard Crazy Bee - Medium", GuardEnemy.class);
-        guardBeeMedium.setDifficulty(Difficulty.MEDIUM);
-        guardBeeMedium.setSpriteType(EnemySpriteType.CRAZY_BEE);
-
-        // Homing
-        EnemyMetaData homingSnailEasy = new EnemyMetaData("Homing Snail - Easy", HomingEnemy.class);
-        homingSnailEasy.setSpriteType(EnemySpriteType.SNAIL);
-
-        EnemyMetaData homingSnailMedium = new EnemyMetaData("Homing Fish - Medium", HomingEnemy.class);
-        homingSnailMedium.setSpriteType(EnemySpriteType.GREEN_FISH);
-        homingSnailMedium.setDifficulty(Difficulty.MEDIUM);
-
-        EnemyMetaData homingSnailHard = new EnemyMetaData("Homing Snail - Hard", HomingEnemy.class);
-        homingSnailHard.setSpriteType(EnemySpriteType.SNAIL);
-        homingSnailHard.setDifficulty(Difficulty.HARD);
-
-        // Tower
-        EnemyMetaData towerEasy = new EnemyMetaData("Tower - Easy", TowerEnemy.class);
-        towerEasy.setSpriteType(EnemySpriteType.JELLYFISH);
-
-        EnemyMetaData towerMedium = new EnemyMetaData("Tower - Medium", TowerEnemy.class);
-        towerMedium.setSpriteType(EnemySpriteType.JELLYFISH);
-
-        EnemyMetaData towerHard = new EnemyMetaData("Tower - Hard", TowerEnemy.class);
-        towerHard.setSpriteType(EnemySpriteType.JELLYFISH);
-
-        // Boss
-        EnemyMetaData boss = new EnemyMetaData("Boss", BossEnemy.class);
-        boss.setSpriteType(EnemySpriteType.SQUAREBOSS);
-
-        PowerUpMetaData oneHeartPowerUp = new PowerUpMetaData("PowerUp - 1 Heart", HeartPowerUp.class);
-        PowerUpMetaData twoHeartPowerUp = new PowerUpMetaData("PowerUp - 2 Hearts", HeartPowerUp.class);
-        twoHeartPowerUp.setAmount(2);
-        PowerUpMetaData threeHeartPowerUp = new PowerUpMetaData("PowerUp - 3 Hearts", HeartPowerUp.class);
-        threeHeartPowerUp.setAmount(3);
-
-
-        allData.addAll(Arrays.asList(
-                player,
-
-                oneHeartPowerUp,
-                twoHeartPowerUp,
-                threeHeartPowerUp,
-
-                guardBlobEasy,
-                guardWormEasy,
-                guardBeeMedium,
-
-                homingSnailEasy,
-                homingSnailMedium,
-                homingSnailHard,
-
-                towerEasy,
-                towerMedium,
-                towerHard,
-                boss
-        ));
-
-        ObjectSerializer serializer = new ObjectSerializer();
-        try {
-            serializer.write(allData, Paths.get("metadata.data"));
-        } catch (SerializationException exception) {
-            System.err.println(exception.getMessage());
         }
     }
 
