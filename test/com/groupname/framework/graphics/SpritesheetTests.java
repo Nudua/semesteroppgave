@@ -13,23 +13,22 @@ public class SpritesheetTests {
 
     @Test(expected = NullPointerException.class)
     public void nameCannotBeNull() {
-        SpriteSheet spriteSheet = new SpriteSheet(null, img);
+        new SpriteSheet(null, img);
     }
 
     @Test(expected = EmptyStringException.class)
     public void nameCannotBeEmpty() {
-        SpriteSheet spriteSheet = new SpriteSheet("", img);
+        new SpriteSheet("", img);
     }
 
     @Test(expected = NullPointerException.class)
     public void imageCannotBeNull(){
-        SpriteSheet spriteSheet = new SpriteSheet("Tom", null);
+        new SpriteSheet("Tom", null);
     }
 
     @Test
-    public void imageGetSet() {
+    public void imageGetIsSame() {
         SpriteSheet spritesheet = new SpriteSheet("hei", img);
-        //Assert.assertTrue(spritesheet.getImage() == img);
         Assert.assertSame(spritesheet.getImage(), img);
     }
 

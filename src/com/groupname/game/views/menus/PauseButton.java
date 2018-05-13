@@ -1,4 +1,4 @@
-package com.groupname.framework.core;
+package com.groupname.game.views.menus;
 
 /**
  * Represents the different actions a PauseMenu can execute.

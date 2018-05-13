@@ -41,9 +41,6 @@ public class Player extends Actor {
         return maxHitpoints;
     }
 
-    public void setMaxHitpoints(int maxHitpoints) {
-        this.maxHitpoints = maxHitpoints;
-    }
 
     private void createWeapon() {
         currentWeapon = new SingleBulletWeapon(20, 1);
@@ -207,7 +204,6 @@ public class Player extends Actor {
         for(Actor enemy : enemies) {
             if(enemy.isAlive()) {
                 if(enemy.collides(getHitbox())) {
-                    //System.out.println("CRASH");
 
                     if(isAlive()){
                         onCollides(1);
@@ -241,7 +237,6 @@ public class Player extends Actor {
 
     @Override
     public void draw(SpriteBatch spriteBatch) {
-
         if(isAlive()) {
             spriteBatch.draw(sprite,position, EnumSet.of(spriteFlip));
 

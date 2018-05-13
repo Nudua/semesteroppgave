@@ -1,6 +1,6 @@
 package com.groupname.game.controllers;
 
-import com.groupname.framework.core.PauseButton;
+import com.groupname.game.views.menus.PauseButton;
 import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
 import com.groupname.framework.input.InputManager;
@@ -107,7 +107,7 @@ public class GameController implements Controller {
         String[] levelFiles = {"level1.level", "level2.level"};
 
         for(String levelPath: levelFiles) {
-            boolean loaded = loadLevel(reader, levelPath);
+            loadLevel(reader, levelPath);
         }
         levels.add(credits);
 
@@ -119,7 +119,7 @@ public class GameController implements Controller {
         gameOverIndex = levels.indexOf(gameOver);
     }
 
-    private boolean loadLevel(ObjectSerializer reader, String fileName) {
+    private void loadLevel(ObjectSerializer reader, String fileName) {
         boolean error = false;
         String errorMessage = "";
 
@@ -136,11 +136,8 @@ public class GameController implements Controller {
         }
 
         if(error) {
-            //Show alert here
-            System.out.println("Error loading level" + errorMessage);
+            System.err.println("Error loading level" + errorMessage);
         }
-
-        return error;
     }
 
     private void setupMenu() {

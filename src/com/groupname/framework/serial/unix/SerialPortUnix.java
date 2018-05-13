@@ -142,28 +142,33 @@ public class SerialPortUnix implements SerialPort {
             return false;
         }
 
+        // Set input / output speed
         nativeLibrary.cfsetospeed(termios, speed);
         nativeLibrary.cfsetispeed(termios, speed);
 
         // Use 8-bit chars
         termios.c_cflag = (termios.c_cflag & ~CSIZE) | CS8;
 
+        // 0.6 seconds reading timeout
+        termios.c_cc[VTIME] = 6;
+
         // No break processing
         termios.c_iflag &= ~IGNBRK;
         // No signalling chars
         termios.c_lflag = 0;
 
+        termios.c_cflag |= 0;
+        termios.c_cflag &= ~CSTOPB;
+        termios.c_cflag &= ~CRTSCTS;
+
         // No remapping of characters
         termios.c_oflag = 0;
 
-        // Reading does not block
-        termios.c_cc[VMIN]  = 0;
-
-        // 0.6 seconds reading timeout
-        termios.c_cc[VTIME] = 6;
-
         // Turns off xon/xoff control characters
         termios.c_iflag &= ~(IXON | IXOFF | IXANY);
+
+        // Reading does not block
+        termios.c_cc[VMIN]  = 0;
 
         // Turn on reading
         termios.c_cflag |= (CLOCAL | CREAD);
@@ -171,9 +176,6 @@ public class SerialPortUnix implements SerialPort {
         //Parity off
         termios.c_cflag &= ~(PARENB | PARODD);
 
-        termios.c_cflag |= 0;
-        termios.c_cflag &= ~CSTOPB;
-        termios.c_cflag &= ~CRTSCTS;
 
         if(nativeLibrary.tcsetattr(fd, TCSANOW, termios) != 0) {
             System.err.println("error in tcsetattr");

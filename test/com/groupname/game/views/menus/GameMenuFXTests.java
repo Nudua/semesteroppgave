@@ -1,9 +1,7 @@
 package com.groupname.game.views.menus;
 
-import com.groupname.framework.core.PauseButton;
 import com.groupname.framework.util.EmptyStringException;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class GameMenuFXTests {
 
