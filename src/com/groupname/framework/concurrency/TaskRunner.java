@@ -83,8 +83,17 @@ public class TaskRunner {
         executor.submit(action);
     }
 
+    /**
+     * Runs all the runnables in the List on the ExecutorService in parallel
+     * and invokes the onAllCompleted Runnable when every Runnable in the list has been completed it's action.
+     *
+     * @param actions a list of Runnables to run in parallel.
+     * @param onAllCompleted the Runnable to invoke when all of the actions has completed their methods.
+     */
     public void submitAll(List<Runnable> actions, Runnable onAllCompleted) {
         Objects.requireNonNull(actions);
+        Objects.requireNonNull(onAllCompleted);
+
         if(actions.size() == 0) {
             throw new InvalidParameterException("Nothing to submit");
         }

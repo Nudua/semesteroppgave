@@ -179,7 +179,6 @@ public class GameController implements Controller {
         int randomIndex = random.nextInt(screenTransitions.size());
 
         return screenTransitions.get(randomIndex);
-
     }
 
     private int getKeyFromLevel(LevelBase level) {
@@ -198,8 +197,6 @@ public class GameController implements Controller {
     private LevelBase getCurrentLevel() {
         return levels.get(currentLevelIndex);
     }
-
-
 
     private void setupMenu() {
         pauseMenu = new GameMenuFX<>(PauseButton.class, "/com/groupname/game/views/menus/pausemenu.fxml");
