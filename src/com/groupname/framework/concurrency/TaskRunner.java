@@ -98,12 +98,12 @@ public class TaskRunner {
             throw new InvalidParameterException("Nothing to submit");
         }
 
-        final AtomicInteger counter = new AtomicInteger();
+        final AtomicInteger numActionsCompleted = new AtomicInteger();
 
         for(Runnable action : actions) {
             executor.submit(() -> {
                action.run();
-               int currentAction = counter.incrementAndGet();
+               int currentAction = numActionsCompleted.incrementAndGet();
 
                // the last action was completed, so fire our event
                if(currentAction == actions.size()) {
