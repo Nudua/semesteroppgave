@@ -29,11 +29,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import org.junit.rules.Stopwatch;
 
 import java.util.*;
 import java.util.concurrent.*;
-import java.util.stream.Collectors;
 
 /**
  * This controller is used to connect the fxml (views/gameview.fxml)
@@ -51,9 +49,6 @@ public class GameController implements Controller {
     private Game game;
 
     private GameMenuFX<PauseButton> pauseMenu;
-
-    //private List<LevelBase> levels = new CopyOnWriteArrayList<>();
-
     private ConcurrentMap<Integer, LevelBase> levels = new ConcurrentHashMap<>();
 
     private boolean isPaused = false;
@@ -63,8 +58,6 @@ public class GameController implements Controller {
     private int gameOverIndex = 0;
 
     private final TaskRunner taskRunner = new TaskRunner();
-
-    private long now;
 
     /**
      * Creates a new instance of this controller.
@@ -82,13 +75,11 @@ public class GameController implements Controller {
     public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 
-        now = System.currentTimeMillis();
-
-        loadLevels(parameters);
+        loadAllLevelsConcurrently(parameters);
     }
 
-    // Load all our levels in parallel
-    private void loadLevels(Object parameters) {
+    // Load all our levels concurrently using the TaskRunner
+    private void loadAllLevelsConcurrently(Object parameters) {
         ObjectSerializer reader = new ObjectSerializer();
 
         List<Runnable> levelLoadAction = new ArrayList<>();
@@ -145,9 +136,6 @@ public class GameController implements Controller {
     }
 
     private void levelsLoadCompleted(Object parameters) {
-        long completed =  System.currentTimeMillis() - now;
-        System.out.println("Loading of levels took: " + completed + "ms");
-
         int startHitpoints = Player.DEFAULT_HITPOINTS;
 
         // The parameters may be the String id of the level to load
