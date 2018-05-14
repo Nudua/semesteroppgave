@@ -76,11 +76,9 @@ public class BossEnemy extends Enemy {
             if(counterInAction.getCounter() < 60) {
                 position.addX(-randomX);
                 position.addY(randomY);
-                System.out.println(randomX);
             } if(counterInAction.getCounter() > 60) {
                 position.addX(randomX);
                 position.addY(randomY);
-                System.out.println("-"+randomX);
             }
             counterInAction.step();
             if(counterInAction.isDone()){
