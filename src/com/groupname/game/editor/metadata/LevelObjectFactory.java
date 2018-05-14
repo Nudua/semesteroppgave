@@ -151,7 +151,7 @@ public class LevelObjectFactory {
         Sprite sprite = spriteFactory.createEnemy(metaData.getSpriteType());
 
         BossEnemy enemy = new BossEnemy(sprite, metaData.getPosition(), player);
-        enemy.setHitPoints(10);
+        enemy.setHitPoints(50);
 
         return enemy;
     }
