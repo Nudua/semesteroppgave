@@ -131,11 +131,11 @@ public class GameController implements Controller {
 
         ObjectSerializer reader = new ObjectSerializer();
 
-        String[] levelFiles = {"level1.level", "level2.level", "level3.level"};
-
-        for(String levelPath: levelFiles) {
-            loadLevel(reader, levelPath);
+        for(int i = 1; i <= 8; i++) {
+            String levelFile = String.format("level%d.level", i);
+            loadLevel(reader, levelFile);
         }
+
         levels.add(credits);
 
         LevelBase gameOver = new GameOver(game, canvas.getGraphicsContext2D());
