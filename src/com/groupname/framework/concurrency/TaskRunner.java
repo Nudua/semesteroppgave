@@ -98,7 +98,7 @@ public class TaskRunner {
             throw new InvalidParameterException("Nothing to submit");
         }
 
-        final AtomicInteger counter = new AtomicInteger(0);
+        final AtomicInteger counter = new AtomicInteger();
 
         for(Runnable action : actions) {
             executor.submit(() -> {
