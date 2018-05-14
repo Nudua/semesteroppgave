@@ -39,8 +39,6 @@ public class INIPreferencesTests {
         String value = "test";
 
         preferences.put(null, value);
-
-        //assertEquals(preferences.get(key), value);
     }
 
     @Test(expected = EmptyStringException.class)

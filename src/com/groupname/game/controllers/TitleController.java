@@ -4,6 +4,7 @@ import com.groupname.framework.audio.SoundPlayer;
 import com.groupname.framework.input.InputManager;
 import com.groupname.game.data.PlayerProgress;
 import com.groupname.game.data.SaveData;
+import com.groupname.game.entities.Player;
 import com.groupname.game.levels.Credits;
 import com.groupname.game.scene.SceneManager;
 import com.groupname.game.scene.SceneName;
@@ -66,7 +67,7 @@ public class TitleController implements Controller {
         titleMenu.setOnClicked(TitleMenuNames.Exit, Platform::exit);
         titleMenu.setOnClicked(TitleMenuNames.NewGame, () -> SceneManager.navigate(SceneName.GAME));
         titleMenu.setOnClicked(TitleMenuNames.Editor, () -> SceneManager.navigate(SceneName.EDITOR));
-        titleMenu.setOnClicked(TitleMenuNames.Credits, () -> SceneManager.navigate(SceneName.GAME, Credits.LEVEL_ID));
+        titleMenu.setOnClicked(TitleMenuNames.Credits, () -> SceneManager.navigate(SceneName.GAME, new SaveData(Credits.LEVEL_ID, Player.DEFAULT_HITPOINTS)));
         titleMenu.setOnClicked(TitleMenuNames.Continue, this::continueOnClicked);
 
         root.getChildren().add(titleMenu);

@@ -45,6 +45,7 @@ public class PowerUpMetaData extends ObjectMetaData {
     @Override
     public ObjectMetaData deepCopy() {
         PowerUpMetaData copy = new PowerUpMetaData(getName(), getType());
+        copy.setPosition(getPosition());
         copy.setAmount(amount);
         return copy;
     }
