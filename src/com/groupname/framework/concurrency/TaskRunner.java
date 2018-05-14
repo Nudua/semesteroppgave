@@ -3,10 +3,14 @@ package com.groupname.framework.concurrency;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 
+import java.security.InvalidParameterException;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -77,6 +81,27 @@ public class TaskRunner {
     public void submit(Runnable action) {
         Objects.requireNonNull(action);
         executor.submit(action);
+    }
+
+    public void submitAll(List<Runnable> actions, Runnable onAllCompleted) {
+        Objects.requireNonNull(actions);
+        if(actions.size() == 0) {
+            throw new InvalidParameterException("Nothing to submit");
+        }
+
+        final AtomicInteger counter = new AtomicInteger(0);
+
+        for(Runnable action : actions) {
+            executor.submit(() -> {
+               action.run();
+               int currentAction = counter.incrementAndGet();
+
+               // the last action was completed, so fire our event
+               if(currentAction == actions.size()) {
+                   Platform.runLater(onAllCompleted);
+               }
+            });
+        }
     }
 
     /**

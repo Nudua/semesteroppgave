@@ -1,5 +1,6 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
 import com.groupname.game.entities.Player;
 import com.groupname.game.views.menus.PauseButton;
@@ -27,9 +28,12 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import org.junit.rules.Stopwatch;
 
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 /**
  * This controller is used to connect the fxml (views/gameview.fxml)
@@ -42,18 +46,25 @@ public class GameController implements Controller {
     @FXML protected GridPane root;
     @FXML protected Canvas canvas;
     @FXML protected Button pauseButton;
+    @FXML protected HBox loadingBox;
 
     private Game game;
 
     private GameMenuFX<PauseButton> pauseMenu;
 
-    private List<LevelBase> levels = new ArrayList<>();
+    //private List<LevelBase> levels = new CopyOnWriteArrayList<>();
+
+    private ConcurrentMap<Integer, LevelBase> levels = new ConcurrentHashMap<>();
 
     private boolean isPaused = false;
     private int currentLevelIndex = 0;
 
     private ScreenTransition levelCompletedTransition;
     private int gameOverIndex = 0;
+
+    private final TaskRunner taskRunner = new TaskRunner();
+
+    private long now;
 
     /**
      * Creates a new instance of this controller.
@@ -71,9 +82,71 @@ public class GameController implements Controller {
     public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 
-        game.initialize(canvas, this::update, this::draw);
+        now = System.currentTimeMillis();
 
-        loadLevels();
+        loadLevels(parameters);
+    }
+
+    // Load all our levels in parallel
+    private void loadLevels(Object parameters) {
+        ObjectSerializer reader = new ObjectSerializer();
+
+        List<Runnable> levelLoadAction = new ArrayList<>();
+
+        for(int i = 1; i <= 8; i++) {
+            final int index = i;
+            Runnable load = () -> { loadLevel(reader, index); };
+            levelLoadAction.add(load);
+        }
+
+        Runnable loadCredits = () -> {
+            LevelBase credits = new Credits(game, canvas.getGraphicsContext2D());
+            credits.initialize();
+            levels.put(8, credits);
+        };
+
+        levelLoadAction.add(loadCredits);
+
+        Runnable loadGameOver = () -> {
+            LevelBase gameOver = new GameOver(game, canvas.getGraphicsContext2D());
+            gameOver.initialize();
+
+            levels.put(9, gameOver);
+
+            gameOverIndex = getKeyFromLevel(gameOver);
+        };
+
+        levelLoadAction.add(loadGameOver);
+
+        taskRunner.submitAll(levelLoadAction, () -> levelsLoadCompleted(parameters));
+    }
+
+    private void loadLevel(ObjectSerializer reader, int index) {
+        boolean error = false;
+        String errorMessage = "";
+
+        try {
+            String levelFile = String.format("level%d.level", index);
+
+            LevelMetaData levelMetaData = reader.read(Content.loadFile(levelFile, ResourceType.LEVEL), LevelMetaData.class);
+
+            Level level = new Level(game, canvas.getGraphicsContext2D(), levelMetaData);
+            level.initialize();
+
+            levels.put(index - 1, level);
+        } catch (SerializationException exception) {
+            error = true;
+            errorMessage = exception.getMessage();
+        }
+
+        if(error) {
+            System.err.println("Error loading level" + errorMessage);
+        }
+    }
+
+    private void levelsLoadCompleted(Object parameters) {
+        long completed =  System.currentTimeMillis() - now;
+        System.out.println("Loading of levels took: " + completed + "ms");
 
         int startHitpoints = Player.DEFAULT_HITPOINTS;
 
@@ -83,7 +156,7 @@ public class GameController implements Controller {
             Optional<LevelBase> level = getLevelFromId(progress.getCurrentLevel());
 
             if(level.isPresent()) {
-                currentLevelIndex = levels.indexOf(level.get());
+                currentLevelIndex = getKeyFromLevel(level.get());
                 startHitpoints = progress.getHitpoints();
             }
         }
@@ -99,6 +172,10 @@ public class GameController implements Controller {
         if(!game.isRunning()) {
             game.start();
         }
+
+        game.initialize(canvas, this::update, this::draw);
+
+        loadingBox.setVisible(false);
 
         setupMenu();
     }
@@ -117,55 +194,24 @@ public class GameController implements Controller {
 
     }
 
+    private int getKeyFromLevel(LevelBase level) {
+        for(Map.Entry<Integer, LevelBase> entry : levels.entrySet()) {
+            if(entry.getValue() == level) {
+                return entry.getKey();
+            }
+        }
+        return -1;
+    }
+
     private Optional<LevelBase> getLevelFromId(String levelId) {
-        return levels.stream().filter(n -> n.getId().equals(levelId)).findFirst();
+        return levels.values().stream().filter(n -> n.getId().equals(levelId)).findFirst();
     }
 
     private LevelBase getCurrentLevel() {
         return levels.get(currentLevelIndex);
     }
 
-    private void loadLevels() {
-        LevelBase credits = new Credits(game, canvas.getGraphicsContext2D());
-        credits.initialize();
 
-        ObjectSerializer reader = new ObjectSerializer();
-
-        for(int i = 1; i <= 8; i++) {
-            String levelFile = String.format("level%d.level", i);
-            loadLevel(reader, levelFile);
-        }
-
-        levels.add(credits);
-
-        LevelBase gameOver = new GameOver(game, canvas.getGraphicsContext2D());
-        gameOver.initialize();
-
-        levels.add(gameOver);
-
-        gameOverIndex = levels.indexOf(gameOver);
-    }
-
-    private void loadLevel(ObjectSerializer reader, String fileName) {
-        boolean error = false;
-        String errorMessage = "";
-
-        try {
-            LevelMetaData levelMetaData = reader.read(Content.loadFile(fileName, ResourceType.LEVEL), LevelMetaData.class);
-
-            Level level = new Level(game, canvas.getGraphicsContext2D(), levelMetaData);
-            level.initialize();
-
-            levels.add(level);
-        } catch (SerializationException exception) {
-            error = true;
-            errorMessage = exception.getMessage();
-        }
-
-        if(error) {
-            System.err.println("Error loading level" + errorMessage);
-        }
-    }
 
     private void setupMenu() {
         pauseMenu = new GameMenuFX<>(PauseButton.class, "/com/groupname/game/views/menus/pausemenu.fxml");
@@ -305,5 +351,12 @@ public class GameController implements Controller {
      */
     @Override
     public void exit() {
+        if(!taskRunner.isShutdown()){
+            try {
+                taskRunner.stop();
+            } catch (InterruptedException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
     }
 }
