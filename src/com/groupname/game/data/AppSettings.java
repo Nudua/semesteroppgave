@@ -24,6 +24,9 @@ import java.util.Objects;
 public enum AppSettings {
     INSTANCE;
 
+    /**
+     * The name of this game.
+     */
     public static final String GAME_NAME = "Aliens in the backyard";
 
     /**
@@ -39,12 +42,10 @@ public enum AppSettings {
     // Constants
     private static final String APPSETTINGS_INI = "appsettings.ini";
     private static final double DEFAULT_VOLUME = 0.8d;
-    private static final String SAVEDATA_FILENAME = "save.xml";
 
     // Keys for our preferences
     private static final String FIRSTRUN_KEY = "firstrun";
     private static final String FULLSCREEN_KEY = "fullscreen";
-    private static final String CURRENT_LEVEL_KEY = "currentlevel";
     private static final String MUSIC_VOLUME_KEY = "musicvolume";
     private static final String SOUNDEFFECTS_VOLUME_KEY = "soundeffectsvolume";
 
@@ -52,7 +53,6 @@ public enum AppSettings {
     private SaveData saveData = new SaveData();
 
     // Preferences
-    private String currentLevel = Strings.EMPTY;
     private boolean firstRun = false;
     private boolean fullScreen = false;
     private double musicVolume = DEFAULT_VOLUME;
@@ -60,18 +60,8 @@ public enum AppSettings {
 
     private INIPreferences iniPreferences;
 
-    // Getters and setters for our preferences
-    // Will be empty if not set
-    public String getCurrentLevel() {
-        return currentLevel;
-    }
-
     public boolean isFirstRun() {
         return firstRun;
-    }
-
-    public void setCurrentLevel(String currentLevel) {
-        this.currentLevel = Objects.requireNonNull(currentLevel);
     }
 
     /**
@@ -135,7 +125,6 @@ public enum AppSettings {
     public void save() throws IOException {
         iniPreferences.putBoolean(FIRSTRUN_KEY, false);
         iniPreferences.putBoolean(FULLSCREEN_KEY, false);
-        iniPreferences.put(CURRENT_LEVEL_KEY, currentLevel);
         iniPreferences.putDouble(MUSIC_VOLUME_KEY, musicVolume);
         iniPreferences.putDouble(SOUNDEFFECTS_VOLUME_KEY, soundEffectVolume);
 
@@ -167,7 +156,6 @@ public enum AppSettings {
 
         firstRun = iniPreferences.getBoolean(FIRSTRUN_KEY, true);
         fullScreen = iniPreferences.getBoolean(FULLSCREEN_KEY, false);
-        currentLevel = iniPreferences.get(CURRENT_LEVEL_KEY);
         musicVolume = iniPreferences.getDouble(MUSIC_VOLUME_KEY, DEFAULT_VOLUME);
         soundEffectVolume = iniPreferences.getDouble(SOUNDEFFECTS_VOLUME_KEY, DEFAULT_VOLUME);
     }
@@ -180,7 +168,7 @@ public enum AppSettings {
     @Override
     public String toString() {
         return "AppSettings{" +
-                "currentLevel='" + currentLevel + '\'' +
+                "saveData=" + saveData +
                 ", firstRun=" + firstRun +
                 ", fullScreen=" + fullScreen +
                 ", musicVolume=" + musicVolume +

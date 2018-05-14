@@ -3,8 +3,6 @@ package com.groupname.framework.graphics.drawing;
 import com.groupname.framework.graphics.Sprite;
 import com.groupname.framework.math.Vector2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import java.util.EnumSet;
@@ -13,8 +11,7 @@ import java.util.Objects;
 /**
  * An JavaFX based implementation of the SpriteBatch interface which uses the GraphicsContext2D class to draw Sprites.
  *
- * Supports drawing sprites at the position given, horizontal and vertical flipping of these sprites,
- * as well as tinting the sprites in a specified color.
+ * Supports drawing sprites at the position given, horizontal and vertical flipping of these sprites.
  *
  * Example usage: (assume that we already have a Sprite called mySprite.)
  *
@@ -28,7 +25,6 @@ import java.util.Objects;
  * spriteBatch.draw(mySprite, new Vector2D(100, 200), EnumSet.of(SpriteFlip.HORIZONTAL));
  */
 public class SpriteBatchFX implements SpriteBatch {
-
     private GraphicsContext graphicsContext;
 
     /**
@@ -47,16 +43,18 @@ public class SpriteBatchFX implements SpriteBatch {
      * @param sprite the sprite to draw.
      * @param position the position to draw it.
      */
+    @Override
     public void draw(Sprite sprite, Vector2D position) {
         draw(sprite, position, EnumSet.noneOf(SpriteFlip.class));
     }
 
     /**
-     * Draws the given sprite at the specified position with the specified spriteFlip flags and color tint.
+     * Draws the given sprite at the specified position with the specified spriteFlip flags.
      *
      * @param sprite the sprite to draw.
      * @param position the position to draw it.
      */
+    @Override
     public void draw(Sprite sprite, Vector2D position, EnumSet<SpriteFlip> flipFlags) {
         Objects.requireNonNull(sprite);
         Objects.requireNonNull(position);
@@ -83,5 +81,17 @@ public class SpriteBatchFX implements SpriteBatch {
         }
 
         graphicsContext.drawImage(sprite.getSpriteSheet().getImage(), srcRect.getX(), srcRect.getY() + 1, srcRect.getWidth(), srcRect.getHeight() - 1, posX, posY, spriteWidth, spriteHeight);
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "SpriteBatchFX{" +
+                "graphicsContext=" + graphicsContext +
+                '}';
     }
 }

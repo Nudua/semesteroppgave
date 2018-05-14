@@ -15,6 +15,7 @@ import java.util.*;
 
 /**
  * Gathers and updates input from different input adapters. (Keyboard, gamepads, custom controllers)
+ * that implements the InputAdapter interface.
  */
 public class InputManager {
     private boolean enabled = true;
@@ -39,8 +40,7 @@ public class InputManager {
         internalInputState = new HashSet<>();
         inputAdapters = new ArrayList<>();
 
-        // Set these from another place
-        bindings = PlayerInputDefinitions.getDefaultBindings();//new HashSet<>(); //
+        bindings = PlayerInputDefinitions.getDefaultBindings();
 
         initializeInputAdapters(parent);
     }
@@ -60,10 +60,11 @@ public class InputManager {
         }
     }
 
+
     /**
-     * Returns the bindings associated by this instance.
+     * Sets the bindins associated wit this InputManager.
      *
-     * @return the bindings associated by this instance.
+     * @param bindings the new Set of Bindings to use.
      */
     public void setBindings(Set<InputBinding> bindings) {
         this.bindings.clear();
@@ -80,16 +81,17 @@ public class InputManager {
     }
 
     /**
-     * Sets enable or disable the current inputManager.
+     * Enabled or disabled this InputManager from updating it's InputAdapters.
      *
-     * @param enabled true to enable and false to disable.
+     * @param enabled true to enable, false to disable.
      */
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
     private void initializeInputAdapters(Scene parent) {
-        // Keyboard
+        assert parent != null;
+
         inputAdapters.add(new KeyboardInput(parent));
 
         initializeXInput();
@@ -168,11 +170,11 @@ public class InputManager {
 
     /**
      * Method to check single press.
-     * Returns true if buttonName was not pressed last frame but are pressed on the current frame.
-     * Returns false if the buttonName wass pressed last frame and are pressed at the current frame.
+     * Returns true if buttonName was not pressed last frame but is pressed on the current frame
+     * otherwise it will return false.
      *
      * @param buttonName the name of the button to check.
-     * @return true if buttonName was not pressed last frame but are pressed now
+     * @return true if buttonName was not pressed last frame but is pressed now.
      */
     public boolean wasPressed(String buttonName) {
         return !lastState.contains(buttonName) && state.contains(buttonName);
@@ -184,7 +186,7 @@ public class InputManager {
     }
 
     /**
-     * If a hitboxInput is running this method will stop the thread that its running on.
+     * If a hitboxInput is running then this method will stop the thread that it's running on.
      */
     public void stop() {
         System.out.println("Stopping inputadapters...");

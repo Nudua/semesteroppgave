@@ -18,7 +18,7 @@ public class WindFlake extends GameObject {
     private Size screenBounds;
     private double speed;
 
-    private int stallTimer = 0;
+    private int stallTimer;
 
     /**
      * Creates a new instance of this flake.
@@ -76,9 +76,15 @@ public class WindFlake extends GameObject {
         spriteBatch.draw(sprite, position);
     }
 
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
     @Override
     public String toString() {
-        return super.toString() + "WindFlake{" +
+        return super.toString() +
+                "WindFlake{" +
                 "screenBounds=" + screenBounds +
                 ", speed=" + speed +
                 ", stallTimer=" + stallTimer +

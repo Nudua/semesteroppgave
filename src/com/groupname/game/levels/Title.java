@@ -100,7 +100,8 @@ public class Title extends LevelBase {
      */
     @Override
     public String toString() {
-        return "Title{" +
+        return super.toString() +
+                "Title{" +
                 "backgroundImage=" + backgroundImage +
                 '}';
     }

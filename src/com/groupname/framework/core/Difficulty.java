@@ -1,7 +1,7 @@
 package com.groupname.framework.core;
 
 /**
- * Specifies the current difficulty for an object.
+ * Specifies the difficulty for an object.
  */
 public enum Difficulty {
     EASY,

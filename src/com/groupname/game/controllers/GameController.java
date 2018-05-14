@@ -1,5 +1,7 @@
 package com.groupname.game.controllers;
 
+import com.groupname.framework.graphics.background.transitions.BlindsScreenTransition;
+import com.groupname.game.entities.Player;
 import com.groupname.game.views.menus.PauseButton;
 import com.groupname.framework.graphics.background.transitions.ArrowScreenTransition;
 import com.groupname.framework.graphics.background.transitions.ScreenTransition;
@@ -27,6 +29,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * This controller is used to connect the fxml (views/gameview.fxml)
@@ -64,6 +67,7 @@ public class GameController implements Controller {
      * @param game the game instance to use for this controller.
      * @param parameters the String id of the level that you want to start on.
      */
+    @Override
     public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 
@@ -71,23 +75,46 @@ public class GameController implements Controller {
 
         loadLevels();
 
+        int startHitpoints = Player.DEFAULT_HITPOINTS;
+
         // The parameters may be the String id of the level to load
-        if(parameters instanceof String) {
-            Optional<LevelBase> level = getLevelFromId((String)parameters);
-            level.ifPresent((n) -> currentLevelIndex = levels.indexOf(level.get()));
+        if(parameters instanceof SaveData) {
+            SaveData progress = (SaveData)parameters;
+            Optional<LevelBase> level = getLevelFromId(progress.getCurrentLevel());
+
+            if(level.isPresent()) {
+                currentLevelIndex = levels.indexOf(level.get());
+                startHitpoints = progress.getHitpoints();
+            }
         }
 
         LevelBase currentLevel = getCurrentLevel();
 
+        trySetPlayerHitpoints(startHitpoints);
+
         onPlayerDead(currentLevel);
 
-        levelCompletedTransition = new ArrowScreenTransition(canvas.getGraphicsContext2D());
+        levelCompletedTransition = getRandomScreenTransition();
 
         if(!game.isRunning()) {
             game.start();
         }
 
         setupMenu();
+    }
+
+    private ScreenTransition getRandomScreenTransition() {
+        List<ScreenTransition> screenTransitions = Arrays.asList(
+                new ArrowScreenTransition(canvas.getGraphicsContext2D()),
+                new BlindsScreenTransition(canvas.getGraphicsContext2D())
+        );
+
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        int randomIndex = random.nextInt(screenTransitions.size());
+
+        return screenTransitions.get(randomIndex);
+
     }
 
     private Optional<LevelBase> getLevelFromId(String levelId) {
@@ -104,7 +131,7 @@ public class GameController implements Controller {
 
         ObjectSerializer reader = new ObjectSerializer();
 
-        String[] levelFiles = {"level1.level", "level2.level"};
+        String[] levelFiles = {"level1.level", "level2.level", "level3.level"};
 
         for(String levelPath: levelFiles) {
             loadLevel(reader, levelPath);
@@ -163,10 +190,36 @@ public class GameController implements Controller {
         unPause();
     }
 
+    private int getCurrentHitpointsOfPlayerIfPossible() {
+        LevelBase currentLevel = getCurrentLevel();
+
+        if(currentLevel instanceof Level) {
+            Optional<Player> player = ((Level) currentLevel).getPlayerIfExists();
+
+            if(player.isPresent()) {
+                return player.get().getHitPoints();
+            }
+        }
+        return Player.DEFAULT_HITPOINTS;
+    }
+
+    private void trySetPlayerHitpoints(int value) {
+        LevelBase currentLevel = getCurrentLevel();
+
+        if(currentLevel instanceof Level) {
+            Optional<Player> player = ((Level) currentLevel).getPlayerIfExists();
+
+            player.ifPresent(n -> n.setHitPoints(value));
+        }
+    }
+
     // Save our current progress
     private void save() {
         PlayerProgress playerProgress = new PlayerProgress();
-        playerProgress.save(new SaveData(getCurrentLevel().getId(), 0));
+
+        int hitPoints = getCurrentHitpointsOfPlayerIfPossible();
+
+        playerProgress.save(new SaveData(getCurrentLevel().getId(), hitPoints));
     }
 
     private void onPlayerDead(LevelBase level) {
@@ -189,16 +242,15 @@ public class GameController implements Controller {
             if(currentLevel.getState() == LevelState.COMPLETED) {
 
                 if(levelCompletedTransition.isDone()) {
-                    currentLevelIndex++;
+                    int hitPoints = getCurrentHitpointsOfPlayerIfPossible();
 
-                    // Loop around for now
-                    if(currentLevelIndex >= levels.size()) {
-                        currentLevelIndex = 0;
-                    }
+                    currentLevelIndex++;
 
                     // Update to the next level
                     currentLevel = getCurrentLevel();
                     currentLevel.reset();
+
+                    trySetPlayerHitpoints(hitPoints);
 
                     onPlayerDead(currentLevel);
 

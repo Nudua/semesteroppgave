@@ -19,12 +19,10 @@ import java.security.InvalidParameterException;
  * The default port is "COM3" and bounds are 9600 bits per second.
  */
 public class SerialPortWin implements SerialPort {
-
     private static final String DEFAULT_PORT = "COM3";
     private static final BaudRate DEFAULT_BAUDRATE = BaudRate.CBR_9600; //9600 bits per second
 
     private final long GENERIC_READ = 0x8000_0000L;
-    //private final long GENERIC_WRITE = 0x4000_0000L;
     private final int OPEN_EXISTING = 3;
 
     private boolean open;

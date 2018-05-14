@@ -8,7 +8,9 @@ public final class Strings {
         throw new AssertionError("No Strings instances for you!");
     }
 
-    // An empty String referenced, this String is interned and should only have one reference.
+    /**
+     * An empty String referenced, this String is interned and should only have one reference.
+     */
     public static final String EMPTY = "";
 
     /**

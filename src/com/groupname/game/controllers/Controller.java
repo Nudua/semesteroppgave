@@ -5,7 +5,7 @@ import javafx.scene.canvas.Canvas;
 
 /**
  * This interface is meant to be used to connect fxml (views)
- * with the specified game model
+ * with the specified game model.
  */
 public interface Controller {
     /**

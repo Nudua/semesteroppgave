@@ -9,7 +9,7 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 /**
- * A full screen arrow animation implementation of the ScreenTransition interface.
+ * A full screen blinds animation implementation of the ScreenTransition interface.
  *
  * This implementation will recursively draw blinds up the screen.
  * Users should check the isDone() method every frame to see if the animation has completed.
@@ -20,6 +20,7 @@ public class BlindsScreenTransition implements ScreenTransition {
     private final int tileSize = 40;
     private final double speed = 1.0d;
     private final double targetHeight = tileSize + 4;
+
     private final double screenWidth = AppSettings.SCREEN_BOUNDS.getWidth();
     private final double screenHeight = AppSettings.SCREEN_BOUNDS.getHeight();
 
@@ -38,6 +39,7 @@ public class BlindsScreenTransition implements ScreenTransition {
     /**
      * Increases the state of the blinds animation.
      */
+    @Override
     public void update() {
         currentHeight+= speed;
 
@@ -50,6 +52,7 @@ public class BlindsScreenTransition implements ScreenTransition {
     /**
      * Draws the current full-screen animation used for this screen transition.
      */
+    @Override
     public void draw() {
         int numTiles = (int)screenHeight / tileSize;
 
@@ -71,6 +74,7 @@ public class BlindsScreenTransition implements ScreenTransition {
     /**
      * Resets the state of the animation of the screen-transition to the start.
      */
+    @Override
     public void reset() {
         currentHeight = 0;
         done = false;
@@ -84,5 +88,22 @@ public class BlindsScreenTransition implements ScreenTransition {
     public boolean isDone() {
         return done;
     }
-
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "BlindsScreenTransition{" +
+                "graphicsContext=" + graphicsContext +
+                ", tileSize=" + tileSize +
+                ", speed=" + speed +
+                ", targetHeight=" + targetHeight +
+                ", screenWidth=" + screenWidth +
+                ", screenHeight=" + screenHeight +
+                ", currentHeight=" + currentHeight +
+                ", done=" + done +
+                '}';
+    }
 }

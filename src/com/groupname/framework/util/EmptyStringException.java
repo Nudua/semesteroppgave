@@ -21,14 +21,4 @@ public class EmptyStringException extends RuntimeException {
     public EmptyStringException(String message) {
         super(message);
     }
-
-    /**
-     * Returns a string representation of this exception.
-     *
-     * @return @return a string representation of this exception.
-     */
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 }

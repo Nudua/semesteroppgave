@@ -13,7 +13,6 @@ import java.util.Objects;
  * This class represents a weapon with a single projectile.
  */
 public class SingleBulletWeapon extends WeaponBase {
-
     private Direction bulletDirection = Direction.NONE;
 
     /**
@@ -129,7 +128,8 @@ public class SingleBulletWeapon extends WeaponBase {
      */
     @Override
     public String toString() {
-        return "SingleBulletWeapon{" +
+        return super.toString() +
+                "SingleBulletWeapon{" +
                 "bulletDirection=" + bulletDirection +
                 '}';
     }

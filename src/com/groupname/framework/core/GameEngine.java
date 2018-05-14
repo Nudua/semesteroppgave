@@ -7,7 +7,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.paint.Color;
 
 /**
- * The base class used to drive a GAME which contains an AnimatingTimer that
+ * The base class used to drive a game which contains an AnimationTimer that
  * updates 60 times per second.
  *
  * Subclasses must override update (logic) and draw (used to draw the game world).
@@ -89,4 +89,21 @@ public abstract class GameEngine {
      * Implementations must override this to draw the game world, this method will be called 60 times per second.
      */
     protected abstract void draw();
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "GameEngine{" +
+                "canvas=" + canvas +
+                ", width=" + width +
+                ", height=" + height +
+                ", running=" + running +
+                ", background=" + background +
+                ", animationTimer=" + animationTimer +
+                '}';
+    }
 }

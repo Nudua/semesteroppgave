@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
  * It also handles firing weapon and checking for collision between enemies and powerups.
  */
 public class Player extends Actor {
-
     private static final int DEFAULT_MAX_HEARTS = 5;
     private static final double KNOCKBACK_AMOUNT = 150;
 
@@ -159,7 +158,6 @@ public class Player extends Actor {
             isMoving = true;
         }
 
-        // Remove this
         if(!isMoving) {
             direction.clear();
             direction.add(Direction.LEFT);
@@ -206,7 +204,6 @@ public class Player extends Actor {
         // Check collision between player and enemies
         checkEnemyCollision(enemies);
 
-        // Write generic class?
         List<PowerUp> powerUps = gameObjects.stream()
                 .filter(n -> n instanceof PowerUp && !((PowerUp) n).isCollected())
                 .map((n) -> (PowerUp) n)

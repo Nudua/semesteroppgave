@@ -27,7 +27,6 @@ public class InputBinding {
      */
     public InputBinding(String name) {
         this.name = Strings.requireNonNullAndNotEmpty(name);
-
         this.bindings = new HashSet<>();
     }
 
@@ -80,6 +79,7 @@ public class InputBinding {
 
     /**
      * Returns the String representation of this object, the name and all of the bindings used for this instance.
+     *
      * @return the name and all of the bindings used for this instance.
      */
     @Override

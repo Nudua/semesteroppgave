@@ -27,7 +27,7 @@ public class TowerEnemy extends Enemy {
     private boolean canShoot;
 
     /**
-     * The constructure for an TowerEnemy. Takes a sprite, a start position and the player.
+     * The constructor for an TowerEnemy. Takes a sprite, a start position and the player.
      *
      * @param sprite Sets an default sprite for the enemy.
      * @param position Sets the start position, on the canvas.
@@ -46,8 +46,6 @@ public class TowerEnemy extends Enemy {
         shootingC = (int) position.getY() - 40;
         shootingD = (int) position.getY() + 40;
     }
-
-
 
     /**
      * The specific logic for this type of enemy.
@@ -69,7 +67,7 @@ public class TowerEnemy extends Enemy {
         currentWeapon.update();
 
 
-        // Shoots UP
+        // Shoots up
         if(playerY < shootingC) {
             if (shootingA < playerX) {
                 inRangeLeft = true;
@@ -90,7 +88,7 @@ public class TowerEnemy extends Enemy {
             }
         }
 
-        // Shoots DOWN
+        // Shoots down
         if(playerY > shootingD) {
             if (shootingA < playerX) {
                 inRangeLeft = true;
@@ -111,7 +109,7 @@ public class TowerEnemy extends Enemy {
             }
         }
 
-        // Shoots LEFT
+        // Shoots left
         if(playerX < shootingA) {
             if(shootingC < playerY) {
                 inRangeLeft = true;
@@ -132,7 +130,7 @@ public class TowerEnemy extends Enemy {
             }
         }
 
-        // Shoots RIGHT
+        // Shoots right
         if(playerX > shootingB) {
             if(shootingC < playerY) {
                 inRangeLeft = true;
@@ -159,7 +157,6 @@ public class TowerEnemy extends Enemy {
         }
 
         currentWeapon.checkCollision(player);
-
     }
 
     /**
@@ -191,7 +188,8 @@ public class TowerEnemy extends Enemy {
      */
     @Override
     public String toString() {
-        return "TowerEnemy{" +
+        return super.toString() +
+                "TowerEnemy{" +
                 "shootingDirection=" + shootingDirection +
                 ", currentWeapon=" + currentWeapon +
                 ", player=" + player +

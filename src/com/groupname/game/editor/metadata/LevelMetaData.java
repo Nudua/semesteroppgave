@@ -1,14 +1,10 @@
 package com.groupname.game.editor.metadata;
 
-import com.groupname.framework.math.Vector2D;
 import com.groupname.framework.util.Strings;
-import com.groupname.game.data.AppSettings;
-import com.groupname.game.editor.metadata.ObjectMetaData;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -18,7 +14,7 @@ public class LevelMetaData implements Serializable {
 
     private static final String DEFAULT_BACKGROUND = "background4.png";
 
-    private final String id; // Generate from AppSettings
+    private final String id;
     private final String name;
     private final List<ObjectMetaData> objectMetaDataList;
 
@@ -53,8 +49,6 @@ public class LevelMetaData implements Serializable {
         return name;
     }
 
-    // This one is mutable
-
     /**
      * Mutable ArrayList.
      * Returns a list of objects.
@@ -72,7 +66,6 @@ public class LevelMetaData implements Serializable {
      * @param backgroundImagePath the path to the image.
      */
     public void setBackgroundImagePath(String backgroundImagePath) {
-        // Check if file exists also
         this.backgroundImagePath = Strings.requireNonNullAndNotEmpty(backgroundImagePath);
     }
 
@@ -84,10 +77,6 @@ public class LevelMetaData implements Serializable {
     public String getBackgroundImagePath() {
         return backgroundImagePath;
     }
-
-    // Screentransitions, maybe just class type here?
-    //private ScreenTransition startLevel;
-    //private ScreenTransition endLevel;
 
     /**
      * Returns the String representation of this instance.

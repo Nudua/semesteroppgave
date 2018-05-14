@@ -6,7 +6,6 @@ import com.groupname.framework.util.Strings;
  * This immutable class holds the title and viewPath (fxml) for scenes used by this application.
  */
 public class SceneInfo {
-
     private final String title;
     private final String viewPath;
 

@@ -19,15 +19,12 @@ import java.util.concurrent.ThreadLocalRandom;
  * shoots a little and is hard to kill.
  */
 public class BossEnemy extends Enemy {
-    //private SpreadGun currentWeapon;
     private Player player;
     private Vector2D basePosition;
     private Rectangle bossBounds;
     private BoundsChecker boundsChecker = new BoundsChecker();
     private Counter counter = new Counter(5);
     private Counter counterInAction = new Counter(2);
-
-
 
     /**
      * The constructor for an BossEnemy. Takes a sprite, start position and the player.
@@ -50,7 +47,6 @@ public class BossEnemy extends Enemy {
         double height = sprite.getHeight() + 200;
         bossBounds = new Rectangle((int)basePosition.getX() - 300, (int)basePosition.getY() - 100, (int)width, (int)height);
     }
-
 
     /**
      * Returns a modified Hitbox for BossEnemy.
@@ -123,7 +119,6 @@ public class BossEnemy extends Enemy {
     public void draw(SpriteBatch spriteBatch) {
         if(isAlive()) {
             spriteBatch.draw(sprite, position);
-            //currentWeapon.draw(spriteBatch);
         }
 
     }
@@ -133,7 +128,6 @@ public class BossEnemy extends Enemy {
      */
     @Override
     public void reset() {
-
     }
 
     /**
@@ -143,7 +137,8 @@ public class BossEnemy extends Enemy {
      */
     @Override
     public String toString() {
-        return "BossEnemy{" +
+        return super.toString() +
+                "BossEnemy{" +
                 "player=" + player +
                 ", basePosition=" + basePosition +
                 ", bossBounds=" + bossBounds +

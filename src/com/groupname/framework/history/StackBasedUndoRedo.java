@@ -10,7 +10,6 @@ import java.util.Deque;
  * Made for executing, undoing and redoing commands.
  */
 public class StackBasedUndoRedo implements UndoRedo {
-
     // The internal collections used for this implementation.
     private Deque<Command> undoStack = new ArrayDeque<>();
     private Deque<Command> redoStack = new ArrayDeque<>();

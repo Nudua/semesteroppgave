@@ -13,13 +13,24 @@ import com.groupname.game.entities.Player;
  * PowerUps gives the player "upgrades".
  */
 public abstract class PowerUp extends GameObject {
-
     private boolean collected = false;
 
+    /**
+     * Implementations must call this constructor to initialize this powerup with the specified
+     * Sprite and position.
+     *
+     * @param sprite the sprite to use for this PowerUp.
+     * @param position the position of this PowerUp.
+     */
     public PowerUp(Sprite sprite, Vector2D position) {
         super(sprite, position);
     }
 
+    /**
+     * Returns whether this powerup has been collected by the player or not.
+     *
+     * @return whether this powerup has been collected by the player or not.
+     */
     public boolean isCollected() {
         return collected;
     }
@@ -62,7 +73,8 @@ public abstract class PowerUp extends GameObject {
      */
     @Override
     public String toString() {
-        return "PowerUp{" +
+        return super.toString() +
+                "PowerUp{" +
                 "collected=" + collected +
                 '}';
     }

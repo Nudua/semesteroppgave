@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 /**
- * The Main for our application.
+ * The Main entry point for our application.
  */
 public class Main extends Application {
 

@@ -45,7 +45,8 @@ public abstract class Enemy extends Actor {
      */
     @Override
     public String toString() {
-        return "Enemy{" +
+        return super.toString() +
+                "Enemy{" +
                 "speed=" + speed +
                 ", damage=" + damage +
                 '}';

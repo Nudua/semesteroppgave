@@ -10,7 +10,7 @@ import java.util.Objects;
 /**
  * This class is a representation for a character in a game
  * using a region of a SpriteSheet as the backing for the Image
- * used to draw this class and is a subclass of the SPRITE class that supports
+ * used to draw this class and is a subclass of the sprite class that supports
  * animation via different AnimationFrames.
  */
 public class AnimatedSprite extends Sprite {

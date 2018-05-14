@@ -72,6 +72,7 @@ public class ScrollingText implements UpdateAble {
     /**
      * Scrolls the text.
      */
+    @Override
     public void update() {
         position.addY(SCROLL_SPEED);
     }

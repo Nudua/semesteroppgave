@@ -52,9 +52,8 @@ public class SpaceEffect implements UpdateDrawAble {
 
         Type[] starTypes = Star.Type.values();
         int[] starCount = {100, 30, 10};
-        //int[] starCount = {1000, 500, 250};
 
-        // Create 20 stars for each type and place them at a random position
+        // Place these stars at a random location on the screen
         for(int z = 0; z < starTypes.length; z++) {
 
             Type starType = starTypes[z];
@@ -72,7 +71,6 @@ public class SpaceEffect implements UpdateDrawAble {
                 stars.add(star);
             }
         }
-
     }
 
     /**

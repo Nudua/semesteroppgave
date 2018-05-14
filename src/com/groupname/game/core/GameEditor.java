@@ -37,7 +37,6 @@ import java.util.stream.Collectors;
  * Specially this class is the level board section of the editor and is used to manipulate level items.
  */
 public class GameEditor extends LevelBase {
-
     private final static String LEVEL_ID = "cd4305d4-d624-4c4e-9ef8-77207cf9b4e1";
 
     private final ContainedMouseInput mouseInput;

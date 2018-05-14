@@ -10,7 +10,10 @@ import com.groupname.framework.math.Vector2D;
  * Base class for game object that is alive.
  */
 public abstract class Actor extends GameObject {
-    private static final int DEFAULT_HITPOINTS = 5;
+    /**
+     * The default hitpoints for an Actor.
+     */
+    public static final int DEFAULT_HITPOINTS = 5;
 
     private int hitPoints = DEFAULT_HITPOINTS;
     private boolean alive = true;

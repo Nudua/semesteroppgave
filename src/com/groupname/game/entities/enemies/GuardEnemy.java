@@ -145,7 +145,8 @@ public class GuardEnemy extends Enemy {
      */
     @Override
     public String toString() {
-        return "GuardEnemy{" +
+        return super.toString() +
+                "GuardEnemy{" +
                 "endPosition=" + endPosition +
                 ", startPosition=" + startPosition +
                 ", walkDistance=" + walkDistance +

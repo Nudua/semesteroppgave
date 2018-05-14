@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  * EnemyMetaData extends ObjectMetaData and
- * giv us distinctive setters and getters for enemies.
+ * gives us distinctive setters and getters for enemies.
  * Create an enemy based on the information we give it.
  */
 public class EnemyMetaData extends ObjectMetaData {
@@ -84,7 +84,7 @@ public class EnemyMetaData extends ObjectMetaData {
      */
     @Override
     public String toString() {
-        return "EnemyMetaData{" +
+        return super.toString() + "EnemyMetaData{" +
                 "difficulty=" + difficulty +
                 ", spriteType=" + spriteType +
                 '}';

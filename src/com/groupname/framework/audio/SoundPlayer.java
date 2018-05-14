@@ -23,7 +23,6 @@ import java.util.concurrent.Executors;
 public enum SoundPlayer {
     INSTANCE;
 
-    //private static final String MUSIC_MAIN = "punch-deck-by-force.mp3";
     private static final String MUSIC_MAIN = "punch-deck-by-force.mp3";
     private static final String MUSIC_EDITOR = "elevator1.mp3";
     private static final String MUSIC_CREDITS = "intro.mp3";

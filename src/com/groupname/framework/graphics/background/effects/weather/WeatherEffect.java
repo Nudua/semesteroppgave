@@ -68,15 +68,7 @@ public class WeatherEffect implements UpdateDrawAble {
      */
     @Override
     public void update() {
-        // Benchmark this
         flakes.parallelStream().forEach(GameObject::update);
-
-        /*
-        for(GameObject flake : flakes) {
-            flake.update();
-        }
-        */
-
     }
 
     /**

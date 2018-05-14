@@ -11,7 +11,6 @@ import java.util.Objects;
  * The amount of life it gives is controllable.
  */
 public class HeartPowerUp extends PowerUp {
-
     private final int hearts;
 
     /**
@@ -34,7 +33,6 @@ public class HeartPowerUp extends PowerUp {
      *
      * @param player the player that collects the object.
      */
-    // Make this a runnable instead? Strategy pattern
     @Override
     public void onCollect(Player player) {
         super.onCollect(player);
@@ -55,7 +53,8 @@ public class HeartPowerUp extends PowerUp {
      */
     @Override
     public String toString() {
-        return "HeartPowerUp{" +
+        return super.toString() +
+                "HeartPowerUp{" +
                 "hearts=" + hearts +
                 '}';
     }

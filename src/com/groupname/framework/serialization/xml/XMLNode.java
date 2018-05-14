@@ -5,7 +5,9 @@ import com.groupname.framework.util.Strings;
 import java.util.Objects;
 
 /**
- * The different fields we store in our XML file.
+ * This class represents an XML Node.
+ * Example:
+ * <name>Value</name>
  */
 public class XMLNode {
     private final String name;

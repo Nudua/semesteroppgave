@@ -14,7 +14,6 @@ import java.util.Objects;
  * Represents a single star that moves across the screen.
  *
  * It's speed is determined by it's Type.
- *
  */
 public class Star extends GameObject {
 

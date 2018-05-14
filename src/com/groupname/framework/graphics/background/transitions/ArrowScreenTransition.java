@@ -35,6 +35,7 @@ public class ArrowScreenTransition implements ScreenTransition {
     /**
      * Moves the arrow further towards the end position. (which is off screen)
      */
+    @Override
     public void update() {
         trianglePosition = trianglePosition.add(60,0);
 
@@ -46,6 +47,7 @@ public class ArrowScreenTransition implements ScreenTransition {
     /**
      * Draws the current full-screen animation used for this screen transition.
      */
+    @Override
     public void draw() {
         graphicsContext.save();
 
@@ -57,6 +59,7 @@ public class ArrowScreenTransition implements ScreenTransition {
     /**
      * Resets the state of the animation of the screen-transition to the start.
      */
+    @Override
     public void reset() {
         done = false;
         trianglePosition = triangleStartPos;
@@ -67,11 +70,12 @@ public class ArrowScreenTransition implements ScreenTransition {
      *
      * @return true if the screen-transition has completed its animation, false otherwise.
      */
+    @Override
     public boolean isDone() {
         return done;
     }
 
-    //todo, remember what these things do and comment them
+    // Use the graphicContext polygon support to draw a huge arrow on the screen at the given position.
     private void drawTriangle() {
         graphicsContext.setFill(Color.BLACK);
         Point2D[] triangle = buildTriangle(trianglePosition.getX(), trianglePosition.getY(), 720 / 2);

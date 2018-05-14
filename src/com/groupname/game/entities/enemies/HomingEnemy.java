@@ -24,7 +24,7 @@ public class HomingEnemy extends Enemy {
     private double speed = 1.0d;
     private int frequency = 1;
     private Counter counter = new Counter(frequency);
-    ThreadLocalRandom random = ThreadLocalRandom.current();
+    private final ThreadLocalRandom random = ThreadLocalRandom.current();
 
 
     /**
@@ -126,7 +126,6 @@ public class HomingEnemy extends Enemy {
      */
     @Override
     public void reset() {
-
     }
 
     /**
@@ -136,7 +135,8 @@ public class HomingEnemy extends Enemy {
      */
     @Override
     public String toString() {
-        return "HomingEnemy{" +
+        return super.toString() +
+                "HomingEnemy{" +
                 "startPosition=" + startPosition +
                 ", player=" + player +
                 ", currentWeapon=" + currentWeapon +

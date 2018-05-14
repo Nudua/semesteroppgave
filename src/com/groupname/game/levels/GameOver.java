@@ -21,7 +21,6 @@ import java.util.List;
  * This level represents the Game Over level that is shown when the player dies.
  */
 public class GameOver extends LevelBase {
-
     public static final String LEVEL_ID = "493b0589-2308-4415-aeef-071856b11da4";
 
     private WeatherEffect weatherEffect;
@@ -69,7 +68,7 @@ public class GameOver extends LevelBase {
     }
 
     /**
-     * Method that update the logic of this "level".
+     * Method that updates the logic of this "level".
      */
     @Override
     public void update() {
@@ -94,6 +93,19 @@ public class GameOver extends LevelBase {
 
         graphicsContext.setFill(Color.WHITE);
         graphicsContext.setFont(Font.font(80));
-        graphicsContext.fillText("GAME Over ...", 1280 / 2 - 250, 720 / 2);
+        graphicsContext.fillText("GAME OVER ...", 1280 / 2 - 250, 720 / 2);
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return super.toString() +
+                "GameOver{" +
+                "weatherEffect=" + weatherEffect +
+                '}';
     }
 }

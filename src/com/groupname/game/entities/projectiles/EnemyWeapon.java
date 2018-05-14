@@ -12,7 +12,6 @@ import java.util.Objects;
  * This weapon represents a weapon that will shoot towards the specified target.
  */
 public class EnemyWeapon extends WeaponBase {
-
     private final Actor target;
     private final Projectile projectile;
     private Vector2D targetPosition = new Vector2D();
@@ -72,14 +71,7 @@ public class EnemyWeapon extends WeaponBase {
         double normalizedX = aimDirection.getX() / Math.sqrt(Math.pow(aimDirection.getX(), 2) + Math.pow(aimDirection.getY(), 2));
         double normalizedY = aimDirection.getY() / Math.sqrt(Math.pow(aimDirection.getX(), 2) + Math.pow(aimDirection.getY(), 2));
 
-        /*
-        double hypotenuse = Math.sqrt((aimDirection.getX() * aimDirection.getX()) + (aimDirection.getY() * aimDirection.getY()));
-        System.out.println("Hyp:" + hypotenuse);
-        */
-
-        //if (hypotenuse > 10) {
         velocity = new Vector2D(speed * normalizedX, speed * normalizedY);
-        //}
     }
 
     /**
@@ -107,7 +99,8 @@ public class EnemyWeapon extends WeaponBase {
      */
     @Override
     public String toString() {
-        return "EnemyWeapon{" +
+        return super.toString() +
+                "EnemyWeapon{" +
                 "target=" + target +
                 ", projectile=" + projectile +
                 ", targetPosition=" + targetPosition +

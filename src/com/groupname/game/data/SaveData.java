@@ -1,8 +1,9 @@
 package com.groupname.game.data;
 
-import com.groupname.framework.util.Strings;
+import com.groupname.game.entities.Player;
 
 import java.security.InvalidParameterException;
+import java.util.Objects;
 
 
 /**
@@ -11,28 +12,29 @@ import java.security.InvalidParameterException;
  */
 public class SaveData {
     private final String currentLevel;
-    private final long score;
+    private final int hitpoints;
 
     /**
      * Creates an empty instance of this class.
      */
     public SaveData() {
         currentLevel = "";
-        score = 0;
+        hitpoints = Player.DEFAULT_HITPOINTS;
     }
 
     /**
-     * Creates a new instance with the specified level and score.
+     * Creates a new instance with the specified level and hitpoints.
      *
      * @param currentLevel the level id that the player is currently on, leave empty if no progress has been made.
-     * @param score the current player's score.
+     * @param hitpoints the current hitpoints of the player.
      */
-    public SaveData(String currentLevel, long score) {
-        this.currentLevel = Strings.requireNonNullAndNotEmpty(currentLevel);
-        if(score < 0) {
-            throw new InvalidParameterException("Score cannot be negative");
+    public SaveData(String currentLevel, int hitpoints) {
+        this.currentLevel = Objects.requireNonNull(currentLevel);
+
+        if(hitpoints < 0) {
+            throw new InvalidParameterException("Hitpoints cannot be negative");
         }
-        this.score = score;
+        this.hitpoints = hitpoints;
     }
 
     /**
@@ -49,7 +51,20 @@ public class SaveData {
      *
      * @return the player score.
      */
-    public long getScore() {
-        return score;
+    public int getHitpoints() {
+        return hitpoints;
+    }
+
+    /**
+     * Returns the String representation of this object.
+     *
+     * @return the String representation of this object.
+     */
+    @Override
+    public String toString() {
+        return "SaveData{" +
+                "currentLevel='" + currentLevel + '\'' +
+                ", hitpoints=" + hitpoints +
+                '}';
     }
 }

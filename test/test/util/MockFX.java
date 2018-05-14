@@ -3,6 +3,9 @@ package test.util;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+/**
+ * Helper class for test components that require a JavaFX thread to be running.
+ */
 public class MockFX extends Application {
 
     private static Stage stage;

@@ -82,7 +82,7 @@ public class Credits extends LevelBase {
     }
 
     private String[] generateCredits() {
-        return new String[] {"CREDITS...", "thank", "you", "for", "playing", "our", "game", "...", "now", "we", "just", "have", "to", "make", "it", "\uD83D\uDE0A"};
+        return new String[] {"CREDITS...", "thank", "you", "for", "playing", "our", "game", "regards", "Tor", "And", "Håkon", "\uD83D\uDE0A"};
     }
 
     /**

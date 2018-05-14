@@ -25,8 +25,6 @@ import java.util.Objects;
  * /metadata (file)
  */
 public final class Content {
-
-    // Maybe set this at start?
     private static String contentBaseFolder;
 
     /**
@@ -50,13 +48,13 @@ public final class Content {
      */
     public static Image loadImage(String filename, ResourceType type) {
         ensureBaseFolderIsSet();
-        // ResourceType has to be either a SPRITE, SPRITE_SHEET or a BACKGROUND
+
+        // ResourceType has to be either a SPRITE, SPRITE_SHEET or a BACKGROUND for images.
         if(!(type == ResourceType.SPRITE || type == ResourceType.SPRITE_SHEET || type == ResourceType.BACKGROUND)) {
             throw new IllegalArgumentException();
         }
 
         InputStream inputStream = loadFile(filename, type);
-
         return new Image(inputStream, -1, -1, true, false);
     }
 
@@ -79,7 +77,7 @@ public final class Content {
     }
 
     /**
-     * Gets the fully qualified path of the requested filename.
+     * Gets the fully qualified path of the requested filename in it's external form.
      *
      * @param fileName the relative filename.
      * @param type the ResourceType of the requested file.
@@ -133,7 +131,7 @@ public final class Content {
         return inputStream;
     }
 
-    // gets the full path from the specified ResourceType
+    // gets the directory path for the specified ResourceType
     private static String getFolderPathFromResourceType(ResourceType resourceType) {
         switch (resourceType) {
             case SPRITE_SHEET:
@@ -154,5 +152,4 @@ public final class Content {
 
         return Strings.EMPTY;
     }
-
 }

@@ -15,7 +15,7 @@ public enum ResourceType {
     SPRITE,
 
     /**
-     * An audio file that plays in the background.
+     * A music file.
      */
     MUSIC,
 
@@ -30,7 +30,7 @@ public enum ResourceType {
     BACKGROUND,
 
     /**
-     * An level file that contain a specific level.
+     * A file that contains a serialized level.
      */
     LEVEL,
     /**

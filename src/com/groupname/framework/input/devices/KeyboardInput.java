@@ -36,6 +36,7 @@ public class KeyboardInput implements InputAdapter {
      *
      * @return whether this InputAdapter is enabled or not.
      */
+    @Override
     public boolean isEnabled() {
         return enabled;
     }
@@ -45,6 +46,7 @@ public class KeyboardInput implements InputAdapter {
      *
      * @param enabled true to enabled, false to disable.
      */
+    @Override
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
@@ -62,6 +64,7 @@ public class KeyboardInput implements InputAdapter {
      *
      * @param digitalInput the collection to add the currently pressed keys.
      */
+    @Override
     public void update(Set<String> digitalInput) {
         Objects.requireNonNull(digitalInput);
         // Update the global input state with the keyboard presses

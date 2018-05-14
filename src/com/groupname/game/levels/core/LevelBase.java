@@ -17,7 +17,6 @@ import java.util.*;
  * and a GraphicsContext.
  */
 public abstract class LevelBase {
-
     protected boolean initialized;
 
     protected final SpriteBatch spriteBatch;

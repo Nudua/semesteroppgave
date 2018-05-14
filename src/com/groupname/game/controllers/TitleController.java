@@ -27,8 +27,6 @@ public class TitleController implements Controller {
     @FXML protected GridPane root;
     @FXML protected Canvas canvas;
 
-    private Game game;
-
     private GameMenuFX<TitleMenuNames> titleMenu;
     private LevelBase titleLevel;
 
@@ -44,8 +42,9 @@ public class TitleController implements Controller {
      * @param game the game instance to use for this controller.
      * @param parameters optional parameters that you want to pass to the controller when initializing.
      */
+    @Override
     public void init(Game game, Object parameters) {
-        this.game = Objects.requireNonNull(game);
+        Objects.requireNonNull(game);
 
         game.initialize(canvas, this::update, this::draw);
 
@@ -78,7 +77,7 @@ public class TitleController implements Controller {
 
         Optional<SaveData> saveData = playerProgress.load();
 
-        saveData.ifPresent(save -> SceneManager.navigate(SceneName.GAME, save.getCurrentLevel()));
+        saveData.ifPresent(save -> SceneManager.navigate(SceneName.GAME, save));
     }
 
     private void update(InputManager inputManager) {

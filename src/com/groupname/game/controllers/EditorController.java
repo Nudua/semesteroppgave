@@ -159,6 +159,7 @@ public class EditorController implements Controller {
      *
      * @param parameters optional parameters that you want to pass to the controller when initializing.
      */
+    @Override
     public void init(Game game, Object parameters) {
         this.game = Objects.requireNonNull(game);
 

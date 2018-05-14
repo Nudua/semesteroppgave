@@ -25,7 +25,6 @@ import java.util.Optional;
  * This class generates gameObjects based on the LevelMetaData that is given.
  */
 public class Level extends LevelBase {
-
     private final LevelMetaData levelMetaData;
     private Image backgroundImage;
     private HitPointsDisplay hitPointsDisplay;
@@ -66,6 +65,18 @@ public class Level extends LevelBase {
     }
 
     /**
+     * Returns an optional that contains the Player used on this level if it exists.
+     *
+     * @return an optional that contains the Player used on this level if it exists.
+     */
+    public Optional<Player> getPlayerIfExists() {
+        return gameObjects.stream()
+                .filter(gameObject -> gameObject instanceof Player)
+                .map(gameObject -> (Player)gameObject)
+                .findFirst();
+    }
+
+    /**
      * Loads and initializes all the gameObjects used by this level
      * from the LevelMetaData specified by the constructor.
      */
@@ -101,15 +112,11 @@ public class Level extends LevelBase {
      */
     @Override
     public void update() {
-
         gameObjects.forEach(GameObject::update);
 
-        Optional<GameObject> player = gameObjects.stream().filter(n -> n instanceof Player).findFirst();
+        Optional<Player> player =  getPlayerIfExists();
 
-        if(player.isPresent()) {
-            Player player1 = (Player)player.get();
-            player1.checkCollision(gameObjects);
-        }
+        player.ifPresent(p -> p.checkCollision(gameObjects));
 
         if(allEnemiesDead()) {
             state = LevelState.COMPLETED;
@@ -148,9 +155,6 @@ public class Level extends LevelBase {
     public void draw() {
         // Draw background
         graphicsContext.drawImage(backgroundImage, 0, 0, screenWidth, screenHeight);
-
-        // Can't do this!
-        //gameObjects.parallelStream().forEach(gameObject -> { gameObject.draw(spriteBatch); });
 
         for(GameObject gameObject : gameObjects) {
             gameObject.draw(spriteBatch);

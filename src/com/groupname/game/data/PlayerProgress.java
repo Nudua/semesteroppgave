@@ -3,8 +3,6 @@ package com.groupname.game.data;
 import com.groupname.framework.concurrency.TaskRunner;
 import com.groupname.framework.serialization.SerializationException;
 import com.groupname.framework.util.Alerts;
-import com.groupname.game.data.AppSettings;
-import com.groupname.game.data.SaveData;
 import javafx.stage.FileChooser;
 
 import java.io.File;
