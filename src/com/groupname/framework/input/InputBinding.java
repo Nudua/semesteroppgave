@@ -12,9 +12,7 @@ import java.util.Set;
  * This class is used to bind one String to an arbitrary amount of other bindings.
  */
 public class InputBinding {
-
     private String name;
-
     private Set<String> bindings;
 
     /**

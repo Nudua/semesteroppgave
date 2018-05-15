@@ -3,7 +3,6 @@ package com.groupname.framework.serial.win;
 import com.groupname.framework.util.LibraryUtils;
 import com.groupname.framework.serial.SerialPort;
 import com.groupname.framework.serial.SerialPortException;
-import com.groupname.framework.serial.BaudRate;
 import com.groupname.framework.serial.win.internal.DCB;
 import com.groupname.framework.serial.win.internal.Kernel32Library;
 import com.groupname.framework.util.EmptyStringException;
@@ -20,14 +19,13 @@ import java.security.InvalidParameterException;
  */
 public class SerialPortWin implements SerialPort {
     private static final String DEFAULT_PORT = "COM3";
-    private static final BaudRate DEFAULT_BAUDRATE = BaudRate.CBR_9600; //9600 bits per second
-
-    private final long GENERIC_READ = 0x8000_0000L;
-    private final int OPEN_EXISTING = 3;
+    private static final int DEFAULT_BAUDRATE = 9600;
+    private static final long GENERIC_READ = 0x8000_0000L;
+    private static final int OPEN_EXISTING = 3;
 
     private boolean open;
     private final String port;
-    private final BaudRate baudRate;
+    private final int baudRate;
 
     private Kernel32Library nativeLibrary;
     private WinNT.HANDLE handle;
@@ -49,7 +47,7 @@ public class SerialPortWin implements SerialPort {
      * @throws NullPointerException if port is null.
      * @throws EmptyStringException if port is equal to an empty String "".
      */
-    public SerialPortWin(String port, BaudRate rate) {
+    public SerialPortWin(String port, int rate) {
         this.port = Strings.requireNonNullAndNotEmpty(port);
         this.baudRate = rate;
     }
