@@ -88,7 +88,7 @@ public class Main extends Application {
         }
     }
 
-    // Stores general appsettings and saveData (player progress)
+    // Save our general settings
     private void saveSettings() {
         AppSettings settings = AppSettings.INSTANCE;
 
@@ -99,12 +99,6 @@ public class Main extends Application {
             System.out.println("Settings saved successfully...");
         } catch (IOException ex) {
             System.err.println("Unable to store settings..");
-        }
-
-        try {
-            settings.saveSaveData(Paths.get("save.xml"));
-        } catch (SerializationException exception) {
-            System.err.println("Unable to save player progress.");
         }
     }
 
