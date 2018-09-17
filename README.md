@@ -40,19 +40,19 @@ Internally it uses the JNA (Java Native Access) to do serial communications on e
 #### Usage
 ```java
 try {
-	// Get an instance of the SerialPort interface
-	SerialPort serialPort = SerialPortFactory.create();
+    // Get an instance of the SerialPort interface
+    SerialPort serialPort = SerialPortFactory.create();
     
     // Opens the default port
-	serialPort.open();
+    serialPort.open();
     
     // Buffer to hold our data
     byte[] buffer = new byte[256];
 
-	// Read the amount requested into the buffer given
+    // Read the amount requested into the buffer given
     long read = serialPort.read(buffer, buffer.length);
 } catch (SerialPortException e) {
-	System.err.println(e.getMessage());
+    System.err.println(e.getMessage());
 }
 ```
 
