@@ -57,3 +57,4 @@ pom.xml.releaseBackup
 pom.xml.tag
 *.xml
 *.ini
+!lib/*.jar
